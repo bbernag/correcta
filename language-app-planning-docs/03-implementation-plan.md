@@ -189,12 +189,12 @@ react-native-nitro-sqlite
 
 ### Goal
 
-Create the visual foundation before building feature screens.
+Create the visual foundation before building product screens.
 
 ### Recommended files
 
 ```txt
-src/shared/styles/
+src/theme/
     tokens.ts
     themes.ts
     unistyles.ts
@@ -253,7 +253,7 @@ colors.feedback.info
 Create:
 
 ```txt
-src/shared/ui/GlassSurface/
+src/components/common/GlassSurface/
 ```
 
 Use Liquid Glass only for:
@@ -286,16 +286,16 @@ On Android, use elevated Material-like surfaces instead of fake iOS glass.
 
 ---
 
-## 6. Phase 2 — Shared UI component library
+## 6. Phase 2 — Reusable UI component library
 
 ### Goal
 
-Build reusable UI primitives before feature screens.
+Build reusable UI primitives before product screens.
 
-### Required shared components
+### Required reusable components
 
 ```txt
-src/shared/ui/
+src/components/common/
     AppText/
     Screen/
     Surface/
@@ -378,7 +378,7 @@ This component is part of the app's differentiation.
 
 ### Goal
 
-Create the app shell before feature logic.
+Create the app shell before product logic.
 
 ### Recommendation
 
@@ -524,23 +524,23 @@ Keep backend and AI provider replaceable.
 ### Create service interfaces
 
 ```txt
-src/shared/api/
+src/services/api/
     httpClient.ts
     apiError.ts
     queryClient.ts
 
-src/features/practice/services/
+src/services/practice/
     sentenceService.ts
     validationService.ts
     teacherFeedbackService.ts
 
-src/features/review/services/
+src/services/review/
     reviewService.ts
 
-src/features/progress/services/
+src/services/progress/
     progressService.ts
 
-src/features/notifications/services/
+src/services/notifications/
     notificationService.ts
 ```
 
@@ -989,79 +989,52 @@ Never show ads:
 
 ## 18. Folder structure
 
-Recommended feature-based structure:
+Recommended project structure:
 
 ```txt
 src/
-    app/
-        App.tsx
-        providers/
-        navigation/
-        config/
-
-    shared/
-        ui/
-        styles/
-        motion/
-        api/
-        storage/
-        analytics/
-        notifications/
-        ads/
-        types/
-        utils/
-
-    entities/
-        user/
-        sentence/
-        word/
-        mistake/
-        review/
-        progress/
-
-    features/
-        onboarding/
-        home/
-        practice/
-        feedback/
-        history/
-        savedWords/
-        savedSentences/
-        mistakeNotebook/
-        review/
-        progress/
-        settings/
-        notifications/
-        achievements/
-
+    App.tsx
+    assets/
+    components/
+        common/
+    constants/
+    contexts/
+    helpers/
+    hooks/
+    native/
+    router/
+    screens/
     services/
-        teacher/
-        sentenceGeneration/
-        validation/
-        reports/
+    state/
+    theme/
+    types/
+    utils/
 ```
 
-Feature folder shape:
+Screen folder shape:
 
 ```txt
-src/features/practice/
+src/screens/Practice/
+    PracticeScreen.tsx
     components/
         PracticeHeader.tsx
         SentencePromptCard.tsx
         TranslationInput.tsx
         ScrambledWordsInput.tsx
         PracticeActions.tsx
-    screens/
-        PracticeScreen.tsx
-    services/
-        practiceSessionService.ts
-    state/
-        practiceSessionReducer.ts
-    types/
-        practiceTypes.ts
-    utils/
-        buildSentenceFromChips.ts
+    hooks/
+        usePracticeSession.ts
+    utils.ts
+    types.ts
+    constants.ts
 ```
+
+Reusable UI belongs in `src/components/common/<ComponentName>`. Product-level
+services, API clients, storage adapters, notification adapters, analytics
+adapters, and ad adapters belong under `src/services`. Broadly reusable state,
+types, hooks, constants, helpers, and utilities use their matching top-level
+folders. Screen-specific code stays inside `src/screens/<ScreenName>` until
+actual reuse requires promotion.
 
 ---
 
@@ -1213,7 +1186,10 @@ Requirements:
 - Do not use Zeego.
 - Use @bernagl/react-native-date for date handling.
 - Use Unistyles for styling and dark mode.
-- Create semantic theme tokens before feature screens.
+- Follow the repo structure rules: screens in `src/screens/<ScreenName>`,
+  reusable UI in `src/components/common`, and shared support code in the
+  matching top-level folders.
+- Create semantic theme tokens before product screens.
 - Do not add backend, auth, ads, or AI provider logic yet.
 - Create mock service interfaces only where needed.
 
@@ -1223,7 +1199,8 @@ Deliver Phase 0/1 foundation:
 - Native foundation package setup.
 - Unistyles configuration.
 - Light and dark themes.
-- Initial shared UI components: Screen, AppText, Surface, Button, TextInput.
+- Initial reusable UI components in `src/components/common`: Screen, AppText,
+  Surface, Button, TextInput.
 - A component playground screen showing light/dark mode.
 - iOS/Android build notes.
 ```

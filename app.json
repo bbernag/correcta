@@ -1,0 +1,47 @@
+{
+    "expo": {
+        "name": "Conecta",
+        "slug": "conecta",
+        "version": "0.1.0",
+        "orientation": "portrait",
+        "icon": "./src/assets/icon.png",
+        "scheme": "conecta",
+        "userInterfaceStyle": "automatic",
+        "runtimeVersion": {
+            "policy": "appVersion"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "plugins": [
+            "expo-dev-client",
+            "expo-updates",
+            [
+                "expo-build-properties",
+                {
+                    "android": {
+                        "minSdkVersion": 26,
+                        "useDayNightTheme": true
+                    }
+                }
+            ],
+            "react-native-nitro-fetch"
+        ],
+        "ios": {
+            "bundleIdentifier": "com.luisgarcia.conecta",
+            "deploymentTarget": "16.0",
+            "supportsTablet": true
+        },
+        "android": {
+            "package": "com.luisgarcia.conecta",
+            "adaptiveIcon": {
+                "backgroundColor": "#E6F4FE",
+                "foregroundImage": "./src/assets/android-icon-foreground.png",
+                "backgroundImage": "./src/assets/android-icon-background.png",
+                "monochromeImage": "./src/assets/android-icon-monochrome.png"
+            },
+            "predictiveBackGestureEnabled": false
+        }
+    }
+}

@@ -10,8 +10,8 @@
         "prebuild": "expo prebuild",
         "typecheck": "tsc --noEmit",
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-        "format": "prettier --write .",
-        "format:check": "prettier --check ."
+        "format": "prettier --write --ignore-unknown .",
+        "format:check": "prettier --check --ignore-unknown ."
     },
     "expo": {
         "doctor": {

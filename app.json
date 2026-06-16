@@ -26,7 +26,8 @@
                     }
                 }
             ],
-            "react-native-nitro-fetch"
+            "react-native-nitro-fetch",
+            "react-native-bottom-tabs"
         ],
         "ios": {
             "bundleIdentifier": "com.luisgarcia.conecta",

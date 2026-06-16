@@ -1,0 +1,11 @@
+node_modules/
+.expo/
+dist/
+web-build/
+ios/
+android/
+package-lock.json
+
+AGENTS.md
+docs/rules/
+language-app-planning-docs/

@@ -1,5 +1,14 @@
 export {createConectaServices} from "./conectaServices";
 export {
+    getPracticeSummary,
+    savePracticeSentence,
+    savePracticeWord,
+    startLocalPracticeSession,
+    submitPracticeAnswer,
+    type LocalPracticeSession,
+    type PracticeFeedbackResult,
+} from "./practiceLoopService";
+export {
     runLocalDomainChecks,
     type LocalDomainCheckResult,
 } from "./runLocalDomainChecks";

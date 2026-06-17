@@ -12,6 +12,10 @@ type HomeScreenProps = CompositeScreenProps<
 >;
 
 export function HomeScreen({navigation}: HomeScreenProps) {
+    function handleStartPractice() {
+        navigation.navigate("Practice", {restartKey: Date.now()});
+    }
+
     function handleOpenPlayground() {
         navigation.navigate("ComponentPlayground");
     }
@@ -30,8 +34,15 @@ export function HomeScreen({navigation}: HomeScreenProps) {
                 </AppText>
             </Surface>
             <Button
+                accessibilityLabel="Start practice session"
+                label="Start practice"
+                onPress={handleStartPractice}
+            />
+            <Button
+                accessibilityLabel="Open component check"
                 label="Open component check"
                 onPress={handleOpenPlayground}
+                variant="secondary"
             />
         </Screen>
     );

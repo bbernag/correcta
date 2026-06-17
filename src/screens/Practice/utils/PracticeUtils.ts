@@ -1,4 +1,5 @@
 import type {ValidationStatus, PracticeSentence} from "../../../types";
+import type {HapticFeedback} from "../../../native";
 import type {WordBankItem} from "../types/PracticeTypes";
 
 export function createWordBankItems(
@@ -61,6 +62,20 @@ export function getStatusTone(status: ValidationStatus) {
     }
 
     return "danger";
+}
+
+export function getPracticeResultHapticFeedback(
+    status: ValidationStatus
+): HapticFeedback {
+    if (status === "correct") {
+        return "success";
+    }
+
+    if (status === "skipped") {
+        return "impact";
+    }
+
+    return "warning";
 }
 
 export function formatScore(score: number) {

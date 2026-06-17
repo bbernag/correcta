@@ -4,6 +4,7 @@ import {
     getPracticeSummary,
     submitPracticeAnswer,
 } from "../../../services/domain";
+import {playHapticFeedback} from "../../../native";
 import type {CorrectaServices, PracticeSentence} from "../../../types";
 import type {
     PracticePhase,
@@ -11,6 +12,7 @@ import type {
     PracticeSessionState,
     PracticeSessionSummaryState,
 } from "../types/PracticeTypes";
+import {getPracticeResultHapticFeedback} from "../utils/PracticeUtils";
 
 export function usePracticeFlowActions({
     answerText,
@@ -185,11 +187,15 @@ async function checkAnswer({
 
         setResult(nextResult);
         setPhase("feedback");
+        playHapticFeedback(
+            getPracticeResultHapticFeedback(nextResult.validation.status)
+        );
     } catch (submitError) {
         if (!mountedRef.current) {
             return;
         }
 
+        playHapticFeedback("error");
         setError(
             submitError instanceof Error
                 ? submitError.message

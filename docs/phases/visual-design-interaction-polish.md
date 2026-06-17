@@ -16,7 +16,7 @@ Pro Extended produced the implementation sequence and recommended:
 - A standalone visual polish phase before backend/AI.
 - A first implementation slice for the `Scribe Blue` token theme before
   icons, haptics, components, or screens.
-- `lucide-react-native`, `react-native-svg`, and `expo-haptics`.
+- `lucide-react-native`, `react-native-svg`, and `react-native-pulsar`.
 - No extra animation or charting library for this phase.
 - Shared wrappers for icons, haptics, motion, and native surfaces.
 - Liquid Glass only as an iOS-only spike behind a fallback `GlassSurface`.
@@ -83,7 +83,7 @@ Add only when starting implementation:
 
 - `lucide-react-native`
 - `react-native-svg`
-- `expo-haptics`
+- `react-native-pulsar`
 
 Do not add:
 
@@ -210,7 +210,8 @@ Goal: add native feedback infrastructure without changing every screen.
 
 Tasks:
 
-- Install `lucide-react-native`, `react-native-svg`, and `expo-haptics`.
+- Install `lucide-react-native`, `react-native-svg`, and
+  `react-native-pulsar`.
 - Create `Icon` wrapper and registry.
 - Create `IconButton`.
 - Create haptics adapter in `src/native/haptics`.

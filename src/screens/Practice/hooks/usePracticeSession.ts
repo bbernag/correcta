@@ -4,6 +4,7 @@ import {
     createCorrectaServices,
     startLocalPracticeSession,
 } from "../../../services/domain";
+import {playHapticFeedback} from "../../../native";
 import type {PracticeInputMode} from "../../../types";
 import {createWordBankItems, getBuilderAnswer} from "../utils/PracticeUtils";
 import {usePracticeFlowActions} from "./usePracticeFlowActions";
@@ -167,17 +168,30 @@ export function usePracticeSession({
         setAnswerText(currentAnswer);
         setSelectedItemIds([]);
         setSessionState({...sessionState, inputMode});
+        playHapticFeedback("selection");
     }
 
     function handleSelectWord(itemId: string) {
+        if (selectedItemIds.includes(itemId)) {
+            return;
+        }
+
+        playHapticFeedback("selection");
         setSelectedItemIds((currentItemIds) => {
-            return currentItemIds.includes(itemId)
-                ? currentItemIds
-                : [...currentItemIds, itemId];
+            if (currentItemIds.includes(itemId)) {
+                return currentItemIds;
+            }
+
+            return [...currentItemIds, itemId];
         });
     }
 
     function handleRemoveWord(itemId: string) {
+        if (!selectedItemIds.includes(itemId)) {
+            return;
+        }
+
+        playHapticFeedback("selection");
         setSelectedItemIds((currentItemIds) => {
             return currentItemIds.filter((currentItemId) => {
                 return currentItemId !== itemId;
@@ -186,7 +200,12 @@ export function usePracticeSession({
     }
 
     function handleClearBuilder() {
+        if (selectedItemIds.length === 0) {
+            return;
+        }
+
         setSelectedItemIds([]);
+        playHapticFeedback("selection");
     }
 
     function handleShowHint() {

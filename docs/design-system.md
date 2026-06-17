@@ -693,7 +693,8 @@ Reduced motion:
 
 ## Haptics
 
-Recommended dependency: `expo-haptics`, wrapped in `src/native/haptics`.
+Recommended dependency: `react-native-pulsar`, wrapped in
+`src/native/haptics`.
 
 API:
 

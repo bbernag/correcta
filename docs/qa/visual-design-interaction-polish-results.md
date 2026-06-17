@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slice 1 is complete; remaining visual polish slices still need
-their own implementation and QA evidence.
+Status: partial. Slice 1 is complete. Slice 2 haptics foundation is started;
+icons and final Slice 2 QA remain open.
 
 ## Slice 1: Theme Token Design System
 
@@ -41,3 +41,35 @@ Known follow-ups:
   motion, React Native accessibility, iOS QA, and final Android QA.
 - Android accessibility snapshots are currently sparse for this app, so this
   QA pass used screenshots and coordinate navigation.
+
+## Slice 2: Icons And Haptics Foundation
+
+Date: 2026-06-17
+
+Result: partial pass.
+
+Implemented:
+
+- `react-native-pulsar` dependency.
+- Shared haptics wrapper in `src/native/haptics`.
+- Basic Practice haptics for selection, feedback result, save confirmation,
+  and answer-check failure paths.
+- Visual-design docs updated to use Pulsar as the active haptics dependency.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- `npx expo run:ios --no-bundler`
+- `npx expo run:android --no-bundler`
+- iOS runtime: Home -> Start Practice -> type answer -> Submit answer ->
+  Feedback.
+- Android runtime: Home -> Start Practice -> Skip -> Feedback.
+
+Known follow-ups:
+
+- Add `lucide-react-native` and `react-native-svg`.
+- Add shared `Icon` and `IconButton` components.
+- Add ComponentPlayground haptics test actions.
+- Finish Slice 2 visual/device QA after icons and playground examples exist.

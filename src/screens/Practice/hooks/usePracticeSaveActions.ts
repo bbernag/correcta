@@ -1,6 +1,7 @@
 import type {Dispatch, MutableRefObject, SetStateAction} from "react";
 import {useState} from "react";
 
+import {playHapticFeedback} from "../../../native";
 import {savePracticeSentence, savePracticeWord} from "../../../services/domain";
 import type {CorrectaServices, PracticeSentence} from "../../../types";
 import type {PracticeResult} from "../types/PracticeTypes";
@@ -50,6 +51,7 @@ export function usePracticeSaveActions({
                 },
                 savedWordId: savedWord.id,
             });
+            playHapticFeedback("success");
         } finally {
             if (mountedRef.current) {
                 setIsSavingWord(false);
@@ -87,6 +89,7 @@ export function usePracticeSaveActions({
                 },
                 savedSentenceId: savedSentence.id,
             });
+            playHapticFeedback("success");
         } finally {
             if (mountedRef.current) {
                 setIsSavingSentence(false);

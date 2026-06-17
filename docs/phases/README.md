@@ -35,7 +35,7 @@ These slices live inside `docs/phases/visual-design-interaction-polish.md`.
 | Status | Slice                                     | Notes                                                                                                                                 |
 | ------ | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | `[x]`  | 1. Theme Token Design System              | Scribe Blue tokens are implemented in `src/theme`, wired through React Native Unistyles, and Android-verified in light and dark mode. |
-| `[ ]`  | 2. Icons And Haptics Foundation           | Add the icon wrapper, haptics helper, and motion-safe interaction patterns.                                                           |
+| `[~]`  | 2. Icons And Haptics Foundation           | Pulsar and the haptics helper are started. Icon wrapper, IconButton, playground examples, and device QA remain pending.               |
 | `[ ]`  | 3. Upgrade Existing Common Components     | Bring existing common components onto the new token system.                                                                           |
 | `[ ]`  | 4. Add New Shared Visual Components       | Add missing shared primitives such as badges, stat cards, segmented controls, and feedback highlights.                                |
 | `[ ]`  | 5. ComponentPlayground Redesign           | Make the component-check route the visual QA surface for all shared primitives.                                                       |

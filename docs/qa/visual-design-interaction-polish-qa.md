@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slice 1 is implemented and Android-verified; the full visual
-polish QA remains open until all slices are complete.
+Status: partial. Slice 1 is implemented and Android-verified. Slice 2 haptics
+foundation is started; icons and final Slice 2 QA remain open.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -57,6 +57,54 @@ Local screenshot evidence from this QA pass:
 - `/tmp/correcta-light-roundtrip-fixed.png`
 - `/tmp/correcta-scribe-blue-ios-home.png`
 - `/tmp/correcta-scribe-blue-android-home-2.png`
+
+## Slice 2 Evidence
+
+Date: 2026-06-17
+
+Scope:
+
+- Installed `react-native-pulsar`.
+- Added the app haptics wrapper under `src/native/haptics`.
+- Routed basic Practice haptics through the wrapper for selection changes,
+  answer feedback results, app-level answer-check failures, and save
+  confirmations.
+- Updated active visual-design docs from `expo-haptics` to
+  `react-native-pulsar`.
+
+Automated checks:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+
+iOS QA:
+
+- Command: `npx expo run:ios --no-bundler`
+- Result: build, install, and dev-client launch succeeded.
+- Device: `iPhone 17`
+- App id: `com.luisgarcia.correcta`
+- Runtime path: Home -> Start Practice -> type answer -> Submit answer ->
+  Feedback.
+- Result: feedback rendered after the Pulsar-backed result haptic call.
+
+Android QA:
+
+- Command: `npx expo run:android --no-bundler`
+- Result: build, install, and dev-client launch succeeded.
+- Device: `Medium Phone API 36.1`
+- App id: `com.luisgarcia.correcta`
+- Runtime path: Home -> Start Practice -> Skip -> Feedback.
+- Result: feedback rendered after the Pulsar-backed skipped-result haptic
+  call.
+- Android filtered accessibility snapshots remained sparse, so this pass used
+  raw device coordinates and screenshots for navigation evidence.
+
+Local screenshot evidence from this QA pass:
+
+- `/tmp/correcta-pulsar-android-home.png`
+- `/tmp/correcta-pulsar-android-practice-final.png`
+- `/tmp/correcta-pulsar-android-feedback.png`
 
 ## General
 

@@ -21,12 +21,13 @@
 - Expo Doctor: passed with `npx expo-doctor`.
 - Prettier check: passed with `npm run format:check`.
 
-## Pending Native Checks
+## Native Checks
 
-- iOS simulator development build: not run yet.
+- iOS simulator development build: passed with
+  `npx expo run:ios --device "iPhone 16"`.
 - iOS physical-device development build: not run yet.
-- Android emulator development build: not run yet.
+- Android emulator development build: blocked because no Android emulator
+  command or attached adb device was available.
 - Android physical-device development build: not run yet.
 - Native foundation check screen: implemented, but still needs execution in a
-  development build because MMKV, native date, Nitro Fetch, Keyboard Controller,
-  Reanimated, and native tabs require native runtime validation.
+  development build after dismissing the Expo Dev Client onboarding sheet.

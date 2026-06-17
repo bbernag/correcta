@@ -14,7 +14,7 @@ The plan was refined through the existing ChatGPT Pro Extended planning thread.
 Pro Extended produced the implementation sequence and recommended:
 
 - A standalone visual polish phase before backend/AI.
-- A first implementation slice for the `Correction Desk` token theme before
+- A first implementation slice for the `Scribe Blue` token theme before
   icons, haptics, components, or screens.
 - `lucide-react-native`, `react-native-svg`, and `expo-haptics`.
 - No extra animation or charting library for this phase.
@@ -162,7 +162,7 @@ Upgrade existing components:
 
 Status: done.
 
-Goal: implement the `Correction Desk` token design system before changing
+Goal: implement the `Scribe Blue` token design system before changing
 icons, haptics, common components, or screens.
 
 Tasks:

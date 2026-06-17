@@ -1,7 +1,8 @@
-import type {PropsWithChildren} from "react";
+import {useContext, type PropsWithChildren} from "react";
 import type {StyleProp, ViewStyle} from "react-native";
 import {useColorScheme, View} from "react-native";
 import {KeyboardAwareScrollView} from "react-native-keyboard-controller";
+import {BottomTabBarHeightContext} from "react-native-bottom-tabs";
 import type {Edge} from "react-native-safe-area-context";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {StyleSheet} from "react-native-unistyles";
@@ -24,14 +25,18 @@ export function Screen({
 }: ScreenProps) {
     const colorScheme = useColorScheme();
     const theme = colorScheme === "dark" ? appThemes.dark : appThemes.light;
+    const bottomTabBarHeight = useContext(BottomTabBarHeightContext) ?? 0;
     const backgroundStyle = {
         backgroundColor: theme.colors.backgroundPrimary,
+    };
+    const tabBarInsetStyle = {
+        marginBottom: bottomTabBarHeight,
     };
 
     return (
         <SafeAreaView
             edges={edges}
-            style={[styles.safeArea, backgroundStyle, style]}
+            style={[styles.safeArea, backgroundStyle, tabBarInsetStyle, style]}
         >
             {scroll ? (
                 <KeyboardAwareScrollView

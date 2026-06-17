@@ -11,7 +11,7 @@ Result: pass.
 
 Implemented:
 
-- Correction Desk light and dark color tokens.
+- Scribe Blue light and dark color tokens.
 - Spacing, radius, typography, motion, shadow, and elevation token modules.
 - Typed `appThemes` for React Native Unistyles.
 - Flat Unistyles-compatible semantic color keys.
@@ -29,6 +29,8 @@ Verification:
 - Android emulator dark-mode rendering: Home, Practice, Library.
 - Android live appearance round-trip: light to dark to light while the app was
   running.
+- Scribe Blue light-mode rendering: iOS Home and Android Home after full
+  dev-client relaunch.
 - Clean Android runtime log window after relaunch: no current React Native
   render errors.
 

@@ -13,7 +13,7 @@ Correcta should feel like a quiet native study desk: precise, calm, tactile,
 and trustworthy, with feedback that feels like careful teacher markup rather
 than game scoring.
 
-Theme name: **Correction Desk**.
+Theme name: **Scribe Blue**.
 
 The theme should feel like a calm native study workspace where mistakes are
 marked clearly, professionally, and without visual noise.
@@ -42,74 +42,97 @@ without making mistakes feel punitive.
 
 ## Visual Identity
 
-Use a restrained cool-neutral system with teal as the primary correction accent.
-The palette should feel modern and focused without becoming one-note teal. Pro
-Extended recommended keeping this direction, with muted teal in light mode and
-a more luminous but non-neon teal in dark mode.
+Use a restrained cool-neutral system with academic blue as the primary
+correction accent. The palette should feel calmer, more trustworthy, and more
+study-focused than the earlier teal direction while keeping the app native and
+professional.
+
+The primary accent is **Scribe Blue**. Green is reserved for semantic success
+feedback only; do not use green, teal, mint, or turquoise for brand labels,
+primary actions, active tabs, selected controls, focus rings, or tonal surfaces.
+
+Alternate directions considered:
+
+- **Graphite Blue**: more neutral and enterprise-like, but less memorable.
+- **Paper Indigo**: more expressive and premium, but too close to a
+  purple-heavy direction for this phase.
 
 ### Light Theme Colors
 
-| Token                   | Hex         | Use                                    |
-| ----------------------- | ----------- | -------------------------------------- |
-| `background.primary`    | `#F5F7F8`   | Main screen background                 |
-| `background.secondary`  | `#ECEFF1`   | Quiet grouped background               |
-| `surface.primary`       | `#FFFFFF`   | Main cards and inputs                  |
-| `surface.elevated`      | `#FBFCFC`   | Raised cards                           |
-| `surface.tonal`         | `#E7F0EE`   | Android tonal surfaces, selected tabs  |
-| `surface.inverse`       | `#11181B`   | Inverse badges and high-emphasis pills |
-| `surface.glassFallback` | `#FFFFFFD9` | iOS glass fallback surface             |
-| `text.primary`          | `#11181B`   | Primary readable text                  |
-| `text.secondary`        | `#405056`   | Supporting text                        |
-| `text.muted`            | `#6D7A7F`   | Captions and low-emphasis labels       |
-| `text.inverse`          | `#F7FAFA`   | Text on inverse surfaces               |
-| `border.subtle`         | `#D9E1E4`   | Card and input borders                 |
-| `border.strong`         | `#AAB8BE`   | Focus-adjacent separators              |
-| `accent.primary`        | `#0F766E`   | Primary actions and active tabs        |
-| `accent.primaryStrong`  | `#0B5F59`   | Pressed primary action                 |
-| `accent.primarySoft`    | `#D7F0EC`   | Accent background                      |
-| `accent.secondary`      | `#315C7C`   | Secondary data highlight only          |
-| `feedback.success`      | `#15803D`   | Correct results                        |
-| `feedback.successSoft`  | `#DFF5E7`   | Correct background                     |
-| `feedback.warning`      | `#A15C07`   | Almost-correct and caution             |
-| `feedback.warningSoft`  | `#FFF2D6`   | Warning background                     |
-| `feedback.danger`       | `#B42318`   | App errors and critical mistakes       |
-| `feedback.dangerSoft`   | `#FDE7E5`   | Error background                       |
-| `feedback.info`         | `#2D6A8E`   | Hints, explanations                    |
-| `feedback.infoSoft`     | `#E2F1F8`   | Informational background               |
-| `focus.ring`            | `#12A594`   | Input focus and selected controls      |
-| `shadow.tint`           | `#0B1F24`   | Shadow tint                            |
+| Token                   | Hex         | Use                                           |
+| ----------------------- | ----------- | --------------------------------------------- |
+| `background.primary`    | `#F6F7FA`   | Main app background                           |
+| `background.secondary`  | `#EEF1F5`   | Secondary app background, grouped areas       |
+| `surface.primary`       | `#FFFFFF`   | Cards, inputs, main surfaces                  |
+| `surface.elevated`      | `#FBFCFE`   | Raised cards and floating panels              |
+| `surface.tonal`         | `#E8EEF8`   | Soft selected areas and quiet panels          |
+| `surface.inverse`       | `#111827`   | Inverse surfaces                              |
+| `surface.glassFallback` | `#FFFFFFE6` | iOS glass fallback or floating nav fallback   |
+| `text.primary`          | `#111827`   | Main text                                     |
+| `text.secondary`        | `#3F4B5B`   | Secondary copy                                |
+| `text.muted`            | `#6B7280`   | Metadata and helper text                      |
+| `text.inverse`          | `#F9FAFB`   | Text on inverse or dark surfaces              |
+| `border.subtle`         | `#D9DEE7`   | Card and input borders                        |
+| `border.strong`         | `#AAB4C3`   | Focused/active borders and separators         |
+| `accent.primary`        | `#2F5DA8`   | Primary buttons, active tabs, selected states |
+| `accent.primaryStrong`  | `#22477F`   | Pressed primary action or stronger active     |
+| `accent.primarySoft`    | `#E2EBFA`   | Secondary accent backgrounds                  |
+| `accent.secondary`      | `#4F6F8F`   | Secondary highlight and info-adjacent UI      |
+| `feedback.success`      | `#16803C`   | Correct result only                           |
+| `feedback.successSoft`  | `#E3F5EA`   | Correct result background only                |
+| `feedback.warning`      | `#B26A00`   | Almost-correct, caution, pending review       |
+| `feedback.warningSoft`  | `#FFF1D6`   | Warning background                            |
+| `feedback.danger`       | `#B42318`   | Incorrect result and destructive actions      |
+| `feedback.dangerSoft`   | `#FDE8E6`   | Error background                              |
+| `feedback.info`         | `#496A91`   | Hints, neutral explanations, teacher notes    |
+| `feedback.infoSoft`     | `#E6EEF8`   | Info background                               |
+| `focus.ring`            | `#4778D6`   | Input focus, keyboard focus, active outline   |
+| `shadow.tint`           | `#111827`   | Shadow tint                                   |
 
 ### Dark Theme Colors
 
-| Token                   | Hex         | Use                               |
-| ----------------------- | ----------- | --------------------------------- |
-| `background.primary`    | `#0E1315`   | Main dark background              |
-| `background.secondary`  | `#121A1D`   | Grouped dark background           |
-| `surface.primary`       | `#171F22`   | Main cards and inputs             |
-| `surface.elevated`      | `#1D282C`   | Raised cards                      |
-| `surface.tonal`         | `#18302F`   | Android tonal selected surfaces   |
-| `surface.inverse`       | `#F5F7F8`   | Inverse badges                    |
-| `surface.glassFallback` | `#182125D9` | iOS glass fallback surface        |
-| `text.primary`          | `#F4F8F8`   | Primary readable text             |
-| `text.secondary`        | `#C4D0D3`   | Supporting text                   |
-| `text.muted`            | `#8C9A9F`   | Captions and low-emphasis labels  |
-| `text.inverse`          | `#11181B`   | Text on inverse surfaces          |
-| `border.subtle`         | `#2A383D`   | Card and input borders            |
-| `border.strong`         | `#43565C`   | Focus-adjacent separators         |
-| `accent.primary`        | `#41C7BA`   | Primary actions and active tabs   |
-| `accent.primaryStrong`  | `#7DE2D8`   | High-emphasis accent text         |
-| `accent.primarySoft`    | `#173D3A`   | Accent background                 |
-| `accent.secondary`      | `#9FB7D1`   | Secondary data highlight only     |
-| `feedback.success`      | `#5FD28A`   | Correct results                   |
-| `feedback.successSoft`  | `#183A27`   | Correct background                |
-| `feedback.warning`      | `#F2B84B`   | Almost-correct and caution        |
-| `feedback.warningSoft`  | `#3D2E16`   | Warning background                |
-| `feedback.danger`       | `#FF7A70`   | App errors and critical mistakes  |
-| `feedback.dangerSoft`   | `#3F1F1D`   | Error background                  |
-| `feedback.info`         | `#73B7FF`   | Hints, explanations               |
-| `feedback.infoSoft`     | `#172E42`   | Informational background          |
-| `focus.ring`            | `#5ADFD3`   | Input focus and selected controls |
-| `shadow.tint`           | `#000000`   | Shadow tint                       |
+| Token                   | Hex         | Use                                           |
+| ----------------------- | ----------- | --------------------------------------------- |
+| `background.primary`    | `#0D1117`   | Main app background                           |
+| `background.secondary`  | `#121822`   | Secondary app background, grouped areas       |
+| `surface.primary`       | `#171E28`   | Cards, inputs, main surfaces                  |
+| `surface.elevated`      | `#1E2633`   | Raised cards and floating panels              |
+| `surface.tonal`         | `#202A3A`   | Soft selected areas and quiet panels          |
+| `surface.inverse`       | `#F6F7FA`   | Inverse surfaces                              |
+| `surface.glassFallback` | `#171E28E6` | iOS glass fallback or floating nav fallback   |
+| `text.primary`          | `#F4F7FB`   | Main text                                     |
+| `text.secondary`        | `#C6CFDB`   | Secondary copy                                |
+| `text.muted`            | `#8E9AAC`   | Metadata and helper text                      |
+| `text.inverse`          | `#111827`   | Text on inverse or light surfaces             |
+| `border.subtle`         | `#2B3545`   | Card and input borders                        |
+| `border.strong`         | `#46566D`   | Focused/active borders and separators         |
+| `accent.primary`        | `#7DA6F7`   | Primary buttons, active tabs, selected states |
+| `accent.primaryStrong`  | `#A9C5FF`   | Pressed primary action or stronger active     |
+| `accent.primarySoft`    | `#1D3357`   | Secondary accent backgrounds                  |
+| `accent.secondary`      | `#9EB4CC`   | Secondary highlight and info-adjacent UI      |
+| `feedback.success`      | `#5FD28A`   | Correct result only                           |
+| `feedback.successSoft`  | `#163522`   | Correct result background only                |
+| `feedback.warning`      | `#F0B35A`   | Almost-correct, caution, pending review       |
+| `feedback.warningSoft`  | `#3A2A12`   | Warning background                            |
+| `feedback.danger`       | `#FF7A70`   | Incorrect result and destructive actions      |
+| `feedback.dangerSoft`   | `#3D1E1C`   | Error background                              |
+| `feedback.info`         | `#98B8E8`   | Hints, neutral explanations, teacher notes    |
+| `feedback.infoSoft`     | `#182A43`   | Info background                               |
+| `focus.ring`            | `#9BBEFF`   | Input focus, keyboard focus, active outline   |
+| `shadow.tint`           | `#000000`   | Shadow tint                                   |
+
+### Color Usage Rules
+
+- Use `accent.primary` for primary buttons, active tab icon/label, selected
+  segmented-control items, main progress indicators, neutral correction rails,
+  and primary links/actions.
+- Use `accent.primarySoft` for secondary buttons, selected tab backgrounds,
+  selected filter backgrounds, light emphasis cards, and subtle active states.
+- Use `surface.tonal` for quiet grouped areas, segmented-control containers,
+  non-critical panels, and Android elevated/tonal fallback surfaces.
+- Use feedback colors only for learning state: success, almost-correct,
+  incorrect, hints, teacher explanations, and neutral notes.
+- Do not use success green for normal actions.
 
 ## Typography
 
@@ -877,7 +900,7 @@ Feedback language:
 ## Implementation Order
 
 1. Add phase and QA docs.
-2. Implement the `Correction Desk` theme tokens in `src/theme`.
+2. Implement the `Scribe Blue` theme tokens in `src/theme`.
 3. Add icon and haptics dependencies.
 4. Add icon and haptics wrappers.
 5. Upgrade existing common components.

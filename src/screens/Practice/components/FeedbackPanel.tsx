@@ -76,36 +76,45 @@ export function FeedbackPanel({
                 </View>
             ) : null}
             <View style={styles.actions}>
-                <Button
-                    disabled={hasSavedWord || isContinuing}
-                    label={hasSavedWord ? "Word saved" : "Save word"}
-                    loading={isSavingWord}
-                    onPress={onSaveWord}
-                    variant="secondary"
-                />
-                <Button
-                    disabled={hasSavedSentence || isContinuing}
-                    label={
-                        hasSavedSentence ? "Sentence saved" : "Save sentence"
-                    }
-                    loading={isSavingSentence}
-                    onPress={onSaveSentence}
-                    variant="secondary"
-                />
-                {result.validation.canRetry ? (
+                <View style={styles.primaryActions}>
+                    {result.validation.canRetry ? (
+                        <Button
+                            disabled={isContinuing}
+                            label="Retry"
+                            onPress={onRetry}
+                            style={styles.retryAction}
+                            variant="ghost"
+                        />
+                    ) : null}
                     <Button
-                        disabled={isContinuing}
-                        label="Retry"
-                        onPress={onRetry}
-                        variant="ghost"
+                        label={isLastSentence ? "Show summary" : "Next prompt"}
+                        loading={isContinuing}
+                        onPress={onContinue}
+                        style={styles.continueAction}
                     />
-                ) : null}
-                <Button
-                    fullWidth
-                    label={isLastSentence ? "Show summary" : "Next prompt"}
-                    loading={isContinuing}
-                    onPress={onContinue}
-                />
+                </View>
+                <View style={styles.secondaryActions}>
+                    <Button
+                        disabled={hasSavedWord || isContinuing}
+                        label={hasSavedWord ? "Word saved" : "Save word"}
+                        loading={isSavingWord}
+                        onPress={onSaveWord}
+                        style={styles.secondaryAction}
+                        variant="secondary"
+                    />
+                    <Button
+                        disabled={hasSavedSentence || isContinuing}
+                        label={
+                            hasSavedSentence
+                                ? "Sentence saved"
+                                : "Save sentence"
+                        }
+                        loading={isSavingSentence}
+                        onPress={onSaveSentence}
+                        style={styles.secondaryAction}
+                        variant="secondary"
+                    />
+                </View>
             </View>
         </Surface>
     );
@@ -126,6 +135,25 @@ const styles = StyleSheet.create((theme) => ({
         paddingTop: theme.spacing.md,
     },
     actions: {
+        gap: theme.spacing.sm,
+    },
+    continueAction: {
+        flex: 1,
+    },
+    primaryActions: {
+        flexDirection: "row",
+        gap: theme.spacing.sm,
+    },
+    retryAction: {
+        minWidth: 92,
+    },
+    secondaryAction: {
+        flex: 1,
+        minWidth: 132,
+    },
+    secondaryActions: {
+        flexDirection: "row",
+        flexWrap: "wrap",
         gap: theme.spacing.sm,
     },
 }));

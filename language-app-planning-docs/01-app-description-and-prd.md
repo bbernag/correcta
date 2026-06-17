@@ -1797,8 +1797,8 @@ Recommended direction:
 
 - Background: warm white, soft gray, or very dark navy in dark mode.
 - Primary text: charcoal or near-white.
-- Primary accent: deep blue, indigo, or forest green.
-- Secondary accent: muted amber or soft teal.
+- Primary accent: restrained academic blue.
+- Secondary accent: muted blue-gray or quiet amber for learning-state support.
 - Success: calm green.
 - Warning: warm amber.
 - Error: soft red, not aggressive.

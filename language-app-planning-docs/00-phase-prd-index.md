@@ -37,7 +37,7 @@ phase.
 
 6. **Visual Design and Interaction Polish**
    Use `../docs/phases/visual-design-interaction-polish.md`.
-   Goal: implement the Correction Desk theme tokens first, then polish icons,
+   Goal: implement the Scribe Blue theme tokens first, then polish icons,
    haptics, shared components, screen visuals, React Native accessibility, and
    iOS/Android QA before moving deeper into provider-backed work.
 

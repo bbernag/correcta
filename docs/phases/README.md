@@ -32,21 +32,21 @@ verification files record evidence from completed or partially completed work.
 
 These slices live inside `docs/phases/visual-design-interaction-polish.md`.
 
-| Status | Slice                                     | Notes                                                                                                                                     |
-| ------ | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `[x]`  | 1. Theme Token Design System              | Correction Desk tokens are implemented in `src/theme`, wired through React Native Unistyles, and Android-verified in light and dark mode. |
-| `[ ]`  | 2. Icons And Haptics Foundation           | Add the icon wrapper, haptics helper, and motion-safe interaction patterns.                                                               |
-| `[ ]`  | 3. Upgrade Existing Common Components     | Bring existing common components onto the new token system.                                                                               |
-| `[ ]`  | 4. Add New Shared Visual Components       | Add missing shared primitives such as badges, stat cards, segmented controls, and feedback highlights.                                    |
-| `[ ]`  | 5. ComponentPlayground Redesign           | Make the component-check route the visual QA surface for all shared primitives.                                                           |
-| `[ ]`  | 6. Home Polish                            | Apply the new design direction to Home.                                                                                                   |
-| `[ ]`  | 7. Practice Polish                        | Apply richer correction, input, feedback, animation, and haptic treatment to Practice.                                                    |
-| `[ ]`  | 8. Review Polish                          | Upgrade Review decks and card states with the new visual system.                                                                          |
-| `[ ]`  | 9. Library Polish                         | Upgrade saved content and history views for scanning and review.                                                                          |
-| `[ ]`  | 10. Progress Polish                       | Upgrade progress metrics, achievements, reminders, backend status, and monetization status.                                               |
-| `[ ]`  | 11. Native Polish And GlassSurface Spike  | Validate whether Liquid Glass belongs behind a capability wrapper.                                                                        |
-| `[ ]`  | 12. Accessibility And Reduced Motion Pass | Verify React Native accessibility labels, contrast, text scaling, and reduced motion behavior.                                            |
-| `[ ]`  | 13. Final QA And Evidence                 | Run automated checks plus iOS and Android visual/runtime QA, then update evidence docs.                                                   |
+| Status | Slice                                     | Notes                                                                                                                                 |
+| ------ | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `[x]`  | 1. Theme Token Design System              | Scribe Blue tokens are implemented in `src/theme`, wired through React Native Unistyles, and Android-verified in light and dark mode. |
+| `[ ]`  | 2. Icons And Haptics Foundation           | Add the icon wrapper, haptics helper, and motion-safe interaction patterns.                                                           |
+| `[ ]`  | 3. Upgrade Existing Common Components     | Bring existing common components onto the new token system.                                                                           |
+| `[ ]`  | 4. Add New Shared Visual Components       | Add missing shared primitives such as badges, stat cards, segmented controls, and feedback highlights.                                |
+| `[ ]`  | 5. ComponentPlayground Redesign           | Make the component-check route the visual QA surface for all shared primitives.                                                       |
+| `[ ]`  | 6. Home Polish                            | Apply the new design direction to Home.                                                                                               |
+| `[ ]`  | 7. Practice Polish                        | Apply richer correction, input, feedback, animation, and haptic treatment to Practice.                                                |
+| `[ ]`  | 8. Review Polish                          | Upgrade Review decks and card states with the new visual system.                                                                      |
+| `[ ]`  | 9. Library Polish                         | Upgrade saved content and history views for scanning and review.                                                                      |
+| `[ ]`  | 10. Progress Polish                       | Upgrade progress metrics, achievements, reminders, backend status, and monetization status.                                           |
+| `[ ]`  | 11. Native Polish And GlassSurface Spike  | Validate whether Liquid Glass belongs behind a capability wrapper.                                                                    |
+| `[ ]`  | 12. Accessibility And Reduced Motion Pass | Verify React Native accessibility labels, contrast, text scaling, and reduced motion behavior.                                        |
+| `[ ]`  | 13. Final QA And Evidence                 | Run automated checks plus iOS and Android visual/runtime QA, then update evidence docs.                                               |
 
 ## How To Update This Tracker
 

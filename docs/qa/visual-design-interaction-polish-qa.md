@@ -12,7 +12,7 @@ Date: 2026-06-17
 
 Scope:
 
-- Implemented the Correction Desk theme tokens in `src/theme`.
+- Implemented the Scribe Blue theme tokens in `src/theme`.
 - Wired light and dark theme variants through React Native Unistyles.
 - Migrated current common primitives and touched screens away from the older
   nested theme token shape.
@@ -55,6 +55,8 @@ Local screenshot evidence from this QA pass:
 - `/tmp/correcta-light-live-fixed.png`
 - `/tmp/correcta-dark-live-fixed.png`
 - `/tmp/correcta-light-roundtrip-fixed.png`
+- `/tmp/correcta-scribe-blue-ios-home.png`
+- `/tmp/correcta-scribe-blue-android-home-2.png`
 
 ## General
 
@@ -79,7 +81,7 @@ Local screenshot evidence from this QA pass:
 ## Design System
 
 - `docs/design-system.md` is implemented as the source of truth.
-- `Correction Desk` is the active planned theme.
+- `Scribe Blue` is the active planned theme.
 - Theme tokens exist for colors, spacing, radius, typography, shadow/elevation,
   and motion.
 - Light and dark semantic color tokens match `docs/design-system.md`.

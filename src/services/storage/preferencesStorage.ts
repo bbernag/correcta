@@ -4,7 +4,7 @@ const FOUNDATION_CHECK_KEY = "foundation.check";
 
 let preferencesStorage: MMKV | null = null;
 
-function getPreferencesStorage() {
+export function getPreferencesStorage() {
     if (!preferencesStorage) {
         preferencesStorage = createMMKV({
             id: "conecta.preferences",

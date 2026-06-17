@@ -1,6 +1,9 @@
 export {createConectaServices} from "./conectaServices";
 export {
     getPracticeSummary,
+    removeSavedPracticeSentence,
+    removeSavedPracticeWord,
+    savePracticeAttemptSentence,
     savePracticeSentence,
     savePracticeWord,
     startLocalPracticeSession,

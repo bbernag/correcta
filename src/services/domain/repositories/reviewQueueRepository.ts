@@ -35,6 +35,22 @@ export function createReviewQueueRepository(): ReviewQueueRepository {
                 return item.dueAt <= now;
             });
         },
+        async removeItemsBySource({sourceId, sourceType}) {
+            const items = readJsonValue<ReviewItem[]>({
+                fallback: [],
+                key: REVIEW_QUEUE_KEY,
+            });
+
+            writeJsonValue({
+                key: REVIEW_QUEUE_KEY,
+                value: items.filter((item) => {
+                    return (
+                        item.sourceId !== sourceId ||
+                        item.sourceType !== sourceType
+                    );
+                }),
+            });
+        },
         async clearItems() {
             removeJsonValue(REVIEW_QUEUE_KEY);
         },

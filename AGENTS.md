@@ -38,7 +38,8 @@ Use the task router below to read only the rules relevant to the current task.
 - Screen-specific types belong in
   `src/screens/<ScreenName>/types/<ScreenName>Types.ts`.
 - Screen-specific utils belong in
-  `src/screens/<ScreenName>/utils/<ScreenName>Utils.ts`.
+  `src/screens/<ScreenName>/utils/<ScreenName>Utils.ts` or another
+  screen-prefixed utility file when split by responsibility.
 - Keep constants in `src/screens/<ScreenName>/constants` once a screen needs
   extracted constants.
 - Keep files under about 300 lines.

@@ -20,6 +20,7 @@ type PracticeScreenProps = NativeBottomTabScreenProps<
 export function PracticeScreen({route}: PracticeScreenProps) {
     const practice = usePracticeSession({
         restartKey: route.params?.restartKey,
+        retrySentenceId: route.params?.retrySentenceId,
     });
     const {currentSentence, error, phase, result, sessionState, summaryState} =
         practice;

@@ -15,7 +15,13 @@ import type {
     PracticeSessionSummaryState,
 } from "../types/PracticeTypes";
 
-export function usePracticeSession({restartKey}: {restartKey?: number}) {
+export function usePracticeSession({
+    restartKey,
+    retrySentenceId,
+}: {
+    restartKey?: number;
+    retrySentenceId?: string;
+}) {
     const services = useMemo(() => {
         return createConectaServices();
     }, []);
@@ -107,7 +113,10 @@ export function usePracticeSession({restartKey}: {restartKey?: number}) {
         resetAnswerState();
 
         try {
-            const nextSession = await startLocalPracticeSession({services});
+            const nextSession = await startLocalPracticeSession({
+                retrySentenceId,
+                services,
+            });
 
             if (!mountedRef.current || loadTokenRef.current !== token) {
                 return;
@@ -131,7 +140,7 @@ export function usePracticeSession({restartKey}: {restartKey?: number}) {
             );
             setPhase("error");
         }
-    }, [resetAnswerState, services]);
+    }, [resetAnswerState, retrySentenceId, services]);
 
     useEffect(() => {
         mountedRef.current = true;

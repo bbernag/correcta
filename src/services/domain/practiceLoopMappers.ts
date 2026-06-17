@@ -83,6 +83,26 @@ export function createSavedSentence({
     };
 }
 
+export function createSavedSentenceFromAttempt({
+    attempt,
+    sentence,
+}: {
+    attempt: PracticeAttempt;
+    sentence: PracticeSentence;
+}): SavedSentence {
+    const preferredTranslation =
+        sentence.acceptedTranslations[0]?.text || attempt.answer;
+
+    return {
+        id: `sentence-${sentence.id}`,
+        preferredTranslation,
+        reason: attempt.status === "correct" ? "useful" : "mistake",
+        savedAt: new Date().toISOString(),
+        sentenceId: sentence.id,
+        sourceText: sentence.sourceText,
+    };
+}
+
 export function createSavedWordReviewItem(savedWord: SavedWord): ReviewItem {
     return {
         answer: savedWord.translation,

@@ -69,7 +69,8 @@ Screen support files must follow the screen name:
 
 - Hooks: `src/screens/<ScreenName>/hooks/useXxx.ts`
 - Types: `src/screens/<ScreenName>/types/<ScreenName>Types.ts`
-- Utils: `src/screens/<ScreenName>/utils/<ScreenName>Utils.ts`
+- Utils: `src/screens/<ScreenName>/utils/<ScreenName>Utils.ts`, or another
+  screen-prefixed utility file when split by responsibility
 - Constants: `src/screens/<ScreenName>/constants/<ScreenName>Constants.ts`
 
 ## Reusable UI
@@ -134,8 +135,8 @@ Screen component -> screen hook -> service workflow -> storage/http/native adapt
 - React component files use PascalCase names.
 - Screen support files use dedicated folders and screen-prefixed filenames:
   `hooks/useXxx.ts`, `types/<ScreenName>Types.ts`,
-  `utils/<ScreenName>Utils.ts`, and
-  `constants/<ScreenName>Constants.ts`.
+  `utils/<ScreenName>Utils.ts`, screen-prefixed utility splits such as
+  `utils/<ScreenName>SectionUtils.ts`, and `constants/<ScreenName>Constants.ts`.
 - Component-local support files can start with `utils.ts`, `types.ts`, and
   `constants.ts`. Split into dedicated folders once multiple support files are
   needed.

@@ -5,7 +5,7 @@ export type RootStackParamList = {
 
 export type MainTabParamList = {
     Home: undefined;
-    Practice: {restartKey?: number} | undefined;
+    Practice: {restartKey?: number; retrySentenceId?: string} | undefined;
     Review: undefined;
     Progress: undefined;
     Library: undefined;

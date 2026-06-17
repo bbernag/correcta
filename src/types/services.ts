@@ -9,7 +9,7 @@ import type {
     ValidateTranslationRequest,
     ValidationResult,
 } from "./practice";
-import type {ProgressSnapshot, ReviewItem} from "./review";
+import type {ProgressSnapshot, ReviewItem, ReviewSourceType} from "./review";
 import type {SavedSentence, SavedWord} from "./savedContent";
 
 export type UserPreferencesRepository = {
@@ -28,12 +28,18 @@ export type SavedContentRepository = {
     saveSentence: (sentence: SavedSentence) => Promise<SavedSentence>;
     listWords: () => Promise<SavedWord[]>;
     listSentences: () => Promise<SavedSentence[]>;
+    removeWord: (wordId: string) => Promise<void>;
+    removeSentence: (sentenceId: string) => Promise<void>;
     clearSavedContent: () => Promise<void>;
 };
 
 export type ReviewQueueRepository = {
     upsertItem: (item: ReviewItem) => Promise<ReviewItem>;
     listDueItems: (now: string) => Promise<ReviewItem[]>;
+    removeItemsBySource: (source: {
+        sourceId: string;
+        sourceType: ReviewSourceType;
+    }) => Promise<void>;
     clearItems: () => Promise<void>;
 };
 
@@ -48,6 +54,9 @@ export type SentenceService = {
     getPracticeSentences: (
         request: PracticeSetRequest
     ) => Promise<PracticeSentence[]>;
+    getPracticeSentenceById: (
+        sentenceId: string
+    ) => Promise<PracticeSentence | null>;
 };
 
 export type TranslationValidationService = {

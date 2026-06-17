@@ -61,6 +61,32 @@ export function createSavedContentRepository(): SavedContentRepository {
                 key: SAVED_SENTENCES_KEY,
             });
         },
+        async removeWord(wordId) {
+            const words = readJsonValue<SavedWord[]>({
+                fallback: [],
+                key: SAVED_WORDS_KEY,
+            });
+
+            writeJsonValue({
+                key: SAVED_WORDS_KEY,
+                value: words.filter((word) => {
+                    return word.id !== wordId;
+                }),
+            });
+        },
+        async removeSentence(sentenceId) {
+            const sentences = readJsonValue<SavedSentence[]>({
+                fallback: [],
+                key: SAVED_SENTENCES_KEY,
+            });
+
+            writeJsonValue({
+                key: SAVED_SENTENCES_KEY,
+                value: sentences.filter((sentence) => {
+                    return sentence.id !== sentenceId;
+                }),
+            });
+        },
         async clearSavedContent() {
             removeJsonValue(SAVED_WORDS_KEY);
             removeJsonValue(SAVED_SENTENCES_KEY);

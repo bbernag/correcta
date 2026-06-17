@@ -1,0 +1,70 @@
+import {Pressable, ScrollView} from "react-native";
+import {StyleSheet} from "react-native-unistyles";
+
+import {AppText} from "../../../components/common";
+import {LIBRARY_FILTERS} from "../constants/LibraryConstants";
+import type {LibraryFilter} from "../types/LibraryTypes";
+import {getFilterLabel} from "../utils/LibraryUtils";
+
+type LibraryFilterBarProps = {
+    value: LibraryFilter;
+    onChange: (filter: LibraryFilter) => void;
+};
+
+export function LibraryFilterBar({onChange, value}: LibraryFilterBarProps) {
+    return (
+        <ScrollView
+            contentContainerStyle={styles.content}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+        >
+            {LIBRARY_FILTERS.map((filter) => {
+                const isSelected = value === filter;
+
+                return (
+                    <Pressable
+                        accessibilityLabel={`${getFilterLabel(filter)} history filter`}
+                        accessibilityRole="button"
+                        accessibilityState={{selected: isSelected}}
+                        key={filter}
+                        onPress={() => {
+                            onChange(filter);
+                        }}
+                        style={({pressed}) => [
+                            styles.chip,
+                            isSelected && styles.chipSelected,
+                            pressed && styles.chipPressed,
+                        ]}
+                    >
+                        <AppText
+                            variant="label"
+                            tone={isSelected ? "inverted" : "accent"}
+                        >
+                            {getFilterLabel(filter)}
+                        </AppText>
+                    </Pressable>
+                );
+            })}
+        </ScrollView>
+    );
+}
+
+const styles = StyleSheet.create((theme) => ({
+    content: {
+        gap: theme.spacing.sm,
+    },
+    chip: {
+        backgroundColor: theme.colors.accentSoft,
+        borderRadius: theme.radii.lg,
+        minHeight: 44,
+        minWidth: 44,
+        paddingHorizontal: theme.spacing.md,
+        paddingVertical: theme.spacing.sm,
+    },
+    chipSelected: {
+        backgroundColor: theme.colors.accent,
+    },
+    chipPressed: {
+        opacity: theme.motion.pressOpacity,
+    },
+}));

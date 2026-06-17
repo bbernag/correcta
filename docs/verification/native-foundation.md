@@ -31,8 +31,10 @@ the project chooses a controlled canary spike.
   `npx expo run:ios --device "iPhone 16"` on the iOS 18.3 iPhone 16
   simulator.
 - iOS physical-device development build: not run yet.
-- Android emulator development build: blocked because `emulator` is not on
-  `PATH` and `adb devices` reports no attached devices.
+- Android debug build: passed with `./gradlew assembleDebug` from the generated
+  `android` project.
+- Android emulator development build: passed with `npx expo run:android` on
+  `Medium_Phone_API_36.1`.
 - Android physical-device development build: not run yet.
 - Preview or release build: not run yet.
 
@@ -54,6 +56,17 @@ the project chooses a controlled canary spike.
 - The successful iOS simulator run built native dependencies, installed the
   dev client, opened the app, and bundled `index.ts`. A screenshot confirmed
   the Home screen rendered behind Expo Dev Client's onboarding sheet.
+- The Android SDK exists at `/Users/luisgarcia/Library/Android/sdk`, but the
+  shell did not expose `ANDROID_HOME` or `ANDROID_SDK_ROOT`. An ignored
+  `android/local.properties` file was added after prebuild so Gradle can find
+  the SDK locally.
+- The Android debug APK build completed successfully in Gradle. The first full
+  build emitted dependency deprecation and namespace warnings, but no app-code
+  failure.
+- The Android emulator `Medium_Phone_API_36.1` launched successfully. The app
+  installed, opened through Expo Dev Client, bundled `index.ts`, rendered the
+  Home screen, and the component-check route reported `MMKV ready`,
+  `Nitro Fetch adapter ready`, and a native date value.
 - `react-native-nitro-fetch` provides an Expo config plugin and is registered
   in `app.json`. `react-native-mmkv` and `react-native-nitro-modules` use
   normal React Native autolinking in the installed packages.

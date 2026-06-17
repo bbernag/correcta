@@ -26,8 +26,11 @@
 - iOS simulator development build: passed with
   `npx expo run:ios --device "iPhone 16"`.
 - iOS physical-device development build: not run yet.
-- Android emulator development build: blocked because no Android emulator
-  command or attached adb device was available.
+- Android debug build: passed with `./gradlew assembleDebug` from the generated
+  `android` project.
+- Android emulator development build: passed with `npx expo run:android` on
+  `Medium_Phone_API_36.1`.
 - Android physical-device development build: not run yet.
-- Native foundation check screen: implemented, but still needs execution in a
-  development build after dismissing the Expo Dev Client onboarding sheet.
+- Native foundation check screen: passed on Android emulator. The component
+  check route reported MMKV storage, native date formatting, and Nitro Fetch
+  adapter readiness.

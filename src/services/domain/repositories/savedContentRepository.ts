@@ -15,7 +15,10 @@ const SAVED_SENTENCES_KEY = "domain.savedSentences";
 export function createSavedContentRepository(): SavedContentRepository {
     return {
         async saveWord(word) {
-            const words = readJsonValue<SavedWord[]>(SAVED_WORDS_KEY, []);
+            const words = readJsonValue<SavedWord[]>({
+                fallback: [],
+                key: SAVED_WORDS_KEY,
+            });
             const nextWords = [
                 word,
                 ...words.filter((storedWord) => {
@@ -23,15 +26,15 @@ export function createSavedContentRepository(): SavedContentRepository {
                 }),
             ];
 
-            writeJsonValue(SAVED_WORDS_KEY, nextWords);
+            writeJsonValue({key: SAVED_WORDS_KEY, value: nextWords});
 
             return word;
         },
         async saveSentence(sentence) {
-            const sentences = readJsonValue<SavedSentence[]>(
-                SAVED_SENTENCES_KEY,
-                []
-            );
+            const sentences = readJsonValue<SavedSentence[]>({
+                fallback: [],
+                key: SAVED_SENTENCES_KEY,
+            });
             const nextSentences = [
                 sentence,
                 ...sentences.filter((storedSentence) => {
@@ -39,15 +42,24 @@ export function createSavedContentRepository(): SavedContentRepository {
                 }),
             ];
 
-            writeJsonValue(SAVED_SENTENCES_KEY, nextSentences);
+            writeJsonValue({
+                key: SAVED_SENTENCES_KEY,
+                value: nextSentences,
+            });
 
             return sentence;
         },
         async listWords() {
-            return readJsonValue<SavedWord[]>(SAVED_WORDS_KEY, []);
+            return readJsonValue<SavedWord[]>({
+                fallback: [],
+                key: SAVED_WORDS_KEY,
+            });
         },
         async listSentences() {
-            return readJsonValue<SavedSentence[]>(SAVED_SENTENCES_KEY, []);
+            return readJsonValue<SavedSentence[]>({
+                fallback: [],
+                key: SAVED_SENTENCES_KEY,
+            });
         },
         async clearSavedContent() {
             removeJsonValue(SAVED_WORDS_KEY);

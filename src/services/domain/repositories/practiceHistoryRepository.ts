@@ -10,10 +10,10 @@ const PRACTICE_ATTEMPTS_KEY = "domain.practiceAttempts";
 export function createPracticeHistoryRepository(): PracticeHistoryRepository {
     return {
         async saveAttempt(attempt) {
-            const attempts = readJsonValue<PracticeAttempt[]>(
-                PRACTICE_ATTEMPTS_KEY,
-                []
-            );
+            const attempts = readJsonValue<PracticeAttempt[]>({
+                fallback: [],
+                key: PRACTICE_ATTEMPTS_KEY,
+            });
             const nextAttempts = [
                 attempt,
                 ...attempts.filter((storedAttempt) => {
@@ -21,12 +21,15 @@ export function createPracticeHistoryRepository(): PracticeHistoryRepository {
                 }),
             ];
 
-            writeJsonValue(PRACTICE_ATTEMPTS_KEY, nextAttempts);
+            writeJsonValue({key: PRACTICE_ATTEMPTS_KEY, value: nextAttempts});
 
             return attempt;
         },
         async listAttempts() {
-            return readJsonValue<PracticeAttempt[]>(PRACTICE_ATTEMPTS_KEY, []);
+            return readJsonValue<PracticeAttempt[]>({
+                fallback: [],
+                key: PRACTICE_ATTEMPTS_KEY,
+            });
         },
         async clearAttempts() {
             removeJsonValue(PRACTICE_ATTEMPTS_KEY);

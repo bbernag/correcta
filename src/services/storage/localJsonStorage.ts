@@ -12,7 +12,17 @@ export function getLearningStorage() {
     return learningStorage;
 }
 
-export function readJsonValue<T>(key: string, fallback: T): T {
+type ReadJsonValueParams<T> = {
+    fallback: T;
+    key: string;
+};
+
+type WriteJsonValueParams<T> = {
+    key: string;
+    value: T;
+};
+
+export function readJsonValue<T>({fallback, key}: ReadJsonValueParams<T>): T {
     const storedValue = getLearningStorage().getString(key);
 
     if (!storedValue) {
@@ -26,7 +36,7 @@ export function readJsonValue<T>(key: string, fallback: T): T {
     }
 }
 
-export function writeJsonValue<T>(key: string, value: T) {
+export function writeJsonValue<T>({key, value}: WriteJsonValueParams<T>) {
     getLearningStorage().set(key, JSON.stringify(value));
 }
 

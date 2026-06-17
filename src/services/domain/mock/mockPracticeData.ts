@@ -4,8 +4,14 @@ import {normalizeTranslation} from "../validation/normalizeTranslation";
 export const MOCK_PRACTICE_SENTENCES: PracticeSentence[] = [
     {
         acceptedTranslations: [
-            createAcceptedTranslation("mock-accepted-1", "I need a coffee."),
-            createAcceptedTranslation("mock-accepted-2", "I need coffee."),
+            createAcceptedTranslation({
+                id: "mock-accepted-1",
+                text: "I need a coffee.",
+            }),
+            createAcceptedTranslation({
+                id: "mock-accepted-2",
+                text: "I need coffee.",
+            }),
         ],
         createdAt: "2026-06-16T00:00:00.000Z",
         hints: ["The verb means need.", "The object is coffee."],
@@ -22,7 +28,10 @@ export const MOCK_PRACTICE_SENTENCES: PracticeSentence[] = [
     },
     {
         acceptedTranslations: [
-            createAcceptedTranslation("mock-accepted-3", "Where is the train?"),
+            createAcceptedTranslation({
+                id: "mock-accepted-3",
+                text: "Where is the train?",
+            }),
         ],
         createdAt: "2026-06-16T00:00:00.000Z",
         hints: ["Start with where.", "The noun is train."],
@@ -39,11 +48,14 @@ export const MOCK_PRACTICE_SENTENCES: PracticeSentence[] = [
     },
     {
         acceptedTranslations: [
-            createAcceptedTranslation(
-                "mock-accepted-4",
-                "She works on Mondays."
-            ),
-            createAcceptedTranslation("mock-accepted-5", "She works Mondays."),
+            createAcceptedTranslation({
+                id: "mock-accepted-4",
+                text: "She works on Mondays.",
+            }),
+            createAcceptedTranslation({
+                id: "mock-accepted-5",
+                text: "She works Mondays.",
+            }),
         ],
         createdAt: "2026-06-16T00:00:00.000Z",
         hints: ["Use she.", "The schedule is Mondays."],
@@ -60,10 +72,10 @@ export const MOCK_PRACTICE_SENTENCES: PracticeSentence[] = [
     },
     {
         acceptedTranslations: [
-            createAcceptedTranslation(
-                "mock-accepted-6",
-                "We are learning together."
-            ),
+            createAcceptedTranslation({
+                id: "mock-accepted-6",
+                text: "We are learning together.",
+            }),
         ],
         createdAt: "2026-06-16T00:00:00.000Z",
         hints: ["Use we.", "Together comes at the end."],
@@ -80,14 +92,14 @@ export const MOCK_PRACTICE_SENTENCES: PracticeSentence[] = [
     },
     {
         acceptedTranslations: [
-            createAcceptedTranslation(
-                "mock-accepted-7",
-                "Can you repeat that?"
-            ),
-            createAcceptedTranslation(
-                "mock-accepted-8",
-                "Could you repeat that?"
-            ),
+            createAcceptedTranslation({
+                id: "mock-accepted-7",
+                text: "Can you repeat that?",
+            }),
+            createAcceptedTranslation({
+                id: "mock-accepted-8",
+                text: "Could you repeat that?",
+            }),
         ],
         createdAt: "2026-06-16T00:00:00.000Z",
         hints: ["This is a polite question.", "Repeat is the main verb."],
@@ -104,7 +116,15 @@ export const MOCK_PRACTICE_SENTENCES: PracticeSentence[] = [
     },
 ];
 
-function createAcceptedTranslation(id: string, text: string) {
+type CreateAcceptedTranslationParams = {
+    id: string;
+    text: string;
+};
+
+function createAcceptedTranslation({
+    id,
+    text,
+}: CreateAcceptedTranslationParams) {
     return {
         id,
         normalizedText: normalizeTranslation(text),

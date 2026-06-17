@@ -10,7 +10,10 @@ const REVIEW_QUEUE_KEY = "domain.reviewQueue";
 export function createReviewQueueRepository(): ReviewQueueRepository {
     return {
         async upsertItem(item) {
-            const items = readJsonValue<ReviewItem[]>(REVIEW_QUEUE_KEY, []);
+            const items = readJsonValue<ReviewItem[]>({
+                fallback: [],
+                key: REVIEW_QUEUE_KEY,
+            });
             const nextItems = [
                 item,
                 ...items.filter((storedItem) => {
@@ -18,12 +21,15 @@ export function createReviewQueueRepository(): ReviewQueueRepository {
                 }),
             ];
 
-            writeJsonValue(REVIEW_QUEUE_KEY, nextItems);
+            writeJsonValue({key: REVIEW_QUEUE_KEY, value: nextItems});
 
             return item;
         },
         async listDueItems(now) {
-            const items = readJsonValue<ReviewItem[]>(REVIEW_QUEUE_KEY, []);
+            const items = readJsonValue<ReviewItem[]>({
+                fallback: [],
+                key: REVIEW_QUEUE_KEY,
+            });
 
             return items.filter((item) => {
                 return item.dueAt <= now;

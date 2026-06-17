@@ -2,7 +2,7 @@ import type {Dispatch, MutableRefObject, SetStateAction} from "react";
 import {useState} from "react";
 
 import {savePracticeSentence, savePracticeWord} from "../../../services/domain";
-import type {ConectaServices, PracticeSentence} from "../../../types";
+import type {CorrectaServices, PracticeSentence} from "../../../types";
 import type {PracticeResult} from "../types/PracticeTypes";
 
 export function usePracticeSaveActions({
@@ -15,7 +15,7 @@ export function usePracticeSaveActions({
     currentSentence: PracticeSentence | null;
     mountedRef: MutableRefObject<boolean>;
     result: PracticeResult | null;
-    services: ConectaServices;
+    services: CorrectaServices;
     setResult: Dispatch<SetStateAction<PracticeResult | null>>;
 }) {
     const [isSavingWord, setIsSavingWord] = useState(false);

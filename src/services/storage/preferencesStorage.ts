@@ -7,7 +7,7 @@ let preferencesStorage: MMKV | null = null;
 export function getPreferencesStorage() {
     if (!preferencesStorage) {
         preferencesStorage = createMMKV({
-            id: "conecta.preferences",
+            id: "correcta.preferences",
         });
     }
 

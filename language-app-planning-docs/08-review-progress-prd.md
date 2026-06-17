@@ -1,8 +1,8 @@
 # Review and Progress PRD
 
-**Product name:** Conecta  
-**Document version:** 1.0  
-**Date:** 2026-06-16  
+**Product name:** Correcta
+**Document version:** 1.0
+**Date:** 2026-06-16
 **Scope:** Recommended review decks, review item mastery, basic progress,
 session summaries, daily goals, and professional motivation
 
@@ -12,7 +12,7 @@ session summaries, daily goals, and professional motivation
 
 History and saved content show what happened, but learners still need the app
 to recommend what to study next and make improvement visible. Without Review
-and Progress, Conecta becomes a logbook instead of a personal teacher.
+and Progress, Correcta becomes a logbook instead of a personal teacher.
 
 ## Solution
 

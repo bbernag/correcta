@@ -5,7 +5,7 @@ import type {
     SavedSentence,
     SavedWord,
 } from "../../types";
-import {createConectaServices} from "./conectaServices";
+import {createCorrectaServices} from "./correctaServices";
 import {parseValidationResult} from "./validation/validationResultParser";
 
 export type LocalDomainCheckResult = {
@@ -19,7 +19,7 @@ export type LocalDomainCheckResult = {
 };
 
 export async function runLocalDomainChecks(): Promise<LocalDomainCheckResult> {
-    const services = createConectaServices();
+    const services = createCorrectaServices();
     const preferences = await services.preferences.getPreferences();
     const sentences = await services.sentences.getPracticeSentences({
         count: 5,

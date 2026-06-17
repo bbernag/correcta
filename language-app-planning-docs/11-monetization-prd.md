@@ -1,8 +1,8 @@
 # Monetization and Ads PRD
 
-**Product name:** Conecta  
-**Document version:** 1.0  
-**Date:** 2026-06-16  
+**Product name:** Correcta
+**Document version:** 1.0
+**Date:** 2026-06-16
 **Scope:** Rewarded ads, non-disruptive monetization surfaces, future premium
 boundary, and monetization adapter contracts
 
@@ -10,7 +10,7 @@ boundary, and monetization adapter contracts
 
 ## Problem Statement
 
-Conecta is intended to launch free, but monetization must not damage the core
+Correcta is intended to launch free, but monetization must not damage the core
 learning experience. Ads shown during typing, correction, or review would make
 the app feel less serious and less trustworthy.
 

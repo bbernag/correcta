@@ -1,8 +1,8 @@
 # Local Domain and Service Foundation PRD
 
-**Product name:** Conecta  
-**Document version:** 1.0  
-**Date:** 2026-06-16  
+**Product name:** Correcta
+**Document version:** 1.0
+**Date:** 2026-06-16
 **Scope:** Domain model, local storage boundaries, repository contracts, service
 adapters, and mock service responses for the first local-first product loop
 
@@ -10,7 +10,7 @@ adapters, and mock service responses for the first local-first product loop
 
 ## Problem Statement
 
-Conecta cannot build a reliable practice loop until the app has stable product
+Correcta cannot build a reliable practice loop until the app has stable product
 language for sentences, translations, validation, mistakes, saved content,
 review items, and progress events. Without this domain foundation, screens will
 invent their own data shapes and the future backend/AI integration will force
@@ -23,7 +23,7 @@ coupling too early.
 
 ## Solution
 
-Create a local domain and service foundation that defines Conecta's core
+Create a local domain and service foundation that defines Correcta's core
 entities, storage split, repository interfaces, and mock service contracts. The
 deliverable is not a visible learning flow. It is a testable set of app
 contracts that let future screens request sentences, validate translations,

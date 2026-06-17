@@ -2,7 +2,7 @@
 
 ## Scope
 
-- Added shared Conecta product contracts for language pairs, practice
+- Added shared Correcta product contracts for language pairs, practice
   sentences, validation results, feedback, saved content, review items,
   progress snapshots, notification preferences, and service interfaces.
 - Added MMKV-backed local repositories for preferences, practice history, saved

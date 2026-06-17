@@ -1,8 +1,8 @@
 # History and Saved Content PRD
 
-**Product name:** Conecta  
-**Document version:** 1.0  
-**Date:** 2026-06-16  
+**Product name:** Correcta
+**Document version:** 1.0
+**Date:** 2026-06-16
 **Scope:** History, saved words, saved sentences, Mistake Notebook, retry
 actions, and local learning records created by practice sessions
 

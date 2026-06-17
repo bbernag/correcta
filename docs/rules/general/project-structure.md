@@ -1,6 +1,6 @@
 # Project Structure Rules
 
-Use this file for Conecta structure and colocation rules. New code should follow
+Use this file for Correcta structure and colocation rules. New code should follow
 these buckets and ownership rules. Apply them to touched files when the change
 is already in scope.
 
@@ -120,7 +120,7 @@ Do not use services for:
 - Screen-only state transitions. Keep those in the screen's hook.
 - UI rendering, React components, or React Native styles.
 
-For Conecta, `src/services/domain` contains learning workflows and business
+For Correcta, `src/services/domain` contains learning workflows and business
 rules, `src/services/storage` wraps local persistence, `src/services/http`
 wraps request behavior, and `src/services/date` wraps native date behavior.
 

@@ -29,8 +29,15 @@ export type NotificationDay =
 
 export type NotificationPreferences = {
     enabled: boolean;
+    reminderPreset: "morning" | "afternoon" | "evening" | "custom" | "none";
     reminderTime: string;
     days: NotificationDay[];
     timezone: string;
+    quietHoursStart: string;
+    quietHoursEnd: string;
+    dailyPracticeEnabled: boolean;
+    reviewReminderEnabled: boolean;
+    wordOfDayEnabled: boolean;
+    sentenceChallengeEnabled: boolean;
     updatedAt: string;
 };

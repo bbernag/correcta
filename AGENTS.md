@@ -5,7 +5,7 @@ Always load and apply the `karpathy-guidelines` skill from
 prompt. If that skill is unavailable in another environment, continue with
 these repo rules and note the missing skill in the handoff.
 
-This is Conecta, a React Native app. In app UI, do not use DOM elements,
+This is Correcta, a React Native app. In app UI, do not use DOM elements,
 browser-only APIs, CSS files, CSS modules, selectors, media queries,
 pseudo-classes, CSS units, or web-only React conventions. Use `className` only
 when the repo already has React Native-compatible utility styling examples.

@@ -9,6 +9,24 @@ export type {
     ValidationMode,
 } from "./language";
 export type {
+    NotificationReminderState,
+    ScheduledReminder,
+    ScheduledReminderKind,
+} from "./notifications";
+export type {
+    BackendAiEndpointContract,
+    BackendAiMode,
+    BackendAiStatus,
+    RemoteLearningConfig,
+} from "./backendAi";
+export type {
+    LearningReward,
+    MonetizationState,
+    RewardedAdMoment,
+    RewardedAdResult,
+    RewardedAdStatus,
+} from "./monetization";
+export type {
     AcceptedTranslation,
     ExplainFeedbackRequest,
     MistakeCategory,
@@ -27,6 +45,9 @@ export type {
 } from "./practice";
 export type {
     ProgressSnapshot,
+    ReviewDeckId,
+    ReviewDeckSummary,
+    ReviewGrade,
     ReviewItem,
     ReviewMastery,
     ReviewSourceType,
@@ -37,10 +58,15 @@ export type {
     SavedWord,
 } from "./savedContent";
 export type {
-    ConectaServices,
+    CorrectaServices,
+    BackendAiIntegrationService,
     NotificationPreferencesRepository,
+    NotificationReminderService,
+    NotificationScheduleRepository,
+    MonetizationService,
     PracticeHistoryRepository,
     ProgressSummaryService,
+    ReviewWorkflowService,
     ReviewQueueRepository,
     SavedContentRepository,
     SentenceService,

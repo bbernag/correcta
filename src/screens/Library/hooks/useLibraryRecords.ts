@@ -2,7 +2,7 @@ import {useFocusEffect} from "@react-navigation/native";
 import {useCallback, useMemo, useRef, useState} from "react";
 
 import {
-    createConectaServices,
+    createCorrectaServices,
     removeSavedPracticeSentence,
     removeSavedPracticeWord,
     savePracticeAttemptSentence,
@@ -28,7 +28,7 @@ const EMPTY_LIBRARY_RECORDS: LibraryRecords = {
 
 export function useLibraryRecords() {
     const services = useMemo(() => {
-        return createConectaServices();
+        return createCorrectaServices();
     }, []);
     const mountedRef = useRef(true);
     const [records, setRecords] = useState<LibraryRecords>(

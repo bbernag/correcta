@@ -1,8 +1,8 @@
 # Practice and Feedback Loop PRD
 
-**Product name:** Conecta  
-**Document version:** 1.0  
-**Date:** 2026-06-16  
+**Product name:** Correcta
+**Document version:** 1.0
+**Date:** 2026-06-16
 **Scope:** First complete local learning loop: Home to Practice, translation
 input, Sentence Builder, mock validation, animated feedback, save actions,
 session summary, and local history event
@@ -11,7 +11,7 @@ session summary, and local history event
 
 ## Problem Statement
 
-Conecta's core product value is not the app shell; it is the learning loop where
+Correcta's core product value is not the app shell; it is the learning loop where
 a user translates one sentence, receives useful correction, saves what matters,
 and continues improving. After the foundation and local service contracts exist,
 the next problem is proving that the app can deliver this loop without backend
@@ -148,7 +148,7 @@ records the attempt in local History.
 
 ## Further Notes
 
-- This phase is the first point where Conecta should feel like a language
+- This phase is the first point where Correcta should feel like a language
   learning app.
 - The goal is a five-sentence local session that can be completed end to end.
 - The next phase should expand the saved data into History, Review, and

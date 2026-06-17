@@ -1,5 +1,9 @@
 import type {NotificationPreferences, UserPreferences} from "./language";
 import type {
+    NotificationReminderState,
+    ScheduledReminder,
+} from "./notifications";
+import type {
     ExplainFeedbackRequest,
     PracticeAttempt,
     PracticeSentence,
@@ -9,8 +13,19 @@ import type {
     ValidateTranslationRequest,
     ValidationResult,
 } from "./practice";
-import type {ProgressSnapshot, ReviewItem, ReviewSourceType} from "./review";
+import type {
+    ProgressSnapshot,
+    ReviewGrade,
+    ReviewItem,
+    ReviewSourceType,
+} from "./review";
 import type {SavedSentence, SavedWord} from "./savedContent";
+import type {BackendAiStatus} from "./backendAi";
+import type {
+    MonetizationState,
+    RewardedAdMoment,
+    RewardedAdResult,
+} from "./monetization";
 
 export type UserPreferencesRepository = {
     getPreferences: () => Promise<UserPreferences>;
@@ -35,6 +50,7 @@ export type SavedContentRepository = {
 
 export type ReviewQueueRepository = {
     upsertItem: (item: ReviewItem) => Promise<ReviewItem>;
+    listItems: () => Promise<ReviewItem[]>;
     listDueItems: (now: string) => Promise<ReviewItem[]>;
     removeItemsBySource: (source: {
         sourceId: string;
@@ -48,6 +64,14 @@ export type NotificationPreferencesRepository = {
     savePreferences: (
         preferences: NotificationPreferences
     ) => Promise<NotificationPreferences>;
+};
+
+export type NotificationScheduleRepository = {
+    listScheduledReminders: () => Promise<ScheduledReminder[]>;
+    saveScheduledReminders: (
+        reminders: ScheduledReminder[]
+    ) => Promise<ScheduledReminder[]>;
+    clearScheduledReminders: () => Promise<void>;
 };
 
 export type SentenceService = {
@@ -78,12 +102,42 @@ export type ProgressSummaryService = {
     ) => Promise<PracticeSessionSummary | null>;
 };
 
-export type ConectaServices = {
+export type ReviewWorkflowService = {
+    completeReviewItem: (params: {
+        grade: ReviewGrade;
+        item: ReviewItem;
+    }) => Promise<ReviewItem>;
+};
+
+export type NotificationReminderService = {
+    getReminderState: () => Promise<NotificationReminderState>;
+    savePreferences: (
+        preferences: NotificationPreferences
+    ) => Promise<NotificationReminderState>;
+};
+
+export type BackendAiIntegrationService = {
+    getStatus: () => Promise<BackendAiStatus>;
+};
+
+export type MonetizationService = {
+    getState: () => Promise<MonetizationState>;
+    requestRewardedAd: (params: {
+        moment: RewardedAdMoment;
+    }) => Promise<RewardedAdResult>;
+};
+
+export type CorrectaServices = {
+    backendAi: BackendAiIntegrationService;
     preferences: UserPreferencesRepository;
     history: PracticeHistoryRepository;
+    monetization: MonetizationService;
     savedContent: SavedContentRepository;
     reviewQueue: ReviewQueueRepository;
+    reviewWorkflow: ReviewWorkflowService;
     notifications: NotificationPreferencesRepository;
+    notificationSchedule: NotificationScheduleRepository;
+    reminders: NotificationReminderService;
     sentences: SentenceService;
     validation: TranslationValidationService;
     feedback: TeacherFeedbackService;

@@ -1,5 +1,5 @@
 import type {
-    ConectaServices,
+    CorrectaServices,
     PracticeAttempt,
     PracticeInputMode,
     PracticeSentence,
@@ -39,7 +39,7 @@ export async function startLocalPracticeSession({
 }: {
     count?: number;
     retrySentenceId?: string;
-    services: ConectaServices;
+    services: CorrectaServices;
 }): Promise<LocalPracticeSession> {
     const preferences = await services.preferences.getPreferences();
     const retrySentence = retrySentenceId
@@ -87,7 +87,7 @@ export async function submitPracticeAnswer({
     answerText: string;
     inputMode: PracticeInputMode;
     sentence: PracticeSentence;
-    services: ConectaServices;
+    services: CorrectaServices;
     session: PracticeSession;
 }): Promise<PracticeFeedbackResult> {
     const preferences = await services.preferences.getPreferences();
@@ -137,7 +137,7 @@ export async function savePracticeWord({
 }: {
     attempt: PracticeAttempt;
     sentence: PracticeSentence;
-    services: ConectaServices;
+    services: CorrectaServices;
 }) {
     const savedWord = await services.savedContent.saveWord(
         createSavedWord({sentence})
@@ -160,7 +160,7 @@ export async function savePracticeSentence({
 }: {
     attempt: PracticeAttempt;
     sentence: PracticeSentence;
-    services: ConectaServices;
+    services: CorrectaServices;
     validation: ValidationResult;
 }) {
     const savedSentence = await services.savedContent.saveSentence(
@@ -191,7 +191,7 @@ export async function savePracticeAttemptSentence({
 }: {
     attempt: PracticeAttempt;
     sentence: PracticeSentence;
-    services: ConectaServices;
+    services: CorrectaServices;
 }) {
     const savedSentence = await services.savedContent.saveSentence(
         createSavedSentenceFromAttempt({
@@ -219,7 +219,7 @@ export async function removeSavedPracticeSentence({
     services,
 }: {
     savedSentenceId: string;
-    services: ConectaServices;
+    services: CorrectaServices;
 }) {
     await services.savedContent.removeSentence(savedSentenceId);
     await services.reviewQueue.removeItemsBySource({
@@ -252,7 +252,7 @@ export async function removeSavedPracticeWord({
     services,
 }: {
     savedWordId: string;
-    services: ConectaServices;
+    services: CorrectaServices;
 }) {
     await services.savedContent.removeWord(savedWordId);
     await services.reviewQueue.removeItemsBySource({
@@ -284,7 +284,7 @@ export async function getPracticeSummary({
     services,
     sessionId,
 }: {
-    services: ConectaServices;
+    services: CorrectaServices;
     sessionId: string;
 }): Promise<PracticeSessionSummary> {
     const summary = await services.progress.getSessionSummary(sessionId);

@@ -1,4 +1,7 @@
-export {createConectaServices} from "./conectaServices";
+export {createCorrectaServices} from "./correctaServices";
+export {createBackendAiIntegrationService} from "./backendAiIntegrationService";
+export {createMonetizationService} from "./monetizationService";
+export {createNotificationReminderService} from "./notificationReminderService";
 export {
     getPracticeSummary,
     removeSavedPracticeSentence,
@@ -11,6 +14,12 @@ export {
     type LocalPracticeSession,
     type PracticeFeedbackResult,
 } from "./practiceLoopService";
+export {createReviewWorkflowService} from "./reviewWorkflowService";
+export {
+    createRemoteSentenceService,
+    createRemoteTeacherFeedbackService,
+    createRemoteTranslationValidationService,
+} from "./remote/remoteLearningServices";
 export {
     runLocalDomainChecks,
     type LocalDomainCheckResult,

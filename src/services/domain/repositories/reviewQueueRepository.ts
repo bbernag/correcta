@@ -25,6 +25,12 @@ export function createReviewQueueRepository(): ReviewQueueRepository {
 
             return item;
         },
+        async listItems() {
+            return readJsonValue<ReviewItem[]>({
+                fallback: [],
+                key: REVIEW_QUEUE_KEY,
+            });
+        },
         async listDueItems(now) {
             const items = readJsonValue<ReviewItem[]>({
                 fallback: [],

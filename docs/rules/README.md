@@ -1,7 +1,7 @@
 # AI Rules Index
 
 These rule files define reusable guidance for AI assistants and developers
-working in the Conecta React Native app.
+working in the Correcta React Native app.
 
 These rules are intentionally compact. `AGENTS.md` contains always-on project
 boundaries. The files below are task-specific and should be read only when
@@ -11,7 +11,7 @@ relevant.
 
 | File | Scope |
 | --- | --- |
-| [general/project-structure.md](./general/project-structure.md) | Conecta source buckets, screen colocation, reusable UI, support files, promotion rules, imports, file size |
+| [general/project-structure.md](./general/project-structure.md) | Correcta source buckets, screen colocation, reusable UI, support files, promotion rules, imports, file size |
 | [general/react-native.md](./general/react-native.md) | React Native components, styling, accessibility, data boundaries, hooks, lists, forms, navigation |
 | [general/typescript.md](./general/typescript.md) | TypeScript, exports, functions, constants, errors |
 | [general/testing.md](./general/testing.md) | Test scope, React Native component tests, mocking, assertions, commands |

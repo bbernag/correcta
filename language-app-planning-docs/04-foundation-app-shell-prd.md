@@ -1,12 +1,12 @@
 # Foundation and App Shell PRD
 
-**Product name:** Conecta  
-**Document version:** 1.0  
-**Date:** 2026-06-16  
-**Document type:** Product Requirements Document  
+**Product name:** Correcta
+**Document version:** 1.0
+**Date:** 2026-06-16
+**Document type:** Product Requirements Document
 **Scope:** First implementation phase for app scaffolding, native dependency
 validation, design-system foundation, reusable components, route shell, and
-iOS/Android run verification  
+iOS/Android run verification
 **Out of scope:** Learning-loop implementation, backend, AI provider
 integration, auth, ads, subscriptions, notifications, persistence-heavy review
 flows, and production content generation
@@ -15,7 +15,7 @@ flows, and production content generation
 
 ## Problem Statement
 
-Conecta has a clear product direction and implementation plan, but the app does
+Correcta has a clear product direction and implementation plan, but the app does
 not yet have a runnable React Native foundation. The team needs a first phase
 that turns the planning docs into a working Expo Dev Client app without jumping
 ahead into product features that depend on unvalidated native modules,
@@ -34,7 +34,7 @@ real app targets before the learning product is built on top.
 
 ## Solution
 
-Create the Conecta mobile app foundation as a focused first implementation
+Create the Correcta mobile app foundation as a focused first implementation
 phase. The deliverable is a runnable Expo Dev Client React Native app with the
 project's structure rules, TypeScript conventions, native module validation,
 semantic theme system, reusable UI primitives, and navigation shell in place.
@@ -68,7 +68,7 @@ surface and document the blocker.
 
 ## User Stories
 
-1. As a product owner, I want the Conecta app scaffolded as a real mobile app,
+1. As a product owner, I want the Correcta app scaffolded as a real mobile app,
    so that future work can build on a runnable foundation instead of planning
    documents.
 2. As a product owner, I want the first phase to stay focused on foundation and

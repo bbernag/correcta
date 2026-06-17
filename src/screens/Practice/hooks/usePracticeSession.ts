@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 
 import {
-    createConectaServices,
+    createCorrectaServices,
     startLocalPracticeSession,
 } from "../../../services/domain";
 import type {PracticeInputMode} from "../../../types";
@@ -23,7 +23,7 @@ export function usePracticeSession({
     retrySentenceId?: string;
 }) {
     const services = useMemo(() => {
-        return createConectaServices();
+        return createCorrectaServices();
     }, []);
     const loadTokenRef = useRef(0);
     const mountedRef = useRef(true);

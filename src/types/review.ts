@@ -2,6 +2,15 @@ export type ReviewSourceType = "word" | "sentence" | "mistake";
 
 export type ReviewMastery = "new" | "learning" | "reviewing" | "mastered";
 
+export type ReviewGrade = "known" | "unsure" | "difficult";
+
+export type ReviewDeckId =
+    | "recommended"
+    | "wordFlashcards"
+    | "sentenceFlashcards"
+    | "mistakeCards"
+    | "sentenceBuilder";
+
 export type ReviewItem = {
     id: string;
     sourceType: ReviewSourceType;
@@ -12,6 +21,15 @@ export type ReviewItem = {
     intervalDays: number;
     mastery: ReviewMastery;
     createdAt: string;
+    lastReviewedAt?: string;
+};
+
+export type ReviewDeckSummary = {
+    id: ReviewDeckId;
+    title: string;
+    description: string;
+    itemCount: number;
+    sourceTypes: ReviewSourceType[];
 };
 
 export type ProgressSnapshot = {

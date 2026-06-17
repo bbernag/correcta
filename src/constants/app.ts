@@ -1,1 +1,1 @@
-export const APP_NAME = "Conecta";
+export const APP_NAME = "Correcta";

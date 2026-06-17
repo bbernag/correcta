@@ -1,8 +1,8 @@
 # Backend and AI Integration PRD
 
-**Product name:** Conecta  
-**Document version:** 1.0  
-**Date:** 2026-06-16  
+**Product name:** Correcta
+**Document version:** 1.0
+**Date:** 2026-06-16
 **Scope:** Remote sentence generation, translation validation, teacher
 feedback, AI safety, API contracts, runtime validation, and backend-ready app
 service adapters
@@ -11,7 +11,7 @@ service adapters
 
 ## Problem Statement
 
-Conecta's local prototype can prove the learning loop, but the product's long-
+Correcta's local prototype can prove the learning loop, but the product's long-
 term value depends on personalized sentence generation, flexible translation
 validation, mistake classification, and teacher-like explanations. These AI
 capabilities must not be wired directly into screens or mobile provider SDKs.

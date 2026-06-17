@@ -5,7 +5,7 @@ let learningStorage: MMKV | null = null;
 export function getLearningStorage() {
     if (!learningStorage) {
         learningStorage = createMMKV({
-            id: "conecta.learning",
+            id: "correcta.learning",
         });
     }
 

@@ -4,7 +4,7 @@ import {
     getPracticeSummary,
     submitPracticeAnswer,
 } from "../../../services/domain";
-import type {ConectaServices, PracticeSentence} from "../../../types";
+import type {CorrectaServices, PracticeSentence} from "../../../types";
 import type {
     PracticePhase,
     PracticeResult,
@@ -37,7 +37,7 @@ export function usePracticeFlowActions({
     phase: PracticePhase;
     resetAnswerState: () => void;
     result: PracticeResult | null;
-    services: ConectaServices;
+    services: CorrectaServices;
     sessionState: PracticeSessionState | null;
     setAnswerText: Dispatch<SetStateAction<string>>;
     setError: Dispatch<SetStateAction<string | null>>;
@@ -157,7 +157,7 @@ async function checkAnswer({
     currentSentence: PracticeSentence | null;
     mountedRef: MutableRefObject<boolean>;
     phase: PracticePhase;
-    services: ConectaServices;
+    services: CorrectaServices;
     sessionState: PracticeSessionState | null;
     setError: Dispatch<SetStateAction<string | null>>;
     setPhase: Dispatch<SetStateAction<PracticePhase>>;

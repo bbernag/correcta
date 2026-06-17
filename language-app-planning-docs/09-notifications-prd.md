@@ -1,8 +1,8 @@
 # Notifications and Learning Reminders PRD
 
-**Product name:** Conecta  
-**Document version:** 1.0  
-**Date:** 2026-06-16  
+**Product name:** Correcta
+**Document version:** 1.0
+**Date:** 2026-06-16
 **Scope:** Local notification preferences, reminder scheduling, quiet hours,
 review reminders, word or sentence challenges, and notification-entry flows
 
@@ -10,7 +10,7 @@ review reminders, word or sentence challenges, and notification-entry flows
 
 ## Problem Statement
 
-Conecta should motivate daily practice, but reminders are only useful once the
+Correcta should motivate daily practice, but reminders are only useful once the
 app understands the user's goals, weak words, review due items, language pair,
 current level, and preferred reminder time. Adding notifications too early would
 create generic interruptions instead of helpful learning prompts.

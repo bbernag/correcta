@@ -45,13 +45,13 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.xs,
     },
     track: {
-        backgroundColor: theme.colors.surfaceMuted,
+        backgroundColor: theme.colors.surfaceTonal,
         borderRadius: theme.radii.pill,
         height: 10,
         overflow: "hidden",
     },
     fill: {
-        backgroundColor: theme.colors.accent,
+        backgroundColor: theme.colors.accentPrimary,
         borderRadius: theme.radii.pill,
         height: 10,
     },

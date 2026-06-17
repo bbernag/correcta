@@ -33,7 +33,7 @@ export function Button({
             disabled={isDisabled}
             style={({pressed}) => [
                 styles.root,
-                styles[variant],
+                getButtonVariantStyle(variant),
                 fullWidth && styles.fullWidth,
                 pressed && !isDisabled && styles.pressed,
                 isDisabled && styles.disabled,
@@ -41,7 +41,7 @@ export function Button({
             ]}
             {...pressableProps}
         >
-            <AppText variant="label" tone={labelTone}>
+            <AppText variant="button" tone={labelTone}>
                 {loading ? "Loading" : label}
             </AppText>
         </Pressable>
@@ -51,7 +51,7 @@ export function Button({
 const styles = StyleSheet.create((theme) => ({
     root: {
         alignItems: "center",
-        borderRadius: theme.radii.md,
+        borderRadius: theme.radii.button,
         justifyContent: "center",
         minHeight: 48,
         minWidth: 48,
@@ -62,10 +62,10 @@ const styles = StyleSheet.create((theme) => ({
         alignSelf: "stretch",
     },
     primary: {
-        backgroundColor: theme.colors.accent,
+        backgroundColor: theme.colors.accentPrimary,
     },
     secondary: {
-        backgroundColor: theme.colors.accentSoft,
+        backgroundColor: theme.colors.accentPrimarySoft,
     },
     ghost: {
         backgroundColor: "transparent",
@@ -74,6 +74,18 @@ const styles = StyleSheet.create((theme) => ({
         opacity: theme.motion.pressOpacity,
     },
     disabled: {
-        opacity: 0.48,
+        opacity: theme.motion.disabledOpacity,
     },
 }));
+
+function getButtonVariantStyle(variant: ButtonVariant) {
+    switch (variant) {
+        case "secondary":
+            return styles.secondary;
+        case "ghost":
+            return styles.ghost;
+        case "primary":
+        default:
+            return styles.primary;
+    }
+}

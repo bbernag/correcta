@@ -9,11 +9,18 @@ import {
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {StyleSheet} from "react-native-unistyles";
 
+import {useSyncUnistylesTheme} from "./hooks/useSyncUnistylesTheme";
 import {RootNavigator} from "./router";
+import {appThemes} from "./theme/themes";
 
 export function App() {
+    const themeName = useSyncUnistylesTheme();
+    const appBackground = appThemes[themeName].colors.backgroundPrimary;
+
     return (
-        <GestureHandlerRootView style={styles.root}>
+        <GestureHandlerRootView
+            style={[styles.root, {backgroundColor: appBackground}]}
+        >
             <KeyboardProvider>
                 <SafeAreaProvider>
                     <RootNavigator />

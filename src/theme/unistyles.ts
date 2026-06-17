@@ -1,6 +1,7 @@
+import {Appearance} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {appBreakpoints, appThemes, type AppTheme} from "./tokens";
+import {appBreakpoints, appThemes, type AppTheme} from "./themes";
 
 declare module "react-native-unistyles" {
     export interface UnistylesThemes {
@@ -9,9 +10,15 @@ declare module "react-native-unistyles" {
     }
 }
 
+type AppThemeName = keyof typeof appThemes;
+
+function getInitialTheme(): AppThemeName {
+    return Appearance.getColorScheme() === "dark" ? "dark" : "light";
+}
+
 StyleSheet.configure({
     settings: {
-        adaptiveThemes: true,
+        initialTheme: getInitialTheme,
     },
     themes: appThemes,
     breakpoints: appBreakpoints,

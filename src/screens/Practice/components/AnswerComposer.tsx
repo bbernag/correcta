@@ -119,8 +119,8 @@ const styles = StyleSheet.create((theme) => ({
     },
     answerArea: {
         alignItems: "flex-start",
-        backgroundColor: theme.colors.surface,
-        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surfacePrimary,
+        borderColor: theme.colors.borderSubtle,
         borderRadius: theme.radii.md,
         borderWidth: 1,
         flexDirection: "row",
@@ -137,7 +137,7 @@ const styles = StyleSheet.create((theme) => ({
         minHeight: 44,
     },
     selectedChip: {
-        backgroundColor: theme.colors.accentSoft,
+        backgroundColor: theme.colors.accentPrimarySoft,
         borderRadius: theme.radii.sm,
         minHeight: 44,
         justifyContent: "center",
@@ -145,8 +145,8 @@ const styles = StyleSheet.create((theme) => ({
         paddingVertical: theme.spacing.sm,
     },
     bankChip: {
-        backgroundColor: theme.colors.surfaceMuted,
-        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surfaceTonal,
+        borderColor: theme.colors.borderSubtle,
         borderRadius: theme.radii.sm,
         borderWidth: 1,
         minHeight: 44,

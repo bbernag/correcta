@@ -1,5 +1,9 @@
 # Phase PRD Index
 
+For current implementation status, use `docs/phases/README.md`. This index
+keeps the original PRD order; the tracker records what is done, partial, and
+planned.
+
 Use these PRDs in order. Each phase should be treated as a separate
 implementation milestone with its own verification before moving to the next
 phase.
@@ -31,18 +35,24 @@ phase.
    Goal: turn saved content and mistakes into review decks, mastery updates,
    session summaries, and visible local progress.
 
-6. **Notifications and learning reminders**  
-   Use `09-notifications-prd.md`.  
+6. **Visual Design and Interaction Polish**
+   Use `../docs/phases/visual-design-interaction-polish.md`.
+   Goal: implement the Correction Desk theme tokens first, then polish icons,
+   haptics, shared components, screen visuals, React Native accessibility, and
+   iOS/Android QA before moving deeper into provider-backed work.
+
+7. **Notifications and learning reminders**
+   Use `09-notifications-prd.md`.
    Goal: add local reminder preferences and gentle notification flows only
    after useful local learning data exists.
 
-7. **Backend and AI integration**  
-   Use `10-backend-ai-integration-prd.md`.  
+8. **Backend and AI integration**
+   Use `10-backend-ai-integration-prd.md`.
    Goal: connect service adapters to safe backend AI generation, validation,
    feedback, and remote contracts after the local prototype works.
 
-8. **Monetization**  
-   Use `11-monetization-prd.md`.  
+9. **Monetization**
+   Use `11-monetization-prd.md`.
    Goal: add non-disruptive rewarded monetization only after the learning
    product is useful and stable.
 

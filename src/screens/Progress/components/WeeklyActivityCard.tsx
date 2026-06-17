@@ -41,7 +41,7 @@ const styles = StyleSheet.create((theme) => ({
     },
     day: {
         alignItems: "center",
-        backgroundColor: theme.colors.backgroundElevated,
+        backgroundColor: theme.colors.surfaceElevated,
         borderRadius: theme.radii.sm,
         flexBasis: "12%",
         flexGrow: 1,

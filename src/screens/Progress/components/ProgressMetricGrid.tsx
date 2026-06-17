@@ -33,7 +33,7 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.sm,
     },
     metric: {
-        backgroundColor: theme.colors.surfaceMuted,
+        backgroundColor: theme.colors.surfaceTonal,
         borderRadius: theme.radii.sm,
         flexBasis: "47%",
         flexGrow: 1,

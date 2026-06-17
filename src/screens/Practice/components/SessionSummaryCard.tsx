@@ -88,7 +88,7 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.sm,
     },
     metric: {
-        backgroundColor: theme.colors.surfaceMuted,
+        backgroundColor: theme.colors.surfaceTonal,
         borderRadius: theme.radii.sm,
         flexBasis: "48%",
         gap: theme.spacing.xs,

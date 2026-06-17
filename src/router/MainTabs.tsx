@@ -23,12 +23,12 @@ export function MainTabs() {
             labeled
             screenOptions={{
                 freezeOnBlur: true,
-                sceneStyle: {backgroundColor: theme.colors.background},
+                sceneStyle: {backgroundColor: theme.colors.backgroundPrimary},
                 tabBarIcon: () => TAB_ICON,
             }}
-            tabBarActiveTintColor={theme.colors.accentStrong}
+            tabBarActiveTintColor={theme.colors.accentPrimaryStrong}
             tabBarInactiveTintColor={theme.colors.textMuted}
-            tabBarStyle={{backgroundColor: theme.colors.surface}}
+            tabBarStyle={{backgroundColor: theme.colors.surfacePrimary}}
         >
             <Tab.Screen
                 component={HomeScreen}

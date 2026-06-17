@@ -56,7 +56,7 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.sm,
     },
     options: {
-        backgroundColor: theme.colors.accentSoft,
+        backgroundColor: theme.colors.accentPrimarySoft,
         borderRadius: theme.radii.md,
         flexDirection: "row",
         gap: theme.spacing.xs,
@@ -71,7 +71,7 @@ const styles = StyleSheet.create((theme) => ({
         paddingHorizontal: theme.spacing.md,
     },
     optionSelected: {
-        backgroundColor: theme.colors.accent,
+        backgroundColor: theme.colors.accentPrimary,
     },
     optionPressed: {
         opacity: theme.motion.pressOpacity,

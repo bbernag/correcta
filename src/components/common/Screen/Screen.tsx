@@ -1,10 +1,12 @@
 import type {PropsWithChildren} from "react";
 import type {StyleProp, ViewStyle} from "react-native";
-import {View} from "react-native";
+import {useColorScheme, View} from "react-native";
 import {KeyboardAwareScrollView} from "react-native-keyboard-controller";
 import type {Edge} from "react-native-safe-area-context";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {StyleSheet} from "react-native-unistyles";
+
+import {appThemes} from "../../../theme/themes";
 
 type ScreenProps = PropsWithChildren<{
     edges?: Edge[];
@@ -20,8 +22,17 @@ export function Screen({
     style,
     contentContainerStyle,
 }: ScreenProps) {
+    const colorScheme = useColorScheme();
+    const theme = colorScheme === "dark" ? appThemes.dark : appThemes.light;
+    const backgroundStyle = {
+        backgroundColor: theme.colors.backgroundPrimary,
+    };
+
     return (
-        <SafeAreaView edges={edges} style={[styles.safeArea, style]}>
+        <SafeAreaView
+            edges={edges}
+            style={[styles.safeArea, backgroundStyle, style]}
+        >
             {scroll ? (
                 <KeyboardAwareScrollView
                     bottomOffset={24}
@@ -51,12 +62,13 @@ export function Screen({
 
 const styles = StyleSheet.create((theme) => ({
     safeArea: {
-        backgroundColor: theme.colors.background,
+        backgroundColor: theme.colors.backgroundPrimary,
         flex: 1,
     },
     content: {
-        gap: theme.spacing.lg,
-        padding: theme.spacing.xl,
+        gap: theme.spacing.sectionGap,
+        paddingHorizontal: theme.spacing.screenHorizontal,
+        paddingVertical: theme.spacing.screenVertical,
     },
     fixed: {
         flex: 1,

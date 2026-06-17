@@ -12,25 +12,40 @@ type SurfaceProps = PropsWithChildren<{
 
 export function Surface({children, variant = "default", style}: SurfaceProps) {
     return (
-        <View style={[styles.root, styles[variant], style]}>{children}</View>
+        <View style={[styles.root, getSurfaceVariantStyle(variant), style]}>
+            {children}
+        </View>
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
     root: {
-        borderRadius: theme.radii.md,
-        padding: theme.spacing.lg,
+        borderRadius: theme.radii.card,
+        padding: theme.spacing.cardPadding,
     },
     default: {
-        backgroundColor: theme.colors.surface,
-        ...theme.shadows.surface,
+        backgroundColor: theme.colors.surfacePrimary,
+        borderColor: theme.colors.borderSubtle,
+        borderWidth: 1,
     },
     muted: {
-        backgroundColor: theme.colors.surfaceMuted,
+        backgroundColor: theme.colors.surfaceTonal,
     },
     outline: {
-        backgroundColor: theme.colors.backgroundElevated,
-        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surfaceElevated,
+        borderColor: theme.colors.borderSubtle,
         borderWidth: 1,
     },
 }));
+
+function getSurfaceVariantStyle(variant: SurfaceVariant) {
+    switch (variant) {
+        case "muted":
+            return styles.muted;
+        case "outline":
+            return styles.outline;
+        case "default":
+        default:
+            return styles.default;
+    }
+}

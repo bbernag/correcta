@@ -43,7 +43,7 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.md,
     },
     hints: {
-        borderTopColor: theme.colors.border,
+        borderTopColor: theme.colors.borderSubtle,
         borderTopWidth: 1,
         gap: theme.spacing.sm,
         paddingTop: theme.spacing.md,

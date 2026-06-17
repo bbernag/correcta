@@ -91,7 +91,7 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.xs,
     },
     answer: {
-        backgroundColor: theme.colors.surfaceMuted,
+        backgroundColor: theme.colors.surfaceTonal,
         borderRadius: theme.radii.md,
         gap: theme.spacing.sm,
         padding: theme.spacing.md,

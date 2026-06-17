@@ -5,7 +5,7 @@ import type {
     ViewStyle,
 } from "react-native";
 import {TextInput as NativeTextInput, View} from "react-native";
-import {StyleSheet} from "react-native-unistyles";
+import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {AppText} from "../AppText";
 
@@ -25,13 +25,15 @@ export function TextInput({
     accessibilityLabel,
     ...inputProps
 }: TextInputProps) {
+    const {theme} = useUnistyles();
+
     return (
         <View style={[styles.root, containerStyle]}>
             <AppText variant="label">{label}</AppText>
             <NativeTextInput
                 accessibilityHint={error ?? accessibilityHint}
                 accessibilityLabel={accessibilityLabel ?? label}
-                placeholderTextColor="#7B8794"
+                placeholderTextColor={theme.colors.textMuted}
                 style={[styles.input, error && styles.inputError, inputStyle]}
                 {...inputProps}
             />
@@ -49,17 +51,19 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.sm,
     },
     input: {
-        backgroundColor: theme.colors.surface,
-        borderColor: theme.colors.border,
-        borderRadius: theme.radii.md,
+        backgroundColor: theme.colors.surfacePrimary,
+        borderColor: theme.colors.borderSubtle,
+        borderRadius: theme.radii.input,
         borderWidth: 1,
-        color: theme.colors.text,
+        color: theme.colors.textPrimary,
         fontSize: theme.typography.body,
+        fontWeight: theme.fontWeights.body,
+        lineHeight: theme.lineHeights.body,
         minHeight: 48,
         paddingHorizontal: theme.spacing.md,
         paddingVertical: theme.spacing.md,
     },
     inputError: {
-        borderColor: theme.colors.danger,
+        borderColor: theme.colors.feedbackDanger,
     },
 }));

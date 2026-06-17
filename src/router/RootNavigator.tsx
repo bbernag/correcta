@@ -21,12 +21,12 @@ export function RootNavigator() {
         () => ({
             dark: colorScheme === "dark",
             colors: {
-                background: theme.colors.background,
-                border: theme.colors.border,
-                card: theme.colors.surface,
-                notification: theme.colors.danger,
-                primary: theme.colors.accent,
-                text: theme.colors.text,
+                background: theme.colors.backgroundPrimary,
+                border: theme.colors.borderSubtle,
+                card: theme.colors.surfacePrimary,
+                notification: theme.colors.feedbackDanger,
+                primary: theme.colors.accentPrimary,
+                text: theme.colors.textPrimary,
             },
             fonts: {
                 bold: {
@@ -54,8 +54,10 @@ export function RootNavigator() {
         <NavigationContainer theme={navigationTheme}>
             <Stack.Navigator
                 screenOptions={{
-                    contentStyle: {backgroundColor: theme.colors.background},
-                    headerTintColor: theme.colors.text,
+                    contentStyle: {
+                        backgroundColor: theme.colors.backgroundPrimary,
+                    },
+                    headerTintColor: theme.colors.textPrimary,
                     headerTitleStyle: {fontWeight: "700"},
                 }}
             >

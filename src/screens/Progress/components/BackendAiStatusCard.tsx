@@ -47,7 +47,7 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.xs,
     },
     endpoint: {
-        borderColor: theme.colors.border,
+        borderColor: theme.colors.borderSubtle,
         borderRadius: theme.radii.sm,
         borderWidth: 1,
         gap: theme.spacing.xs,

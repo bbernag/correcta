@@ -54,7 +54,7 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.sm,
     },
     chip: {
-        backgroundColor: theme.colors.accentSoft,
+        backgroundColor: theme.colors.accentPrimarySoft,
         borderRadius: theme.radii.lg,
         minHeight: 44,
         minWidth: 44,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create((theme) => ({
         paddingVertical: theme.spacing.sm,
     },
     chipSelected: {
-        backgroundColor: theme.colors.accent,
+        backgroundColor: theme.colors.accentPrimary,
     },
     chipPressed: {
         opacity: theme.motion.pressOpacity,

@@ -49,8 +49,8 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.sm,
     },
     deck: {
-        backgroundColor: theme.colors.surfaceMuted,
-        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surfaceTonal,
+        borderColor: theme.colors.borderSubtle,
         borderRadius: theme.radii.md,
         borderWidth: 1,
         gap: theme.spacing.xs,
@@ -58,8 +58,8 @@ const styles = StyleSheet.create((theme) => ({
         padding: theme.spacing.md,
     },
     selected: {
-        backgroundColor: theme.colors.accentSoft,
-        borderColor: theme.colors.accentStrong,
+        backgroundColor: theme.colors.accentPrimarySoft,
+        borderColor: theme.colors.accentPrimaryStrong,
     },
     pressed: {
         opacity: theme.motion.pressOpacity,

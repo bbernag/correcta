@@ -120,7 +120,7 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.xs,
     },
     answerBlock: {
-        borderTopColor: theme.colors.border,
+        borderTopColor: theme.colors.borderSubtle,
         borderTopWidth: 1,
         gap: theme.spacing.xs,
         paddingTop: theme.spacing.md,

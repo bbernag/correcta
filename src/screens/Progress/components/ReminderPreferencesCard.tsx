@@ -114,8 +114,8 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.sm,
     },
     option: {
-        backgroundColor: theme.colors.surfaceMuted,
-        borderColor: theme.colors.border,
+        backgroundColor: theme.colors.surfaceTonal,
+        borderColor: theme.colors.borderSubtle,
         borderRadius: theme.radii.sm,
         borderWidth: 1,
         flexBasis: "45%",
@@ -125,8 +125,8 @@ const styles = StyleSheet.create((theme) => ({
         padding: theme.spacing.md,
     },
     optionSelected: {
-        backgroundColor: theme.colors.accentSoft,
-        borderColor: theme.colors.accentStrong,
+        backgroundColor: theme.colors.accentPrimarySoft,
+        borderColor: theme.colors.accentPrimaryStrong,
     },
     pressed: {
         opacity: theme.motion.pressOpacity,

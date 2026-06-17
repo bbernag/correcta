@@ -19,7 +19,7 @@ export function LibrarySectionHeader({section}: LibrarySectionHeaderProps) {
 
 const styles = StyleSheet.create((theme) => ({
     root: {
-        backgroundColor: theme.colors.background,
+        backgroundColor: theme.colors.backgroundPrimary,
         gap: theme.spacing.xs,
         paddingTop: theme.spacing.md,
     },

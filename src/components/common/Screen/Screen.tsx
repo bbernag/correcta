@@ -1,6 +1,7 @@
 import type {PropsWithChildren} from "react";
 import type {StyleProp, ViewStyle} from "react-native";
-import {ScrollView, View} from "react-native";
+import {View} from "react-native";
+import {KeyboardAwareScrollView} from "react-native-keyboard-controller";
 import type {Edge} from "react-native-safe-area-context";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {StyleSheet} from "react-native-unistyles";
@@ -22,15 +23,17 @@ export function Screen({
     return (
         <SafeAreaView edges={edges} style={[styles.safeArea, style]}>
             {scroll ? (
-                <ScrollView
+                <KeyboardAwareScrollView
+                    bottomOffset={24}
                     contentContainerStyle={[
                         styles.content,
                         contentContainerStyle,
                     ]}
                     keyboardShouldPersistTaps="handled"
+                    mode="insets"
                 >
                     {children}
-                </ScrollView>
+                </KeyboardAwareScrollView>
             ) : (
                 <View
                     style={[

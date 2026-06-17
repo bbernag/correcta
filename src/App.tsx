@@ -2,7 +2,10 @@ import "./theme/unistyles";
 
 import {StatusBar} from "expo-status-bar";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
-import {KeyboardProvider} from "react-native-keyboard-controller";
+import {
+    KeyboardProvider,
+    KeyboardToolbar,
+} from "react-native-keyboard-controller";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import {StyleSheet} from "react-native-unistyles";
 
@@ -14,6 +17,9 @@ export function App() {
             <KeyboardProvider>
                 <SafeAreaProvider>
                     <RootNavigator />
+                    <KeyboardToolbar>
+                        <KeyboardToolbar.Done text="Done" />
+                    </KeyboardToolbar>
                     <StatusBar style="auto" />
                 </SafeAreaProvider>
             </KeyboardProvider>

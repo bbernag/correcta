@@ -31,6 +31,7 @@ export function AnswerComposer({
             <TextInput
                 autoCapitalize="sentences"
                 autoCorrect
+                blurOnSubmit
                 inputStyle={styles.textInput}
                 label="Your translation"
                 multiline

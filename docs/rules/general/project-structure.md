@@ -96,6 +96,39 @@ local visual piece, create a sibling component file. Pure display decisions move
 to colocated `utils.ts`. Multi-value behavior that uses state, handlers,
 effects, or side effects moves to a colocated hook.
 
+## Services
+
+Services are app-owned non-UI modules. They hold product workflows, side
+effects, and adapters to storage, network clients, native APIs, or other
+external systems.
+
+Use `src/services` when code needs to:
+
+- Coordinate an app workflow, such as saving a practice sentence, updating the
+  review queue, and recording progress.
+- Talk to storage, HTTP clients, native APIs, analytics, permissions, or other
+  side-effectful systems.
+- Encapsulate product rules that should not live inside a screen, component, or
+  generic utility.
+- Provide a stable app API that screen hooks can call.
+
+Do not use services for:
+
+- Reusable React behavior. Put that in `src/hooks` or a local `hooks/` folder.
+- Pure reusable functions. Put those in `src/utils` or a local `utils/` folder.
+- Screen-only state transitions. Keep those in the screen's hook.
+- UI rendering, React components, or React Native styles.
+
+For Conecta, `src/services/domain` contains learning workflows and business
+rules, `src/services/storage` wraps local persistence, `src/services/http`
+wraps request behavior, and `src/services/date` wraps native date behavior.
+
+The intended flow is:
+
+```text
+Screen component -> screen hook -> service workflow -> storage/http/native adapter
+```
+
 ## Support File Naming
 
 - React component files use PascalCase names.

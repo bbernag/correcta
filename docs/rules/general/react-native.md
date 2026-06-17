@@ -141,6 +141,12 @@ this repo's existing source and configuration.
 - Components should not build network requests directly.
 - Screens and components call services, screen-local hooks, shared hooks, or
   client data-library APIs.
+- Screen hooks may manage UI state and handlers, then call services for app
+  workflows or side effects.
+- Services own storage, network, native adapters, and product workflows that
+  should stay out of screens and components.
+- Global hooks are for reusable React behavior. Global utils are for pure
+  reusable functions.
 - Keep loading, refresh, retry, empty, and error states explicit.
 - Cancel or ignore stale requests when screens unmount or query params change.
 - Do not duplicate server state into component state just to render it.

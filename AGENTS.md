@@ -48,6 +48,9 @@ Use the task router below to read only the rules relevant to the current task.
 - Use object params for functions with more than one input.
 - Public callback props use `on*`; local handler functions use `handle*`.
 - Components do not build network requests directly.
+- Use services for app workflows, storage, network, and native adapters.
+- Use global hooks for reusable React behavior and global utils for pure
+  reusable functions.
 - Dynamic lists use stable non-index keys.
 - Icon-only controls need accessible names.
 - Loading, empty, disabled, and error states must be explicit when user-facing.

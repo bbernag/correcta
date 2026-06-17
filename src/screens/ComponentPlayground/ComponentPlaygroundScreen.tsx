@@ -1,8 +1,12 @@
 import {useState} from "react";
+import {View} from "react-native";
+import {StyleSheet} from "react-native-unistyles";
 
 import {
     AppText,
     Button,
+    Icon,
+    IconButton,
     Screen,
     Surface,
     TextInput,
@@ -11,6 +15,11 @@ import {
     runFoundationChecks,
     type FoundationCheckResult,
 } from "../../native/foundationChecks";
+import {
+    COMPONENT_PLAYGROUND_HAPTIC_ACTIONS,
+    COMPONENT_PLAYGROUND_ICON_BUTTON_EXAMPLES,
+    COMPONENT_PLAYGROUND_ICON_SAMPLES,
+} from "./constants/ComponentPlaygroundConstants";
 
 export function ComponentPlaygroundScreen() {
     const [result, setResult] = useState<FoundationCheckResult | null>(null);
@@ -51,6 +60,78 @@ export function ComponentPlaygroundScreen() {
                     onPress={handleRunChecks}
                 />
             </Surface>
+            <Surface>
+                <AppText variant="heading">Iconography</AppText>
+                <View style={styles.iconGrid}>
+                    {COMPONENT_PLAYGROUND_ICON_SAMPLES.map((item) => (
+                        <View key={item.name} style={styles.iconSample}>
+                            <Icon
+                                name={item.name}
+                                size="hero"
+                                tone={item.tone}
+                            />
+                            <AppText
+                                numberOfLines={1}
+                                variant="caption"
+                                tone="secondary"
+                            >
+                                {item.label}
+                            </AppText>
+                        </View>
+                    ))}
+                </View>
+            </Surface>
+            <Surface>
+                <AppText variant="heading">Icon buttons</AppText>
+                <View style={styles.iconButtonGrid}>
+                    {COMPONENT_PLAYGROUND_ICON_BUTTON_EXAMPLES.map((item) => (
+                        <View
+                            key={item.accessibilityLabel}
+                            style={styles.iconButtonSample}
+                        >
+                            <IconButton
+                                accessibilityLabel={item.accessibilityLabel}
+                                icon={item.icon}
+                                selected={item.selected}
+                                size={item.size}
+                                variant={item.variant}
+                            />
+                            <AppText
+                                numberOfLines={1}
+                                variant="caption"
+                                tone="secondary"
+                            >
+                                {item.label}
+                            </AppText>
+                        </View>
+                    ))}
+                </View>
+            </Surface>
+            <Surface>
+                <AppText variant="heading">Haptics</AppText>
+                <View style={styles.iconButtonGrid}>
+                    {COMPONENT_PLAYGROUND_HAPTIC_ACTIONS.map((item) => (
+                        <View
+                            key={item.feedback}
+                            style={styles.iconButtonSample}
+                        >
+                            <IconButton
+                                accessibilityLabel={item.accessibilityLabel}
+                                hapticFeedback={item.feedback}
+                                icon={item.icon}
+                                variant={item.variant}
+                            />
+                            <AppText
+                                numberOfLines={1}
+                                variant="caption"
+                                tone="secondary"
+                            >
+                                {item.label}
+                            </AppText>
+                        </View>
+                    ))}
+                </View>
+            </Surface>
             {result ? (
                 <Surface variant="muted">
                     <AppText variant="label">Storage</AppText>
@@ -85,3 +166,26 @@ export function ComponentPlaygroundScreen() {
         </Screen>
     );
 }
+
+const styles = StyleSheet.create((theme) => ({
+    iconGrid: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: theme.spacing.lg,
+    },
+    iconSample: {
+        alignItems: "center",
+        gap: theme.spacing.sm,
+        minWidth: 84,
+    },
+    iconButtonGrid: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: theme.spacing.lg,
+    },
+    iconButtonSample: {
+        alignItems: "center",
+        gap: theme.spacing.sm,
+        minWidth: 72,
+    },
+}));

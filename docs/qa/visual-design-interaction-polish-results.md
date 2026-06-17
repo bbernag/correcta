@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slice 1 is complete. Slice 2 haptics foundation is started;
-icons and final Slice 2 QA remain open.
+Status: partial. Slices 1 and 2 are complete. Remaining visual polish slices
+are still open.
 
 ## Slice 1: Theme Token Design System
 
@@ -36,9 +36,9 @@ Verification:
 
 Known follow-ups:
 
-- Full visual polish phase remains open for icons, haptics, upgraded shared
-  components, ComponentPlayground redesign, screen-specific polish, reduced
-  motion, React Native accessibility, iOS QA, and final Android QA.
+- Full visual polish phase remains open for upgraded shared components,
+  ComponentPlayground redesign, screen-specific polish, reduced motion, React
+  Native accessibility, and final Android/iOS QA.
 - Android accessibility snapshots are currently sparse for this app, so this
   QA pass used screenshots and coordinate navigation.
 
@@ -46,15 +46,21 @@ Known follow-ups:
 
 Date: 2026-06-17
 
-Result: partial pass.
+Result: pass.
 
 Implemented:
 
+- `lucide-react-native` and `react-native-svg` dependencies.
 - `react-native-pulsar` dependency.
+- Shared semantic icon registry and `Icon` wrapper in
+  `src/components/common/Icon`.
+- Shared `IconButton` in `src/components/common/IconButton`.
 - Shared haptics wrapper in `src/native/haptics`.
+- ComponentPlayground icon, IconButton, and haptic examples.
 - Basic Practice haptics for selection, feedback result, save confirmation,
   and answer-check failure paths.
 - Visual-design docs updated to use Pulsar as the active haptics dependency.
+- Local `.agent-device/` runtime state ignored for Git and Prettier.
 
 Verification:
 
@@ -63,13 +69,24 @@ Verification:
 - `npm run format:check`
 - `npx expo run:ios --no-bundler`
 - `npx expo run:android --no-bundler`
+- Metro Android bundle probe returned `200` after restarting Metro with
+  `npx expo start --dev-client --clear --port 8081`.
 - iOS runtime: Home -> Start Practice -> type answer -> Submit answer ->
   Feedback.
+- iOS runtime: reload clean Metro bundle -> Home -> Open component check ->
+  icon, IconButton, and haptics sections rendered.
+- iOS accessibility exposed icon-only button labels and selected state in
+  ComponentPlayground.
+- iOS haptic smoke check: tapped "Play success haptic example"; no crash.
 - Android runtime: Home -> Start Practice -> Skip -> Feedback.
+- Android runtime: dev launcher -> Correcta Metro entry -> Home -> Open
+  component check -> icon, IconButton, and haptics sections rendered.
+- Android haptic smoke check: tapped the success haptic example; no crash.
 
 Known follow-ups:
 
-- Add `lucide-react-native` and `react-native-svg`.
-- Add shared `Icon` and `IconButton` components.
-- Add ComponentPlayground haptics test actions.
-- Finish Slice 2 visual/device QA after icons and playground examples exist.
+- Android accessibility snapshots remain sparse after app load; use screenshots
+  and coordinate fallback until the app exposes a richer accessibility tree.
+- `agent-device` iOS snapshots were blocked by another daemon-owned runner in
+  this pass, so iOS visual QA used Simulator UI through Computer Use plus a
+  `simctl` screenshot.

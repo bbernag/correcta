@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slice 1 is implemented and Android-verified. Slice 2 haptics
-foundation is started; icons and final Slice 2 QA remain open.
+Status: partial. Slices 1 and 2 are implemented and verified. Remaining
+visual polish slices are still open.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -64,19 +64,29 @@ Date: 2026-06-17
 
 Scope:
 
-- Installed `react-native-pulsar`.
+- Installed `lucide-react-native`, `react-native-svg`, and
+  `react-native-pulsar`.
 - Added the app haptics wrapper under `src/native/haptics`.
+- Added the shared semantic icon registry and `Icon` wrapper under
+  `src/components/common/Icon`.
+- Added `IconButton` under `src/components/common/IconButton`.
+- Added ComponentPlayground icon, IconButton, and haptic examples.
 - Routed basic Practice haptics through the wrapper for selection changes,
   answer feedback results, app-level answer-check failures, and save
   confirmations.
 - Updated active visual-design docs from `expo-haptics` to
   `react-native-pulsar`.
+- Ignored local `.agent-device/` runtime state so project format checks do not
+  include daemon metadata.
 
 Automated checks:
 
 - `npm run typecheck`
 - `npm run lint`
 - `npm run format:check`
+- Metro Android bundle probe after restarting with clean cache:
+  `curl -s -o /tmp/correcta-android-bundle.out -w "%{http_code} %{size_download}\n" "http://127.0.0.1:8081/index.ts.bundle?platform=android&dev=true&minify=false"`
+  returned `200`.
 
 iOS QA:
 
@@ -84,6 +94,17 @@ iOS QA:
 - Result: build, install, and dev-client launch succeeded.
 - Device: `iPhone 17`
 - App id: `com.luisgarcia.correcta`
+- Runtime path: reload clean Metro bundle -> Home -> Open component check.
+- Visual result: ComponentPlayground rendered iconography, IconButton, and
+  haptic sections.
+- React Native accessibility result: icon-only buttons exposed labels such as
+  "Open settings example", "Saved example selected", and "Play success haptic
+  example"; selected state was exposed for the selected saved example.
+- Haptics result: tapped "Play success haptic example"; the app stayed
+  responsive and did not crash.
+- Tool note: `agent-device` could relaunch the iOS app, but its iOS snapshot
+  runner was locked by another daemon. This pass used the Simulator UI through
+  Computer Use and `xcrun simctl io` for screenshot evidence.
 - Runtime path: Home -> Start Practice -> type answer -> Submit answer ->
   Feedback.
 - Result: feedback rendered after the Pulsar-backed result haptic call.
@@ -94,17 +115,35 @@ Android QA:
 - Result: build, install, and dev-client launch succeeded.
 - Device: `Medium Phone API 36.1`
 - App id: `com.luisgarcia.correcta`
+- Runtime path: dev launcher -> `Correcta, http://10.0.2.2:8081` -> Home ->
+  Open component check.
+- Visual result: ComponentPlayground rendered iconography, IconButton, and
+  haptic sections.
+- Haptics result: tapped the success haptic example; the app stayed responsive
+  and did not crash.
+- Tool note: Android filtered accessibility snapshots were sparse after app
+  load, so this pass used raw coordinates and screenshots for visual evidence.
+- Metro note: the first reload after installing Lucide/SVG hit a stale Metro
+  file-map resolver error for `lucide-react-native`. Restarting Metro with
+  `npx expo start --dev-client --clear --port 8081` fixed the bundle.
 - Runtime path: Home -> Start Practice -> Skip -> Feedback.
 - Result: feedback rendered after the Pulsar-backed skipped-result haptic
   call.
-- Android filtered accessibility snapshots remained sparse, so this pass used
-  raw device coordinates and screenshots for navigation evidence.
+- Android filtered accessibility snapshots remained sparse in both the Practice
+  and ComponentPlayground checks, so this pass used raw device coordinates and
+  screenshots for navigation evidence.
 
 Local screenshot evidence from this QA pass:
 
 - `/tmp/correcta-pulsar-android-home.png`
 - `/tmp/correcta-pulsar-android-practice-final.png`
 - `/tmp/correcta-pulsar-android-feedback.png`
+- `/tmp/correcta-slice2-android-error.png`
+- `/tmp/correcta-slice2-android-home.png`
+- `/tmp/correcta-slice2-android-component-playground-top.png`
+- `/tmp/correcta-slice2-android-component-playground-haptics.png`
+- `/tmp/correcta-slice2-android-haptic-post-tap.png`
+- `/tmp/correcta-slice2-ios-component-playground.png`
 
 ## General
 

@@ -1,5 +1,6 @@
 node_modules/
 .expo/
+.agent-device/
 dist/
 web-build/
 ios/

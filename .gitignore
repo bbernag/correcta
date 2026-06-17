@@ -24,6 +24,9 @@ expo-env.d.ts
 # Metro
 .metro-health-check*
 
+# Local device automation state
+.agent-device/
+
 # debug
 npm-debug.*
 yarn-debug.*

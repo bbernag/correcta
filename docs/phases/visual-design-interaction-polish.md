@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish
 
-Status: partial. Slice 1, Theme Token Design System, is implemented and
-Android-verified. Remaining slices are still planned.
+Status: partial. Slices 1 and 2 are implemented and verified. Remaining
+slices are still planned.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -206,6 +206,8 @@ Evidence:
 
 ### Slice 2: Icons And Haptics Foundation
 
+Status: done.
+
 Goal: add native feedback infrastructure without changing every screen.
 
 Tasks:
@@ -223,6 +225,18 @@ Exit:
 - Icon-only controls require accessible names.
 - Haptics wrapper is callable.
 - iOS and Android builds pass.
+
+Evidence:
+
+- Typecheck, lint, and Prettier checks pass.
+- iOS build, install, and dev-client launch succeeded.
+- Android build, install, and dev-client launch succeeded.
+- ComponentPlayground renders semantic registry icons, IconButton variants, and
+  haptic test actions on iOS and Android.
+- iOS accessibility exposes icon-only controls with accessible labels and
+  selected state.
+- Android accessibility snapshots remained sparse after app load, so this pass
+  used screenshots and coordinate fallback for modal navigation.
 
 ### Slice 3: Upgrade Existing Common Components
 

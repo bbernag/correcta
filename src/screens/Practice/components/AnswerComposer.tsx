@@ -3,7 +3,7 @@ import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Button, TextInput} from "../../../components/common";
 import type {PracticeInputMode} from "../../../types";
-import type {WordBankItem} from "../types";
+import type {WordBankItem} from "../types/PracticeTypes";
 
 type AnswerComposerProps = {
     answerText: string;

@@ -43,7 +43,8 @@ components are for reusable UI, not screen-specific implementation details.
 ## Screen-Specific Code
 
 Screen-specific UI, hooks, helpers, constants, and types stay under the screen
-when no other owner uses them.
+when no other owner uses them. Use dedicated support folders once a screen has
+extracted hooks, types, utils, or constants.
 
 ```text
 src/screens/Tables/
@@ -53,13 +54,23 @@ src/screens/Tables/
     TableFooter.tsx
   hooks/
     useTableFilters.ts
-  utils.ts
-  types.ts
-  constants.ts
+  types/
+    TablesTypes.ts
+  utils/
+    TablesUtils.ts
+  constants/
+    TablesConstants.ts
 ```
 
 If a screen grows into a multi-file feature, the screen folder remains the
 ownership boundary until code is reused outside that screen.
+
+Screen support files must follow the screen name:
+
+- Hooks: `src/screens/<ScreenName>/hooks/useXxx.ts`
+- Types: `src/screens/<ScreenName>/types/<ScreenName>Types.ts`
+- Utils: `src/screens/<ScreenName>/utils/<ScreenName>Utils.ts`
+- Constants: `src/screens/<ScreenName>/constants/<ScreenName>Constants.ts`
 
 ## Reusable UI
 
@@ -88,14 +99,20 @@ effects, or side effects moves to a colocated hook.
 ## Support File Naming
 
 - React component files use PascalCase names.
-- Small owners can start with `utils.ts`, `types.ts`, and `constants.ts`.
-  Split into dedicated folders once multiple support files are needed.
+- Screen support files use dedicated folders and screen-prefixed filenames:
+  `hooks/useXxx.ts`, `types/<ScreenName>Types.ts`,
+  `utils/<ScreenName>Utils.ts`, and
+  `constants/<ScreenName>Constants.ts`.
+- Component-local support files can start with `utils.ts`, `types.ts`, and
+  `constants.ts`. Split into dedicated folders once multiple support files are
+  needed.
 - Avoid creating empty structure upfront.
-- Hooks are `useXxx` and live in the nearest owner.
+- Hooks are `useXxx` and live in the nearest owner-specific `hooks/` folder.
 - Use top-level `src/hooks`, `src/utils`, `src/types`, and `src/constants` for
   broadly reusable code.
 - Use screen-local or component-local hooks, utils, types, and constants when
-  the code belongs to one owner.
+  the code belongs to one owner. Screen-local code uses the screen support
+  folders above.
 - Do not create both `helpers/` and `utils/` inside the same owner. Prefer
   `utils/` for pure helpers unless existing source says otherwise.
 - Use `.ios.tsx`, `.android.tsx`, `.native.tsx`, or platform-specific support

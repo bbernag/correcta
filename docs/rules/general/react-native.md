@@ -113,8 +113,9 @@ this repo's existing source and configuration.
   navigation patterns.
 - Screens should stay thin: compose UI, connect navigation params, and delegate
   data shaping to services, hooks, or feature helpers.
-- Screen-owned UI, hooks, utils, types, and constants belong under
-  `src/screens/<ScreenName>` before being promoted.
+- Screen-owned UI belongs under `src/screens/<ScreenName>`. Screen-owned
+  hooks, utils, types, and constants use that screen's `hooks/`, `utils/`,
+  `types/`, and `constants/` support folders before being promoted.
 - Keep route params serializable and typed when the navigation library supports
   it.
 - Pass IDs or small params through navigation. Do not pass functions, class

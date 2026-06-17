@@ -3,9 +3,9 @@ import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {
     createConectaServices,
     startLocalPracticeSession,
-} from "../../services/domain";
-import type {PracticeInputMode} from "../../types";
-import {createWordBankItems, getBuilderAnswer} from "./utils";
+} from "../../../services/domain";
+import type {PracticeInputMode} from "../../../types";
+import {createWordBankItems, getBuilderAnswer} from "../utils/PracticeUtils";
 import {usePracticeFlowActions} from "./usePracticeFlowActions";
 import {usePracticeSaveActions} from "./usePracticeSaveActions";
 import type {
@@ -13,7 +13,7 @@ import type {
     PracticeResult,
     PracticeSessionState,
     PracticeSessionSummaryState,
-} from "./types";
+} from "../types/PracticeTypes";
 
 export function usePracticeSession({restartKey}: {restartKey?: number}) {
     const services = useMemo(() => {

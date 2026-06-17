@@ -10,7 +10,7 @@ import {InputModeControl} from "./components/InputModeControl";
 import {PracticeProgressHeader} from "./components/PracticeProgressHeader";
 import {SentencePromptCard} from "./components/SentencePromptCard";
 import {SessionSummaryCard} from "./components/SessionSummaryCard";
-import {usePracticeSession} from "./usePracticeSession";
+import {usePracticeSession} from "./hooks/usePracticeSession";
 
 type PracticeScreenProps = NativeBottomTabScreenProps<
     MainTabParamList,

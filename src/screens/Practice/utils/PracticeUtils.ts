@@ -1,5 +1,5 @@
-import type {ValidationStatus, PracticeSentence} from "../../types";
-import type {WordBankItem} from "./types";
+import type {ValidationStatus, PracticeSentence} from "../../../types";
+import type {WordBankItem} from "../types/PracticeTypes";
 
 export function createWordBankItems(
     sentence: PracticeSentence | null

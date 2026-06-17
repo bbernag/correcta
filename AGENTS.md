@@ -34,8 +34,13 @@ Use the task router below to read only the rules relevant to the current task.
 - Use React Native primitives or project-approved native components.
 - Shared UI belongs in `src/components/common`.
 - Screen-specific code stays under `src/screens/<ScreenName>`.
-- Keep local hooks, utils, types, and constants near the owning screen or
-  component.
+- Screen-specific hooks belong in `src/screens/<ScreenName>/hooks`.
+- Screen-specific types belong in
+  `src/screens/<ScreenName>/types/<ScreenName>Types.ts`.
+- Screen-specific utils belong in
+  `src/screens/<ScreenName>/utils/<ScreenName>Utils.ts`.
+- Keep constants in `src/screens/<ScreenName>/constants` once a screen needs
+  extracted constants.
 - Keep files under about 300 lines.
 - Use function declarations for React components.
 - Prefer named exports unless the framework requires default exports.

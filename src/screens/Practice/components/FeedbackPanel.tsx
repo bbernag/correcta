@@ -2,8 +2,12 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Button, Surface} from "../../../components/common";
-import {formatScore, getStatusLabel, getStatusTone} from "../utils";
-import type {PracticeResult} from "../types";
+import {
+    formatScore,
+    getStatusLabel,
+    getStatusTone,
+} from "../utils/PracticeUtils";
+import type {PracticeResult} from "../types/PracticeTypes";
 
 type FeedbackPanelProps = {
     isContinuing: boolean;

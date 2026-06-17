@@ -1,12 +1,12 @@
 import type {
     PracticeFeedbackResult,
     LocalPracticeSession,
-} from "../../services/domain";
+} from "../../../services/domain";
 import type {
     PracticeInputMode,
     PracticeSentence,
     PracticeSessionSummary,
-} from "../../types";
+} from "../../../types";
 
 export type PracticePhase =
     | "loading"

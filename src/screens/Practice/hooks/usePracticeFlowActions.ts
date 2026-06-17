@@ -1,13 +1,16 @@
 import type {Dispatch, MutableRefObject, SetStateAction} from "react";
 
-import {getPracticeSummary, submitPracticeAnswer} from "../../services/domain";
-import type {ConectaServices, PracticeSentence} from "../../types";
+import {
+    getPracticeSummary,
+    submitPracticeAnswer,
+} from "../../../services/domain";
+import type {ConectaServices, PracticeSentence} from "../../../types";
 import type {
     PracticePhase,
     PracticeResult,
     PracticeSessionState,
     PracticeSessionSummaryState,
-} from "./types";
+} from "../types/PracticeTypes";
 
 export function usePracticeFlowActions({
     answerText,

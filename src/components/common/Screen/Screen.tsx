@@ -1,33 +1,30 @@
-import {useContext, type PropsWithChildren} from "react";
-import type {StyleProp, ViewStyle} from "react-native";
-import {useColorScheme, View} from "react-native";
+import {useContext} from "react";
+import {View} from "react-native";
 import {KeyboardAwareScrollView} from "react-native-keyboard-controller";
 import {BottomTabBarHeightContext} from "react-native-bottom-tabs";
 import type {Edge} from "react-native-safe-area-context";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {StyleSheet} from "react-native-unistyles";
+import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
-import {appThemes} from "../../../theme/themes";
-
-type ScreenProps = PropsWithChildren<{
-    edges?: Edge[];
-    scroll?: boolean;
-    style?: StyleProp<ViewStyle>;
-    contentContainerStyle?: StyleProp<ViewStyle>;
-}>;
+import type {
+    ScreenBackground,
+    ScreenProps,
+    ScreenSafeArea,
+} from "./ScreenTypes";
 
 export function Screen({
     children,
-    edges = ["top", "left", "right"],
+    background = "primary",
+    edges,
+    safeArea = "content",
     scroll = true,
     style,
     contentContainerStyle,
 }: ScreenProps) {
-    const colorScheme = useColorScheme();
-    const theme = colorScheme === "dark" ? appThemes.dark : appThemes.light;
+    const {theme} = useUnistyles();
     const bottomTabBarHeight = useContext(BottomTabBarHeightContext) ?? 0;
     const backgroundStyle = {
-        backgroundColor: theme.colors.backgroundPrimary,
+        backgroundColor: getScreenBackgroundColor({background, theme}),
     };
     const tabBarInsetStyle = {
         marginBottom: bottomTabBarHeight,
@@ -35,7 +32,7 @@ export function Screen({
 
     return (
         <SafeAreaView
-            edges={edges}
+            edges={edges ?? getSafeAreaEdges(safeArea)}
             style={[styles.safeArea, backgroundStyle, tabBarInsetStyle, style]}
         >
             {scroll ? (
@@ -79,3 +76,37 @@ const styles = StyleSheet.create((theme) => ({
         flex: 1,
     },
 }));
+
+function getSafeAreaEdges(safeArea: ScreenSafeArea): Edge[] {
+    switch (safeArea) {
+        case "all":
+            return ["top", "bottom", "left", "right"];
+        case "horizontal":
+            return ["left", "right"];
+        case "none":
+            return [];
+        case "content":
+        default:
+            return ["top", "left", "right"];
+    }
+}
+
+function getScreenBackgroundColor({
+    background,
+    theme,
+}: {
+    background: ScreenBackground;
+    theme: ReturnType<typeof useUnistyles>["theme"];
+}) {
+    switch (background) {
+        case "secondary":
+            return theme.colors.backgroundSecondary;
+        case "surface":
+            return theme.colors.surfacePrimary;
+        case "tonal":
+            return theme.colors.surfaceTonal;
+        case "primary":
+        default:
+            return theme.colors.backgroundPrimary;
+    }
+}

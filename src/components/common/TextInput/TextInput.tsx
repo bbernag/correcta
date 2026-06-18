@@ -1,45 +1,93 @@
-import type {
-    StyleProp,
-    TextInputProps as NativeTextInputProps,
-    TextStyle,
-    ViewStyle,
-} from "react-native";
+import {useState} from "react";
 import {TextInput as NativeTextInput, View} from "react-native";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {AppText} from "../AppText";
-
-type TextInputProps = Omit<NativeTextInputProps, "style"> & {
-    label: string;
-    error?: string;
-    containerStyle?: StyleProp<ViewStyle>;
-    inputStyle?: StyleProp<TextStyle>;
-};
+import {Icon} from "../Icon";
+import type {IconTone} from "../Icon";
+import type {TextInputProps} from "./TextInputTypes";
 
 export function TextInput({
     label,
     error,
+    helperText,
+    successText,
+    status = "default",
+    disabled = false,
+    leadingIcon,
+    trailingIcon,
     containerStyle,
     inputStyle,
     accessibilityHint,
     accessibilityLabel,
+    onBlur,
+    onFocus,
     ...inputProps
 }: TextInputProps) {
     const {theme} = useUnistyles();
+    const [isFocused, setIsFocused] = useState(false);
+    const isDisabled = disabled || inputProps.editable === false;
+    const isSuccess = !error && (status === "success" || Boolean(successText));
+    const supportTone = getSupportTone({error, isSuccess});
+    const supportText = error ?? successText ?? helperText;
+    const iconTone = getIconTone({
+        disabled: isDisabled,
+        error,
+        isFocused,
+        isSuccess,
+    });
+
+    function handleFocus(
+        event: Parameters<NonNullable<TextInputProps["onFocus"]>>[0]
+    ) {
+        setIsFocused(true);
+        onFocus?.(event);
+    }
+
+    function handleBlur(
+        event: Parameters<NonNullable<TextInputProps["onBlur"]>>[0]
+    ) {
+        setIsFocused(false);
+        onBlur?.(event);
+    }
 
     return (
         <View style={[styles.root, containerStyle]}>
-            <AppText variant="label">{label}</AppText>
-            <NativeTextInput
-                accessibilityHint={error ?? accessibilityHint}
-                accessibilityLabel={accessibilityLabel ?? label}
-                placeholderTextColor={theme.colors.textMuted}
-                style={[styles.input, error && styles.inputError, inputStyle]}
-                {...inputProps}
-            />
-            {error ? (
-                <AppText variant="caption" tone="danger">
-                    {error}
+            <AppText variant="label" tone={isDisabled ? "muted" : "primary"}>
+                {label}
+            </AppText>
+            <View
+                style={[
+                    styles.inputFrame,
+                    isFocused && styles.inputFocused,
+                    isSuccess && styles.inputSuccess,
+                    error && styles.inputError,
+                    isDisabled && styles.inputDisabled,
+                ]}
+            >
+                {leadingIcon ? (
+                    <Icon name={leadingIcon} size="default" tone={iconTone} />
+                ) : null}
+                <NativeTextInput
+                    {...inputProps}
+                    accessibilityHint={error ?? accessibilityHint}
+                    accessibilityLabel={accessibilityLabel ?? label}
+                    accessibilityState={{
+                        disabled: isDisabled,
+                    }}
+                    editable={!isDisabled}
+                    onBlur={handleBlur}
+                    onFocus={handleFocus}
+                    placeholderTextColor={theme.colors.textMuted}
+                    style={[styles.input, inputStyle]}
+                />
+                {trailingIcon ? (
+                    <Icon name={trailingIcon} size="default" tone={iconTone} />
+                ) : null}
+            </View>
+            {supportText ? (
+                <AppText variant="caption" tone={supportTone}>
+                    {supportText}
                 </AppText>
             ) : null}
         </View>
@@ -50,20 +98,87 @@ const styles = StyleSheet.create((theme) => ({
     root: {
         gap: theme.spacing.sm,
     },
-    input: {
+    inputFrame: {
+        alignItems: "center",
         backgroundColor: theme.colors.surfacePrimary,
         borderColor: theme.colors.borderSubtle,
         borderRadius: theme.radii.input,
         borderWidth: 1,
+        flexDirection: "row",
+        gap: theme.spacing.sm,
+        minHeight: 48,
+        paddingHorizontal: theme.spacing.md,
+    },
+    input: {
         color: theme.colors.textPrimary,
+        flex: 1,
         fontSize: theme.typography.body,
         fontWeight: theme.fontWeights.body,
         lineHeight: theme.lineHeights.body,
-        minHeight: 48,
-        paddingHorizontal: theme.spacing.md,
         paddingVertical: theme.spacing.md,
     },
+    inputFocused: {
+        backgroundColor: theme.colors.accentPrimarySoft,
+        borderColor: theme.colors.focusRing,
+    },
     inputError: {
+        backgroundColor: theme.colors.feedbackDangerSoft,
         borderColor: theme.colors.feedbackDanger,
     },
+    inputSuccess: {
+        backgroundColor: theme.colors.feedbackSuccessSoft,
+        borderColor: theme.colors.feedbackSuccess,
+    },
+    inputDisabled: {
+        backgroundColor: theme.colors.backgroundSecondary,
+        opacity: theme.motion.disabledOpacity,
+    },
 }));
+
+function getSupportTone({
+    error,
+    isSuccess,
+}: {
+    error?: string;
+    isSuccess: boolean;
+}) {
+    if (error) {
+        return "danger";
+    }
+
+    if (isSuccess) {
+        return "success";
+    }
+
+    return "muted";
+}
+
+function getIconTone({
+    disabled,
+    error,
+    isFocused,
+    isSuccess,
+}: {
+    disabled: boolean;
+    error?: string;
+    isFocused: boolean;
+    isSuccess: boolean;
+}): IconTone {
+    if (disabled) {
+        return "muted";
+    }
+
+    if (error) {
+        return "danger";
+    }
+
+    if (isSuccess) {
+        return "success";
+    }
+
+    if (isFocused) {
+        return "accent";
+    }
+
+    return "secondary";
+}

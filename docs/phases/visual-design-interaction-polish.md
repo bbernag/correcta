@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish
 
-Status: partial. Slices 1 and 2 are implemented and verified. Remaining
-slices are still planned.
+Status: partial. Slices 1-3 are implemented as foundation work. Slice 3 is not
+the approved final visual direction; a native elegance pass is planned next.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -240,6 +240,9 @@ Evidence:
 
 ### Slice 3: Upgrade Existing Common Components
 
+Status: partial. Technical primitive APIs are done; visual direction is not
+approved.
+
 Goal: make current primitives support the new design without breaking screens.
 
 Tasks:
@@ -255,7 +258,42 @@ Exit:
 - Existing screens compile.
 - ComponentPlayground shows upgraded primitives.
 
-### Slice 4: Add New Shared Visual Components
+Evidence:
+
+- Typecheck, lint, and Prettier checks pass.
+- iOS simulator runtime check shows the upgraded primitive examples in
+  ComponentPlayground.
+- AppText exposes typed variants and semantic tones from the design system.
+- Button supports typed variants, sizes, leading/trailing icons, loading,
+  disabled, and press states while preserving existing call sites.
+- Screen supports typed background and safe-area variants while preserving the
+  existing `edges` override.
+- Surface supports typed hierarchy variants, status variants, and correction
+  rails.
+- TextInput supports focused, helper, error, success, disabled, and icon states.
+- ComponentPlayground shows upgraded typography, button, input, and surface
+  examples.
+- User visual review rejected the current samples as too generic, card-heavy,
+  and not native/elegant enough. Treat this slice as technical foundation only.
+
+### Slice 4: Native Elegance Pass For Common Primitives And Glass
+
+Status: planned.
+
+Plan: [native-elegance-common-primitives.md](native-elegance-common-primitives.md)
+
+Goal: turn the existing primitive APIs into an approved native visual language
+before adding more shared components.
+
+Exit:
+
+- ComponentPlayground no longer looks like generic web card UI.
+- Existing primitives feel native and elegant in iOS and Android light/dark
+  mode.
+- `GlassSurface` fallback exists and is only used in approved compact contexts.
+- Android uses tonal/elevated native treatment instead of fake iOS glass.
+
+### Slice 5: Add New Shared Visual Components
 
 Goal: create the reusable UI building blocks before screen polish.
 
@@ -275,7 +313,7 @@ Exit:
 - Reduced motion is respected by animated components.
 - Icon-only controls have accessible labels.
 
-### Slice 5: ComponentPlayground Redesign
+### Slice 6: ComponentPlayground Redesign
 
 Goal: make ComponentPlayground the visual QA source.
 
@@ -291,7 +329,7 @@ Exit:
 
 - Design system can be reviewed from one screen.
 
-### Slice 6: Home Polish
+### Slice 7: Home Polish
 
 Goal: make Home feel like a calm learning dashboard.
 
@@ -315,7 +353,7 @@ Exit:
 
 - Home has one obvious next action and looks polished in light/dark mode.
 
-### Slice 7: Practice Polish
+### Slice 8: Practice Polish
 
 Goal: make the core loop feel excellent.
 
@@ -348,7 +386,7 @@ Exit:
 - Home -> Practice -> Check answer -> Feedback -> Save -> Continue feels
   premium and remains keyboard-safe on iOS and Android.
 
-### Slice 8: Review Polish
+### Slice 9: Review Polish
 
 Goal: make Review feel like an intentional study area.
 
@@ -364,7 +402,7 @@ Exit:
 
 - Review clearly tells the user what to practice next.
 
-### Slice 9: Library Polish
+### Slice 10: Library Polish
 
 Goal: make saved content feel like a personal learning notebook.
 
@@ -379,7 +417,7 @@ Exit:
 
 - Library content feels organized and useful without adding complex new filters.
 
-### Slice 10: Progress Polish
+### Slice 11: Progress Polish
 
 Goal: make progress feel motivating without heavy analytics.
 
@@ -396,7 +434,7 @@ Exit:
 
 - Progress gives a clear sense of improvement using native views, not charts.
 
-### Slice 11: Native Polish And GlassSurface Spike
+### Slice 12: Native Polish And GlassSurface Spike
 
 Goal: platform-specific polish without Android pretending to be iOS.
 
@@ -412,7 +450,7 @@ Exit:
 - No readability regressions.
 - Android does not look like an iOS clone.
 
-### Slice 12: Accessibility And Reduced Motion Pass
+### Slice 13: Accessibility And Reduced Motion Pass
 
 Goal: make the polished UI usable.
 
@@ -430,7 +468,7 @@ Exit:
 
 - Accessibility QA passes on iOS and Android.
 
-### Slice 13: Final QA And Evidence
+### Slice 14: Final QA And Evidence
 
 Goal: close the phase with verified evidence.
 
@@ -454,17 +492,18 @@ Exit:
 1. `docs: add visual design polish phase plan`
 2. `feat: add correction desk theme tokens`
 3. `feat: add icon and haptics foundations`
-4. `feat: upgrade common primitives`
-5. `feat: add shared visual components`
-6. `feat: redesign component playground`
-7. `feat: polish home screen`
-8. `feat: polish practice screen interactions`
-9. `feat: polish review screen`
-10. `feat: polish library screen`
-11. `feat: polish progress screen`
-12. `feat: add platform visual polish`
-13. `fix: improve accessibility and reduced motion handling`
-14. `docs: add visual polish QA evidence`
+4. `feat: add common primitive API foundation`
+5. `feat: add native elegance primitive pass`
+6. `feat: add shared visual components`
+7. `feat: redesign component playground`
+8. `feat: polish home screen`
+9. `feat: polish practice screen interactions`
+10. `feat: polish review screen`
+11. `feat: polish library screen`
+12. `feat: polish progress screen`
+13. `feat: add platform visual polish`
+14. `fix: improve accessibility and reduced motion handling`
+15. `docs: add visual polish QA evidence`
 
 ## Risks
 

@@ -1,6 +1,6 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slices 1 and 2 are implemented and verified. Remaining
+Status: partial. Slices 1-3 are implemented and verified. Remaining
 visual polish slices are still open.
 
 Use this checklist when implementing and closing the Visual Design &
@@ -21,6 +21,8 @@ Scope:
 Automated checks:
 
 - `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
 - `npm run lint`
 - `npm run format:check`
 
@@ -144,6 +146,62 @@ Local screenshot evidence from this QA pass:
 - `/tmp/correcta-slice2-android-component-playground-haptics.png`
 - `/tmp/correcta-slice2-android-haptic-post-tap.png`
 - `/tmp/correcta-slice2-ios-component-playground.png`
+
+## Slice 3 Evidence
+
+Date: 2026-06-18
+
+Scope:
+
+- Added exported type files for AppText, Button, Screen, Surface, and
+  TextInput.
+- Upgraded AppText with the full semantic tone set used by the design system.
+- Upgraded Button with primary, secondary, tertiary, ghost, danger, and success
+  variants; small, medium, and large sizes; leading/trailing icons; loading
+  state; disabled state; press state; and Android ripple color.
+- Upgraded Screen with typed background and safe-area variants while preserving
+  the existing `edges` escape hatch.
+- Upgraded Surface with flat, card, elevated, tonal, inverse, success, warning,
+  danger, and info variants plus correction rail support.
+- Upgraded TextInput with label, helper, focused, error, success, disabled,
+  leading icon, and trailing icon states.
+- Added ComponentPlayground sections for typography, buttons, inputs, and
+  surfaces.
+- Added the `lock` semantic icon registry entry for disabled input examples.
+
+Automated checks:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+
+iOS QA:
+
+- Device: `iPhone 17` simulator.
+- Build type: Expo Dev Client debug build.
+- Metro command: `npx expo start --dev-client --clear --port 8081 --offline`.
+- Runtime path: development build launcher ->
+  `Correcta, http://192.168.68.100:8081` -> Home -> Open component check.
+- Visual result: ComponentPlayground rendered Typography, Buttons, Inputs, and
+  Surfaces sections.
+- React Native accessibility result: the loading button exposed disabled and
+  busy state; the disabled input exposed disabled state; helper, success, and
+  error text were present near the fields.
+- Screenshot: `/tmp/correcta-slice3-ios-component-playground.png`.
+
+Android QA:
+
+- Not run in this slice because `agent-device apps --platform android` returned
+  `DEVICE_NOT_FOUND`.
+
+Known follow-ups:
+
+- Android runtime visual QA for the upgraded primitive examples still belongs
+  in a device pass before closing the full visual polish phase.
+- Slice 4 will add the missing shared primitives such as chips, stat cards,
+  progress bars, segmented controls, and feedback highlights.
+- Slice 4 will add the missing shared primitives such as chips, stat cards,
+  progress bars, segmented controls, and feedback highlights.
 
 ## General
 

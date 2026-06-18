@@ -16,9 +16,13 @@ import {
     type FoundationCheckResult,
 } from "../../native/foundationChecks";
 import {
+    COMPONENT_PLAYGROUND_BUTTON_EXAMPLES,
     COMPONENT_PLAYGROUND_HAPTIC_ACTIONS,
     COMPONENT_PLAYGROUND_ICON_BUTTON_EXAMPLES,
     COMPONENT_PLAYGROUND_ICON_SAMPLES,
+    COMPONENT_PLAYGROUND_INPUT_EXAMPLES,
+    COMPONENT_PLAYGROUND_SURFACE_EXAMPLES,
+    COMPONENT_PLAYGROUND_TEXT_EXAMPLES,
 } from "./constants/ComponentPlaygroundConstants";
 
 export function ComponentPlaygroundScreen() {
@@ -43,16 +47,87 @@ export function ComponentPlaygroundScreen() {
         }
     }
 
+    function handlePlaygroundPress() {
+        return undefined;
+    }
+
     return (
         <Screen>
             <AppText variant="title">Component check</AppText>
             <Surface>
-                <AppText variant="heading">Common controls</AppText>
-                <TextInput
-                    label="Sample answer"
-                    placeholder="Write a short translation"
-                    returnKeyType="done"
-                />
+                <AppText variant="heading">Typography</AppText>
+                <View style={styles.textStack}>
+                    {COMPONENT_PLAYGROUND_TEXT_EXAMPLES.map((item) => (
+                        <View key={item.label} style={styles.textSample}>
+                            <AppText variant="caption" tone="muted">
+                                {item.label}
+                            </AppText>
+                            <AppText variant={item.variant} tone={item.tone}>
+                                {item.text}
+                            </AppText>
+                        </View>
+                    ))}
+                </View>
+            </Surface>
+            <Surface>
+                <AppText variant="heading">Buttons</AppText>
+                <View style={styles.buttonGrid}>
+                    {COMPONENT_PLAYGROUND_BUTTON_EXAMPLES.map((item) => (
+                        <Button
+                            accessibilityLabel={item.accessibilityLabel}
+                            key={item.accessibilityLabel}
+                            label={item.label}
+                            leadingIcon={item.leadingIcon}
+                            loading={item.loading}
+                            onPress={handlePlaygroundPress}
+                            size={item.size}
+                            trailingIcon={item.trailingIcon}
+                            variant={item.variant}
+                        />
+                    ))}
+                </View>
+            </Surface>
+            <Surface>
+                <AppText variant="heading">Inputs</AppText>
+                <View style={styles.inputStack}>
+                    {COMPONENT_PLAYGROUND_INPUT_EXAMPLES.map((item) => (
+                        <TextInput
+                            disabled={item.disabled}
+                            error={item.error}
+                            defaultValue={item.value}
+                            helperText={item.helperText}
+                            key={item.label}
+                            label={item.label}
+                            leadingIcon={item.leadingIcon}
+                            placeholder={item.placeholder}
+                            returnKeyType="done"
+                            status={item.status}
+                            successText={item.successText}
+                            trailingIcon={item.trailingIcon}
+                        />
+                    ))}
+                </View>
+            </Surface>
+            <Surface>
+                <AppText variant="heading">Surfaces</AppText>
+                <View style={styles.surfaceGrid}>
+                    {COMPONENT_PLAYGROUND_SURFACE_EXAMPLES.map((item) => (
+                        <Surface
+                            key={item.title}
+                            rail={item.rail}
+                            style={styles.surfaceSample}
+                            variant={item.variant}
+                        >
+                            <AppText variant="label">{item.title}</AppText>
+                            <AppText variant="bodySmall" tone="secondary">
+                                {item.body}
+                            </AppText>
+                        </Surface>
+                    ))}
+                </View>
+            </Surface>
+            <Surface>
+                <AppText variant="heading">Foundation checks</AppText>
                 <Button
                     accessibilityLabel="Run native foundation checks"
                     label="Run foundation checks"
@@ -168,6 +243,27 @@ export function ComponentPlaygroundScreen() {
 }
 
 const styles = StyleSheet.create((theme) => ({
+    textStack: {
+        gap: theme.spacing.lg,
+    },
+    textSample: {
+        gap: theme.spacing.xs,
+    },
+    buttonGrid: {
+        alignItems: "flex-start",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: theme.spacing.lg,
+    },
+    inputStack: {
+        gap: theme.spacing.lg,
+    },
+    surfaceGrid: {
+        gap: theme.spacing.lg,
+    },
+    surfaceSample: {
+        gap: theme.spacing.sm,
+    },
     iconGrid: {
         flexDirection: "row",
         flexWrap: "wrap",

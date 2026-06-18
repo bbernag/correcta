@@ -1,6 +1,6 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slices 1 and 2 are complete. Remaining visual polish slices
+Status: partial. Slices 1-3 are complete. Remaining visual polish slices
 are still open.
 
 ## Slice 1: Theme Token Design System
@@ -22,6 +22,8 @@ Implemented:
 Verification:
 
 - `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
 - `npm run lint`
 - `npm run format:check`
 - Android emulator light-mode tab navigation: Home, Practice, Review, Progress,
@@ -90,3 +92,37 @@ Known follow-ups:
 - `agent-device` iOS snapshots were blocked by another daemon-owned runner in
   this pass, so iOS visual QA used Simulator UI through Computer Use plus a
   `simctl` screenshot.
+
+## Slice 3: Upgrade Existing Common Components
+
+Date: 2026-06-18
+
+Result: pass for automated component API verification and iOS runtime smoke
+check.
+
+Implemented:
+
+- Exported type files for AppText, Button, Screen, Surface, and TextInput.
+- AppText semantic tones for success, warning, and info.
+- Button variants, sizes, icon slots, loading, disabled, press, and ripple
+  states.
+- Screen background and safe-area variants.
+- Surface hierarchy variants, status variants, and correction rail support.
+- TextInput helper, focused, error, success, disabled, leading icon, and
+  trailing icon states.
+- ComponentPlayground examples for typography, buttons, inputs, and surfaces.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- iOS simulator: development build launcher -> Correcta 8081 dev server -> Home
+  -> Open component check.
+- iOS screenshot: `/tmp/correcta-slice3-ios-component-playground.png`.
+
+Known follow-ups:
+
+- Run Android visual device QA on ComponentPlayground after Slice 4 adds the
+  new shared primitives, or earlier if these primitives are used heavily before
+  then.

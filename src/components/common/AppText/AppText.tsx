@@ -1,34 +1,7 @@
-import type {PropsWithChildren} from "react";
-import type {StyleProp, TextProps, TextStyle} from "react-native";
 import {Text} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-type AppTextVariant = "title" | "heading" | "body" | "label" | "caption";
-type AppTextEnhancedVariant =
-    | "display"
-    | "titleLarge"
-    | "subtitle"
-    | "sentence"
-    | "answer"
-    | "bodyStrong"
-    | "bodySmall"
-    | "button"
-    | "metric";
-type AppTextTone =
-    | "primary"
-    | "secondary"
-    | "muted"
-    | "accent"
-    | "danger"
-    | "inverted";
-
-type AppTextProps = PropsWithChildren<
-    TextProps & {
-        variant?: AppTextVariant | AppTextEnhancedVariant;
-        tone?: AppTextTone;
-        style?: StyleProp<TextStyle>;
-    }
->;
+import type {AppTextProps, AppTextTone, AppTextVariant} from "./AppTextTypes";
 
 export function AppText({
     children,
@@ -142,12 +115,21 @@ const styles = StyleSheet.create((theme) => ({
     danger: {
         color: theme.colors.feedbackDanger,
     },
+    success: {
+        color: theme.colors.feedbackSuccess,
+    },
+    warning: {
+        color: theme.colors.feedbackWarning,
+    },
+    info: {
+        color: theme.colors.feedbackInfo,
+    },
     inverted: {
         color: theme.colors.textInverse,
     },
 }));
 
-function getVariantStyle(variant: AppTextVariant | AppTextEnhancedVariant) {
+function getVariantStyle(variant: AppTextVariant) {
     switch (variant) {
         case "display":
             return styles.display;
@@ -190,6 +172,12 @@ function getToneStyle(tone: AppTextTone) {
             return styles.accent;
         case "danger":
             return styles.danger;
+        case "success":
+            return styles.success;
+        case "warning":
+            return styles.warning;
+        case "info":
+            return styles.info;
         case "inverted":
             return styles.inverted;
         case "primary":

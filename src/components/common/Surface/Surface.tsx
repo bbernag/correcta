@@ -35,27 +35,21 @@ const styles = StyleSheet.create((theme) => ({
     },
     card: {
         backgroundColor: theme.colors.surfacePrimary,
-        borderColor: theme.colors.borderSubtle,
-        borderWidth: 1,
         ...theme.shadows.surface,
     },
     default: {
         backgroundColor: theme.colors.surfacePrimary,
-        borderColor: theme.colors.borderSubtle,
-        borderWidth: 1,
     },
     muted: {
         backgroundColor: theme.colors.surfaceTonal,
     },
     outline: {
-        backgroundColor: theme.colors.surfaceElevated,
+        backgroundColor: theme.colors.surfacePrimary,
         borderColor: theme.colors.borderSubtle,
         borderWidth: 1,
     },
     elevated: {
         backgroundColor: theme.colors.surfaceElevated,
-        borderColor: theme.colors.borderSubtle,
-        borderWidth: 1,
         ...theme.shadows.elevated,
     },
     inverse: {
@@ -63,43 +57,35 @@ const styles = StyleSheet.create((theme) => ({
     },
     success: {
         backgroundColor: theme.colors.feedbackSuccessSoft,
-        borderColor: theme.colors.feedbackSuccess,
-        borderWidth: 1,
     },
     warning: {
         backgroundColor: theme.colors.feedbackWarningSoft,
-        borderColor: theme.colors.feedbackWarning,
-        borderWidth: 1,
     },
     danger: {
         backgroundColor: theme.colors.feedbackDangerSoft,
-        borderColor: theme.colors.feedbackDanger,
-        borderWidth: 1,
     },
     info: {
         backgroundColor: theme.colors.feedbackInfoSoft,
-        borderColor: theme.colors.feedbackInfo,
-        borderWidth: 1,
     },
     railAccent: {
         borderLeftColor: theme.colors.accentPrimary,
-        borderLeftWidth: 4,
+        borderLeftWidth: 3,
     },
     railSuccess: {
         borderLeftColor: theme.colors.feedbackSuccess,
-        borderLeftWidth: 4,
+        borderLeftWidth: 3,
     },
     railWarning: {
         borderLeftColor: theme.colors.feedbackWarning,
-        borderLeftWidth: 4,
+        borderLeftWidth: 3,
     },
     railDanger: {
         borderLeftColor: theme.colors.feedbackDanger,
-        borderLeftWidth: 4,
+        borderLeftWidth: 3,
     },
     railInfo: {
         borderLeftColor: theme.colors.feedbackInfo,
-        borderLeftWidth: 4,
+        borderLeftWidth: 3,
     },
 }));
 

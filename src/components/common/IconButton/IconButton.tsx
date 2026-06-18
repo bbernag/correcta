@@ -1,6 +1,6 @@
 import type {GestureResponderEvent} from "react-native";
-import {Pressable} from "react-native";
-import {StyleSheet} from "react-native-unistyles";
+import {Platform, Pressable} from "react-native";
+import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {playHapticFeedback} from "../../../native";
 import {Icon, type IconSize, type IconTone} from "../Icon";
@@ -22,6 +22,7 @@ export function IconButton({
     variant = "ghost",
     ...pressableProps
 }: IconButtonProps) {
+    const {theme} = useUnistyles();
     const isDisabled = Boolean(disabled);
 
     function handlePress(event: GestureResponderEvent) {
@@ -34,6 +35,10 @@ export function IconButton({
 
     return (
         <Pressable
+            android_ripple={{
+                borderless: false,
+                color: theme.colors.accentPrimarySoft,
+            }}
             accessibilityLabel={accessibilityLabel}
             accessibilityRole="button"
             accessibilityState={{disabled: isDisabled, selected}}
@@ -52,7 +57,7 @@ export function IconButton({
             <Icon
                 name={icon}
                 size={getIconSize(size)}
-                tone={getIconTone({selected, variant})}
+                tone={getIconTone({disabled: isDisabled, selected, variant})}
             />
         </Pressable>
     );
@@ -61,8 +66,11 @@ export function IconButton({
 const styles = StyleSheet.create((theme) => ({
     root: {
         alignItems: "center",
+        borderColor: "transparent",
+        borderWidth: 1,
         borderRadius: theme.radii.pill,
         justifyContent: "center",
+        overflow: "hidden",
     },
     small: {
         height: 44,
@@ -80,9 +88,15 @@ const styles = StyleSheet.create((theme) => ({
         backgroundColor: "transparent",
     },
     surface: {
-        backgroundColor: theme.colors.surfaceElevated,
-        borderColor: theme.colors.borderSubtle,
-        borderWidth: 1,
+        backgroundColor:
+            Platform.OS === "ios"
+                ? theme.colors.surfaceGlassFallback
+                : theme.colors.surfaceTonal,
+        borderColor:
+            Platform.OS === "ios"
+                ? theme.colors.borderSubtle
+                : theme.colors.borderStrong,
+        ...theme.shadows.surface,
     },
     tonal: {
         backgroundColor: theme.colors.accentPrimarySoft,
@@ -96,9 +110,11 @@ const styles = StyleSheet.create((theme) => ({
     },
     pressed: {
         opacity: theme.motion.pressOpacity,
+        transform: [{scale: 0.96}],
     },
     disabled: {
-        opacity: theme.motion.disabledOpacity,
+        backgroundColor: theme.colors.backgroundSecondary,
+        borderColor: theme.colors.borderSubtle,
     },
 }));
 
@@ -151,12 +167,18 @@ function getIconSize(size: IconButtonSize): IconSize {
 }
 
 function getIconTone({
+    disabled,
     selected,
     variant,
 }: {
+    disabled: boolean;
     selected: boolean;
     variant: IconButtonVariant;
 }): IconTone {
+    if (disabled) {
+        return "muted";
+    }
+
     if (selected) {
         return "inverted";
     }

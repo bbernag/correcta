@@ -26,7 +26,7 @@ verification files record evidence from completed or partially completed work.
 | `[~]`  | Notifications and learning reminders | `language-app-planning-docs/09-notifications-prd.md`          | `docs/verification/notifications-reminders.md`   | Local preferences and schedule metadata exist. Native permission prompts, OS scheduling, delivery, and notification-open routing still need a separate runtime phase.       |
 | `[~]`  | Backend and AI integration           | `language-app-planning-docs/10-backend-ai-integration-prd.md` | `docs/verification/backend-ai-integration.md`    | Backend-ready adapters and contracts exist. No live backend URL, auth, AI provider, production API, or generated client is enabled by default.                              |
 | `[~]`  | Monetization                         | `language-app-planning-docs/11-monetization-prd.md`           | `docs/verification/monetization.md`              | Product-level monetization boundary exists. No ad SDK, rewarded placement, subscription, purchase flow, or analytics integration is implemented.                            |
-| `[~]`  | Visual Design and Interaction Polish | `docs/phases/visual-design-interaction-polish.md`             | `docs/qa/visual-design-interaction-polish-qa.md` | Slices 1-3 are implemented as technical foundation. Slice 3 visual direction is not approved; native elegance pass is planned next.                                         |
+| `[~]`  | Visual Design and Interaction Polish | `docs/phases/visual-design-interaction-polish.md`             | `docs/qa/visual-design-interaction-polish-qa.md` | Slices 1-4 are implemented and verified. Remaining slices add new shared primitives, screen polish, accessibility, reduced motion, and final QA.                            |
 
 ## Visual Design Slice Checklist
 
@@ -37,7 +37,7 @@ These slices live inside `docs/phases/visual-design-interaction-polish.md`.
 | `[x]`  | 1. Theme Token Design System                            | Scribe Blue tokens are implemented in `src/theme`, wired through React Native Unistyles, and Android-verified in light and dark mode. |
 | `[x]`  | 2. Icons And Haptics Foundation                         | Lucide icons, SVG support, Pulsar haptics, shared Icon/IconButton wrappers, playground examples, and iOS/Android QA are complete.     |
 | `[~]`  | 3. Upgrade Existing Common Components                   | Technical primitive APIs are implemented, but visual direction is not approved as final native design.                                |
-| `[ ]`  | 4. Native Elegance Pass For Common Primitives And Glass | Redesign existing primitives and GlassSurface fallback before adding more components.                                                 |
+| `[x]`  | 4. Native Elegance Pass For Common Primitives And Glass | GlassSurface fallback, softer primitive visuals, native playground sections, and iOS/Android QA are complete.                         |
 | `[ ]`  | 5. Add New Shared Visual Components                     | Add missing shared primitives such as badges, stat cards, segmented controls, and feedback highlights.                                |
 | `[ ]`  | 6. ComponentPlayground Redesign                         | Make the component-check route the visual QA surface for all shared primitives.                                                       |
 | `[ ]`  | 7. Home Polish                                          | Apply the new design direction to Home.                                                                                               |

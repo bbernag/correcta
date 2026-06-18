@@ -3,8 +3,9 @@ import {TextInput as NativeTextInput, View} from "react-native";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {AppText} from "../AppText";
+import type {AppTextTone} from "../AppText";
 import {Icon} from "../Icon";
-import type {IconTone} from "../Icon";
+import type {IconName, IconTone} from "../Icon";
 import type {TextInputProps} from "./TextInputTypes";
 
 export function TextInput({
@@ -30,6 +31,7 @@ export function TextInput({
     const isSuccess = !error && (status === "success" || Boolean(successText));
     const supportTone = getSupportTone({error, isSuccess});
     const supportText = error ?? successText ?? helperText;
+    const supportIcon = getSupportIcon({error, isSuccess});
     const iconTone = getIconTone({
         disabled: isDisabled,
         error,
@@ -86,9 +88,22 @@ export function TextInput({
                 ) : null}
             </View>
             {supportText ? (
-                <AppText variant="caption" tone={supportTone}>
-                    {supportText}
-                </AppText>
+                <View style={styles.supportRow}>
+                    {supportIcon ? (
+                        <Icon
+                            name={supportIcon}
+                            size="dense"
+                            tone={supportTone}
+                        />
+                    ) : null}
+                    <AppText
+                        style={styles.supportText}
+                        variant="caption"
+                        tone={supportTone}
+                    >
+                        {supportText}
+                    </AppText>
+                </View>
             ) : null}
         </View>
     );
@@ -106,8 +121,8 @@ const styles = StyleSheet.create((theme) => ({
         borderWidth: 1,
         flexDirection: "row",
         gap: theme.spacing.sm,
-        minHeight: 48,
-        paddingHorizontal: theme.spacing.md,
+        minHeight: 52,
+        paddingHorizontal: theme.spacing.lg,
     },
     input: {
         color: theme.colors.textPrimary,
@@ -118,20 +133,29 @@ const styles = StyleSheet.create((theme) => ({
         paddingVertical: theme.spacing.md,
     },
     inputFocused: {
-        backgroundColor: theme.colors.accentPrimarySoft,
+        backgroundColor: theme.colors.surfaceElevated,
         borderColor: theme.colors.focusRing,
+        ...theme.shadows.surface,
     },
     inputError: {
-        backgroundColor: theme.colors.feedbackDangerSoft,
+        backgroundColor: theme.colors.surfacePrimary,
         borderColor: theme.colors.feedbackDanger,
     },
     inputSuccess: {
-        backgroundColor: theme.colors.feedbackSuccessSoft,
+        backgroundColor: theme.colors.surfacePrimary,
         borderColor: theme.colors.feedbackSuccess,
     },
     inputDisabled: {
-        backgroundColor: theme.colors.backgroundSecondary,
-        opacity: theme.motion.disabledOpacity,
+        backgroundColor: theme.colors.surfaceTonal,
+        borderColor: theme.colors.borderSubtle,
+    },
+    supportRow: {
+        alignItems: "center",
+        flexDirection: "row",
+        gap: theme.spacing.xs,
+    },
+    supportText: {
+        flex: 1,
     },
 }));
 
@@ -141,7 +165,7 @@ function getSupportTone({
 }: {
     error?: string;
     isSuccess: boolean;
-}) {
+}): AppTextTone {
     if (error) {
         return "danger";
     }
@@ -151,6 +175,24 @@ function getSupportTone({
     }
 
     return "muted";
+}
+
+function getSupportIcon({
+    error,
+    isSuccess,
+}: {
+    error?: string;
+    isSuccess: boolean;
+}): IconName | null {
+    if (error) {
+        return "warning";
+    }
+
+    if (isSuccess) {
+        return "success";
+    }
+
+    return null;
 }
 
 function getIconTone({

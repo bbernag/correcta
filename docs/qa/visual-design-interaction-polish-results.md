@@ -1,6 +1,6 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slices 1-3 are complete. Remaining visual polish slices
+Status: partial. Slices 1-4 are complete. Remaining visual polish slices
 are still open.
 
 ## Slice 1: Theme Token Design System
@@ -126,3 +126,55 @@ Known follow-ups:
 - Run Android visual device QA on ComponentPlayground after Slice 4 adds the
   new shared primitives, or earlier if these primitives are used heavily before
   then.
+
+## Slice 4: Native Elegance Pass For Common Primitives And Glass
+
+Date: 2026-06-18
+
+Result: pass.
+
+Implemented:
+
+- `GlassSurface` fallback abstraction in `src/components/common/GlassSurface`.
+- Softer Button, IconButton, Surface, and TextInput visual states.
+- Loading buttons keep their active variant treatment while disabling
+  interaction and exposing busy state.
+- TextInput success and error states use both icon/text cues and semantic
+  borders.
+- Surface default/card/status treatments use fewer heavy outlines and slimmer
+  correction rails.
+- ComponentPlayground redesigned as a screen-owned native QA surface using
+  compound `PlaygroundSection.Root/Header/Body` composition.
+- Haptics and foundation check UI moved to a screen-owned component.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- iOS simulator: Home -> Open component check -> typography, buttons, inputs,
+  surfaces, glass fallback, icon buttons, haptics, and foundation result panel.
+- Android emulator: booted `Medium_Phone_API_36.1`, selected Correcta 8081 dev
+  server, Home -> Open component check -> typography, buttons, inputs,
+  surfaces, glass fallback, icon buttons, haptics, and foundation result panel.
+
+Evidence:
+
+- iOS top: `/tmp/correcta-native-elegance-ios-playground-top.png`
+- iOS inputs: `/tmp/correcta-native-elegance-ios-playground-mid.png`
+- iOS glass: `/tmp/correcta-native-elegance-ios-playground-bottom.png`
+- iOS controls: `/tmp/correcta-native-elegance-ios-playground-controls.png`
+- iOS foundation: `/tmp/correcta-native-elegance-ios-foundation-result.png`
+- Android top: `/tmp/correcta-native-elegance-android-playground-top.png`
+- Android inputs: `/tmp/correcta-native-elegance-android-playground-mid.png`
+- Android glass: `/tmp/correcta-native-elegance-android-playground-glass.png`
+- Android foundation:
+  `/tmp/correcta-native-elegance-android-foundation-result.png`
+
+Known follow-ups:
+
+- Android accessibility snapshots remain sparse for React Native app content, so
+  Android QA used screenshots and coordinate fallback where refs were
+  unavailable.
+- Metro logged a React Navigation deprecation warning during navigation, but no
+  visible runtime overlay appeared during this QA pass.

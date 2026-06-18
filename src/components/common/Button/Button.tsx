@@ -2,6 +2,7 @@ import {ActivityIndicator, Pressable, View} from "react-native";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {AppText} from "../AppText";
+import type {AppTextTone} from "../AppText";
 import {Icon} from "../Icon";
 import type {IconTone} from "../Icon";
 import type {ButtonProps, ButtonSize, ButtonVariant} from "./ButtonTypes";
@@ -12,7 +13,7 @@ export function Button({
     size = "medium",
     disabled = false,
     loading = false,
-    loadingLabel = "Loading",
+    loadingLabel,
     fullWidth = false,
     leadingIcon,
     rightIcon,
@@ -21,14 +22,15 @@ export function Button({
     ...pressableProps
 }: ButtonProps) {
     const {theme} = useUnistyles();
-    const isDisabled = disabled || loading;
-    const labelTone = getButtonLabelTone(variant);
-    const iconTone = getButtonIconTone(variant);
+    const isInteractionDisabled = disabled || loading;
+    const labelTone = disabled ? "muted" : getButtonLabelTone(variant);
+    const iconTone = disabled ? "muted" : getButtonIconTone(variant);
     const activityColor = getButtonActivityColor({
         labelTone,
         theme,
     });
     const resolvedTrailingIcon = trailingIcon ?? rightIcon;
+    const resolvedLabel = loading ? (loadingLabel ?? label) : label;
 
     return (
         <Pressable
@@ -36,15 +38,18 @@ export function Button({
                 color: getButtonRippleColor({theme, variant}),
             }}
             accessibilityRole="button"
-            accessibilityState={{busy: loading, disabled: isDisabled}}
-            disabled={isDisabled}
+            accessibilityState={{
+                busy: loading,
+                disabled: isInteractionDisabled,
+            }}
+            disabled={isInteractionDisabled}
             style={({pressed}) => [
                 styles.root,
                 getButtonVariantStyle(variant),
                 getButtonSizeStyle(size),
                 fullWidth && styles.fullWidth,
-                pressed && !isDisabled && styles.pressed,
-                isDisabled && styles.disabled,
+                pressed && !isInteractionDisabled && styles.pressed,
+                disabled && styles.disabled,
                 style,
             ]}
             {...pressableProps}
@@ -57,7 +62,7 @@ export function Button({
                     <Icon name={leadingIcon} size="dense" tone={iconTone} />
                 ) : null}
                 <AppText variant="button" tone={labelTone}>
-                    {loading ? loadingLabel : label}
+                    {resolvedLabel}
                 </AppText>
                 {!loading && resolvedTrailingIcon ? (
                     <Icon
@@ -74,9 +79,12 @@ export function Button({
 const styles = StyleSheet.create((theme) => ({
     root: {
         alignItems: "center",
+        borderColor: "transparent",
+        borderWidth: 1,
         borderRadius: theme.radii.button,
         justifyContent: "center",
         minWidth: 44,
+        overflow: "hidden",
     },
     content: {
         alignItems: "center",
@@ -90,12 +98,12 @@ const styles = StyleSheet.create((theme) => ({
         paddingVertical: theme.spacing.sm,
     },
     medium: {
-        minHeight: 48,
+        minHeight: 52,
         paddingHorizontal: theme.spacing.xl,
         paddingVertical: theme.spacing.md,
     },
     large: {
-        minHeight: 54,
+        minHeight: 56,
         paddingHorizontal: theme.spacing["2xl"],
         paddingVertical: theme.spacing.lg,
     },
@@ -110,24 +118,23 @@ const styles = StyleSheet.create((theme) => ({
     },
     tertiary: {
         backgroundColor: theme.colors.surfaceTonal,
-        borderColor: theme.colors.borderSubtle,
-        borderWidth: 1,
     },
     ghost: {
         backgroundColor: "transparent",
     },
     danger: {
-        backgroundColor: theme.colors.feedbackDanger,
+        backgroundColor: theme.colors.feedbackDangerSoft,
     },
     success: {
-        backgroundColor: theme.colors.feedbackSuccess,
+        backgroundColor: theme.colors.feedbackSuccessSoft,
     },
     pressed: {
         opacity: theme.motion.pressOpacity,
         transform: [{scale: 0.98}],
     },
     disabled: {
-        opacity: theme.motion.disabledOpacity,
+        backgroundColor: theme.colors.backgroundSecondary,
+        borderColor: theme.colors.borderSubtle,
     },
 }));
 
@@ -164,9 +171,11 @@ function getButtonSizeStyle(size: ButtonSize) {
 function getButtonLabelTone(variant: ButtonVariant) {
     switch (variant) {
         case "primary":
-        case "danger":
-        case "success":
             return "inverted";
+        case "danger":
+            return "danger";
+        case "success":
+            return "success";
         case "secondary":
         case "tertiary":
         case "ghost":
@@ -178,9 +187,11 @@ function getButtonLabelTone(variant: ButtonVariant) {
 function getButtonIconTone(variant: ButtonVariant): IconTone {
     switch (variant) {
         case "primary":
-        case "danger":
-        case "success":
             return "inverted";
+        case "danger":
+            return "danger";
+        case "success":
+            return "success";
         case "secondary":
         case "tertiary":
         case "ghost":
@@ -215,10 +226,20 @@ function getButtonActivityColor({
     labelTone,
     theme,
 }: {
-    labelTone: "accent" | "inverted";
+    labelTone: AppTextTone;
     theme: ReturnType<typeof useUnistyles>["theme"];
 }) {
-    return labelTone === "inverted"
-        ? theme.colors.textInverse
-        : theme.colors.accentPrimary;
+    switch (labelTone) {
+        case "inverted":
+            return theme.colors.textInverse;
+        case "danger":
+            return theme.colors.feedbackDanger;
+        case "success":
+            return theme.colors.feedbackSuccess;
+        case "muted":
+            return theme.colors.textMuted;
+        case "accent":
+        default:
+            return theme.colors.accentPrimary;
+    }
 }

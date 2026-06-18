@@ -3,6 +3,7 @@ import type {
     AppTextVariant,
     ButtonSize,
     ButtonVariant,
+    GlassSurfaceVariant,
     IconButtonSize,
     IconButtonVariant,
     IconName,
@@ -12,6 +13,23 @@ import type {
     TextInputStatus,
 } from "../../../components/common";
 import type {HapticFeedback} from "../../../native";
+import type {PropsWithChildren, ReactNode} from "react";
+import type {StyleProp, ViewStyle} from "react-native";
+
+export type ComponentPlaygroundSectionRootProps = PropsWithChildren<{
+    style?: StyleProp<ViewStyle>;
+}>;
+
+export type ComponentPlaygroundSectionHeaderProps = {
+    action?: ReactNode;
+    description?: string;
+    eyebrow?: string;
+    title: string;
+};
+
+export type ComponentPlaygroundSectionBodyProps = PropsWithChildren<{
+    style?: StyleProp<ViewStyle>;
+}>;
 
 export type ComponentPlaygroundTextExample = {
     label: string;
@@ -71,4 +89,10 @@ export type ComponentPlaygroundHapticAction = {
     icon: IconName;
     label: string;
     variant: IconButtonVariant;
+};
+
+export type ComponentPlaygroundGlassExample = {
+    icon: IconName;
+    label: string;
+    variant: GlassSurfaceVariant;
 };

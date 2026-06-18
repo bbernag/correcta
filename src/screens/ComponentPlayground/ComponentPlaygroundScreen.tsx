@@ -1,23 +1,20 @@
-import {useState} from "react";
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {
     AppText,
     Button,
+    GlassSurface,
     Icon,
     IconButton,
     Screen,
     Surface,
     TextInput,
 } from "../../components/common";
-import {
-    runFoundationChecks,
-    type FoundationCheckResult,
-} from "../../native/foundationChecks";
+import {PlaygroundFoundationSection, PlaygroundSection} from "./components";
 import {
     COMPONENT_PLAYGROUND_BUTTON_EXAMPLES,
-    COMPONENT_PLAYGROUND_HAPTIC_ACTIONS,
+    COMPONENT_PLAYGROUND_GLASS_EXAMPLES,
     COMPONENT_PLAYGROUND_ICON_BUTTON_EXAMPLES,
     COMPONENT_PLAYGROUND_ICON_SAMPLES,
     COMPONENT_PLAYGROUND_INPUT_EXAMPLES,
@@ -26,37 +23,32 @@ import {
 } from "./constants/ComponentPlaygroundConstants";
 
 export function ComponentPlaygroundScreen() {
-    const [result, setResult] = useState<FoundationCheckResult | null>(null);
-    const [error, setError] = useState<string | null>(null);
-    const [isChecking, setIsChecking] = useState(false);
-
-    async function handleRunChecks() {
-        try {
-            setIsChecking(true);
-            setResult(await runFoundationChecks());
-            setError(null);
-        } catch (nativeError) {
-            setResult(null);
-            setError(
-                nativeError instanceof Error
-                    ? nativeError.message
-                    : "Foundation check failed"
-            );
-        } finally {
-            setIsChecking(false);
-        }
-    }
-
     function handlePlaygroundPress() {
         return undefined;
     }
 
     return (
-        <Screen>
-            <AppText variant="title">Component check</AppText>
-            <Surface>
-                <AppText variant="heading">Typography</AppText>
-                <View style={styles.textStack}>
+        <Screen contentContainerStyle={styles.screenContent}>
+            <View style={styles.hero}>
+                <GlassSurface variant="headerControl" style={styles.passBadge}>
+                    <Icon name="check" size="dense" tone="accent" />
+                    <AppText variant="caption" tone="accent">
+                        Native elegance pass
+                    </AppText>
+                </GlassSurface>
+                <AppText variant="titleLarge">Common primitives</AppText>
+                <AppText variant="bodySmall" tone="secondary">
+                    A device QA surface for Scribe Blue typography, controls,
+                    feedback states, glass fallback, and haptics.
+                </AppText>
+            </View>
+            <PlaygroundSection.Root>
+                <PlaygroundSection.Header
+                    description="System typography roles used by learning screens."
+                    eyebrow="Type"
+                    title="Typography"
+                />
+                <PlaygroundSection.Body style={styles.textStack}>
                     {COMPONENT_PLAYGROUND_TEXT_EXAMPLES.map((item) => (
                         <View key={item.label} style={styles.textSample}>
                             <AppText variant="caption" tone="muted">
@@ -67,11 +59,15 @@ export function ComponentPlaygroundScreen() {
                             </AppText>
                         </View>
                     ))}
-                </View>
-            </Surface>
-            <Surface>
-                <AppText variant="heading">Buttons</AppText>
-                <View style={styles.buttonGrid}>
+                </PlaygroundSection.Body>
+            </PlaygroundSection.Root>
+            <PlaygroundSection.Root>
+                <PlaygroundSection.Header
+                    description="Explicit variants with native press states and stable loading width."
+                    eyebrow="Actions"
+                    title="Buttons"
+                />
+                <PlaygroundSection.Body style={styles.buttonGrid}>
                     {COMPONENT_PLAYGROUND_BUTTON_EXAMPLES.map((item) => (
                         <Button
                             accessibilityLabel={item.accessibilityLabel}
@@ -85,11 +81,15 @@ export function ComponentPlaygroundScreen() {
                             variant={item.variant}
                         />
                     ))}
-                </View>
-            </Surface>
-            <Surface>
-                <AppText variant="heading">Inputs</AppText>
-                <View style={styles.inputStack}>
+                </PlaygroundSection.Body>
+            </PlaygroundSection.Root>
+            <PlaygroundSection.Root>
+                <PlaygroundSection.Header
+                    description="Composition fields with focus rings and status text close to the input."
+                    eyebrow="Forms"
+                    title="Inputs"
+                />
+                <PlaygroundSection.Body style={styles.inputStack}>
                     {COMPONENT_PLAYGROUND_INPUT_EXAMPLES.map((item) => (
                         <TextInput
                             disabled={item.disabled}
@@ -106,11 +106,15 @@ export function ComponentPlaygroundScreen() {
                             trailingIcon={item.trailingIcon}
                         />
                     ))}
-                </View>
-            </Surface>
-            <Surface>
-                <AppText variant="heading">Surfaces</AppText>
-                <View style={styles.surfaceGrid}>
+                </PlaygroundSection.Body>
+            </PlaygroundSection.Root>
+            <PlaygroundSection.Root>
+                <PlaygroundSection.Header
+                    description="Content surfaces use softer hierarchy and slim correction rails."
+                    eyebrow="Containers"
+                    title="Surfaces"
+                />
+                <PlaygroundSection.Body style={styles.surfaceGrid}>
                     {COMPONENT_PLAYGROUND_SURFACE_EXAMPLES.map((item) => (
                         <Surface
                             key={item.title}
@@ -124,20 +128,36 @@ export function ComponentPlaygroundScreen() {
                             </AppText>
                         </Surface>
                     ))}
-                </View>
-            </Surface>
-            <Surface>
-                <AppText variant="heading">Foundation checks</AppText>
-                <Button
-                    accessibilityLabel="Run native foundation checks"
-                    label="Run foundation checks"
-                    loading={isChecking}
-                    onPress={handleRunChecks}
+                </PlaygroundSection.Body>
+            </PlaygroundSection.Root>
+            <PlaygroundSection.Root>
+                <PlaygroundSection.Header
+                    description="Compact glass fallback only. Android uses tonal surfaces instead of iOS-style translucency."
+                    eyebrow="Glass"
+                    title="Glass fallback"
                 />
-            </Surface>
-            <Surface>
-                <AppText variant="heading">Iconography</AppText>
-                <View style={styles.iconGrid}>
+                <PlaygroundSection.Body style={styles.glassGrid}>
+                    {COMPONENT_PLAYGROUND_GLASS_EXAMPLES.map((item) => (
+                        <GlassSurface
+                            key={item.variant}
+                            variant={item.variant}
+                            style={styles.glassSample}
+                        >
+                            <Icon name={item.icon} size="dense" tone="accent" />
+                            <AppText variant="caption" tone="accent">
+                                {item.label}
+                            </AppText>
+                        </GlassSurface>
+                    ))}
+                </PlaygroundSection.Body>
+            </PlaygroundSection.Root>
+            <PlaygroundSection.Root>
+                <PlaygroundSection.Header
+                    description="Registry-driven icons keep screens from importing icon packages directly."
+                    eyebrow="Symbols"
+                    title="Iconography"
+                />
+                <PlaygroundSection.Body style={styles.iconGrid}>
                     {COMPONENT_PLAYGROUND_ICON_SAMPLES.map((item) => (
                         <View key={item.name} style={styles.iconSample}>
                             <Icon
@@ -154,11 +174,15 @@ export function ComponentPlaygroundScreen() {
                             </AppText>
                         </View>
                     ))}
-                </View>
-            </Surface>
-            <Surface>
-                <AppText variant="heading">Icon buttons</AppText>
-                <View style={styles.iconButtonGrid}>
+                </PlaygroundSection.Body>
+            </PlaygroundSection.Root>
+            <PlaygroundSection.Root>
+                <PlaygroundSection.Header
+                    description="Toolbar controls remain at least 44 dp with accessible names."
+                    eyebrow="Controls"
+                    title="Icon buttons"
+                />
+                <PlaygroundSection.Body style={styles.iconButtonGrid}>
                     {COMPONENT_PLAYGROUND_ICON_BUTTON_EXAMPLES.map((item) => (
                         <View
                             key={item.accessibilityLabel}
@@ -180,71 +204,30 @@ export function ComponentPlaygroundScreen() {
                             </AppText>
                         </View>
                     ))}
-                </View>
-            </Surface>
-            <Surface>
-                <AppText variant="heading">Haptics</AppText>
-                <View style={styles.iconButtonGrid}>
-                    {COMPONENT_PLAYGROUND_HAPTIC_ACTIONS.map((item) => (
-                        <View
-                            key={item.feedback}
-                            style={styles.iconButtonSample}
-                        >
-                            <IconButton
-                                accessibilityLabel={item.accessibilityLabel}
-                                hapticFeedback={item.feedback}
-                                icon={item.icon}
-                                variant={item.variant}
-                            />
-                            <AppText
-                                numberOfLines={1}
-                                variant="caption"
-                                tone="secondary"
-                            >
-                                {item.label}
-                            </AppText>
-                        </View>
-                    ))}
-                </View>
-            </Surface>
-            {result ? (
-                <Surface variant="muted">
-                    <AppText variant="label">Storage</AppText>
-                    <AppText tone="secondary">{result.storage}</AppText>
-                    <AppText variant="label">Date</AppText>
-                    <AppText tone="secondary">{result.date}</AppText>
-                    <AppText variant="label">HTTP</AppText>
-                    <AppText tone="secondary">{result.http}</AppText>
-                    <AppText variant="label">Domain</AppText>
-                    <AppText tone="secondary">
-                        {result.domain.sentences}
-                    </AppText>
-                    <AppText tone="secondary">{result.domain.history}</AppText>
-                    <AppText tone="secondary">
-                        {result.domain.savedContent}
-                    </AppText>
-                    <AppText tone="secondary">{result.domain.review}</AppText>
-                    <AppText tone="secondary">{result.domain.progress}</AppText>
-                    <AppText tone="secondary">
-                        Malformed validation {result.domain.malformedValidation}
-                    </AppText>
-                </Surface>
-            ) : null}
-            {error ? (
-                <Surface variant="outline">
-                    <AppText variant="label" tone="danger">
-                        Foundation check failed
-                    </AppText>
-                    <AppText tone="secondary">{error}</AppText>
-                </Surface>
-            ) : null}
+                </PlaygroundSection.Body>
+            </PlaygroundSection.Root>
+            <PlaygroundFoundationSection />
         </Screen>
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
+    screenContent: {
+        gap: theme.spacing["3xl"],
+        paddingBottom: theme.spacing["4xl"],
+    },
+    hero: {
+        gap: theme.spacing.md,
+        paddingBottom: theme.spacing.md,
+    },
+    passBadge: {
+        alignItems: "center",
+        alignSelf: "flex-start",
+        flexDirection: "row",
+        gap: theme.spacing.xs,
+    },
     textStack: {
-        gap: theme.spacing.lg,
+        gap: theme.spacing.xl,
     },
     textSample: {
         gap: theme.spacing.xs,
@@ -263,6 +246,17 @@ const styles = StyleSheet.create((theme) => ({
     },
     surfaceSample: {
         gap: theme.spacing.sm,
+    },
+    glassGrid: {
+        alignItems: "flex-start",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: theme.spacing.lg,
+    },
+    glassSample: {
+        alignItems: "center",
+        flexDirection: "row",
+        gap: theme.spacing.xs,
     },
     iconGrid: {
         flexDirection: "row",

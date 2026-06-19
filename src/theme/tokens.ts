@@ -1,5 +1,5 @@
-export {cardUnion} from "./cardUnion";
-export type {AppCardUnion} from "./cardUnion";
+export {card} from "./card";
+export type {AppCard} from "./card";
 export {darkColors, lightColors} from "./colors";
 export type {AppColors} from "./colors";
 export {createElevationTokens} from "./elevation";

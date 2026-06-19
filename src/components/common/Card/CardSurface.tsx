@@ -2,32 +2,26 @@ import {View} from "react-native";
 import Svg, {Path} from "react-native-svg";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
-import type {CardUnionSurfaceProps} from "./CardUnionTypes";
-import {
-    getCardUnionCutoutPath,
-    getCardUnionSurfacePath,
-} from "./CardUnionUtils";
+import type {CardSurfaceProps} from "./CardTypes";
+import {getCardCutoutPath, getCardSurfacePath} from "./CardUtils";
 
-export function CardUnionSurface({
-    axis,
-    bridgeSpan,
+export function CardSurface({
     itemLayouts,
+    orientation,
     rootLayout,
     size,
-}: CardUnionSurfaceProps) {
+}: CardSurfaceProps) {
     const {theme} = useUnistyles();
-    const surfacePath = getCardUnionSurfacePath({
-        axis,
-        bridgeSpan,
+    const surfacePath = getCardSurfacePath({
         itemLayouts,
+        orientation,
         rootLayout,
         size,
         theme,
     });
-    const cutoutPath = getCardUnionCutoutPath({
-        axis,
-        bridgeSpan,
+    const cutoutPath = getCardCutoutPath({
         itemLayouts,
+        orientation,
         rootLayout,
         theme,
     });

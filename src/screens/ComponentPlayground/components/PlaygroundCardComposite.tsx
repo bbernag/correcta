@@ -1,12 +1,12 @@
 import {Pressable, View} from "react-native";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
-import {AppText, CardUnion, Icon} from "../../../components/common";
-import {COMPONENT_PLAYGROUND_CARD_UNION_PROGRESS_SEGMENTS} from "../constants/ComponentPlaygroundConstants";
+import {AppText, Card, Icon} from "../../../components/common";
+import {COMPONENT_PLAYGROUND_CARD_PROGRESS_SEGMENTS} from "../constants/ComponentPlaygroundConstants";
 
 const ACTIVE_PROGRESS_SEGMENTS = 14;
 
-export function PlaygroundCardUnionCanvasExample() {
+export function PlaygroundCardComposite() {
     const {theme} = useUnistyles();
 
     function handleLinkedSurfacePress() {
@@ -24,8 +24,8 @@ export function PlaygroundCardUnionCanvasExample() {
                     pressed && styles.wholeActionPressed,
                 ]}
             >
-                <CardUnion size="hero">
-                    <CardUnion.Item>
+                <Card size="hero">
+                    <Card.Item>
                         <View style={styles.brandRow}>
                             <View style={styles.brandMark}>
                                 <Icon
@@ -33,12 +33,7 @@ export function PlaygroundCardUnionCanvasExample() {
                                     name="practice"
                                     size="hero"
                                 />
-                                <AppText
-                                    variant="subtitle"
-                                    style={styles.contrastText}
-                                >
-                                    Correcta
-                                </AppText>
+                                <AppText variant="subtitle">Correcta</AppText>
                             </View>
                             <View style={styles.levelPill}>
                                 <AppText
@@ -49,43 +44,29 @@ export function PlaygroundCardUnionCanvasExample() {
                                 </AppText>
                             </View>
                         </View>
-                    </CardUnion.Item>
-                </CardUnion>
+                    </Card.Item>
+                </Card>
 
-                <CardUnion size="hero">
-                    <CardUnion.Item style={styles.welcomeItem}>
-                        <AppText
-                            variant="titleLarge"
-                            style={styles.contrastText}
-                        >
+                <Card size="hero">
+                    <Card.Item style={styles.welcomeItem}>
+                        <AppText variant="titleLarge">
                             Luis, welcome back
                         </AppText>
-                        <AppText
-                            variant="body"
-                            style={styles.contrastMutedText}
-                        >
+                        <Card.Caption variant="body">
                             Your grammar streak is waiting.
-                        </AppText>
-                    </CardUnion.Item>
-                    <CardUnion.Item style={styles.progressItem}>
-                        <AppText
-                            variant="bodyStrong"
-                            style={styles.contrastText}
-                        >
-                            Your progress
-                        </AppText>
-                        <AppText
-                            variant="bodySmall"
-                            style={styles.contrastMutedText}
-                        >
+                        </Card.Caption>
+                    </Card.Item>
+                    <Card.Item style={styles.progressItem}>
+                        <Card.Title>Your progress</Card.Title>
+                        <Card.Caption>
                             Complete one short review before practice.
-                        </AppText>
+                        </Card.Caption>
                         <View style={styles.progressRow}>
-                            <AppText variant="metric" style={styles.metricText}>
+                            <AppText tone="accent" variant="metric">
                                 79%
                             </AppText>
                             <View style={styles.progressTrack}>
-                                {COMPONENT_PLAYGROUND_CARD_UNION_PROGRESS_SEGMENTS.map(
+                                {COMPONENT_PLAYGROUND_CARD_PROGRESS_SEGMENTS.map(
                                     (segment) => (
                                         <View
                                             key={segment}
@@ -100,8 +81,8 @@ export function PlaygroundCardUnionCanvasExample() {
                                 )}
                             </View>
                         </View>
-                    </CardUnion.Item>
-                </CardUnion>
+                    </Card.Item>
+                </Card>
             </Pressable>
 
             <View style={styles.challengeRow}>
@@ -137,42 +118,24 @@ export function PlaygroundCardUnionCanvasExample() {
                 </Pressable>
             </View>
 
-            <CardUnion axis="horizontal" gap="default">
-                <CardUnion.Item
+            <Card orientation="horizontal" gap="default">
+                <Card.Item
                     accessibilityLabel="Open best score details"
                     onPress={handleLinkedSurfacePress}
                 >
-                    <AppText variant="bodyStrong" style={styles.contrastText}>
-                        Best score
-                    </AppText>
-                    <AppText
-                        variant="bodySmall"
-                        style={styles.contrastMutedText}
-                    >
-                        Expert mode
-                    </AppText>
-                    <AppText variant="heading" style={styles.metricText}>
-                        7,593
-                    </AppText>
-                </CardUnion.Item>
-                <CardUnion.Item
+                    <Card.Title>Best score</Card.Title>
+                    <Card.Caption>Expert mode</Card.Caption>
+                    <Card.Metric>7,593</Card.Metric>
+                </Card.Item>
+                <Card.Item
                     accessibilityLabel="Open reaction speed details"
                     onPress={handleLinkedSurfacePress}
                 >
-                    <AppText variant="bodyStrong" style={styles.contrastText}>
-                        Reaction speed
-                    </AppText>
-                    <AppText
-                        variant="bodySmall"
-                        style={styles.contrastMutedText}
-                    >
-                        Average time
-                    </AppText>
-                    <AppText variant="heading" style={styles.metricText}>
-                        285 ms
-                    </AppText>
-                </CardUnion.Item>
-            </CardUnion>
+                    <Card.Title>Reaction speed</Card.Title>
+                    <Card.Caption>Average time</Card.Caption>
+                    <Card.Metric>285 ms</Card.Metric>
+                </Card.Item>
+            </Card>
         </View>
     );
 }
@@ -185,7 +148,7 @@ const styles = StyleSheet.create((theme) => ({
         padding: theme.spacing.lg,
     },
     wholeAction: {
-        borderRadius: theme.cardUnion.radius.hero,
+        borderRadius: theme.card.radius.hero,
         gap: theme.spacing.xl,
     },
     wholeActionPressed: {
@@ -217,15 +180,6 @@ const styles = StyleSheet.create((theme) => ({
     },
     progressItem: {
         minHeight: 168,
-    },
-    contrastText: {
-        color: theme.colors.surfaceContrastForeground,
-    },
-    contrastMutedText: {
-        color: theme.colors.surfaceContrastMutedForeground,
-    },
-    metricText: {
-        color: theme.colors.surfaceContrastAccent,
     },
     progressRow: {
         alignItems: "center",
@@ -272,7 +226,7 @@ const styles = StyleSheet.create((theme) => ({
     challengeAction: {
         alignItems: "center",
         backgroundColor: theme.colors.surfaceContrast,
-        borderRadius: theme.cardUnion.radius.compact,
+        borderRadius: theme.card.radius.compact,
         justifyContent: "center",
         minHeight: 64,
         minWidth: 112,

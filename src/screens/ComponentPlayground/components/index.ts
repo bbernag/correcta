@@ -1,7 +1,7 @@
 import {PlaygroundSectionBody} from "./PlaygroundSectionBody";
 import {PlaygroundSectionHeader} from "./PlaygroundSectionHeader";
 import {PlaygroundSectionRoot} from "./PlaygroundSectionRoot";
-export {PlaygroundCardUnionSection} from "./PlaygroundCardUnionSection";
+export {PlaygroundCardSection} from "./PlaygroundCardSection";
 export {PlaygroundFoundationSection} from "./PlaygroundFoundationSection";
 
 export const PlaygroundSection = {

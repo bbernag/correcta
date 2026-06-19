@@ -1,22 +1,22 @@
 import {StyleSheet} from "react-native-unistyles";
 
-import {PlaygroundCardUnionCanvasExample} from "./PlaygroundCardUnionCanvasExample";
-import {PlaygroundCardUnionSpanExamples} from "./PlaygroundCardUnionSpanExamples";
+import {PlaygroundCardComposite} from "./PlaygroundCardComposite";
+import {PlaygroundCardOrientationExamples} from "./PlaygroundCardOrientationExamples";
 import {PlaygroundSectionBody} from "./PlaygroundSectionBody";
 import {PlaygroundSectionHeader} from "./PlaygroundSectionHeader";
 import {PlaygroundSectionRoot} from "./PlaygroundSectionRoot";
 
-export function PlaygroundCardUnionSection() {
+export function PlaygroundCardSection() {
     return (
         <PlaygroundSectionRoot>
             <PlaygroundSectionHeader
-                description="Opaque linked cards with internal bridges, cut-ins, and native press handling."
+                description="Linked cards with orientation, semantic text slots, and auto-contrast typography."
                 eyebrow="Linked surfaces"
-                title="CardUnion"
+                title="Card"
             />
             <PlaygroundSectionBody style={styles.root}>
-                <PlaygroundCardUnionCanvasExample />
-                <PlaygroundCardUnionSpanExamples />
+                <PlaygroundCardOrientationExamples />
+                <PlaygroundCardComposite />
             </PlaygroundSectionBody>
         </PlaygroundSectionRoot>
     );

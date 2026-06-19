@@ -1,10 +1,9 @@
-export const cardUnion = {
+export const card = {
     bridge: {
         capRadius: 999,
         cutoutThickness: 8,
-        spanDefault: 0.7,
-        spanMax: 0.78,
-        spanMin: 0.66,
+        edgeOverlap: 1,
+        span: 0.74,
     },
     gap: {
         compact: 6,
@@ -23,4 +22,4 @@ export const cardUnion = {
     },
 } as const;
 
-export type AppCardUnion = typeof cardUnion;
+export type AppCard = typeof card;

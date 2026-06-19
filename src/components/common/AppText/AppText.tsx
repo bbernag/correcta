@@ -1,6 +1,8 @@
+import {use} from "react";
 import {Text} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
+import {SurfaceContrastContext} from "../surfaceContrastContext";
 import type {AppTextProps, AppTextTone, AppTextVariant} from "./AppTextTypes";
 
 export function AppText({
@@ -10,12 +12,14 @@ export function AppText({
     style,
     ...textProps
 }: AppTextProps) {
+    const onContrast = use(SurfaceContrastContext);
+
     return (
         <Text
             style={[
                 styles.base,
                 getVariantStyle(variant),
-                getToneStyle(tone),
+                getToneStyle(tone, onContrast),
                 style,
             ]}
             {...textProps}
@@ -127,6 +131,15 @@ const styles = StyleSheet.create((theme) => ({
     inverted: {
         color: theme.colors.textInverse,
     },
+    onContrastPrimary: {
+        color: theme.colors.surfaceContrastForeground,
+    },
+    onContrastMuted: {
+        color: theme.colors.surfaceContrastMutedForeground,
+    },
+    onContrastAccent: {
+        color: theme.colors.surfaceContrastAccent,
+    },
 }));
 
 function getVariantStyle(variant: AppTextVariant) {
@@ -162,7 +175,19 @@ function getVariantStyle(variant: AppTextVariant) {
     }
 }
 
-function getToneStyle(tone: AppTextTone) {
+function getToneStyle(tone: AppTextTone, onContrast: boolean) {
+    if (onContrast) {
+        switch (tone) {
+            case "secondary":
+            case "muted":
+                return styles.onContrastMuted;
+            case "accent":
+                return styles.onContrastAccent;
+            case "primary":
+                return styles.onContrastPrimary;
+        }
+    }
+
     switch (tone) {
         case "secondary":
             return styles.secondary;

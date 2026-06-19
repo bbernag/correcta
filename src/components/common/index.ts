@@ -2,15 +2,15 @@ export {AppText} from "./AppText";
 export type {AppTextProps, AppTextTone, AppTextVariant} from "./AppText";
 export {Button} from "./Button";
 export type {ButtonProps, ButtonSize, ButtonVariant} from "./Button";
-export {CardUnion} from "./CardUnion";
+export {Card} from "./Card";
 export type {
-    CardUnionAxis,
-    CardUnionGap,
-    CardUnionItemProps,
-    CardUnionProps,
-    CardUnionSize,
-    CardUnionTone,
-} from "./CardUnion";
+    CardGap,
+    CardItemProps,
+    CardOrientation,
+    CardProps,
+    CardSize,
+    CardTone,
+} from "./Card";
 export {GlassSurface} from "./GlassSurface";
 export type {GlassSurfaceProps, GlassSurfaceVariant} from "./GlassSurface";
 export {Icon} from "./Icon";

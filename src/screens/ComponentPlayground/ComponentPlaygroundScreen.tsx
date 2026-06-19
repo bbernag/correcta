@@ -12,7 +12,7 @@ import {
     TextInput,
 } from "../../components/common";
 import {
-    PlaygroundCardUnionSection,
+    PlaygroundCardSection,
     PlaygroundFoundationSection,
     PlaygroundSection,
 } from "./components";
@@ -134,7 +134,7 @@ export function ComponentPlaygroundScreen() {
                     ))}
                 </PlaygroundSection.Body>
             </PlaygroundSection.Root>
-            <PlaygroundCardUnionSection />
+            <PlaygroundCardSection />
             <PlaygroundSection.Root>
                 <PlaygroundSection.Header
                     description="Compact glass fallback only. Android uses tonal surfaces instead of iOS-style translucency."

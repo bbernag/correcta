@@ -15,94 +15,78 @@ export function PlaygroundCardUnionCanvasExample() {
 
     return (
         <View style={styles.canvas}>
-            <Pressable
-                accessibilityLabel="Open daily rhythm linked surface example"
-                accessibilityRole="button"
-                onPress={handleLinkedSurfacePress}
-                style={({pressed}) => [
-                    styles.wholeAction,
-                    pressed && styles.wholeActionPressed,
-                ]}
-            >
-                <CardUnion size="hero">
-                    <CardUnion.Item>
-                        <View style={styles.brandRow}>
-                            <View style={styles.brandMark}>
-                                <Icon
-                                    color={theme.colors.surfaceContrastAccent}
-                                    name="practice"
-                                    size="hero"
-                                />
-                                <AppText
-                                    variant="subtitle"
-                                    style={styles.contrastText}
-                                >
-                                    Correcta
-                                </AppText>
-                            </View>
-                            <View style={styles.levelPill}>
-                                <AppText
-                                    variant="button"
-                                    style={styles.levelPillText}
-                                >
-                                    12 level
-                                </AppText>
-                            </View>
-                        </View>
-                    </CardUnion.Item>
-                </CardUnion>
-
-                <CardUnion size="hero">
-                    <CardUnion.Item style={styles.welcomeItem}>
-                        <AppText
-                            variant="titleLarge"
-                            style={styles.contrastText}
-                        >
-                            Luis, welcome back
-                        </AppText>
-                        <AppText
-                            variant="body"
-                            style={styles.contrastMutedText}
-                        >
-                            Your grammar streak is waiting.
-                        </AppText>
-                    </CardUnion.Item>
-                    <CardUnion.Item style={styles.progressItem}>
-                        <AppText
-                            variant="bodyStrong"
-                            style={styles.contrastText}
-                        >
-                            Your progress
-                        </AppText>
-                        <AppText
-                            variant="bodySmall"
-                            style={styles.contrastMutedText}
-                        >
-                            Complete one short review before practice.
-                        </AppText>
-                        <View style={styles.progressRow}>
-                            <AppText variant="metric" style={styles.metricText}>
-                                79%
+            <CardUnion>
+                <CardUnion.Item>
+                    <View style={styles.brandRow}>
+                        <View style={styles.brandMark}>
+                            <Icon
+                                color={theme.colors.surfaceContrastAccent}
+                                name="practice"
+                                size="hero"
+                            />
+                            <AppText
+                                variant="subtitle"
+                                style={styles.contrastText}
+                            >
+                                Correcta
                             </AppText>
-                            <View style={styles.progressTrack}>
-                                {COMPONENT_PLAYGROUND_CARD_UNION_PROGRESS_SEGMENTS.map(
-                                    (segment) => (
-                                        <View
-                                            key={segment}
-                                            style={[
-                                                styles.progressSegment,
-                                                segment <
-                                                    ACTIVE_PROGRESS_SEGMENTS &&
-                                                    styles.progressSegmentActive,
-                                            ]}
-                                        />
-                                    )
-                                )}
-                            </View>
                         </View>
-                    </CardUnion.Item>
-                </CardUnion>
-            </Pressable>
+                        <View style={styles.levelPill}>
+                            <AppText
+                                variant="button"
+                                style={styles.levelPillText}
+                            >
+                                12 level
+                            </AppText>
+                        </View>
+                    </View>
+                </CardUnion.Item>
+            </CardUnion>
+
+            <CardUnion
+                accessibilityLabel="Open daily rhythm linked surface example"
+                onPress={handleLinkedSurfacePress}
+            >
+                <CardUnion.Item style={styles.welcomeItem}>
+                    <AppText variant="titleLarge" style={styles.contrastText}>
+                        Luis, welcome back
+                    </AppText>
+                    <AppText variant="body" style={styles.contrastMutedText}>
+                        Your grammar streak is waiting.
+                    </AppText>
+                </CardUnion.Item>
+                <CardUnion.Item style={styles.progressItem}>
+                    <AppText variant="bodyStrong" style={styles.contrastText}>
+                        Your progress
+                    </AppText>
+                    <AppText
+                        variant="bodySmall"
+                        style={styles.contrastMutedText}
+                    >
+                        Complete one short review before practice.
+                    </AppText>
+                    <View style={styles.progressRow}>
+                        <AppText variant="metric" style={styles.metricText}>
+                            79%
+                        </AppText>
+                        <View style={styles.progressTrack}>
+                            {COMPONENT_PLAYGROUND_CARD_UNION_PROGRESS_SEGMENTS.map(
+                                (segment) => (
+                                    <View
+                                        key={segment}
+                                        style={[
+                                            styles.progressSegment,
+                                            segment <
+                                                ACTIVE_PROGRESS_SEGMENTS &&
+                                                styles.progressSegmentActive,
+                                        ]}
+                                    />
+                                )
+                            )}
+                        </View>
+                    </View>
+                </CardUnion.Item>
+            </CardUnion>
 
             <View style={styles.challengeRow}>
                 <View style={styles.challengeCopy}>
@@ -137,7 +121,7 @@ export function PlaygroundCardUnionCanvasExample() {
                 </Pressable>
             </View>
 
-            <CardUnion axis="horizontal" gap="default">
+            <CardUnion axis="horizontal">
                 <CardUnion.Item
                     accessibilityLabel="Open best score details"
                     onPress={handleLinkedSurfacePress}
@@ -183,13 +167,6 @@ const styles = StyleSheet.create((theme) => ({
         borderRadius: theme.radii.sheet,
         gap: theme.spacing.xl,
         padding: theme.spacing.lg,
-    },
-    wholeAction: {
-        borderRadius: theme.cardUnion.radius.hero,
-        gap: theme.spacing.xl,
-    },
-    wholeActionPressed: {
-        opacity: theme.motion.pressOpacity,
     },
     brandRow: {
         alignItems: "center",
@@ -272,7 +249,7 @@ const styles = StyleSheet.create((theme) => ({
     challengeAction: {
         alignItems: "center",
         backgroundColor: theme.colors.surfaceContrast,
-        borderRadius: theme.cardUnion.radius.compact,
+        borderRadius: theme.cardUnion.radius,
         justifyContent: "center",
         minHeight: 64,
         minWidth: 112,

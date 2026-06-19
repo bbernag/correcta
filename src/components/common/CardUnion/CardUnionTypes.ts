@@ -8,18 +8,13 @@ import type {
 } from "react-native";
 
 export type CardUnionAxis = "horizontal" | "vertical";
-export type CardUnionGap = "compact" | "default" | "relaxed";
-export type CardUnionSize = "compact" | "default" | "hero";
-export type CardUnionTone = "contrast";
 
 export type CardUnionProps = PropsWithChildren<
     Omit<ViewProps, "style"> & {
         axis?: CardUnionAxis;
-        bridgeSpan?: number;
-        gap?: CardUnionGap;
-        size?: CardUnionSize;
+        disabled?: boolean;
+        onPress?: (event: GestureResponderEvent) => void;
         style?: StyleProp<ViewStyle>;
-        tone?: CardUnionTone;
     }
 >;
 
@@ -34,8 +29,6 @@ export type CardUnionItemProps = PropsWithChildren<
 
 export type CardUnionContextValue = {
     axis: CardUnionAxis;
-    size: CardUnionSize;
-    tone: CardUnionTone;
 };
 
 export type CardUnionLayout = Pick<
@@ -45,8 +38,6 @@ export type CardUnionLayout = Pick<
 
 export type CardUnionSurfaceProps = {
     axis: CardUnionAxis;
-    bridgeSpan: number;
     itemLayouts: CardUnionLayout[];
     rootLayout: CardUnionLayout;
-    size: CardUnionSize;
 };

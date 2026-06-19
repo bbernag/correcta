@@ -66,7 +66,7 @@ merged card.
 Create a shared compound component:
 
 ```tsx
-<CardUnion axis="vertical" tone="contrast">
+<CardUnion axis="vertical">
   <CardUnion.Item>{content}</CardUnion.Item>
   <CardUnion.Item>{content}</CardUnion.Item>
 </CardUnion>
@@ -76,15 +76,12 @@ Required types:
 
 ```ts
 type CardUnionAxis = "vertical" | "horizontal";
-type CardUnionGap = "compact" | "default" | "relaxed";
 ```
 
 `CardUnion` should accept:
 
 - `axis`
-- `tone`
-- `gap`
-- `bridgeSpan`, defaulting to `0.7` and clamped between `0.66` and `0.78`
+- optional root `onPress` and `disabled` behavior for whole-union actions
 - standard React Native `View` and accessibility props where applicable
 
 `CardUnion.Item` owns card content, padding, pressed state, and accessibility
@@ -95,12 +92,15 @@ cards, split them into separate `CardUnion` groups rather than disabling bridge
 geometry inside one group.
 
 All items in one union must use the same opaque surface token.
+Do not expose `radius`, `gap`, `padding`, `bridgeSpan`, `size`, or alternate
+surface-color props. `CardUnion` is an irreducible shared primitive: every usage
+must inherit the same visual geometry automatically.
 
 ## Geometry
 
-Linked card surfaces use radius `28` by default, radius `24` when compact, and
-radius `32` for hero surfaces. Use padding `20` to `24` for hero cards and `16`
-to `20` for compact stat cards.
+Linked card surfaces use radius `28`, gap `8`, and padding `20`. These values
+are fixed through the shared `cardUnion` token contract and are not caller
+variants.
 
 ### SVG Surface Layer
 
@@ -112,7 +112,7 @@ rounded border visible while allowing true concave seams.
 The SVG layer must:
 
 - Use theme tokens for `surfaceContrast`, `canvas`, radius, gap, cut-out
-  thickness, and bridge span.
+  thickness, bridge span, and bridge overlap.
 - Be absolutely positioned behind item content.
 - Use `pointerEvents="none"`.
 - Be hidden from accessibility.
@@ -133,11 +133,11 @@ The React Native item layer must:
 
 For vertically stacked cards:
 
-- Use a default `8` point Union Gap.
+- Use the fixed `8` point Union Gap.
 - Fill the gap through the SVG silhouette, not through a separate View bridge.
 - Layer active-canvas cut-ins over the left and right edges in the SVG.
-- Size each cut-in to about `15%` of the card width by default (span `0.7`),
-  leaving a narrower `70%` center bridge.
+- Size each cut-in to about `15%` of the card width through the fixed `0.7`
+  bridge span, leaving a narrower `70%` center bridge.
 - Keep each cut-in visually slim, about `8` points tall or the measured Union
   Gap height when the gap is smaller, and center it within the Union Gap. The
   cut-in should look like a short horizontal slot, not a large circular bite.
@@ -163,7 +163,7 @@ Recommended structure:
 The SVG cut-in path must use:
 
 ```ts
-bridgeWidth = measuredUnionWidth * bridgeSpan
+bridgeWidth = measuredUnionWidth * cardUnion.bridge.span
 slotWidth = (measuredUnionWidth - bridgeWidth) / 2
 slotHeight = min(measuredUnionGapHeight, cardUnion.bridge.cutoutThickness)
 slotY = midpointBetweenAdjacentItems - slotHeight / 2
@@ -176,13 +176,15 @@ rounded right corners; a right cut-out should have rounded left corners.
 
 For paired stat cards:
 
-- Use a default `8` point horizontal gap.
+- Use the fixed `8` point horizontal gap.
 - Fill the gap through the SVG silhouette.
 - Layer active-canvas cut-ins over the top and bottom edges in the SVG.
-- Keep each cut-in visually slim, about `10` points tall, so the center gap
-  does not become an hourglass notch.
-- Round the inner edge of the top and bottom cut-ins so the center bridge reads
-  as the inverse of a standalone pill.
+- Size the center bridge to `70%` of the row height through the fixed bridge
+  span, leaving matching top and bottom cut-ins.
+- Keep the bridge visually slim, about the measured horizontal gap width or the
+  cut-out thickness token, whichever is smaller.
+- Round the inner edge of the top and bottom cut-ins so the center bridge uses
+  the same direct-span geometry as vertical linked cards.
 - The remaining canvas must create opposing semicircular cut-ins at the top and
   bottom.
 - Both cards must stretch to the same row height.
@@ -190,9 +192,10 @@ For paired stat cards:
 The horizontal cut-in path must use:
 
 ```ts
+bridgeHeight = measuredRowHeight * cardUnion.bridge.span
+bridgeWidth = min(measuredGapWidth, cardUnion.bridge.cutoutThickness)
+slotHeight = (measuredRowHeight - bridgeHeight) / 2
 slotCenterX = midpointBetweenAdjacentItems
-slotWidth = gapBetweenItems + cardUnion.bridge.cutoutThickness
-slotHeight = cardUnion.bridge.cutoutThickness
 ```
 
 The top cut-out rounds its bottom corners. The bottom cut-out rounds its top
@@ -208,8 +211,8 @@ corners.
 - Use one SVG surface token for the full union geometry. Do not give each item
   its own opaque React Native background.
 - Vertical unions may contain variable-height items.
-- Horizontal Interlocking Pairs must have equal heights and normally contain
-  exactly two items.
+- Horizontal Interlocking Pairs must have equal heights and contain exactly two
+  items. Do not use horizontal `CardUnion` for three or more cards.
 - Do not create cross-shaped, four-directional, or grid-intersection unions.
 
 ## Platform Behavior
@@ -250,15 +253,14 @@ colors: {
 }
 
 cardUnion: {
-  radius: { compact: 24, default: 28, hero: 32 },
-  gap: { compact: 6, default: 8, relaxed: 12 },
-  padding: { compact: 16, default: 20, hero: 24 },
+  radius: 28,
+  gap: 8,
+  padding: 20,
   bridge: {
     capRadius: 999,
     cutoutThickness: 8,
-    spanDefault: 0.7,
-    spanMin: 0.66,
-    spanMax: 0.78,
+    edgeOverlap: 1,
+    span: 0.7,
   },
 }
 ```
@@ -274,8 +276,7 @@ Add examples for:
 - Two-card vertical union.
 - Three-card vertical union.
 - Horizontal Interlocking Pair.
-- `compact`, `default`, and `relaxed` gaps.
-- Bridge spans of `66%`, `70%`, and `78%`.
+- Several responsive widths using the same fixed geometry.
 - Light and dark themes.
 - Separately pressable items.
 - One pressable union.
@@ -298,14 +299,13 @@ src/components/common/CardUnion/
 ```
 
 The shared component owns all gap and bridge geometry. Screen code may choose
-axis, tone, gap, and content, but must not recreate the union with
-screen-specific absolute-positioning values.
+axis and content, but must not recreate the union with screen-specific
+absolute-positioning values.
 
 Tests must cover:
 
 - Vertical and horizontal axes.
-- Default `70%` bridge span.
-- Span clamping between `66%` and `78%`.
+- Fixed `70%` bridge span.
 - Decorative bridge accessibility behavior.
 - Shared surface-token enforcement.
 - Separate-item and whole-group press behavior.
@@ -315,8 +315,7 @@ Tests must cover:
 
 - Ordinary cards separated only by margin when they are intended to form a
   union.
-- A narrow connector spanning less than `66%`.
-- A connector wider than `78%` that removes the visible cut-ins.
+- Caller-provided bridge spans, gaps, sizes, radii, or surface colors.
 - A freestanding rounded pill visible between cards, such as `(===)`.
 - Rectangular or sharp-ended cut-ins.
 - Hard-coded white notch shapes.
@@ -335,7 +334,7 @@ Tests must cover:
 
 - Related cards form a Linked Surface Group rather than an ordinary card stack.
 - A real light canvas cut-in remains visible between cards.
-- The Union Bridge fills `66%` to `78%` of the shared edge; default is `70%`.
+- The Union Bridge fills `70%` of the shared edge.
 - Vertical unions leave rounded cut-ins at the left and right edges.
 - Horizontal unions leave opposing rounded cut-ins at the top and bottom.
 - Cards and bridges use the exact same opaque surface token.

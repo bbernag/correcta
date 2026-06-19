@@ -310,13 +310,15 @@ Tasks:
 - Add or extend Unistyles tokens for `canvas`, `surfaceContrast`,
   `surfaceContrastForeground`, `surfaceContrastMutedForeground`,
   `surfaceContrastAccent`, `surfaceContrastPressed`, `surfaceContrastFocus`,
-  CardUnion radii, gaps, bridge overlap, and min/default/max bridge spans.
+  CardUnion fixed radius, fixed gap, fixed padding, bridge overlap, and fixed
+  bridge span.
 - Create `src/components/common/CardUnion/*`.
 - Add `CardUnion` and `CardUnion.Item` compound anatomy.
 - Support vertical and horizontal axes.
 - Support two or more vertical items.
 - Support a two-item horizontal interlocking pair.
-- Default `bridgeSpan` to `0.7` and clamp it between `0.66` and `0.78`.
+- Use one fixed internal `0.7` bridge span. Do not expose bridge span as a
+  caller prop.
 - Generate bridges internally between adjacent items.
 - Use the same opaque surface token for every item and bridge.
 - Render bridges below items and exclude them from touch, haptics, and
@@ -334,7 +336,7 @@ Tasks:
 Exit:
 
 - CardUnion geometry matches the documented Linked Surface Group rules.
-- The bridge occupies `66%` to `78%` of the shared edge.
+- The bridge occupies `70%` of the shared edge.
 - Rounded canvas cut-ins remain visible.
 - Vertical and horizontal variants work on iOS and Android.
 - Light and dark theme tokens are validated.

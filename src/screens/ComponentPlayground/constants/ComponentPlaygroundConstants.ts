@@ -243,10 +243,6 @@ export const COMPONENT_PLAYGROUND_GLASS_EXAMPLES: ComponentPlaygroundGlassExampl
         },
     ];
 
-export const COMPONENT_PLAYGROUND_CARD_UNION_BRIDGE_SPANS = [
-    0.66, 0.7, 0.78,
-] as const;
-
 export const COMPONENT_PLAYGROUND_CARD_UNION_PROGRESS_SEGMENTS = Array.from(
     {length: 18},
     (_, index) => index

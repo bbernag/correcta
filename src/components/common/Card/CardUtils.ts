@@ -242,23 +242,25 @@ function getVerticalCardCutoutPath({
         theme,
     });
     const edgeOverlap = theme.card.bridge.edgeOverlap;
-    const height = geometry.height + edgeOverlap * 2;
-    const y = geometry.y - edgeOverlap;
+    const cutoutBleed = edgeOverlap * 2;
+    const height = geometry.height + cutoutBleed * 2;
+    const y = geometry.y - cutoutBleed;
     const radius = Math.min(theme.card.bridge.capRadius, height / 2);
+    const sideWidth = geometry.slotWidth + cutoutBleed;
 
     return [
         getRightRoundedRectPath({
             height,
             radius,
-            width: geometry.slotWidth,
+            width: sideWidth,
             x: 0,
             y,
         }),
         getLeftRoundedRectPath({
             height,
             radius,
-            width: geometry.slotWidth,
-            x: rootLayout.width - geometry.slotWidth,
+            width: sideWidth,
+            x: rootLayout.width - sideWidth,
             y,
         }),
     ].join(" ");
@@ -423,9 +425,9 @@ function getRightRoundedRectPath({
     return [
         `M ${x} ${y}`,
         `H ${right - resolvedRadius}`,
-        `Q ${right} ${y} ${right} ${y + resolvedRadius}`,
+        `A ${resolvedRadius} ${resolvedRadius} 0 0 1 ${right} ${y + resolvedRadius}`,
         `V ${bottom - resolvedRadius}`,
-        `Q ${right} ${bottom} ${right - resolvedRadius} ${bottom}`,
+        `A ${resolvedRadius} ${resolvedRadius} 0 0 1 ${right - resolvedRadius} ${bottom}`,
         `H ${x}`,
         "Z",
     ].join(" ");
@@ -447,9 +449,9 @@ function getLeftRoundedRectPath({
         `H ${right}`,
         `V ${bottom}`,
         `H ${x + resolvedRadius}`,
-        `Q ${x} ${bottom} ${x} ${bottom - resolvedRadius}`,
+        `A ${resolvedRadius} ${resolvedRadius} 0 0 1 ${x} ${bottom - resolvedRadius}`,
         `V ${y + resolvedRadius}`,
-        `Q ${x} ${y} ${x + resolvedRadius} ${y}`,
+        `A ${resolvedRadius} ${resolvedRadius} 0 0 1 ${x + resolvedRadius} ${y}`,
         "Z",
     ].join(" ");
 }

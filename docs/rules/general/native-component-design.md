@@ -88,7 +88,8 @@ Use rounded geometry:
 
 - Buttons and controls: radius `12` for `sm`, `14` for `md`, `16` for `lg`.
 - Standalone cards and panels: radius `20` to `24`.
-- Linked card surfaces: fixed radius `28`.
+- Linked card surfaces: radius `28` by default, `24` when compact, and `32`
+  for hero surfaces.
 - Inputs: height `48` to `52`, radius `20` to `24`.
 - Search inputs and compact selector shells may use a full pill radius.
 - Tab and segmented-control shells use a pill radius with a `4` point inner
@@ -339,7 +340,7 @@ elevation: { none, level1, level2, level3, level4 }
 motion: { fast, normal, slow, pressScale, surfacePressScale }
 opacity: { pressed, disabled, separator, overlay }
 hitSlop: { compact, standard }
-cardUnion: { radius, gap, padding, bridge: { span, edgeOverlap, cutoutThickness, capRadius } }
+cardUnion: { radiusCompact, radiusDefault, radiusHero, gapCompact, gapDefault, gapRelaxed, bridgeInset, bridgeOverlap, bridgeCapRadius }
 controls: { inputHeight, inputRadius, segmentedHeight, segmentedInset, segmentedRadius }
 ```
 

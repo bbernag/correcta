@@ -5,8 +5,11 @@ export type {ButtonProps, ButtonSize, ButtonVariant} from "./Button";
 export {CardUnion} from "./CardUnion";
 export type {
     CardUnionAxis,
+    CardUnionGap,
     CardUnionItemProps,
     CardUnionProps,
+    CardUnionSize,
+    CardUnionTone,
 } from "./CardUnion";
 export {GlassSurface} from "./GlassSurface";
 export type {GlassSurfaceProps, GlassSurfaceVariant} from "./GlassSurface";

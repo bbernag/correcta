@@ -10,18 +10,23 @@ import {
 
 export function CardUnionSurface({
     axis,
+    bridgeSpan,
     itemLayouts,
     rootLayout,
+    size,
 }: CardUnionSurfaceProps) {
     const {theme} = useUnistyles();
     const surfacePath = getCardUnionSurfacePath({
         axis,
+        bridgeSpan,
         itemLayouts,
         rootLayout,
+        size,
         theme,
     });
     const cutoutPath = getCardUnionCutoutPath({
         axis,
+        bridgeSpan,
         itemLayouts,
         rootLayout,
         theme,

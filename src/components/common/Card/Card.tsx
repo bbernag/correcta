@@ -261,8 +261,12 @@ function areCardLayoutsEqual({
     currentLayout: CardLayout | null | undefined;
     nextLayout: CardLayout;
 }) {
+    if (currentLayout == null) {
+        return false;
+    }
+
     return (
-        currentLayout?.height === nextLayout.height &&
+        currentLayout.height === nextLayout.height &&
         currentLayout.width === nextLayout.width &&
         currentLayout.x === nextLayout.x &&
         currentLayout.y === nextLayout.y

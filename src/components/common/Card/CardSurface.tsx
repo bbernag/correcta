@@ -23,6 +23,7 @@ export function CardSurface({
         itemLayouts,
         orientation,
         rootLayout,
+        size,
         theme,
     });
 

@@ -17,6 +17,7 @@ type CardSeam = {
     layout: CardLayout;
     nextLayout: CardLayout;
     rootLayout: CardLayout;
+    size: CardSize;
     theme: AppTheme;
 };
 
@@ -87,6 +88,7 @@ export function getCardSurfacePath({
         itemLayouts,
         orientation,
         rootLayout,
+        size,
         theme,
     });
 
@@ -97,29 +99,42 @@ export function getCardCutoutPath({
     itemLayouts,
     orientation,
     rootLayout,
+    size,
     theme,
 }: {
     itemLayouts: CardLayout[];
     orientation: CardOrientation;
     rootLayout: CardLayout;
+    size: CardSize;
     theme: AppTheme;
 }) {
     if (itemLayouts.length < 2) {
         return "";
     }
 
-    const getSeamPath =
-        orientation === "horizontal"
-            ? getHorizontalCardCutoutPath
-            : getVerticalCardCutoutPath;
+    if (orientation === "horizontal") {
+        return itemLayouts
+            .slice(0, -1)
+            .map((layout, index) =>
+                getHorizontalCardCutoutPath({
+                    layout,
+                    nextLayout: itemLayouts[index + 1],
+                    rootLayout,
+                    size,
+                    theme,
+                })
+            )
+            .join(" ");
+    }
 
     return itemLayouts
         .slice(0, -1)
         .map((layout, index) =>
-            getSeamPath({
+            getVerticalCardCutoutPath({
                 layout,
                 nextLayout: itemLayouts[index + 1],
                 rootLayout,
+                size,
                 theme,
             })
         )
@@ -130,11 +145,13 @@ function getCardBridgePaths({
     itemLayouts,
     orientation,
     rootLayout,
+    size,
     theme,
 }: {
     itemLayouts: CardLayout[];
     orientation: CardOrientation;
     rootLayout: CardLayout;
+    size: CardSize;
     theme: AppTheme;
 }) {
     if (itemLayouts.length < 2) {
@@ -151,6 +168,7 @@ function getCardBridgePaths({
             layout,
             nextLayout: itemLayouts[index + 1],
             rootLayout,
+            size,
             theme,
         })
     );
@@ -160,12 +178,14 @@ function getHorizontalCardBridgePath({
     layout,
     nextLayout,
     rootLayout,
+    size,
     theme,
 }: CardSeam) {
     const geometry = getHorizontalCardBridgeGeometry({
         gapEnd: nextLayout.x,
         gapStart: layout.x + layout.width,
         rootHeight: rootLayout.height,
+        size,
         theme,
     });
     const bridgeUnderlap = Math.min(geometry.radius, geometry.slotHeight);
@@ -184,12 +204,14 @@ function getVerticalCardBridgePath({
     layout,
     nextLayout,
     rootLayout,
+    size,
     theme,
 }: CardSeam) {
     const geometry = getVerticalCardBridgeGeometry({
         gapEnd: nextLayout.y,
         gapStart: layout.y + layout.height,
         rootWidth: rootLayout.width,
+        size,
         theme,
     });
     const bridgeUnderlap = Math.min(geometry.radius, geometry.slotWidth);
@@ -204,54 +226,18 @@ function getVerticalCardBridgePath({
     });
 }
 
-function getHorizontalCardCutoutPath({
-    layout,
-    nextLayout,
-    rootLayout,
-    theme,
-}: CardSeam) {
-    const geometry = getHorizontalCardBridgeGeometry({
-        gapEnd: nextLayout.x,
-        gapStart: layout.x + layout.width,
-        rootHeight: rootLayout.height,
-        theme,
-    });
-    const edgeOverlap = theme.card.bridge.edgeOverlap;
-    const width = geometry.width + edgeOverlap * 2;
-    const x = geometry.x - edgeOverlap;
-    const topHeight = geometry.slotHeight + edgeOverlap;
-    const bottomY = geometry.y + geometry.height - edgeOverlap;
-    const bottomHeight =
-        rootLayout.height - (geometry.y + geometry.height) + edgeOverlap;
-
-    return [
-        getBottomRoundedRectPath({
-            height: topHeight,
-            radius: geometry.radius,
-            width,
-            x,
-            y: 0,
-        }),
-        getTopRoundedRectPath({
-            height: bottomHeight,
-            radius: geometry.radius,
-            width,
-            x,
-            y: bottomY,
-        }),
-    ].join(" ");
-}
-
 function getVerticalCardCutoutPath({
     layout,
     nextLayout,
     rootLayout,
+    size,
     theme,
 }: CardSeam) {
     const geometry = getVerticalCardBridgeGeometry({
         gapEnd: nextLayout.y,
         gapStart: layout.y + layout.height,
         rootWidth: rootLayout.width,
+        size,
         theme,
     });
     const edgeOverlap = theme.card.bridge.edgeOverlap;
@@ -277,20 +263,66 @@ function getVerticalCardCutoutPath({
     ].join(" ");
 }
 
+function getHorizontalCardCutoutPath({
+    layout,
+    nextLayout,
+    rootLayout,
+    size,
+    theme,
+}: CardSeam) {
+    const geometry = getHorizontalCardBridgeGeometry({
+        gapEnd: nextLayout.x,
+        gapStart: layout.x + layout.width,
+        rootHeight: rootLayout.height,
+        size,
+        theme,
+    });
+    const edgeOverlap = theme.card.bridge.edgeOverlap;
+    const width = geometry.width + edgeOverlap * 2;
+    const x = geometry.x - edgeOverlap;
+    const radius = Math.min(theme.card.bridge.capRadius, width / 2);
+    const topHeight = geometry.slotHeight + edgeOverlap;
+    const bottomY = geometry.y + geometry.height - edgeOverlap;
+    const bottomHeight =
+        rootLayout.height - (geometry.y + geometry.height) + edgeOverlap;
+
+    return [
+        getBottomRoundedRectPath({
+            height: topHeight,
+            radius,
+            width,
+            x,
+            y: 0,
+        }),
+        getTopRoundedRectPath({
+            height: bottomHeight,
+            radius,
+            width,
+            x,
+            y: bottomY,
+        }),
+    ].join(" ");
+}
+
 function getHorizontalCardBridgeGeometry({
     gapEnd,
     gapStart,
     rootHeight,
+    size,
     theme,
 }: {
     gapEnd: number;
     gapStart: number;
     rootHeight: number;
+    size: CardSize;
     theme: AppTheme;
 }): CardBridgeGeometry {
     const gapWidth = Math.max(0, gapEnd - gapStart);
     const centerX = gapStart + gapWidth / 2;
-    const height = Number((rootHeight * theme.card.bridge.span).toFixed(2));
+    const maxNeck = Math.max(0, rootHeight - 2 * theme.card.radius[size]);
+    const height = Number(
+        Math.min(rootHeight * theme.card.bridge.span, maxNeck).toFixed(2)
+    );
     const width = Math.min(gapWidth, theme.card.bridge.cutoutThickness);
     const x = centerX - width / 2;
     const y = Number(((rootHeight - height) / 2).toFixed(2));
@@ -311,16 +343,21 @@ function getVerticalCardBridgeGeometry({
     gapEnd,
     gapStart,
     rootWidth,
+    size,
     theme,
 }: {
     gapEnd: number;
     gapStart: number;
     rootWidth: number;
+    size: CardSize;
     theme: AppTheme;
 }): CardBridgeGeometry {
     const gapHeight = Math.max(0, gapEnd - gapStart);
     const centerY = gapStart + gapHeight / 2;
-    const width = Number((rootWidth * theme.card.bridge.span).toFixed(2));
+    const maxNeck = Math.max(0, rootWidth - 2 * theme.card.radius[size]);
+    const width = Number(
+        Math.min(rootWidth * theme.card.bridge.span, maxNeck).toFixed(2)
+    );
     const height = Math.min(gapHeight, theme.card.bridge.cutoutThickness);
     const x = Number(((rootWidth - width) / 2).toFixed(2));
     const y = centerY - height / 2;

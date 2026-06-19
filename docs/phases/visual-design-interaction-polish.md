@@ -1,7 +1,8 @@
 # Visual Design & Interaction Polish
 
-Status: partial. Slices 1-3 are implemented as foundation work. Slice 3 is not
-the approved final visual direction; a native elegance pass is planned next.
+Status: partial. Slices 1-4 are implemented as foundation work. Slice 3 is not
+the approved final visual direction; Slice 4 improved native primitive polish.
+The next approved direction starts with CardUnion and Linked Surface Groups.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -27,6 +28,11 @@ A follow-up Pro Extended prompt requested a design-system-level spec, including
 tokens, platform rules, component specs, motion, haptics, copy, screen
 blueprints, and QA. This document combines the completed Pro Extended plan with
 those stricter design requirements.
+
+A later Pro Extended orchestration checkpoint confirmed that CardUnion and
+Linked Surface Groups should become a dedicated Slice 5 before broader shared
+components or production screen polish. ComponentPlayground should become an
+acceptance gate before Home, Practice, Review, Progress, and Library adoption.
 
 ## Goal
 
@@ -133,6 +139,7 @@ Common components:
 
 - `src/components/common/Icon/*`
 - `src/components/common/IconButton/*`
+- `src/components/common/CardUnion/*`
 - `src/components/common/AnimatedPressable/*`
 - `src/components/common/Chip/*`
 - `src/components/common/WordChip/*`
@@ -278,7 +285,7 @@ Evidence:
 
 ### Slice 4: Native Elegance Pass For Common Primitives And Glass
 
-Status: planned.
+Status: done.
 
 Plan: [native-elegance-common-primitives.md](native-elegance-common-primitives.md)
 
@@ -293,19 +300,78 @@ Exit:
 - `GlassSurface` fallback exists and is only used in approved compact contexts.
 - Android uses tonal/elevated native treatment instead of fake iOS glass.
 
-### Slice 5: Add New Shared Visual Components
+### Slice 5: CardUnion And Linked Surface Foundation
 
-Goal: create the reusable UI building blocks before screen polish.
+Goal: establish Linked Surface Groups as a tested shared layout primitive before
+applying the new direction to production screens.
 
 Tasks:
 
-- Add `AnimatedPressable`.
+- Add or extend Unistyles tokens for `canvas`, `surfaceContrast`,
+  `surfaceContrastForeground`, `surfaceContrastMutedForeground`,
+  `surfaceContrastAccent`, `surfaceContrastPressed`, `surfaceContrastFocus`,
+  CardUnion radii, gaps, bridge overlap, and min/default/max bridge spans.
+- Create `src/components/common/CardUnion/*`.
+- Add `CardUnion` and `CardUnion.Item` compound anatomy.
+- Support vertical and horizontal axes.
+- Support two or more vertical items.
+- Support a two-item horizontal interlocking pair.
+- Default `bridgeSpan` to `0.7` and clamp it between `0.66` and `0.78`.
+- Generate bridges internally between adjacent items.
+- Use the same opaque surface token for every item and bridge.
+- Render bridges below items and exclude them from touch, haptics, and
+  accessibility.
+- Preserve visible canvas cut-ins.
+- Use a small overlap to prevent density-dependent hairline seams.
+- Keep horizontal paired items equal in height.
+- Keep union geometry stable during pressed, focused, and loading states.
+- Do not independently scale an interactive item inside a union.
+- Do not use gradients, blur, glass, masks, image assets, SVG geometry, Skia,
+  Canvas, or custom native drawing.
+- Add focused CardUnion examples to ComponentPlayground without redesigning the
+  whole playground in this slice.
+
+Exit:
+
+- CardUnion geometry matches the documented Linked Surface Group rules.
+- The bridge occupies `66%` to `78%` of the shared edge.
+- Rounded canvas cut-ins remain visible.
+- Vertical and horizontal variants work on iOS and Android.
+- Light and dark theme tokens are validated.
+- Accessibility and pointer behavior are tested.
+- Focused playground examples are approved.
+
+Out of scope:
+
+- Home redesign.
+- Practice redesign.
+- New product behavior.
+- Repository or service changes.
+- GlassSurface work.
+- Broad common-component redesign.
+- Backend, notification, or monetization work.
+
+### Slice 6: Supporting Shared Visual Components
+
+Goal: create or restyle the remaining reusable UI building blocks before screen
+polish.
+
+Tasks:
+
+- Add `AnimatedPressable` only when the existing press primitive does not
+  already satisfy the required behavior.
 - Add `Chip` and `WordChip`.
 - Add `ScreenHeader` and `SectionHeader`.
 - Add `StatCard`, `ProgressBar`, and `SegmentedControl`.
 - Add shared empty/loading/error states.
 - Add `ResultBadge` and `FeedbackHighlight`.
-- Add `GlassSurface` fallback.
+- Keep `StatCard` focused on metric content and state, not union geometry.
+  Screens compose `StatCard` inside `CardUnion` when metrics are semantically
+  related.
+- Use solid colors only for progress bars, badges, tabs, chips, and pressed
+  states.
+- Do not include `GlassSurface` fallback in this slice. CardUnion must not
+  depend on glass.
 
 Exit:
 
@@ -313,25 +379,35 @@ Exit:
 - Reduced motion is respected by animated components.
 - Icon-only controls have accessible labels.
 
-### Slice 6: ComponentPlayground Redesign
+### Slice 7: ComponentPlayground Acceptance Gate
 
 Goal: make ComponentPlayground the visual QA source.
 
 Tasks:
 
-- Add sections for typography, surfaces, buttons, icon buttons, chips, word
-  chips, inputs, progress, feedback states, empty/loading/error states, haptics,
-  and reduced motion.
+- Redesign ComponentPlayground into a coherent native component index grouped
+  by actions, inputs, selection controls, feedback, status and progress,
+  surfaces and Linked Surface Groups, headers and navigation-adjacent elements,
+  and empty/loading/error states.
+- Show supported variants and sizes.
+- Show light and dark themes.
+- Show enabled, pressed, focused, disabled, and loading states where applicable.
+- Show long copy and multiline content.
+- Show Dynamic Type, reduced motion, accessibility labels/state, and iOS/Android
+  behavior.
 - Keep screen-specific logic in
   `src/screens/ComponentPlayground/hooks/useComponentPlaygroundViewModel.ts`.
 
 Exit:
 
 - Design system can be reviewed from one screen.
+- Production-screen adoption does not begin until the shared visual system has
+  been reviewed in the playground.
 
-### Slice 7: Home Polish
+### Slice 8: Home Design Pilot
 
-Goal: make Home feel like a calm learning dashboard.
+Goal: use Home as the first production integration of the accepted shared
+system.
 
 Expected files:
 
@@ -345,15 +421,22 @@ Expected files:
 Tasks:
 
 - Add hero practice card and primary CTA.
-- Add quick stat grid.
+- Add linked summary and progress surfaces where semantically related.
+- Add horizontal stat pairs.
 - Add teacher tip and continue learning sections.
+- Add rounded segmented controls or filters only where already required.
+- Add solid progress treatment.
 - Add icons and progress animation.
+- Use real product copy and variable data.
+- Cover loading, empty, and error states.
+- Do not introduce screen-local copies of CardUnion geometry.
+- Do not refactor Home product logic unless required for visual integration.
 
 Exit:
 
 - Home has one obvious next action and looks polished in light/dark mode.
 
-### Slice 8: Practice Polish
+### Slice 9: Practice Core Loop Polish
 
 Goal: make the core loop feel excellent.
 
@@ -374,6 +457,10 @@ Expected files:
 Tasks:
 
 - Upgrade sentence card and input panel.
+- Do not force CardUnion onto every Practice surface. Use it only where adjacent
+  content is semantically related.
+- Preserve keyboard behavior, input focus, sentence-builder interaction,
+  validation state, and stable action placement.
 - Add scrambled-word beginner mode.
 - Animate word chip selection.
 - Add checking state.
@@ -386,7 +473,7 @@ Exit:
 - Home -> Practice -> Check answer -> Feedback -> Save -> Continue feels
   premium and remains keyboard-safe on iOS and Android.
 
-### Slice 9: Review Polish
+### Slice 10: Review And Feedback Polish
 
 Goal: make Review feel like an intentional study area.
 
@@ -402,21 +489,6 @@ Exit:
 
 - Review clearly tells the user what to practice next.
 
-### Slice 10: Library Polish
-
-Goal: make saved content feel like a personal learning notebook.
-
-Tasks:
-
-- Add segmented control for Words, Sentences, History.
-- Improve saved word, sentence, and history cards.
-- Add mastery chips and mistake badges.
-- Improve empty states.
-
-Exit:
-
-- Library content feels organized and useful without adding complex new filters.
-
 ### Slice 11: Progress Polish
 
 Goal: make progress feel motivating without heavy analytics.
@@ -425,6 +497,8 @@ Tasks:
 
 - Add hero progress card.
 - Add stat grid.
+- Use Linked Surface Groups for related metrics, achievements, trends, and
+  status summaries.
 - Add mistake breakdown bars.
 - Add weekly activity row.
 - Add recommendation card.
@@ -434,23 +508,50 @@ Exit:
 
 - Progress gives a clear sense of improvement using native views, not charts.
 
-### Slice 12: Native Polish And GlassSurface Spike
+### Slice 12: Library Polish
+
+Goal: make saved content feel like a personal learning notebook.
+
+Tasks:
+
+- Add segmented control for Words, Sentences, History.
+- Improve saved word, sentence, and history cards.
+- Add mastery chips and mistake badges.
+- Polish retry actions, removal flows, and empty states.
+- Prefer ordinary list grouping where linked geometry does not express a real
+  relationship.
+
+Exit:
+
+- Library content feels organized and useful without adding complex new filters.
+
+### Slice 13: Platform-Native Surface And Motion Polish
 
 Goal: platform-specific polish without Android pretending to be iOS.
 
 Tasks:
 
-- Finalize `GlassSurface` fallback.
-- Use iOS glass-like fallback only on compact controls.
-- Use Android tonal/elevated fallback.
-- Run an iOS-only Liquid Glass dependency spike if still wanted.
+- Validate press feedback.
+- Validate haptic restraint.
+- Validate reduced-motion fallbacks.
+- Validate keyboard transitions.
+- Validate safe-area behavior.
+- Validate native focus behavior.
+- Validate Android tonal and elevation treatment.
+- Use iOS platform-material treatment only where it has a concrete use outside
+  CardUnion.
+- Keep CardUnion opaque and solid on both platforms.
+- Do not create or retain a general GlassSurface abstraction without an
+  approved production use case.
+- Do not add gradients.
 
 Exit:
 
 - No readability regressions.
 - Android does not look like an iOS clone.
+- CardUnion remains solid, opaque, and platform-consistent.
 
-### Slice 13: Accessibility And Reduced Motion Pass
+### Slice 14: Accessibility And Reduced Motion Audit
 
 Goal: make the polished UI usable.
 
@@ -468,7 +569,7 @@ Exit:
 
 - Accessibility QA passes on iOS and Android.
 
-### Slice 14: Final QA And Evidence
+### Slice 15: Final QA And Evidence
 
 Goal: close the phase with verified evidence.
 
@@ -494,16 +595,29 @@ Exit:
 3. `feat: add icon and haptics foundations`
 4. `feat: add common primitive API foundation`
 5. `feat: add native elegance primitive pass`
-6. `feat: add shared visual components`
-7. `feat: redesign component playground`
-8. `feat: polish home screen`
-9. `feat: polish practice screen interactions`
-10. `feat: polish review screen`
-11. `feat: polish library screen`
+6. `feat: add card union linked surface foundation`
+7. `feat: add supporting shared visual components`
+8. `feat: redesign component playground acceptance gate`
+9. `feat: polish home design pilot`
+10. `feat: polish practice core loop`
+11. `feat: polish review feedback flows`
 12. `feat: polish progress screen`
-13. `feat: add platform visual polish`
-14. `fix: improve accessibility and reduced motion handling`
-15. `docs: add visual polish QA evidence`
+13. `feat: polish library screen`
+14. `feat: add platform-native surface and motion polish`
+15. `fix: improve accessibility and reduced motion handling`
+16. `docs: add visual polish QA evidence`
+
+## Slice Dependencies
+
+- Slice 5 blocks Slice 6.
+- Slices 5 and 6 block Slice 7.
+- Slice 7 blocks all production-screen polish.
+- Home is the production integration pilot and blocks Practice.
+- Practice blocks Review because Review consumes Practice outcomes.
+- Progress and Library may proceed after Review, but the documented order
+  remains Progress followed by Library.
+- Accessibility requirements are continuous and must not be deferred entirely
+  to Slice 14.
 
 ## Risks
 

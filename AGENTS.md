@@ -17,11 +17,12 @@ Use the task router below to read only the rules relevant to the current task.
 | Task | Read |
 | --- | --- |
 | Decide where code belongs | [project-structure.md](docs/rules/general/project-structure.md) |
-| Create or edit a screen/component | [react-native.md](docs/rules/general/react-native.md), [project-structure.md](docs/rules/general/project-structure.md) |
-| Add reusable UI | [project-structure.md](docs/rules/general/project-structure.md), [react-native.md](docs/rules/general/react-native.md) |
+| Create or edit a screen/component | [react-native.md](docs/rules/general/react-native.md), [native-component-design.md](docs/rules/general/native-component-design.md), [linked-surface-groups.md](docs/rules/general/linked-surface-groups.md), [project-structure.md](docs/rules/general/project-structure.md) |
+| Add reusable UI | [project-structure.md](docs/rules/general/project-structure.md), [react-native.md](docs/rules/general/react-native.md), [native-component-design.md](docs/rules/general/native-component-design.md), [linked-surface-groups.md](docs/rules/general/linked-surface-groups.md) |
 | Create a hook | [react-native.md](docs/rules/general/react-native.md), [project-structure.md](docs/rules/general/project-structure.md) |
 | Create types, constants, helpers, utilities, or shared code | [typescript.md](docs/rules/general/typescript.md), [project-structure.md](docs/rules/general/project-structure.md) |
-| Add or change styling/layout | [react-native.md](docs/rules/general/react-native.md) |
+| Add or change styling/layout | [react-native.md](docs/rules/general/react-native.md), [native-component-design.md](docs/rules/general/native-component-design.md), [linked-surface-groups.md](docs/rules/general/linked-surface-groups.md) |
+| Create or refine native component visuals | [native-component-design.md](docs/rules/general/native-component-design.md), [linked-surface-groups.md](docs/rules/general/linked-surface-groups.md), [react-native.md](docs/rules/general/react-native.md) |
 | Add a list/feed/search/pagination UI | [react-native.md](docs/rules/general/react-native.md) |
 | Add forms or inputs | [react-native.md](docs/rules/general/react-native.md) |
 | Add navigation | [react-native.md](docs/rules/general/react-native.md) |

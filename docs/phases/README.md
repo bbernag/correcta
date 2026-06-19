@@ -26,7 +26,7 @@ verification files record evidence from completed or partially completed work.
 | `[~]`  | Notifications and learning reminders | `language-app-planning-docs/09-notifications-prd.md`          | `docs/verification/notifications-reminders.md`   | Local preferences and schedule metadata exist. Native permission prompts, OS scheduling, delivery, and notification-open routing still need a separate runtime phase.       |
 | `[~]`  | Backend and AI integration           | `language-app-planning-docs/10-backend-ai-integration-prd.md` | `docs/verification/backend-ai-integration.md`    | Backend-ready adapters and contracts exist. No live backend URL, auth, AI provider, production API, or generated client is enabled by default.                              |
 | `[~]`  | Monetization                         | `language-app-planning-docs/11-monetization-prd.md`           | `docs/verification/monetization.md`              | Product-level monetization boundary exists. No ad SDK, rewarded placement, subscription, purchase flow, or analytics integration is implemented.                            |
-| `[~]`  | Visual Design and Interaction Polish | `docs/phases/visual-design-interaction-polish.md`             | `docs/qa/visual-design-interaction-polish-qa.md` | Slices 1-4 are implemented and verified. Remaining slices add new shared primitives, screen polish, accessibility, reduced motion, and final QA.                            |
+| `[~]`  | Visual Design and Interaction Polish | `docs/phases/visual-design-interaction-polish.md`             | `docs/qa/visual-design-interaction-polish-qa.md` | Slices 1-4 are implemented and verified. Pro Extended confirmed the next slice should be CardUnion and Linked Surface foundation before broader shared components.           |
 
 ## Visual Design Slice Checklist
 
@@ -38,16 +38,25 @@ These slices live inside `docs/phases/visual-design-interaction-polish.md`.
 | `[x]`  | 2. Icons And Haptics Foundation                         | Lucide icons, SVG support, Pulsar haptics, shared Icon/IconButton wrappers, playground examples, and iOS/Android QA are complete.     |
 | `[~]`  | 3. Upgrade Existing Common Components                   | Technical primitive APIs are implemented, but visual direction is not approved as final native design.                                |
 | `[x]`  | 4. Native Elegance Pass For Common Primitives And Glass | GlassSurface fallback, softer primitive visuals, native playground sections, and iOS/Android QA are complete.                         |
-| `[ ]`  | 5. Add New Shared Visual Components                     | Add missing shared primitives such as badges, stat cards, segmented controls, and feedback highlights.                                |
-| `[ ]`  | 6. ComponentPlayground Redesign                         | Make the component-check route the visual QA surface for all shared primitives.                                                       |
-| `[ ]`  | 7. Home Polish                                          | Apply the new design direction to Home.                                                                                               |
-| `[ ]`  | 8. Practice Polish                                      | Apply richer correction, input, feedback, animation, and haptic treatment to Practice.                                                |
-| `[ ]`  | 9. Review Polish                                        | Upgrade Review decks and card states with the new visual system.                                                                      |
-| `[ ]`  | 10. Library Polish                                      | Upgrade saved content and history views for scanning and review.                                                                      |
-| `[ ]`  | 11. Progress Polish                                     | Upgrade progress metrics, achievements, reminders, backend status, and monetization status.                                           |
-| `[ ]`  | 12. Native Polish And GlassSurface Spike                | Validate whether Liquid Glass belongs behind a capability wrapper.                                                                    |
-| `[ ]`  | 13. Accessibility And Reduced Motion Pass               | Verify React Native accessibility labels, contrast, text scaling, and reduced motion behavior.                                        |
-| `[ ]`  | 14. Final QA And Evidence                               | Run automated checks plus iOS and Android visual/runtime QA, then update evidence docs.                                               |
+| `[ ]`  | 5. CardUnion And Linked Surface Foundation              | Add CardUnion tokens, shared compound component, geometry tests, and focused playground examples.                                     |
+| `[ ]`  | 6. Supporting Shared Visual Components                  | Add or restyle badges, chips, stat cards, progress, segmented controls, and feedback components against the accepted visual direction. |
+| `[ ]`  | 7. ComponentPlayground Acceptance Gate                  | Make the component-check route the review gate for all shared primitives before production screen adoption.                           |
+| `[ ]`  | 8. Home Design Pilot                                    | Apply the accepted shared system to Home as the first production screen.                                                              |
+| `[ ]`  | 9. Practice Core Loop Polish                            | Apply richer correction, input, feedback, animation, and haptic treatment to Practice after Home validates the system.                |
+| `[ ]`  | 10. Review And Feedback Polish                          | Upgrade Review, grading, explanations, accepted alternatives, retry, and continuation flows.                                          |
+| `[ ]`  | 11. Progress Polish                                     | Upgrade progress metrics, achievements, trends, and summaries using linked surfaces only where semantically meaningful.               |
+| `[ ]`  | 12. Library Polish                                      | Upgrade saved content, history, filters, retry actions, removal flows, and empty states.                                              |
+| `[ ]`  | 13. Platform-Native Surface And Motion Polish           | Validate platform treatment, motion, haptics, keyboard transitions, safe areas, and any narrowly justified material effects.          |
+| `[ ]`  | 14. Accessibility And Reduced Motion Audit              | Verify React Native accessibility labels, contrast, text scaling, focus, touch targets, and reduced motion behavior.                  |
+| `[ ]`  | 15. Final QA And Evidence                               | Run automated checks plus iOS and Android visual/runtime QA, then update evidence docs.                                               |
+
+## Phase Orchestration Checkpoint
+
+Before starting a new implementation phase or visual design slice, share the
+current tracker status, completed evidence, open partial phases, and proposed
+next slice with ChatGPT Pro Extended in the existing planning thread. Update
+this tracker and the relevant phase document when Pro Extended recommends a
+clearer sequence or scope boundary.
 
 ## How To Update This Tracker
 

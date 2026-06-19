@@ -13,6 +13,8 @@ relevant.
 | --- | --- |
 | [general/project-structure.md](./general/project-structure.md) | Correcta source buckets, screen colocation, reusable UI, support files, promotion rules, imports, file size |
 | [general/react-native.md](./general/react-native.md) | React Native components, styling, accessibility, data boundaries, hooks, lists, forms, navigation |
+| [general/native-component-design.md](./general/native-component-design.md) | Native component visual language, anatomy, motion, haptics, toasts, buttons, surfaces, and shared UI quality bar |
+| [general/linked-surface-groups.md](./general/linked-surface-groups.md) | Signature linked-card/Card Union geometry, tokens, layout rules, and visual acceptance checklist |
 | [general/typescript.md](./general/typescript.md) | TypeScript, exports, functions, constants, errors |
 | [general/testing.md](./general/testing.md) | Test scope, React Native component tests, mocking, assertions, commands |
 

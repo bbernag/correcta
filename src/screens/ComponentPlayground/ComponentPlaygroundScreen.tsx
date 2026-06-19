@@ -11,7 +11,11 @@ import {
     Surface,
     TextInput,
 } from "../../components/common";
-import {PlaygroundFoundationSection, PlaygroundSection} from "./components";
+import {
+    PlaygroundCardUnionSection,
+    PlaygroundFoundationSection,
+    PlaygroundSection,
+} from "./components";
 import {
     COMPONENT_PLAYGROUND_BUTTON_EXAMPLES,
     COMPONENT_PLAYGROUND_GLASS_EXAMPLES,
@@ -130,6 +134,7 @@ export function ComponentPlaygroundScreen() {
                     ))}
                 </PlaygroundSection.Body>
             </PlaygroundSection.Root>
+            <PlaygroundCardUnionSection />
             <PlaygroundSection.Root>
                 <PlaygroundSection.Header
                     description="Compact glass fallback only. Android uses tonal surfaces instead of iOS-style translucency."

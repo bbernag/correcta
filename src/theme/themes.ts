@@ -1,3 +1,4 @@
+import {cardUnion} from "./cardUnion";
 import {darkColors, lightColors} from "./colors";
 import {motionPrimitives} from "./motion";
 import {radius} from "./radius";
@@ -15,6 +16,7 @@ export const lightTheme = {
     fontWeights,
     shadows: createShadowTokens(lightColors.shadowTint),
     motion: motionPrimitives,
+    cardUnion,
 } as const;
 
 export const darkTheme = {
@@ -27,6 +29,7 @@ export const darkTheme = {
     fontWeights,
     shadows: createShadowTokens(darkColors.shadowTint),
     motion: motionPrimitives,
+    cardUnion,
 } as const;
 
 export const appThemes = {

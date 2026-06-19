@@ -1,5 +1,6 @@
 export {appBreakpoints, appThemes} from "./unistyles";
 export {
+    cardUnion,
     darkColors,
     lightColors,
     motion,
@@ -9,6 +10,7 @@ export {
 } from "./tokens";
 export type {
     AppColors,
+    AppCardUnion,
     AppElevation,
     AppMotion,
     AppRadius,

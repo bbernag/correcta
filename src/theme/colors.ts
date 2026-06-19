@@ -1,4 +1,7 @@
 type SemanticColorTokens = {
+    canvas: {
+        primary: string;
+    };
     background: {
         primary: string;
         secondary: string;
@@ -42,9 +45,21 @@ type SemanticColorTokens = {
     shadow: {
         tint: string;
     };
+    surfaceContrast: {
+        accent: string;
+        background: string;
+        focus: string;
+        foreground: string;
+        mutedForeground: string;
+        outline: string;
+        pressed: string;
+    };
 };
 
 const lightSemanticColors = {
+    canvas: {
+        primary: "#F8F7F1",
+    },
     background: {
         primary: "#F6F7FA",
         secondary: "#EEF1F5",
@@ -88,9 +103,21 @@ const lightSemanticColors = {
     shadow: {
         tint: "#111827",
     },
+    surfaceContrast: {
+        accent: "#CDC6FF",
+        background: "#062B2D",
+        focus: "#C8BEFF",
+        foreground: "#F3EEFF",
+        mutedForeground: "#D9D4F6",
+        outline: "#E8E3FF",
+        pressed: "#103A3D",
+    },
 } as const satisfies SemanticColorTokens;
 
 const darkSemanticColors = {
+    canvas: {
+        primary: "#070B10",
+    },
     background: {
         primary: "#0D1117",
         secondary: "#121822",
@@ -134,10 +161,20 @@ const darkSemanticColors = {
     shadow: {
         tint: "#000000",
     },
+    surfaceContrast: {
+        accent: "#C8C0FF",
+        background: "#0A292D",
+        focus: "#CDC5FF",
+        foreground: "#F4EFFF",
+        mutedForeground: "#C9C4E9",
+        outline: "#273F47",
+        pressed: "#123D43",
+    },
 } as const satisfies SemanticColorTokens;
 
 function createColorTokens(colors: SemanticColorTokens) {
     return {
+        canvas: colors.canvas.primary,
         backgroundPrimary: colors.background.primary,
         backgroundSecondary: colors.background.secondary,
         surfacePrimary: colors.surface.primary,
@@ -165,6 +202,13 @@ function createColorTokens(colors: SemanticColorTokens) {
         feedbackInfoSoft: colors.feedback.infoSoft,
         focusRing: colors.focus.ring,
         shadowTint: colors.shadow.tint,
+        surfaceContrast: colors.surfaceContrast.background,
+        surfaceContrastAccent: colors.surfaceContrast.accent,
+        surfaceContrastFocus: colors.surfaceContrast.focus,
+        surfaceContrastForeground: colors.surfaceContrast.foreground,
+        surfaceContrastMutedForeground: colors.surfaceContrast.mutedForeground,
+        surfaceContrastOutline: colors.surfaceContrast.outline,
+        surfaceContrastPressed: colors.surfaceContrast.pressed,
         background: colors.background.primary,
         backgroundElevated: colors.surface.elevated,
         surface: colors.surface.primary,

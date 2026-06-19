@@ -5,6 +5,7 @@ export const card = {
         edgeOverlap: 1,
         span: 0.74,
     },
+    cornerSmoothing: 1,
     gap: {
         compact: 6,
         default: 8,

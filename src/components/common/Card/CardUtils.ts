@@ -54,9 +54,10 @@ export function getCardItemStyle({
     theme: AppTheme;
 }): ViewStyle {
     return {
-        backgroundColor: "transparent",
+        backgroundColor: theme.colors.surfaceContrast,
         borderRadius: theme.card.radius[size],
         flex: orientation === "horizontal" ? 1 : undefined,
+        overflow: "hidden",
         padding: theme.card.padding[size],
     };
 }

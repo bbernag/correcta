@@ -45,11 +45,12 @@ merged card.
 
 ## Hard Boundaries
 
-- Implement union content with React Native `View`, `Pressable`, flex layout,
-  and Unistyles.
-- `CardUnion` may use `react-native-svg` `Svg` and `Path` for decorative
-  background geometry only. The SVG layer must not own text, controls, touch
-  handling, haptics, or accessibility semantics.
+- Implement union content with React Native `View`, `Pressable`,
+  `react-native-fast-squircle` `FastSquircleView`, flex layout, and Unistyles.
+- The shared `Card` component uses `FastSquircleView` for item surfaces and
+  `react-native-svg` `Svg` and `Path` for decorative union geometry. The SVG
+  layer owns bridge and cut-in geometry only; it must not own text, controls,
+  touch handling, haptics, or accessibility semantics.
 - Do not use DOM APIs, CSS masks, `clip-path`, SVG masks, Skia, Canvas, image
   assets, or custom native drawing for this geometry unless a future rule
   explicitly replaces the SVG path approach.
@@ -63,35 +64,34 @@ merged card.
 
 ## Component API
 
-Create a shared compound component:
+Use the shared `Card` compound component:
 
 ```tsx
-<CardUnion axis="vertical" tone="contrast">
-  <CardUnion.Item>{content}</CardUnion.Item>
-  <CardUnion.Item>{content}</CardUnion.Item>
-</CardUnion>
+<Card orientation="vertical" tone="contrast">
+  <Card.Item>{content}</Card.Item>
+  <Card.Item>{content}</Card.Item>
+</Card>
 ```
 
 Required types:
 
 ```ts
-type CardUnionAxis = "vertical" | "horizontal";
-type CardUnionGap = "compact" | "default" | "relaxed";
+type CardOrientation = "vertical" | "horizontal";
+type CardGap = "compact" | "default" | "relaxed";
 ```
 
-`CardUnion` should accept:
+`Card` should accept:
 
-- `axis`
+- `orientation`
 - `tone`
 - `gap`
-- `bridgeSpan`, defaulting to `0.7` and clamped between `0.66` and `0.78`
 - standard React Native `View` and accessibility props where applicable
 
-`CardUnion.Item` owns card content, padding, pressed state, and accessibility
+`Card.Item` owns card content, padding, pressed state, and accessibility
 semantics. The root must generate union bridges automatically between adjacent
-items. Do not expose `CardUnion.Bridge` publicly or require screens to position
+items. Do not expose a public bridge subcomponent or require screens to position
 bridges manually. When the design calls for a full canvas gap between two
-cards, split them into separate `CardUnion` groups rather than disabling bridge
+cards, split them into separate `Card` groups rather than disabling bridge
 geometry inside one group.
 
 All items in one union must use the same opaque surface token.
@@ -104,10 +104,10 @@ to `20` for compact stat cards.
 
 ### SVG Surface Layer
 
-The Card Union visual surface is a decorative SVG path behind normal React
-Native content. The SVG draws rounded item silhouettes plus same-color center
-bridges, then draws active-canvas cut-outs on top. This keeps each card's
-rounded border visible while allowing true concave seams.
+The Card Union visual geometry is a decorative SVG path behind normal React
+Native content. The SVG draws same-color center bridges and active-canvas
+cut-outs. This keeps the bridge and concave seams in the measured SVG geometry
+instead of rendering a separate visible connector pill between cards.
 
 The SVG layer must:
 
@@ -117,17 +117,19 @@ The SVG layer must:
 - Use `pointerEvents="none"`.
 - Be hidden from accessibility.
 - Be measured from actual item layout so variable-height content still works.
-- Preserve rounded per-card silhouettes. Do not replace a multi-item union with
-  one full-height rounded rectangle.
+- Preserve rounded per-card silhouettes and concave cut-ins. Do not replace a
+  multi-item union with one full-height rounded rectangle.
 
 The React Native item layer must:
 
 - Own text, icons, actions, haptics, focus, accessibility labels, and pressed
   state.
-- Keep item backgrounds transparent so the SVG silhouette remains the only
-  surface shape.
-- Use opacity or internal overlays for press feedback; do not redraw a separate
-  rounded card background above the SVG.
+- Render item surfaces with `FastSquircleView` when the card itself needs
+  native smoothed corners.
+- Use the same opaque `surfaceContrast` token as the SVG bridge. Do not mix
+  item and bridge colors.
+- Use opacity or internal overlays for press feedback; do not render a separate
+  bridge view above the SVG.
 
 ### Vertical Union
 
@@ -152,20 +154,20 @@ For vertically stacked cards:
 Recommended structure:
 
 ```tsx
-<View style={styles.cardUnionRoot}>
-  <CardUnionSurface pointerEvents="none" />
-  <CardUnion.Item>{content}</CardUnion.Item>
+<View style={styles.cardRoot}>
+  <CardSurface pointerEvents="none" />
+  <Card.Item>{content}</Card.Item>
   <View style={styles.unionGap} pointerEvents="none" />
-  <CardUnion.Item>{content}</CardUnion.Item>
+  <Card.Item>{content}</Card.Item>
 </View>
 ```
 
 The SVG cut-in path must use:
 
 ```ts
-bridgeWidth = measuredUnionWidth * bridgeSpan
+bridgeWidth = measuredUnionWidth * card.bridge.span
 slotWidth = (measuredUnionWidth - bridgeWidth) / 2
-slotHeight = min(measuredUnionGapHeight, cardUnion.bridge.cutoutThickness)
+slotHeight = min(measuredUnionGapHeight, card.bridge.cutoutThickness)
 slotY = midpointBetweenAdjacentItems - slotHeight / 2
 ```
 
@@ -191,8 +193,8 @@ The horizontal cut-in path must use:
 
 ```ts
 slotCenterX = midpointBetweenAdjacentItems
-slotWidth = gapBetweenItems + cardUnion.bridge.cutoutThickness
-slotHeight = cardUnion.bridge.cutoutThickness
+slotWidth = gapBetweenItems + card.bridge.cutoutThickness
+slotHeight = card.bridge.cutoutThickness
 ```
 
 The top cut-out rounds its bottom corners. The bottom cut-out rounds its top
@@ -205,8 +207,8 @@ corners.
 - Keep the Card Union root and gap slots at `overflow: "visible"`.
 - Items may use `overflow: "hidden"` to clip their own pressed overlays.
 - Do not use per-item elevation or shadows inside a union.
-- Use one SVG surface token for the full union geometry. Do not give each item
-  its own opaque React Native background.
+- Use one opaque surface token for the item surfaces and SVG bridge geometry.
+  Do not mix surface colors inside one union.
 - Vertical unions may contain variable-height items.
 - Horizontal Interlocking Pairs must have equal heights and normally contain
   exactly two items.
@@ -226,7 +228,7 @@ corners.
 
 - Never scale one Card Union item independently. This visually tears the union
   apart.
-- When the entire union is one action, animate the complete `CardUnion` root.
+- When the entire union is one action, animate the complete `Card` root.
 - When items have separate actions, use a clipped pressed overlay without scale.
 - Union gaps, bridges, and cut-ins must not resize or morph during presses.
 - The bridge remains decorative and must not trigger haptics.
@@ -249,7 +251,7 @@ colors: {
   surfaceContrastOutline,
 }
 
-cardUnion: {
+card: {
   radius: { compact: 24, default: 28, hero: 32 },
   gap: { compact: 6, default: 8, relaxed: 12 },
   padding: { compact: 16, default: 20, hero: 24 },
@@ -289,16 +291,16 @@ the measured SVG surface. Verify that there are no one-pixel seams at `1x`,
 ## Files And Architecture
 
 ```txt
-src/components/common/CardUnion/
-  CardUnion.tsx
-  CardUnionSurface.tsx
-  CardUnionTypes.ts
-  CardUnionUtils.ts
+src/components/common/Card/
+  Card.tsx
+  CardSurface.tsx
+  CardTypes.ts
+  CardUtils.ts
   index.ts
 ```
 
 The shared component owns all gap and bridge geometry. Screen code may choose
-axis, tone, gap, and content, but must not recreate the union with
+orientation, tone, gap, and content, but must not recreate the union with
 screen-specific absolute-positioning values.
 
 Tests must cover:

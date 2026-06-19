@@ -9,6 +9,7 @@ import {
 import type {ReactNode} from "react";
 import type {LayoutChangeEvent} from "react-native";
 import {Pressable, View} from "react-native";
+import FastSquircleView from "react-native-fast-squircle";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {AppText} from "../AppText";
@@ -194,29 +195,40 @@ function CardItem({
                 accessibilityState={resolvedAccessibilityState}
                 disabled={disabled}
                 onPress={onPress}
-                style={({pressed}) => [
-                    ...baseItemStyle,
-                    pressed && !disabled && styles.pressed,
-                    style,
-                ]}
+                style={
+                    context.orientation === "horizontal" &&
+                    styles.horizontalPressable
+                }
                 {...viewProps}
             >
-                <View style={[styles.itemContent, contentStyle]}>
-                    {children}
-                </View>
+                {({pressed}) => (
+                    <FastSquircleView
+                        cornerSmoothing={theme.card.cornerSmoothing}
+                        style={[
+                            ...baseItemStyle,
+                            pressed && !disabled && styles.pressed,
+                            style,
+                        ]}
+                    >
+                        <View style={[styles.itemContent, contentStyle]}>
+                            {children}
+                        </View>
+                    </FastSquircleView>
+                )}
             </Pressable>
         );
     }
 
     return (
-        <View
+        <FastSquircleView
             accessibilityRole={accessibilityRole}
             accessibilityState={resolvedAccessibilityState}
+            cornerSmoothing={theme.card.cornerSmoothing}
             style={[...baseItemStyle, style]}
             {...viewProps}
         >
             <View style={[styles.itemContent, contentStyle]}>{children}</View>
-        </View>
+        </FastSquircleView>
     );
 }
 
@@ -300,6 +312,9 @@ const styles = StyleSheet.create((theme) => ({
         zIndex: 1,
     },
     horizontalItemFrame: {
+        flex: 1,
+    },
+    horizontalPressable: {
         flex: 1,
     },
     item: {

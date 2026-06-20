@@ -12,6 +12,7 @@ export type PocCardTone =
 
 export type PocCardProps = PropsWithChildren<
     Omit<ViewProps, "style"> & {
+        bridgeColor?: string;
         bridgeSpan?: number;
         cutoutColor?: ColorValue;
         orientation?: PocCardOrientation;
@@ -20,14 +21,21 @@ export type PocCardProps = PropsWithChildren<
     }
 >;
 
+export type PocCardSectionGradient = {
+    from: string;
+    to: string;
+};
+
 export type PocCardSectionProps = PropsWithChildren<
     Omit<ViewProps, "style"> & {
         contentStyle?: StyleProp<ViewStyle>;
+        gradient?: PocCardSectionGradient;
         style?: StyleProp<ViewStyle>;
     }
 >;
 
 export type PocCardConnectorProps = {
+    bridgeColor?: string;
     bridgeSpan: number;
     cutoutColor?: ColorValue;
     orientation: PocCardOrientation;

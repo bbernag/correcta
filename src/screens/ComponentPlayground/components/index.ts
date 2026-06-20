@@ -6,6 +6,7 @@ export {PlaygroundFoundationSection} from "./PlaygroundFoundationSection";
 export {PlaygroundHero} from "./PlaygroundHero";
 export {PlaygroundNativeControlsSection} from "./PlaygroundNativeControlsSection";
 export {PlaygroundScaffoldSection} from "./PlaygroundScaffoldSection";
+export {PlaygroundShapeSurfaceSection} from "./PlaygroundShapeSurfaceSection";
 
 export const PlaygroundSection = {
     Body: PlaygroundSectionBody,

@@ -4,7 +4,6 @@ import {StyleSheet} from "react-native-unistyles";
 import {
     AppText,
     Button,
-    GlassSurface,
     Icon,
     IconButton,
     NoticeCard,
@@ -19,10 +18,10 @@ import {
     PlaygroundNativeControlsSection,
     PlaygroundScaffoldSection,
     PlaygroundSection,
+    PlaygroundShapeSurfaceSection,
 } from "./components";
 import {
     COMPONENT_PLAYGROUND_BUTTON_EXAMPLES,
-    COMPONENT_PLAYGROUND_GLASS_EXAMPLES,
     COMPONENT_PLAYGROUND_ICON_BUTTON_EXAMPLES,
     COMPONENT_PLAYGROUND_ICON_SAMPLES,
     COMPONENT_PLAYGROUND_INPUT_EXAMPLES,
@@ -126,6 +125,7 @@ export function ComponentPlaygroundScreen() {
                     ))}
                 </PlaygroundSection.Body>
             </PlaygroundSection.Root>
+            <PlaygroundShapeSurfaceSection />
             <PlaygroundSection.Root>
                 <PlaygroundSection.Header
                     description="Linked notes pair a status heading with its detail, carrying tone through a soft fill instead of a punitive rail."
@@ -149,27 +149,6 @@ export function ComponentPlaygroundScreen() {
             <PlaygroundCardSection />
             <PlaygroundScaffoldSection />
             <PlaygroundNativeControlsSection />
-            <PlaygroundSection.Root>
-                <PlaygroundSection.Header
-                    description="Compact glass fallback only. Android uses tonal surfaces instead of iOS-style translucency."
-                    eyebrow="Glass"
-                    title="Glass fallback"
-                />
-                <PlaygroundSection.Body style={styles.glassGrid}>
-                    {COMPONENT_PLAYGROUND_GLASS_EXAMPLES.map((item) => (
-                        <GlassSurface
-                            key={item.variant}
-                            variant={item.variant}
-                            style={styles.glassSample}
-                        >
-                            <Icon name={item.icon} size="dense" tone="accent" />
-                            <AppText variant="caption" tone="accent">
-                                {item.label}
-                            </AppText>
-                        </GlassSurface>
-                    ))}
-                </PlaygroundSection.Body>
-            </PlaygroundSection.Root>
             <PlaygroundSection.Root>
                 <PlaygroundSection.Header
                     description="Registry-driven icons keep screens from importing icon packages directly."
@@ -261,17 +240,6 @@ const styles = StyleSheet.create((theme) => ({
         borderRadius: theme.radii.sheet,
         gap: theme.spacing.lg,
         padding: theme.spacing.lg,
-    },
-    glassGrid: {
-        alignItems: "flex-start",
-        flexDirection: "row",
-        flexWrap: "wrap",
-        gap: theme.spacing.lg,
-    },
-    glassSample: {
-        alignItems: "center",
-        flexDirection: "row",
-        gap: theme.spacing.xs,
     },
     iconGrid: {
         flexDirection: "row",

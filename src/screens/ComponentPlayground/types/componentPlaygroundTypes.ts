@@ -13,6 +13,7 @@ import type {
     ProgressBarTone,
     ResultBadgeTone,
     StatCardTone,
+    SquircleSurfaceRadius,
     SurfaceVariant,
     TextInputStatus,
     WordChipStatus,
@@ -105,6 +106,11 @@ export type ComponentPlaygroundGlassExample = {
     icon: IconName;
     label: string;
     variant: GlassSurfaceVariant;
+};
+
+export type ComponentPlaygroundSquircleExample = {
+    label: string;
+    radius: SquircleSurfaceRadius;
 };
 
 export type ComponentPlaygroundChipExample = {

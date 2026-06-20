@@ -9,6 +9,7 @@ import type {
     ComponentPlaygroundNoticeExample,
     ComponentPlaygroundProgressExample,
     ComponentPlaygroundResultBadgeExample,
+    ComponentPlaygroundSquircleExample,
     ComponentPlaygroundStatExample,
     ComponentPlaygroundSurfaceExample,
     ComponentPlaygroundTextExample,
@@ -246,6 +247,16 @@ export const COMPONENT_PLAYGROUND_GLASS_EXAMPLES: ComponentPlaygroundGlassExampl
             variant: "headerControl",
         },
         {
+            icon: "goal",
+            label: "Tab bar",
+            variant: "tabBar",
+        },
+        {
+            icon: "sentence",
+            label: "Overlay",
+            variant: "overlay",
+        },
+        {
             icon: "hint",
             label: "Floating",
             variant: "floatingControl",
@@ -259,6 +270,26 @@ export const COMPONENT_PLAYGROUND_GLASS_EXAMPLES: ComponentPlaygroundGlassExampl
             icon: "check",
             label: "Chip",
             variant: "chip",
+        },
+    ];
+
+export const COMPONENT_PLAYGROUND_SQUIRCLE_EXAMPLES: ComponentPlaygroundSquircleExample[] =
+    [
+        {
+            label: "Compact",
+            radius: "compact",
+        },
+        {
+            label: "Default",
+            radius: "default",
+        },
+        {
+            label: "Hero",
+            radius: "hero",
+        },
+        {
+            label: "Pill",
+            radius: "pill",
         },
     ];
 

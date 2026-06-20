@@ -14,6 +14,7 @@ import {
 } from "./pocCardUtils";
 
 function PocCardRoot({
+    bridgeColor,
     bridgeSpan = POC_CARD_BRIDGE_SPAN_DEFAULT,
     children,
     cutoutColor,
@@ -46,6 +47,7 @@ function PocCardRoot({
                             {child}
                             {index < items.length - 1 ? (
                                 <PocCardConnector
+                                    bridgeColor={bridgeColor}
                                     bridgeSpan={resolvedBridgeSpan}
                                     cutoutColor={cutoutColor}
                                     orientation={orientation}

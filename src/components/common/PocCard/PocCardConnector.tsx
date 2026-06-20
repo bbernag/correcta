@@ -6,6 +6,7 @@ import {getPocCardToneStyle} from "./pocCardTone";
 import {getPocCardCutoutSpan} from "./pocCardUtils";
 
 export function PocCardConnector({
+    bridgeColor,
     bridgeSpan,
     cutoutColor,
     orientation,
@@ -15,6 +16,9 @@ export function PocCardConnector({
     const cutoutColorStyle = cutoutColor
         ? {backgroundColor: cutoutColor}
         : null;
+    const bridgeColorStyle = bridgeColor
+        ? {backgroundColor: bridgeColor}
+        : getPocCardToneStyle(tone);
     const horizontal = orientation === "horizontal";
 
     return (
@@ -31,7 +35,7 @@ export function PocCardConnector({
             <View
                 style={[
                     styles.bridge,
-                    getPocCardToneStyle(tone),
+                    bridgeColorStyle,
                     horizontal && styles.horizontalBridge,
                 ]}
             />

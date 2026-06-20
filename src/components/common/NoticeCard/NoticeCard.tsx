@@ -1,9 +1,11 @@
 import {View} from "react-native";
-import {StyleSheet} from "react-native-unistyles";
+import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
+import type {AppColors} from "../../../theme/colors";
 import {AppText} from "../AppText";
 import {Icon, type IconName} from "../Icon";
 import {PocCard} from "../PocCard";
+import {getNoticeCardGradient} from "./noticeCardColors";
 import type {NoticeCardProps, NoticeCardTone} from "./noticeCardTypes";
 
 const TONE_ICONS: Record<NoticeCardTone, IconName> = {
@@ -20,6 +22,20 @@ const TONE_LABELS: Record<NoticeCardTone, string> = {
     info: "Note",
 };
 
+const TONE_SOFT_COLORS: Record<NoticeCardTone, keyof AppColors> = {
+    success: "feedbackSuccessSoft",
+    warning: "feedbackWarningSoft",
+    danger: "feedbackDangerSoft",
+    info: "feedbackInfoSoft",
+};
+
+const TONE_STRONG_COLORS: Record<NoticeCardTone, keyof AppColors> = {
+    success: "feedbackSuccess",
+    warning: "feedbackWarning",
+    danger: "feedbackDanger",
+    info: "feedbackInfo",
+};
+
 const NOTICE_CARD_BRIDGE_SPAN = 0.8;
 
 export function NoticeCard({
@@ -31,15 +47,25 @@ export function NoticeCard({
     tone,
     ...viewProps
 }: NoticeCardProps) {
+    const {theme} = useUnistyles();
+    const gradient = getNoticeCardGradient(
+        theme.colors[TONE_SOFT_COLORS[tone]],
+        theme.colors[TONE_STRONG_COLORS[tone]]
+    );
+
     return (
         <PocCard
+            bridgeColor={gradient.seam}
             bridgeSpan={NOTICE_CARD_BRIDGE_SPAN}
             cutoutColor={cutoutColor}
             style={style}
             tone={tone}
             {...viewProps}
         >
-            <PocCard.Section style={styles.titleSection}>
+            <PocCard.Section
+                gradient={{from: gradient.top, to: gradient.seam}}
+                style={styles.titleSection}
+            >
                 <View style={styles.titleRow}>
                     <Icon
                         name={icon ?? TONE_ICONS[tone]}
@@ -55,7 +81,10 @@ export function NoticeCard({
                     </AppText>
                 </View>
             </PocCard.Section>
-            <PocCard.Section style={styles.bodySection}>
+            <PocCard.Section
+                gradient={{from: gradient.seam, to: gradient.bottom}}
+                style={styles.bodySection}
+            >
                 {children}
             </PocCard.Section>
         </PocCard>

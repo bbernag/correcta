@@ -9,9 +9,6 @@ module.exports = defineConfig([
             "web-build/**",
             "ios/**",
             "android/**",
-            ".ds-sync/**",
-            ".design-sync/web/dist/**",
-            ".design-sync/web/web-deps/**",
         ],
     },
 ]);

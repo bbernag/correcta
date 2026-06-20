@@ -20,6 +20,18 @@ export function HomeScreen({navigation}: HomeScreenProps) {
         navigation.navigate("ComponentPlayground");
     }
 
+    function handleOpenExpoUiShowcase() {
+        navigation.navigate("ExpoUiShowcase");
+    }
+
+    function handleOpenPocCardPerformance() {
+        navigation.navigate("PocCardPerformance");
+    }
+
+    function handleOpenExistingCardPerformance() {
+        navigation.navigate("ExistingCardPerformance");
+    }
+
     return (
         <Screen>
             <AppText variant="label" tone="accent">
@@ -43,6 +55,24 @@ export function HomeScreen({navigation}: HomeScreenProps) {
                 label="Open component check"
                 onPress={handleOpenPlayground}
                 variant="secondary"
+            />
+            <Button
+                accessibilityLabel="Open Expo UI showcase"
+                label="Open Expo UI showcase"
+                onPress={handleOpenExpoUiShowcase}
+                variant="secondary"
+            />
+            <Button
+                accessibilityLabel="Open POC card benchmark"
+                label="Open POC card benchmark"
+                onPress={handleOpenPocCardPerformance}
+                variant="tertiary"
+            />
+            <Button
+                accessibilityLabel="Open existing card benchmark"
+                label="Open existing card benchmark"
+                onPress={handleOpenExistingCardPerformance}
+                variant="tertiary"
             />
         </Screen>
     );

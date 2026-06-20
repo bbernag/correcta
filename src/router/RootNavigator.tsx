@@ -4,7 +4,12 @@ import {useMemo} from "react";
 import {useColorScheme} from "react-native";
 import {enableFreeze} from "react-native-screens";
 
+import {
+    ExistingCardPerformanceScreen,
+    PocCardPerformanceScreen,
+} from "../screens/CardPerformance";
 import {ComponentPlaygroundScreen} from "../screens/ComponentPlayground";
+import {ExpoUiShowcaseScreen} from "../screens/ExpoUiShowcase";
 import {appThemes} from "../theme";
 import {MainTabs} from "./MainTabs";
 import type {RootStackParamList} from "./types";
@@ -72,6 +77,27 @@ export function RootNavigator() {
                     options={{
                         presentation: "modal",
                         title: "Component check",
+                    }}
+                />
+                <Stack.Screen
+                    component={ExpoUiShowcaseScreen}
+                    name="ExpoUiShowcase"
+                    options={{
+                        title: "Expo UI showcase",
+                    }}
+                />
+                <Stack.Screen
+                    component={PocCardPerformanceScreen}
+                    name="PocCardPerformance"
+                    options={{
+                        title: "POC card benchmark",
+                    }}
+                />
+                <Stack.Screen
+                    component={ExistingCardPerformanceScreen}
+                    name="ExistingCardPerformance"
+                    options={{
+                        title: "Existing card benchmark",
                     }}
                 />
             </Stack.Navigator>

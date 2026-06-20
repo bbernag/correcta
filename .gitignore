@@ -27,6 +27,14 @@ expo-env.d.ts
 # Local device automation state
 .agent-device/
 
+# design-sync generated/scratch (durable inputs under .design-sync/ stay tracked)
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules
+.design-sync/web/web-deps/
+
 # debug
 npm-debug.*
 yarn-debug.*

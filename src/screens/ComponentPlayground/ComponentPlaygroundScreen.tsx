@@ -15,6 +15,8 @@ import {
 import {
     PlaygroundCardSection,
     PlaygroundFoundationSection,
+    PlaygroundHero,
+    PlaygroundNativeControlsSection,
     PlaygroundScaffoldSection,
     PlaygroundSection,
 } from "./components";
@@ -36,19 +38,7 @@ export function ComponentPlaygroundScreen() {
 
     return (
         <Screen contentContainerStyle={styles.screenContent}>
-            <View style={styles.hero}>
-                <GlassSurface variant="headerControl" style={styles.passBadge}>
-                    <Icon name="check" size="dense" tone="accent" />
-                    <AppText variant="caption" tone="accent">
-                        Native elegance pass
-                    </AppText>
-                </GlassSurface>
-                <AppText variant="titleLarge">Common primitives</AppText>
-                <AppText variant="bodySmall" tone="secondary">
-                    A device QA surface for Scribe Blue typography, controls,
-                    feedback states, glass fallback, and haptics.
-                </AppText>
-            </View>
+            <PlaygroundHero />
             <PlaygroundSection.Root>
                 <PlaygroundSection.Header
                     description="System typography roles used by learning screens."
@@ -158,6 +148,7 @@ export function ComponentPlaygroundScreen() {
             </PlaygroundSection.Root>
             <PlaygroundCardSection />
             <PlaygroundScaffoldSection />
+            <PlaygroundNativeControlsSection />
             <PlaygroundSection.Root>
                 <PlaygroundSection.Header
                     description="Compact glass fallback only. Android uses tonal surfaces instead of iOS-style translucency."
@@ -243,16 +234,6 @@ const styles = StyleSheet.create((theme) => ({
     screenContent: {
         gap: theme.spacing["3xl"],
         paddingBottom: theme.spacing["4xl"],
-    },
-    hero: {
-        gap: theme.spacing.md,
-        paddingBottom: theme.spacing.md,
-    },
-    passBadge: {
-        alignItems: "center",
-        alignSelf: "flex-start",
-        flexDirection: "row",
-        gap: theme.spacing.xs,
     },
     textStack: {
         gap: theme.spacing.xl,

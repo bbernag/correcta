@@ -1,11 +1,15 @@
 node_modules/
 .expo/
 .agent-device/
+.claude/
+.ds-sync/
 dist/
 web-build/
 ios/
 android/
 package-lock.json
+.design-sync/web/dist/
+.design-sync/web/web-deps/
 
 AGENTS.md
 docs/rules/

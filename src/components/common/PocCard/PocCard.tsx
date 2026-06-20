@@ -16,16 +16,18 @@ import {
 function PocCardRoot({
     bridgeSpan = POC_CARD_BRIDGE_SPAN_DEFAULT,
     children,
+    cutoutColor,
     orientation = "vertical",
     style,
+    tone = "contrast",
     ...viewProps
 }: PocCardProps) {
     const items = Children.toArray(children);
     const resolvedBridgeSpan = getPocCardBridgeSpan(bridgeSpan);
 
     return (
-        <PocCardContext.Provider value={{orientation}}>
-            <SurfaceContrastContext.Provider value>
+        <PocCardContext.Provider value={{orientation, tone}}>
+            <SurfaceContrastContext.Provider value={tone === "contrast"}>
                 <View
                     style={[
                         styles.root,
@@ -45,7 +47,9 @@ function PocCardRoot({
                             {index < items.length - 1 ? (
                                 <PocCardConnector
                                     bridgeSpan={resolvedBridgeSpan}
+                                    cutoutColor={cutoutColor}
                                     orientation={orientation}
+                                    tone={tone}
                                 />
                             ) : null}
                         </Fragment>

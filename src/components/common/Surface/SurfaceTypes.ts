@@ -15,11 +15,8 @@ export type SurfaceVariant =
     | "danger"
     | "info";
 
-export type SurfaceRail = "accent" | "success" | "warning" | "danger" | "info";
-
 export type SurfaceProps = PropsWithChildren<
     Omit<ViewProps, "style"> & {
-        rail?: SurfaceRail;
         style?: StyleProp<ViewStyle>;
         variant?: SurfaceVariant;
     }

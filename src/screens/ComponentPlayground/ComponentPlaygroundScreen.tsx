@@ -7,6 +7,7 @@ import {
     GlassSurface,
     Icon,
     IconButton,
+    NoticeCard,
     Screen,
     Surface,
     TextInput,
@@ -22,6 +23,7 @@ import {
     COMPONENT_PLAYGROUND_ICON_BUTTON_EXAMPLES,
     COMPONENT_PLAYGROUND_ICON_SAMPLES,
     COMPONENT_PLAYGROUND_INPUT_EXAMPLES,
+    COMPONENT_PLAYGROUND_NOTICE_EXAMPLES,
     COMPONENT_PLAYGROUND_SURFACE_EXAMPLES,
     COMPONENT_PLAYGROUND_TEXT_EXAMPLES,
 } from "./constants/ComponentPlaygroundConstants";
@@ -114,7 +116,7 @@ export function ComponentPlaygroundScreen() {
             </PlaygroundSection.Root>
             <PlaygroundSection.Root>
                 <PlaygroundSection.Header
-                    description="Content surfaces use softer hierarchy and slim correction rails."
+                    description="Content surfaces show hierarchy through fill and elevation, not borders."
                     eyebrow="Containers"
                     title="Surfaces"
                 />
@@ -122,7 +124,6 @@ export function ComponentPlaygroundScreen() {
                     {COMPONENT_PLAYGROUND_SURFACE_EXAMPLES.map((item) => (
                         <Surface
                             key={item.title}
-                            rail={item.rail}
                             style={styles.surfaceSample}
                             variant={item.variant}
                         >
@@ -131,6 +132,26 @@ export function ComponentPlaygroundScreen() {
                                 {item.body}
                             </AppText>
                         </Surface>
+                    ))}
+                </PlaygroundSection.Body>
+            </PlaygroundSection.Root>
+            <PlaygroundSection.Root>
+                <PlaygroundSection.Header
+                    description="Linked notes pair a status heading with its detail, carrying tone through a soft fill instead of a punitive rail."
+                    eyebrow="Feedback"
+                    title="Feedback notes"
+                />
+                <PlaygroundSection.Body style={styles.noticeStack}>
+                    {COMPONENT_PLAYGROUND_NOTICE_EXAMPLES.map((item) => (
+                        <NoticeCard
+                            key={item.title}
+                            title={item.title}
+                            tone={item.tone}
+                        >
+                            <AppText variant="bodySmall" tone="secondary">
+                                {item.body}
+                            </AppText>
+                        </NoticeCard>
                     ))}
                 </PlaygroundSection.Body>
             </PlaygroundSection.Root>
@@ -251,6 +272,12 @@ const styles = StyleSheet.create((theme) => ({
     },
     surfaceSample: {
         gap: theme.spacing.sm,
+    },
+    noticeStack: {
+        backgroundColor: theme.colors.canvas,
+        borderRadius: theme.radii.sheet,
+        gap: theme.spacing.lg,
+        padding: theme.spacing.lg,
     },
     glassGrid: {
         alignItems: "flex-start",

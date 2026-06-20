@@ -21,15 +21,18 @@ export type {
     IconButtonSize,
     IconButtonVariant,
 } from "./IconButton";
+export {NoticeCard} from "./NoticeCard";
+export type {NoticeCardProps, NoticeCardTone} from "./NoticeCard";
 export {PocCard} from "./PocCard";
 export type {
     PocCardOrientation,
     PocCardProps,
     PocCardSectionProps,
+    PocCardTone,
 } from "./PocCard";
 export {Screen} from "./Screen";
 export type {ScreenBackground, ScreenProps, ScreenSafeArea} from "./Screen";
 export {Surface} from "./Surface";
-export type {SurfaceProps, SurfaceRail, SurfaceVariant} from "./Surface";
+export type {SurfaceProps, SurfaceVariant} from "./Surface";
 export {TextInput} from "./TextInput";
 export type {TextInputProps, TextInputStatus} from "./TextInput";

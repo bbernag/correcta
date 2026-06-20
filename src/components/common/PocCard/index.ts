@@ -3,4 +3,5 @@ export type {
     PocCardOrientation,
     PocCardProps,
     PocCardSectionProps,
+    PocCardTone,
 } from "./PocCardTypes";

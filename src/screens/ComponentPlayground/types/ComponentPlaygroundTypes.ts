@@ -8,7 +8,7 @@ import type {
     IconButtonVariant,
     IconName,
     IconTone,
-    SurfaceRail,
+    NoticeCardTone,
     SurfaceVariant,
     TextInputStatus,
 } from "../../../components/common";
@@ -50,9 +50,14 @@ export type ComponentPlaygroundButtonExample = {
 
 export type ComponentPlaygroundSurfaceExample = {
     body: string;
-    rail?: SurfaceRail;
     title: string;
     variant: SurfaceVariant;
+};
+
+export type ComponentPlaygroundNoticeExample = {
+    body: string;
+    title: string;
+    tone: NoticeCardTone;
 };
 
 export type ComponentPlaygroundInputExample = {

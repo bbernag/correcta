@@ -1,11 +1,10 @@
 import FastSquircleView from "react-native-fast-squircle";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
-import type {SurfaceProps, SurfaceRail, SurfaceVariant} from "./SurfaceTypes";
+import type {SurfaceProps, SurfaceVariant} from "./SurfaceTypes";
 
 export function Surface({
     children,
-    rail,
     variant = "default",
     style,
     ...viewProps
@@ -15,12 +14,7 @@ export function Surface({
     return (
         <FastSquircleView
             cornerSmoothing={theme.card.cornerSmoothing}
-            style={[
-                styles.root,
-                getSurfaceVariantStyle(variant),
-                getSurfaceRailStyle(rail ?? getDefaultRailForVariant(variant)),
-                style,
-            ]}
+            style={[styles.root, getSurfaceVariantStyle(variant), style]}
             {...viewProps}
         >
             {children}
@@ -70,26 +64,6 @@ const styles = StyleSheet.create((theme) => ({
     info: {
         backgroundColor: theme.colors.feedbackInfoSoft,
     },
-    railAccent: {
-        borderLeftColor: theme.colors.accentPrimary,
-        borderLeftWidth: 3,
-    },
-    railSuccess: {
-        borderLeftColor: theme.colors.feedbackSuccess,
-        borderLeftWidth: 3,
-    },
-    railWarning: {
-        borderLeftColor: theme.colors.feedbackWarning,
-        borderLeftWidth: 3,
-    },
-    railDanger: {
-        borderLeftColor: theme.colors.feedbackDanger,
-        borderLeftWidth: 3,
-    },
-    railInfo: {
-        borderLeftColor: theme.colors.feedbackInfo,
-        borderLeftWidth: 3,
-    },
 }));
 
 function getSurfaceVariantStyle(variant: SurfaceVariant) {
@@ -118,37 +92,5 @@ function getSurfaceVariantStyle(variant: SurfaceVariant) {
         case "default":
         default:
             return styles.default;
-    }
-}
-
-function getDefaultRailForVariant(variant: SurfaceVariant): SurfaceRail | null {
-    switch (variant) {
-        case "success":
-            return "success";
-        case "warning":
-            return "warning";
-        case "danger":
-            return "danger";
-        case "info":
-            return "info";
-        default:
-            return null;
-    }
-}
-
-function getSurfaceRailStyle(rail: SurfaceRail | null) {
-    switch (rail) {
-        case "accent":
-            return styles.railAccent;
-        case "success":
-            return styles.railSuccess;
-        case "warning":
-            return styles.railWarning;
-        case "danger":
-            return styles.railDanger;
-        case "info":
-            return styles.railInfo;
-        default:
-            return undefined;
     }
 }

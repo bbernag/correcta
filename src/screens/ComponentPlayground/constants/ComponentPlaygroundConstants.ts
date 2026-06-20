@@ -5,6 +5,7 @@ import type {
     ComponentPlaygroundIconButtonExample,
     ComponentPlaygroundIconSample,
     ComponentPlaygroundInputExample,
+    ComponentPlaygroundNoticeExample,
     ComponentPlaygroundSurfaceExample,
     ComponentPlaygroundTextExample,
 } from "../types/ComponentPlaygroundTypes";
@@ -79,35 +80,48 @@ export const COMPONENT_PLAYGROUND_BUTTON_EXAMPLES: ComponentPlaygroundButtonExam
 export const COMPONENT_PLAYGROUND_SURFACE_EXAMPLES: ComponentPlaygroundSurfaceExample[] =
     [
         {
-            body: "Default card surface with subtle boundary.",
+            body: "Default card surface with a subtle boundary.",
             title: "Card",
             variant: "card",
         },
         {
             body: "Elevated treatment for important grouped content.",
-            rail: "accent",
             title: "Elevated",
             variant: "elevated",
         },
         {
-            body: "Correct feedback uses success only for learning result.",
-            title: "Success",
-            variant: "success",
+            body: "Tonal surface for quiet, grouped panels.",
+            title: "Muted",
+            variant: "muted",
+        },
+        {
+            body: "Outline surface for low-emphasis sections.",
+            title: "Outline",
+            variant: "outline",
+        },
+    ];
+
+export const COMPONENT_PLAYGROUND_NOTICE_EXAMPLES: ComponentPlaygroundNoticeExample[] =
+    [
+        {
+            body: "Correct feedback uses success only for a learning result.",
+            title: "Correct",
+            tone: "success",
         },
         {
             body: "Needs-work feedback stays clear without feeling punitive.",
-            title: "Warning",
-            variant: "warning",
+            title: "Needs work",
+            tone: "warning",
         },
         {
-            body: "Error surfaces explain app-level failures.",
-            title: "Danger",
-            variant: "danger",
+            body: "Error notes explain what failed and the next step.",
+            title: "Something went wrong",
+            tone: "danger",
         },
         {
-            body: "Teacher notes and hints use neutral information treatment.",
-            title: "Info",
-            variant: "info",
+            body: "Teacher notes and hints use a neutral information tone.",
+            title: "Teacher note",
+            tone: "info",
         },
     ];
 

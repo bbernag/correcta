@@ -2,13 +2,19 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import type {PocCardConnectorProps} from "./PocCardTypes";
+import {getPocCardToneStyle} from "./PocCardTone";
 import {getPocCardCutoutSpan} from "./PocCardUtils";
 
 export function PocCardConnector({
     bridgeSpan,
+    cutoutColor,
     orientation,
+    tone,
 }: PocCardConnectorProps) {
     const cutoutSpan = getPocCardCutoutSpan(bridgeSpan);
+    const cutoutColorStyle = cutoutColor
+        ? {backgroundColor: cutoutColor}
+        : null;
     const horizontal = orientation === "horizontal";
 
     return (
@@ -23,13 +29,18 @@ export function PocCardConnector({
             ]}
         >
             <View
-                style={[styles.bridge, horizontal && styles.horizontalBridge]}
+                style={[
+                    styles.bridge,
+                    getPocCardToneStyle(tone),
+                    horizontal && styles.horizontalBridge,
+                ]}
             />
             {horizontal ? (
                 <>
                     <View
                         style={[
                             styles.horizontalCutout,
+                            cutoutColorStyle,
                             styles.topCutout,
                             {
                                 height: cutoutSpan,
@@ -39,6 +50,7 @@ export function PocCardConnector({
                     <View
                         style={[
                             styles.horizontalCutout,
+                            cutoutColorStyle,
                             styles.bottomCutout,
                             {
                                 height: cutoutSpan,
@@ -51,6 +63,7 @@ export function PocCardConnector({
                     <View
                         style={[
                             styles.verticalCutout,
+                            cutoutColorStyle,
                             styles.leftCutout,
                             {
                                 width: cutoutSpan,
@@ -60,6 +73,7 @@ export function PocCardConnector({
                     <View
                         style={[
                             styles.verticalCutout,
+                            cutoutColorStyle,
                             styles.rightCutout,
                             {
                                 width: cutoutSpan,
@@ -87,7 +101,6 @@ const styles = StyleSheet.create((theme) => ({
         width: theme.card.gap.default,
     },
     bridge: {
-        backgroundColor: theme.colors.surfaceContrast,
         bottom: 0,
         left: 0,
         position: "absolute",

@@ -23,10 +23,11 @@ marked clearly, professionally, and without visual noise.
 Correcta is serious, focused, clear, and encouraging. It should not feel
 childish, neon, cartoon-like, over-gamified, or like a web page inside a phone.
 
-The strongest visual signature is the **correction rail**: a restrained status
-rail used on feedback surfaces, review cards, and mistake summaries. The rail
-borrows from annotated study material: it gives the learner a quick signal
-without making mistakes feel punitive.
+The strongest visual signature is the **marked feedback note**: a restrained
+status treatment used on feedback surfaces, review cards, and mistake summaries.
+It borrows from annotated study material — a linked pair of cards, a status
+heading joined to its detail — giving the learner a quick signal without making
+mistakes feel punitive.
 
 ## Hard Constraints
 
@@ -124,8 +125,7 @@ Alternate directions considered:
 ### Color Usage Rules
 
 - Use `accent.primary` for primary buttons, active tab icon/label, selected
-  segmented-control items, main progress indicators, neutral correction rails,
-  and primary links/actions.
+  segmented-control items, main progress indicators, and primary links/actions.
 - Use `accent.primarySoft` for secondary buttons, selected tab backgrounds,
   selected filter backgrounds, light emphasis cards, and subtle active states.
 - Use `surface.tonal` for quiet grouped areas, segmented-control containers,
@@ -461,8 +461,33 @@ Rules:
 
 - Default radius: `radius.md`.
 - Default padding: `space.6`.
-- Status surfaces use the correction rail when they contain feedback.
+- `Surface` is a plain container: hierarchy comes from fill and elevation, not
+  borders. Wrap feedback content in `NoticeCard` instead of styling `Surface`
+  status variants directly.
 - Platform-specific elevation is handled inside `Surface`, not per screen.
+
+### NoticeCard
+
+Files:
+
+- `src/components/common/NoticeCard/NoticeCard.tsx`
+- `src/components/common/NoticeCard/NoticeCardTypes.ts`
+- `src/components/common/NoticeCard/index.ts`
+
+Tones: `success`, `warning`, `danger`, `info`.
+
+Rules:
+
+- Composes a vertical `PocCard` (linked sections) with the matching soft status
+  fill, so feedback adopts the linked-card signature instead of a left rail.
+- The first section is the status heading (status icon plus a calm
+  `text.primary` title); the second section holds the feedback detail.
+- Status is never color-only: the icon and the title's accessibility label both
+  carry the tone.
+- For feedback revealed after an action, pass `accessibilityLiveRegion="polite"`
+  so screen readers announce it.
+- On a non-canvas background, pass `cutoutColor` so the notch cutouts match the
+  surface behind the note.
 
 ### GlassSurface
 
@@ -739,7 +764,7 @@ Hierarchy:
 
 Visual treatment:
 
-- Hero card uses `surface.elevated`, accent rail, primary CTA.
+- Hero card uses `surface.elevated` and a primary CTA.
 - Stat cards use `StatCard`.
 - Icons clarify the stat type but never replace labels.
 
@@ -766,7 +791,7 @@ Visual treatment:
 
 - Sentence card uses large `sentence` type.
 - Input area is stable and keyboard-safe.
-- Feedback panel uses correction rail and `ResultBadge`.
+- Feedback panel uses `NoticeCard` and `ResultBadge`.
 - Mistake details use `FeedbackHighlight`.
 
 Animation:

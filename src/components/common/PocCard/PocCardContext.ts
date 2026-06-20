@@ -4,4 +4,5 @@ import type {PocCardContextValue} from "./PocCardTypes";
 
 export const PocCardContext = createContext<PocCardContextValue>({
     orientation: "vertical",
+    tone: "contrast",
 });

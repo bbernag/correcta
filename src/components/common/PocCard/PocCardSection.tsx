@@ -5,6 +5,7 @@ import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {PocCardContext} from "./PocCardContext";
 import type {PocCardSectionProps} from "./PocCardTypes";
+import {getPocCardToneStyle} from "./PocCardTone";
 
 export function PocCardSection({
     children,
@@ -13,13 +14,14 @@ export function PocCardSection({
     ...viewProps
 }: PocCardSectionProps) {
     const {theme} = useUnistyles();
-    const {orientation} = use(PocCardContext);
+    const {orientation, tone} = use(PocCardContext);
 
     return (
         <FastSquircleView
             cornerSmoothing={theme.card.cornerSmoothing}
             style={[
                 styles.root,
+                getPocCardToneStyle(tone),
                 orientation === "horizontal" && styles.horizontalRoot,
                 style,
             ]}
@@ -32,7 +34,6 @@ export function PocCardSection({
 
 const styles = StyleSheet.create((theme) => ({
     root: {
-        backgroundColor: theme.colors.surfaceContrast,
         borderRadius: theme.card.radius.compact,
         overflow: "hidden",
         padding: theme.spacing.xl,

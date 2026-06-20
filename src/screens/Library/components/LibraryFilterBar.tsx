@@ -1,7 +1,7 @@
 import {Pressable, ScrollView} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText} from "../../../components/common";
+import {AppText, PressableMotionView} from "../../../components/common";
 import {LIBRARY_FILTERS} from "../constants/libraryConstants";
 import type {LibraryFilter} from "../types/libraryTypes";
 import {getFilterLabel} from "../utils/libraryUtils";
@@ -30,18 +30,23 @@ export function LibraryFilterBar({onChange, value}: LibraryFilterBarProps) {
                         onPress={() => {
                             onChange(filter);
                         }}
-                        style={({pressed}) => [
-                            styles.chip,
-                            isSelected && styles.chipSelected,
-                            pressed && styles.chipPressed,
-                        ]}
                     >
-                        <AppText
-                            variant="label"
-                            tone={isSelected ? "inverted" : "accent"}
-                        >
-                            {getFilterLabel(filter)}
-                        </AppText>
+                        {({pressed}) => (
+                            <PressableMotionView
+                                pressed={pressed}
+                                style={[
+                                    styles.chip,
+                                    isSelected && styles.chipSelected,
+                                ]}
+                            >
+                                <AppText
+                                    variant="label"
+                                    tone={isSelected ? "inverted" : "accent"}
+                                >
+                                    {getFilterLabel(filter)}
+                                </AppText>
+                            </PressableMotionView>
+                        )}
                     </Pressable>
                 );
             })}
@@ -63,8 +68,5 @@ const styles = StyleSheet.create((theme) => ({
     },
     chipSelected: {
         backgroundColor: theme.colors.accentPrimary,
-    },
-    chipPressed: {
-        opacity: theme.motion.pressOpacity,
     },
 }));

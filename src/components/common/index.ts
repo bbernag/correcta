@@ -74,6 +74,8 @@ export type {
 } from "./PocCard";
 export {ProgressBar} from "./ProgressBar";
 export type {ProgressBarProps, ProgressBarTone} from "./ProgressBar";
+export {PressableMotionView} from "./PressableMotionView";
+export type {PressableMotionViewProps} from "./PressableMotionView";
 export {ResultBadge} from "./ResultBadge";
 export type {ResultBadgeProps, ResultBadgeTone} from "./ResultBadge";
 export {Screen} from "./Screen";

@@ -1,7 +1,12 @@
 import {Pressable, View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, Surface} from "../../../components/common";
+import {
+    AppText,
+    Button,
+    PressableMotionView,
+    Surface,
+} from "../../../components/common";
 import type {
     NotificationPreferences,
     NotificationReminderState,
@@ -63,18 +68,26 @@ export function ReminderPreferencesCard({
                                     time: option.time,
                                 });
                             }}
-                            style={({pressed}) => [
-                                styles.option,
-                                selected && styles.optionSelected,
-                                pressed && styles.pressed,
-                            ]}
+                            style={styles.optionFrame}
                         >
-                            <AppText variant="label">{option.label}</AppText>
-                            <AppText variant="caption" tone="secondary">
-                                {option.time === "none"
-                                    ? "No alerts"
-                                    : option.time}
-                            </AppText>
+                            {({pressed}) => (
+                                <PressableMotionView
+                                    pressed={pressed}
+                                    style={[
+                                        styles.option,
+                                        selected && styles.optionSelected,
+                                    ]}
+                                >
+                                    <AppText variant="label">
+                                        {option.label}
+                                    </AppText>
+                                    <AppText variant="caption" tone="secondary">
+                                        {option.time === "none"
+                                            ? "No alerts"
+                                            : option.time}
+                                    </AppText>
+                                </PressableMotionView>
+                            )}
                         </Pressable>
                     );
                 })}
@@ -113,13 +126,15 @@ const styles = StyleSheet.create((theme) => ({
         flexWrap: "wrap",
         gap: theme.spacing.sm,
     },
+    optionFrame: {
+        flexBasis: "45%",
+        flexGrow: 1,
+    },
     option: {
         backgroundColor: theme.colors.surfaceTonal,
         borderColor: theme.colors.borderSubtle,
         borderRadius: theme.radii.sm,
         borderWidth: 1,
-        flexBasis: "45%",
-        flexGrow: 1,
         gap: theme.spacing.xs,
         minHeight: 56,
         padding: theme.spacing.md,
@@ -127,8 +142,5 @@ const styles = StyleSheet.create((theme) => ({
     optionSelected: {
         backgroundColor: theme.colors.accentPrimarySoft,
         borderColor: theme.colors.accentPrimaryStrong,
-    },
-    pressed: {
-        opacity: theme.motion.pressOpacity,
     },
 }));

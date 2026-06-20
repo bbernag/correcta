@@ -1,7 +1,7 @@
 import {Pressable, View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText} from "../../../components/common";
+import {AppText, PressableMotionView} from "../../../components/common";
 import type {PracticeInputMode} from "../../../types";
 
 const INPUT_MODES = [
@@ -31,18 +31,26 @@ export function InputModeControl({onChange, value}: InputModeControlProps) {
                             onPress={() => {
                                 onChange(option.value);
                             }}
-                            style={({pressed}) => [
-                                styles.option,
-                                isSelected && styles.optionSelected,
-                                pressed && styles.optionPressed,
-                            ]}
+                            style={styles.optionFrame}
                         >
-                            <AppText
-                                variant="label"
-                                tone={isSelected ? "inverted" : "accent"}
-                            >
-                                {option.label}
-                            </AppText>
+                            {({pressed}) => (
+                                <PressableMotionView
+                                    pressed={pressed}
+                                    style={[
+                                        styles.option,
+                                        isSelected && styles.optionSelected,
+                                    ]}
+                                >
+                                    <AppText
+                                        variant="label"
+                                        tone={
+                                            isSelected ? "inverted" : "accent"
+                                        }
+                                    >
+                                        {option.label}
+                                    </AppText>
+                                </PressableMotionView>
+                            )}
                         </Pressable>
                     );
                 })}
@@ -62,18 +70,17 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.xs,
         padding: theme.spacing.xs,
     },
+    optionFrame: {
+        flex: 1,
+    },
     option: {
         alignItems: "center",
         borderRadius: theme.radii.sm,
-        flex: 1,
         minHeight: 44,
         justifyContent: "center",
         paddingHorizontal: theme.spacing.md,
     },
     optionSelected: {
         backgroundColor: theme.colors.accentPrimary,
-    },
-    optionPressed: {
-        opacity: theme.motion.pressOpacity,
     },
 }));

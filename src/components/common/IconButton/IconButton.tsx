@@ -4,6 +4,7 @@ import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {playHapticFeedback} from "../../../native";
 import {Icon, type IconSize, type IconTone} from "../Icon";
+import {PressableMotionView} from "../PressableMotionView";
 import {SquircleSurface} from "../SquircleSurface";
 import type {
     IconButtonProps,
@@ -49,26 +50,27 @@ export function IconButton({
             {...pressableProps}
         >
             {({pressed}) => (
-                <SquircleSurface
-                    radius="pill"
-                    style={[
-                        styles.visual,
-                        getSizeStyle(size),
-                        getVariantStyle({selected, variant}),
-                        pressed && !isDisabled && styles.pressed,
-                        isDisabled && styles.disabled,
-                    ]}
-                >
-                    <Icon
-                        name={icon}
-                        size={getIconSize(size)}
-                        tone={getIconTone({
-                            disabled: isDisabled,
-                            selected,
-                            variant,
-                        })}
-                    />
-                </SquircleSurface>
+                <PressableMotionView disabled={isDisabled} pressed={pressed}>
+                    <SquircleSurface
+                        radius="pill"
+                        style={[
+                            styles.visual,
+                            getSizeStyle(size),
+                            getVariantStyle({selected, variant}),
+                            isDisabled && styles.disabled,
+                        ]}
+                    >
+                        <Icon
+                            name={icon}
+                            size={getIconSize(size)}
+                            tone={getIconTone({
+                                disabled: isDisabled,
+                                selected,
+                                variant,
+                            })}
+                        />
+                    </SquircleSurface>
+                </PressableMotionView>
             )}
         </Pressable>
     );
@@ -120,10 +122,6 @@ const styles = StyleSheet.create((theme) => ({
     selected: {
         backgroundColor: theme.colors.accentPrimary,
         borderColor: theme.colors.accentPrimary,
-    },
-    pressed: {
-        opacity: theme.motion.pressOpacity,
-        transform: [{scale: 0.96}],
     },
     disabled: {
         backgroundColor: theme.colors.backgroundSecondary,

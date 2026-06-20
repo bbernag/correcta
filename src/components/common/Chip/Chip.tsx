@@ -3,6 +3,7 @@ import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, type AppTextTone} from "../AppText";
 import {Icon, type IconTone} from "../Icon";
+import {PressableMotionView} from "../PressableMotionView";
 import {SquircleSurface} from "../SquircleSurface";
 import type {ChipProps, ChipSize, ChipVariant} from "./chipTypes";
 
@@ -18,39 +19,45 @@ export function Chip({
     ...pressableProps
 }: ChipProps) {
     const isInteractive = Boolean(onPress);
-    const visual = ({pressed = false}: {pressed?: boolean} = {}) => (
-        <SquircleSurface
-            radius="pill"
-            style={[
-                styles.root,
-                getChipSizeStyle(size),
-                getChipVariantStyle({selected, variant}),
-                pressed && !disabled && styles.pressed,
-                disabled && styles.disabled,
-                style,
-            ]}
-        >
-            <View style={styles.content}>
-                {icon ? (
-                    <Icon
-                        name={icon}
-                        size="dense"
-                        tone={getChipIconTone({disabled, selected, variant})}
-                    />
-                ) : null}
-                <AppText
-                    numberOfLines={1}
-                    tone={getChipTextTone({disabled, selected, variant})}
-                    variant="label"
-                >
-                    {label}
-                </AppText>
-            </View>
-        </SquircleSurface>
-    );
+
+    function renderSurface() {
+        return (
+            <SquircleSurface
+                radius="pill"
+                style={[
+                    styles.root,
+                    getChipSizeStyle(size),
+                    getChipVariantStyle({selected, variant}),
+                    disabled && styles.disabled,
+                    style,
+                ]}
+            >
+                <View style={styles.content}>
+                    {icon ? (
+                        <Icon
+                            name={icon}
+                            size="dense"
+                            tone={getChipIconTone({
+                                disabled,
+                                selected,
+                                variant,
+                            })}
+                        />
+                    ) : null}
+                    <AppText
+                        numberOfLines={1}
+                        tone={getChipTextTone({disabled, selected, variant})}
+                        variant="label"
+                    >
+                        {label}
+                    </AppText>
+                </View>
+            </SquircleSurface>
+        );
+    }
 
     if (!isInteractive) {
-        return visual();
+        return renderSurface();
     }
 
     return (
@@ -61,7 +68,11 @@ export function Chip({
             onPress={onPress}
             {...pressableProps}
         >
-            {({pressed}) => visual({pressed})}
+            {({pressed}) => (
+                <PressableMotionView disabled={disabled} pressed={pressed}>
+                    {renderSurface()}
+                </PressableMotionView>
+            )}
         </Pressable>
     );
 }
@@ -116,10 +127,6 @@ const styles = StyleSheet.create((theme) => ({
     selected: {
         backgroundColor: theme.colors.accentPrimary,
         borderColor: theme.colors.accentPrimary,
-    },
-    pressed: {
-        opacity: theme.motion.pressOpacity,
-        transform: [{scale: 0.98}],
     },
     disabled: {
         opacity: theme.motion.disabledOpacity,

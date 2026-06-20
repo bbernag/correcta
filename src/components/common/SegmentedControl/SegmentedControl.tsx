@@ -3,6 +3,7 @@ import {StyleSheet} from "react-native-unistyles";
 
 import {AppText} from "../AppText";
 import {Icon} from "../Icon";
+import {PressableMotionView} from "../PressableMotionView";
 import {SquircleSurface} from "../SquircleSurface";
 import type {
     SegmentedControlOption,
@@ -89,30 +90,35 @@ function SegmentedControlOptionContent({
 
     if (!selected) {
         return (
-            <View
-                style={[
-                    styles.option,
-                    pressed && !disabled && styles.optionPressed,
-                    disabled && styles.disabled,
-                ]}
+            <PressableMotionView
+                disabled={disabled}
+                pressed={pressed}
+                style={styles.optionMotion}
             >
-                {content}
-            </View>
+                <View style={[styles.option, disabled && styles.disabled]}>
+                    {content}
+                </View>
+            </PressableMotionView>
         );
     }
 
     return (
-        <SquircleSurface
-            radius="pill"
-            style={[
-                styles.option,
-                styles.selectedOption,
-                pressed && !disabled && styles.optionPressed,
-                disabled && styles.disabled,
-            ]}
+        <PressableMotionView
+            disabled={disabled}
+            pressed={pressed}
+            style={styles.optionMotion}
         >
-            {content}
-        </SquircleSurface>
+            <SquircleSurface
+                radius="pill"
+                style={[
+                    styles.option,
+                    styles.selectedOption,
+                    disabled && styles.disabled,
+                ]}
+            >
+                {content}
+            </SquircleSurface>
+        </PressableMotionView>
     );
 }
 
@@ -128,6 +134,9 @@ const styles = StyleSheet.create((theme) => ({
     optionPressable: {
         flex: 1,
         minWidth: 44,
+    },
+    optionMotion: {
+        flex: 1,
     },
     option: {
         alignItems: "center",
@@ -145,9 +154,6 @@ const styles = StyleSheet.create((theme) => ({
         flexDirection: "row",
         gap: theme.spacing.xs,
         justifyContent: "center",
-    },
-    optionPressed: {
-        opacity: theme.motion.pressOpacity,
     },
     disabled: {
         opacity: theme.motion.disabledOpacity,

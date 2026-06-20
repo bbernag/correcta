@@ -5,6 +5,7 @@ import {AppText} from "../AppText";
 import type {AppTextTone} from "../AppText";
 import {Icon} from "../Icon";
 import type {IconTone} from "../Icon";
+import {PressableMotionView} from "../PressableMotionView";
 import {SquircleSurface} from "../SquircleSurface";
 import type {ButtonProps, ButtonSize, ButtonVariant} from "./buttonTypes";
 
@@ -48,41 +49,45 @@ export function Button({
             {...pressableProps}
         >
             {({pressed}) => (
-                <SquircleSurface
-                    style={[
-                        styles.surface,
-                        getButtonVariantStyle(variant),
-                        getButtonSizeStyle(size),
-                        pressed && !isInteractionDisabled && styles.pressed,
-                        disabled && styles.disabled,
-                    ]}
+                <PressableMotionView
+                    disabled={isInteractionDisabled}
+                    pressed={pressed}
                 >
-                    <View style={styles.content}>
-                        {loading ? (
-                            <ActivityIndicator
-                                color={activityColor}
-                                size="small"
-                            />
-                        ) : null}
-                        {!loading && leadingIcon ? (
-                            <Icon
-                                name={leadingIcon}
-                                size="dense"
-                                tone={iconTone}
-                            />
-                        ) : null}
-                        <AppText variant="button" tone={labelTone}>
-                            {resolvedLabel}
-                        </AppText>
-                        {!loading && resolvedTrailingIcon ? (
-                            <Icon
-                                name={resolvedTrailingIcon}
-                                size="dense"
-                                tone={iconTone}
-                            />
-                        ) : null}
-                    </View>
-                </SquircleSurface>
+                    <SquircleSurface
+                        style={[
+                            styles.surface,
+                            getButtonVariantStyle(variant),
+                            getButtonSizeStyle(size),
+                            disabled && styles.disabled,
+                        ]}
+                    >
+                        <View style={styles.content}>
+                            {loading ? (
+                                <ActivityIndicator
+                                    color={activityColor}
+                                    size="small"
+                                />
+                            ) : null}
+                            {!loading && leadingIcon ? (
+                                <Icon
+                                    name={leadingIcon}
+                                    size="dense"
+                                    tone={iconTone}
+                                />
+                            ) : null}
+                            <AppText variant="button" tone={labelTone}>
+                                {resolvedLabel}
+                            </AppText>
+                            {!loading && resolvedTrailingIcon ? (
+                                <Icon
+                                    name={resolvedTrailingIcon}
+                                    size="dense"
+                                    tone={iconTone}
+                                />
+                            ) : null}
+                        </View>
+                    </SquircleSurface>
+                </PressableMotionView>
             )}
         </Pressable>
     );
@@ -140,10 +145,6 @@ const styles = StyleSheet.create((theme) => ({
     },
     success: {
         backgroundColor: theme.colors.feedbackSuccessSoft,
-    },
-    pressed: {
-        opacity: theme.motion.pressOpacity,
-        transform: [{scale: 0.98}],
     },
     disabled: {
         backgroundColor: theme.colors.backgroundSecondary,

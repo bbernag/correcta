@@ -1,7 +1,12 @@
 import {Pressable, View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, TextInput} from "../../../components/common";
+import {
+    AppText,
+    Button,
+    PressableMotionView,
+    TextInput,
+} from "../../../components/common";
 import type {PracticeInputMode} from "../../../types";
 import type {WordBankItem} from "../types/practiceTypes";
 
@@ -56,12 +61,17 @@ export function AnswerComposer({
                                 onPress={() => {
                                     onRemoveWord(item.id);
                                 }}
-                                style={({pressed}) => [
-                                    styles.selectedChip,
-                                    pressed && styles.pressed,
-                                ]}
                             >
-                                <AppText variant="label">{item.label}</AppText>
+                                {({pressed}) => (
+                                    <PressableMotionView
+                                        pressed={pressed}
+                                        style={styles.selectedChip}
+                                    >
+                                        <AppText variant="label">
+                                            {item.label}
+                                        </AppText>
+                                    </PressableMotionView>
+                                )}
                             </Pressable>
                         );
                     })
@@ -80,14 +90,17 @@ export function AnswerComposer({
                                 onPress={() => {
                                     onSelectWord(item.id);
                                 }}
-                                style={({pressed}) => [
-                                    styles.bankChip,
-                                    pressed && styles.pressed,
-                                ]}
                             >
-                                <AppText variant="label" tone="accent">
-                                    {item.label}
-                                </AppText>
+                                {({pressed}) => (
+                                    <PressableMotionView
+                                        pressed={pressed}
+                                        style={styles.bankChip}
+                                    >
+                                        <AppText variant="label" tone="accent">
+                                            {item.label}
+                                        </AppText>
+                                    </PressableMotionView>
+                                )}
                             </Pressable>
                         );
                     })
@@ -153,9 +166,6 @@ const styles = StyleSheet.create((theme) => ({
         justifyContent: "center",
         paddingHorizontal: theme.spacing.md,
         paddingVertical: theme.spacing.sm,
-    },
-    pressed: {
-        opacity: theme.motion.pressOpacity,
     },
     emptyWordBank: {
         minHeight: 44,

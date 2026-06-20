@@ -1,7 +1,7 @@
 import {Pressable, View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText} from "../../../components/common";
+import {AppText, PressableMotionView} from "../../../components/common";
 import type {ReviewDeckId} from "../../../types";
 import type {ReviewDeckState} from "../types/reviewTypes";
 
@@ -27,16 +27,22 @@ export function ReviewDeckSelector({
                         onPress={() => {
                             onSelectDeck(deck.id);
                         }}
-                        style={({pressed}) => [
-                            styles.deck,
-                            deck.state === "selected" && styles.selected,
-                            pressed && styles.pressed,
-                        ]}
                     >
-                        <AppText variant="label">{deck.title}</AppText>
-                        <AppText variant="caption" tone="secondary">
-                            {deck.itemCount} due
-                        </AppText>
+                        {({pressed}) => (
+                            <PressableMotionView
+                                pressed={pressed}
+                                style={[
+                                    styles.deck,
+                                    deck.state === "selected" &&
+                                        styles.selected,
+                                ]}
+                            >
+                                <AppText variant="label">{deck.title}</AppText>
+                                <AppText variant="caption" tone="secondary">
+                                    {deck.itemCount} due
+                                </AppText>
+                            </PressableMotionView>
+                        )}
                     </Pressable>
                 );
             })}
@@ -60,8 +66,5 @@ const styles = StyleSheet.create((theme) => ({
     selected: {
         backgroundColor: theme.colors.accentPrimarySoft,
         borderColor: theme.colors.accentPrimaryStrong,
-    },
-    pressed: {
-        opacity: theme.motion.pressOpacity,
     },
 }));

@@ -14,6 +14,7 @@ import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {AppText} from "../AppText";
 import type {AppTextProps} from "../AppText";
+import {PressableMotionView} from "../PressableMotionView";
 import {SurfaceContrastContext} from "../surfaceContrastContext";
 import {CardSurface} from "./CardSurface";
 import type {
@@ -202,18 +203,20 @@ function CardItem({
                 {...viewProps}
             >
                 {({pressed}) => (
-                    <FastSquircleView
-                        cornerSmoothing={theme.card.cornerSmoothing}
-                        style={[
-                            ...baseItemStyle,
-                            pressed && !disabled && styles.pressed,
-                            style,
-                        ]}
+                    <PressableMotionView
+                        disabled={disabled}
+                        pressScale={0.985}
+                        pressed={pressed}
                     >
-                        <View style={[styles.itemContent, contentStyle]}>
-                            {children}
-                        </View>
-                    </FastSquircleView>
+                        <FastSquircleView
+                            cornerSmoothing={theme.card.cornerSmoothing}
+                            style={[...baseItemStyle, style]}
+                        >
+                            <View style={[styles.itemContent, contentStyle]}>
+                                {children}
+                            </View>
+                        </FastSquircleView>
+                    </PressableMotionView>
                 )}
             </Pressable>
         );
@@ -324,9 +327,6 @@ const styles = StyleSheet.create((theme) => ({
     },
     itemContent: {
         gap: theme.spacing.md,
-    },
-    pressed: {
-        opacity: theme.motion.pressOpacity,
     },
     disabled: {
         opacity: theme.motion.disabledOpacity,

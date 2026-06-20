@@ -1,12 +1,34 @@
 import {useState} from "react";
 import {TextInput as NativeTextInput, View} from "react-native";
+import {EaseView, type Transition} from "react-native-ease";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
+import {useReducedMotion} from "../../../hooks/useReducedMotion";
+import {motion} from "../../../theme";
 import {AppText} from "../AppText";
 import {Icon} from "../Icon";
 import {SquircleSurface} from "../SquircleSurface";
 import type {TextInputProps} from "./textInputTypes";
 import {getIconTone, getSupportIcon, getSupportTone} from "./textInputUtils";
+
+const INPUT_FRAME_TRANSITION = {
+    transform: {
+        damping: motion.spring.snappy.damping,
+        mass: motion.spring.snappy.mass,
+        stiffness: motion.spring.snappy.stiffness,
+        type: "spring",
+    },
+} satisfies Transition;
+
+const SUPPORT_TEXT_TRANSITION = {
+    duration: motion.duration.fast,
+    easing: "easeOut",
+    type: "timing",
+} satisfies Transition;
+
+const REDUCED_MOTION_TRANSITION = {
+    type: "none",
+} satisfies Transition;
 
 export function TextInput({
     label,
@@ -26,6 +48,7 @@ export function TextInput({
     ...inputProps
 }: TextInputProps) {
     const {theme} = useUnistyles();
+    const isReducedMotionEnabled = useReducedMotion();
     const [isFocused, setIsFocused] = useState(false);
     const isDisabled = disabled || inputProps.editable === false;
     const isSuccess = !error && (status === "success" || Boolean(successText));
@@ -68,45 +91,82 @@ export function TextInput({
             >
                 {label}
             </AppText>
-            <SquircleSurface
-                style={[
-                    styles.inputFrame,
-                    isFocused && styles.inputFocused,
-                    isSuccess && styles.inputSuccess,
-                    error && styles.inputError,
-                    isDisabled && styles.inputDisabled,
-                ]}
+            <EaseView
+                animate={{
+                    scale:
+                        isFocused && !isReducedMotionEnabled && !isDisabled
+                            ? 1.01
+                            : 1,
+                }}
+                transition={
+                    isReducedMotionEnabled
+                        ? REDUCED_MOTION_TRANSITION
+                        : INPUT_FRAME_TRANSITION
+                }
             >
-                {leadingIcon ? (
-                    <Icon name={leadingIcon} size="default" tone={iconTone} />
-                ) : null}
-                <NativeTextInput
-                    {...inputProps}
-                    accessibilityHint={error ?? accessibilityHint}
-                    accessibilityLabel={accessibilityLabel ?? label}
-                    accessibilityState={{
-                        disabled: isDisabled,
-                    }}
-                    autoCorrect={autoCorrect}
-                    editable={!isDisabled}
-                    onBlur={handleBlur}
-                    onFocus={handleFocus}
-                    placeholderTextColor={placeholderTextColor}
-                    spellCheck={spellCheck}
+                <SquircleSurface
                     style={[
-                        styles.input,
-                        !isMultiline && styles.inputSingleLine,
-                        isDisabled && styles.inputDisabledText,
-                        inputStyle,
+                        styles.inputFrame,
+                        isFocused && styles.inputFocused,
+                        isSuccess && styles.inputSuccess,
+                        error && styles.inputError,
+                        isDisabled && styles.inputDisabled,
                     ]}
-                    underlineColorAndroid="transparent"
-                />
-                {trailingIcon ? (
-                    <Icon name={trailingIcon} size="default" tone={iconTone} />
-                ) : null}
-            </SquircleSurface>
+                >
+                    {leadingIcon ? (
+                        <Icon
+                            name={leadingIcon}
+                            size="default"
+                            tone={iconTone}
+                        />
+                    ) : null}
+                    <NativeTextInput
+                        {...inputProps}
+                        accessibilityHint={error ?? accessibilityHint}
+                        accessibilityLabel={accessibilityLabel ?? label}
+                        accessibilityState={{
+                            disabled: isDisabled,
+                        }}
+                        autoCorrect={autoCorrect}
+                        editable={!isDisabled}
+                        onBlur={handleBlur}
+                        onFocus={handleFocus}
+                        placeholderTextColor={placeholderTextColor}
+                        spellCheck={spellCheck}
+                        style={[
+                            styles.input,
+                            !isMultiline && styles.inputSingleLine,
+                            isDisabled && styles.inputDisabledText,
+                            inputStyle,
+                        ]}
+                        underlineColorAndroid="transparent"
+                    />
+                    {trailingIcon ? (
+                        <Icon
+                            name={trailingIcon}
+                            size="default"
+                            tone={iconTone}
+                        />
+                    ) : null}
+                </SquircleSurface>
+            </EaseView>
             {supportText ? (
-                <View style={styles.supportRow}>
+                <EaseView
+                    animate={{
+                        opacity: 1,
+                        translateY: 0,
+                    }}
+                    initialAnimate={{
+                        opacity: isReducedMotionEnabled ? 1 : 0,
+                        translateY: isReducedMotionEnabled ? 0 : 4,
+                    }}
+                    style={styles.supportRow}
+                    transition={
+                        isReducedMotionEnabled
+                            ? REDUCED_MOTION_TRANSITION
+                            : SUPPORT_TEXT_TRANSITION
+                    }
+                >
                     {supportIcon ? (
                         <Icon
                             name={supportIcon}
@@ -121,7 +181,7 @@ export function TextInput({
                     >
                         {supportText}
                     </AppText>
-                </View>
+                </EaseView>
             ) : null}
         </View>
     );

@@ -1,6 +1,9 @@
 import {Pressable, View} from "react-native";
+import {EaseView, type Transition} from "react-native-ease";
 import {StyleSheet} from "react-native-unistyles";
 
+import {useReducedMotion} from "../../../hooks/useReducedMotion";
+import {motion} from "../../../theme";
 import {AppText} from "../AppText";
 import {Icon} from "../Icon";
 import {PressableMotionView} from "../PressableMotionView";
@@ -9,6 +12,24 @@ import type {
     SegmentedControlOption,
     SegmentedControlProps,
 } from "./segmentedControlTypes";
+
+const SELECTED_OPTION_TRANSITION = {
+    opacity: {
+        duration: motion.duration.fast,
+        easing: "easeOut",
+        type: "timing",
+    },
+    transform: {
+        damping: motion.spring.snappy.damping,
+        mass: motion.spring.snappy.mass,
+        stiffness: motion.spring.snappy.stiffness,
+        type: "spring",
+    },
+} satisfies Transition;
+
+const REDUCED_MOTION_TRANSITION = {
+    type: "none",
+} satisfies Transition;
 
 export function SegmentedControl({
     accessibilityLabel,
@@ -69,6 +90,7 @@ function SegmentedControlOptionContent({
     pressed: boolean;
     selected: boolean;
 }) {
+    const isReducedMotionEnabled = useReducedMotion();
     const content = (
         <View style={styles.optionContent}>
             {option.icon ? (
@@ -108,16 +130,33 @@ function SegmentedControlOptionContent({
             pressed={pressed}
             style={styles.optionMotion}
         >
-            <SquircleSurface
-                radius="pill"
-                style={[
-                    styles.option,
-                    styles.selectedOption,
-                    disabled && styles.disabled,
-                ]}
+            <EaseView
+                animate={{
+                    opacity: 1,
+                    scale: 1,
+                }}
+                initialAnimate={{
+                    opacity: isReducedMotionEnabled ? 1 : 0,
+                    scale: isReducedMotionEnabled ? 1 : 0.96,
+                }}
+                style={styles.optionMotion}
+                transition={
+                    isReducedMotionEnabled
+                        ? REDUCED_MOTION_TRANSITION
+                        : SELECTED_OPTION_TRANSITION
+                }
             >
-                {content}
-            </SquircleSurface>
+                <SquircleSurface
+                    radius="pill"
+                    style={[
+                        styles.option,
+                        styles.selectedOption,
+                        disabled && styles.disabled,
+                    ]}
+                >
+                    {content}
+                </SquircleSurface>
+            </EaseView>
         </PressableMotionView>
     );
 }

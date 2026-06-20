@@ -1,7 +1,10 @@
 import {View} from "react-native";
+import {EaseView, type Transition} from "react-native-ease";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
+import {useReducedMotion} from "../../../hooks/useReducedMotion";
 import type {AppColors} from "../../../theme/colors";
+import {motion} from "../../../theme";
 import {AppText} from "../AppText";
 import {Icon, type IconName} from "../Icon";
 import {PocCard} from "../PocCard";
@@ -38,6 +41,16 @@ const TONE_STRONG_COLORS: Record<NoticeCardTone, keyof AppColors> = {
 
 const NOTICE_CARD_BRIDGE_SPAN = 0.8;
 
+const NOTICE_CARD_ENTRY_TRANSITION = {
+    duration: motion.duration.normal,
+    easing: "easeOut",
+    type: "timing",
+} satisfies Transition;
+
+const REDUCED_MOTION_TRANSITION = {
+    type: "none",
+} satisfies Transition;
+
 export function NoticeCard({
     children,
     cutoutColor,
@@ -48,6 +61,7 @@ export function NoticeCard({
     ...viewProps
 }: NoticeCardProps) {
     const {theme} = useUnistyles();
+    const isReducedMotionEnabled = useReducedMotion();
     const gradient = getNoticeCardGradient(
         theme.colors[TONE_SOFT_COLORS[tone]],
         theme.colors[TONE_STRONG_COLORS[tone]]
@@ -66,26 +80,58 @@ export function NoticeCard({
                 gradient={{from: gradient.top, to: gradient.seam}}
                 style={styles.titleSection}
             >
-                <View style={styles.titleRow}>
-                    <Icon
-                        name={icon ?? TONE_ICONS[tone]}
-                        size="dense"
-                        tone={tone}
-                    />
-                    <AppText
-                        accessibilityLabel={`${TONE_LABELS[tone]}: ${title}`}
-                        style={styles.title}
-                        variant="subtitle"
-                    >
-                        {title}
-                    </AppText>
-                </View>
+                <EaseView
+                    animate={{
+                        opacity: 1,
+                        translateY: 0,
+                    }}
+                    initialAnimate={{
+                        opacity: isReducedMotionEnabled ? 1 : 0,
+                        translateY: isReducedMotionEnabled ? 0 : 4,
+                    }}
+                    transition={
+                        isReducedMotionEnabled
+                            ? REDUCED_MOTION_TRANSITION
+                            : NOTICE_CARD_ENTRY_TRANSITION
+                    }
+                >
+                    <View style={styles.titleRow}>
+                        <Icon
+                            name={icon ?? TONE_ICONS[tone]}
+                            size="dense"
+                            tone={tone}
+                        />
+                        <AppText
+                            accessibilityLabel={`${TONE_LABELS[tone]}: ${title}`}
+                            style={styles.title}
+                            variant="subtitle"
+                        >
+                            {title}
+                        </AppText>
+                    </View>
+                </EaseView>
             </PocCard.Section>
             <PocCard.Section
                 gradient={{from: gradient.seam, to: gradient.bottom}}
                 style={styles.bodySection}
             >
-                {children}
+                <EaseView
+                    animate={{
+                        opacity: 1,
+                        translateY: 0,
+                    }}
+                    initialAnimate={{
+                        opacity: isReducedMotionEnabled ? 1 : 0,
+                        translateY: isReducedMotionEnabled ? 0 : 4,
+                    }}
+                    transition={
+                        isReducedMotionEnabled
+                            ? REDUCED_MOTION_TRANSITION
+                            : NOTICE_CARD_ENTRY_TRANSITION
+                    }
+                >
+                    {children}
+                </EaseView>
             </PocCard.Section>
         </PocCard>
     );

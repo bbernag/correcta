@@ -1,8 +1,20 @@
-import {View} from "react-native";
+import {EaseView, type Transition} from "react-native-ease";
 import {StyleSheet} from "react-native-unistyles";
 
+import {useReducedMotion} from "../../../hooks/useReducedMotion";
+import {motion} from "../../../theme";
 import {SquircleSurface} from "../SquircleSurface";
 import type {ProgressBarProps, ProgressBarTone} from "./progressBarTypes";
+
+const PROGRESS_TRANSITION = {
+    duration: motion.duration.normal,
+    easing: "easeOut",
+    type: "timing",
+} satisfies Transition;
+
+const REDUCED_MOTION_TRANSITION = {
+    type: "none",
+} satisfies Transition;
 
 export function ProgressBar({
     accessibilityLabel,
@@ -11,28 +23,38 @@ export function ProgressBar({
     tone = "accent",
     value,
 }: ProgressBarProps) {
+    const isReducedMotionEnabled = useReducedMotion();
     const ratio = getProgressRatio({max, value});
+    const accessibilityMax = Number.isFinite(max) && max > 0 ? max : 0;
+    const accessibilityValue = Number.isFinite(value) ? value : 0;
+    const accessibilityNow =
+        accessibilityMax === 0
+            ? 0
+            : Math.min(Math.max(accessibilityValue, 0), accessibilityMax);
 
     return (
         <SquircleSurface
             accessibilityLabel={accessibilityLabel}
             accessibilityRole="progressbar"
             accessibilityValue={{
-                max,
+                max: accessibilityMax,
                 min: 0,
-                now: Math.min(value, max),
+                now: accessibilityNow,
             }}
             radius="pill"
             style={[styles.track, style]}
         >
-            <View
-                style={[
-                    styles.fill,
-                    getProgressFillStyle(tone),
-                    {
-                        width: `${ratio * 100}%`,
-                    },
-                ]}
+            <EaseView
+                animate={{
+                    scaleX: ratio,
+                }}
+                style={[styles.fill, getProgressFillStyle(tone)]}
+                transformOrigin={{x: 0, y: 0.5}}
+                transition={
+                    isReducedMotionEnabled
+                        ? REDUCED_MOTION_TRANSITION
+                        : PROGRESS_TRANSITION
+                }
             />
         </SquircleSurface>
     );
@@ -49,6 +71,7 @@ const styles = StyleSheet.create((theme) => ({
         bottom: 0,
         left: 0,
         position: "absolute",
+        right: 0,
         top: 0,
     },
     accent: {
@@ -69,7 +92,7 @@ const styles = StyleSheet.create((theme) => ({
 }));
 
 function getProgressRatio({max, value}: {max: number; value: number}) {
-    if (max <= 0) {
+    if (!Number.isFinite(max) || !Number.isFinite(value) || max <= 0) {
         return 0;
     }
 

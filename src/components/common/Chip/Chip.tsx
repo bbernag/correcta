@@ -1,11 +1,26 @@
 import {Pressable, View} from "react-native";
-import {StyleSheet} from "react-native-unistyles";
+import {EaseView, type Transition} from "react-native-ease";
+import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
+import {useReducedMotion} from "../../../hooks/useReducedMotion";
+import {motion, type AppTheme} from "../../../theme";
 import {AppText, type AppTextTone} from "../AppText";
 import {Icon, type IconTone} from "../Icon";
 import {PressableMotionView} from "../PressableMotionView";
 import {SquircleSurface} from "../SquircleSurface";
 import type {ChipProps, ChipSize, ChipVariant} from "./chipTypes";
+
+const CHIP_STATE_TRANSITION = {
+    backgroundColor: {
+        duration: motion.duration.fast,
+        easing: "easeOut",
+        type: "timing",
+    },
+} satisfies Transition;
+
+const REDUCED_MOTION_TRANSITION = {
+    type: "none",
+} satisfies Transition;
 
 export function Chip({
     disabled = false,
@@ -18,7 +33,14 @@ export function Chip({
     variant = "neutral",
     ...pressableProps
 }: ChipProps) {
+    const {theme} = useUnistyles();
+    const isReducedMotionEnabled = useReducedMotion();
     const isInteractive = Boolean(onPress);
+    const chipPalette = getChipVariantPalette({
+        selected,
+        theme,
+        variant,
+    });
 
     function renderSurface() {
         return (
@@ -27,11 +49,22 @@ export function Chip({
                 style={[
                     styles.root,
                     getChipSizeStyle(size),
-                    getChipVariantStyle({selected, variant}),
                     disabled && styles.disabled,
                     style,
                 ]}
             >
+                <EaseView
+                    animate={{
+                        backgroundColor: chipPalette.backgroundColor,
+                    }}
+                    pointerEvents="none"
+                    style={styles.stateLayer}
+                    transition={
+                        isReducedMotionEnabled
+                            ? REDUCED_MOTION_TRANSITION
+                            : CHIP_STATE_TRANSITION
+                    }
+                />
                 <View style={styles.content}>
                     {icon ? (
                         <Icon
@@ -79,16 +112,24 @@ export function Chip({
 
 const styles = StyleSheet.create((theme) => ({
     root: {
-        borderColor: "transparent",
-        borderWidth: 1,
         justifyContent: "center",
         minWidth: 44,
+        position: "relative",
+    },
+    stateLayer: {
+        borderRadius: theme.radii.pill,
+        bottom: 0,
+        left: 0,
+        position: "absolute",
+        right: 0,
+        top: 0,
     },
     content: {
         alignItems: "center",
         flexDirection: "row",
         gap: theme.spacing.xs,
         justifyContent: "center",
+        position: "relative",
     },
     small: {
         minHeight: 44,
@@ -99,34 +140,6 @@ const styles = StyleSheet.create((theme) => ({
         minHeight: 44,
         paddingHorizontal: theme.spacing.xl,
         paddingVertical: theme.spacing.sm,
-    },
-    neutral: {
-        backgroundColor: theme.colors.surfaceTonal,
-        borderColor: theme.colors.borderSubtle,
-    },
-    accent: {
-        backgroundColor: theme.colors.accentPrimarySoft,
-        borderColor: theme.colors.accentPrimarySoft,
-    },
-    success: {
-        backgroundColor: theme.colors.feedbackSuccessSoft,
-        borderColor: theme.colors.feedbackSuccessSoft,
-    },
-    warning: {
-        backgroundColor: theme.colors.feedbackWarningSoft,
-        borderColor: theme.colors.feedbackWarningSoft,
-    },
-    danger: {
-        backgroundColor: theme.colors.feedbackDangerSoft,
-        borderColor: theme.colors.feedbackDangerSoft,
-    },
-    info: {
-        backgroundColor: theme.colors.feedbackInfoSoft,
-        borderColor: theme.colors.feedbackInfoSoft,
-    },
-    selected: {
-        backgroundColor: theme.colors.accentPrimary,
-        borderColor: theme.colors.accentPrimary,
     },
     disabled: {
         opacity: theme.motion.disabledOpacity,
@@ -143,31 +156,47 @@ function getChipSizeStyle(size: ChipSize) {
     }
 }
 
-function getChipVariantStyle({
+function getChipVariantPalette({
     selected,
+    theme,
     variant,
 }: {
     selected: boolean;
+    theme: AppTheme;
     variant: ChipVariant;
 }) {
     if (selected) {
-        return styles.selected;
+        return {
+            backgroundColor: theme.colors.accentPrimary,
+        };
     }
 
     switch (variant) {
         case "accent":
-            return styles.accent;
+            return {
+                backgroundColor: theme.colors.accentPrimarySoft,
+            };
         case "success":
-            return styles.success;
+            return {
+                backgroundColor: theme.colors.feedbackSuccessSoft,
+            };
         case "warning":
-            return styles.warning;
+            return {
+                backgroundColor: theme.colors.feedbackWarningSoft,
+            };
         case "danger":
-            return styles.danger;
+            return {
+                backgroundColor: theme.colors.feedbackDangerSoft,
+            };
         case "info":
-            return styles.info;
+            return {
+                backgroundColor: theme.colors.feedbackInfoSoft,
+            };
         case "neutral":
         default:
-            return styles.neutral;
+            return {
+                backgroundColor: theme.colors.surfaceTonal,
+            };
     }
 }
 

@@ -1,13 +1,18 @@
 import type {
     ComponentPlaygroundButtonExample,
+    ComponentPlaygroundChipExample,
     ComponentPlaygroundGlassExample,
     ComponentPlaygroundHapticAction,
     ComponentPlaygroundIconButtonExample,
     ComponentPlaygroundIconSample,
     ComponentPlaygroundInputExample,
     ComponentPlaygroundNoticeExample,
+    ComponentPlaygroundProgressExample,
+    ComponentPlaygroundResultBadgeExample,
+    ComponentPlaygroundStatExample,
     ComponentPlaygroundSurfaceExample,
     ComponentPlaygroundTextExample,
+    ComponentPlaygroundWordChipExample,
 } from "../types/ComponentPlaygroundTypes";
 
 export const COMPONENT_PLAYGROUND_TEXT_EXAMPLES: ComponentPlaygroundTextExample[] =
@@ -246,7 +251,7 @@ export const COMPONENT_PLAYGROUND_GLASS_EXAMPLES: ComponentPlaygroundGlassExampl
             variant: "floatingControl",
         },
         {
-            icon: "review",
+            icon: "menu",
             label: "Menu",
             variant: "menu",
         },
@@ -261,3 +266,125 @@ export const COMPONENT_PLAYGROUND_CARD_PROGRESS_SEGMENTS = Array.from(
     {length: 18},
     (_, index) => index
 );
+
+export const COMPONENT_PLAYGROUND_CHIP_EXAMPLES: ComponentPlaygroundChipExample[] =
+    [
+        {
+            icon: "practice",
+            label: "Daily",
+            selected: true,
+            variant: "accent",
+        },
+        {
+            icon: "review",
+            label: "Review",
+            variant: "neutral",
+        },
+        {
+            icon: "success",
+            label: "Saved",
+            variant: "success",
+        },
+        {
+            icon: "warning",
+            label: "Needs work",
+            variant: "warning",
+        },
+        {
+            disabled: true,
+            icon: "lock",
+            label: "Locked",
+            variant: "neutral",
+        },
+    ];
+
+export const COMPONENT_PLAYGROUND_WORD_CHIP_EXAMPLES: ComponentPlaygroundWordChipExample[] =
+    [
+        {
+            label: "I",
+            status: "selected",
+        },
+        {
+            label: "have",
+            status: "correct",
+        },
+        {
+            label: "study",
+            status: "incorrect",
+        },
+        {
+            disabled: true,
+            label: "tomorrow",
+            status: "default",
+        },
+    ];
+
+export const COMPONENT_PLAYGROUND_PROGRESS_EXAMPLES: ComponentPlaygroundProgressExample[] =
+    [
+        {
+            accessibilityLabel: "Daily goal progress example",
+            label: "Daily goal",
+            max: 5,
+            tone: "accent",
+            value: 3,
+        },
+        {
+            accessibilityLabel: "Correct answers progress example",
+            label: "Correct",
+            max: 5,
+            tone: "success",
+            value: 4,
+        },
+        {
+            accessibilityLabel: "Needs work progress example",
+            label: "Needs work",
+            max: 5,
+            tone: "warning",
+            value: 2,
+        },
+    ];
+
+export const COMPONENT_PLAYGROUND_STAT_EXAMPLES: ComponentPlaygroundStatExample[] =
+    [
+        {
+            helper: "This week",
+            icon: "accuracy",
+            label: "Accuracy",
+            tone: "accent",
+            value: "84%",
+        },
+        {
+            helper: "Due today",
+            icon: "review",
+            label: "Review",
+            tone: "info",
+            value: "12",
+        },
+        {
+            helper: "Saved from feedback",
+            icon: "saved",
+            label: "Words",
+            tone: "success",
+            value: "38",
+        },
+    ];
+
+export const COMPONENT_PLAYGROUND_RESULT_BADGE_EXAMPLES: ComponentPlaygroundResultBadgeExample[] =
+    [
+        {
+            label: "Correct",
+            tone: "correct",
+        },
+        {
+            label: "Almost",
+            tone: "almost",
+        },
+        {
+            label: "Incorrect",
+            tone: "incorrect",
+        },
+        {
+            label: "Skipped",
+            tone: "skipped",
+        },
+    ];

@@ -1,6 +1,6 @@
-import FastSquircleView from "react-native-fast-squircle";
-import {StyleSheet, useUnistyles} from "react-native-unistyles";
+import {StyleSheet} from "react-native-unistyles";
 
+import {SquircleSurface} from "../SquircleSurface";
 import type {SurfaceProps, SurfaceVariant} from "./SurfaceTypes";
 
 export function Surface({
@@ -9,22 +9,18 @@ export function Surface({
     style,
     ...viewProps
 }: SurfaceProps) {
-    const {theme} = useUnistyles();
-
     return (
-        <FastSquircleView
-            cornerSmoothing={theme.card.cornerSmoothing}
+        <SquircleSurface
             style={[styles.root, getSurfaceVariantStyle(variant), style]}
             {...viewProps}
         >
             {children}
-        </FastSquircleView>
+        </SquircleSurface>
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
     root: {
-        borderRadius: theme.radii.card,
         padding: theme.spacing.cardPadding,
     },
     flat: {

@@ -287,6 +287,9 @@ Rules:
 - Register icons in `src/components/common/Icon/iconRegistry.ts`.
 - Use stroke width `2`.
 - Use rounded line caps and joins.
+- Prefer curved or circular glyphs over hard 90-degree arrow shapes, square
+  containers, and sharp warning triangles when a softer semantic alternative
+  exists.
 - Default icon size is `20`.
 - Dense icon size is `16`.
 - Tab icon size is `22`.
@@ -300,7 +303,7 @@ Recommended semantic registry names:
 | ---------- | ------------------- | -------------------- |
 | `home`     | Home                | Home tab             |
 | `practice` | PencilLine          | Practice tab and CTA |
-| `review`   | Repeat2             | Review tab           |
+| `review`   | History             | Review tab           |
 | `library`  | BookOpen            | Library tab          |
 | `progress` | ChartNoAxesCombined | Progress tab         |
 | `settings` | Settings            | Header action        |

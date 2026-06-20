@@ -45,9 +45,9 @@ const styles = StyleSheet.create((theme) => ({
         lineHeight: theme.lineHeights.titleLarge,
     },
     title: {
-        fontSize: theme.typography.titleLarge,
-        fontWeight: theme.fontWeights.titleLarge,
-        lineHeight: theme.lineHeights.titleLarge,
+        fontSize: theme.typography.title,
+        fontWeight: theme.fontWeights.title,
+        lineHeight: theme.lineHeights.title,
     },
     heading: {
         fontSize: theme.typography.title,
@@ -147,8 +147,9 @@ function getVariantStyle(variant: AppTextVariant) {
         case "display":
             return styles.display;
         case "titleLarge":
-        case "title":
             return styles.titleLarge;
+        case "title":
+            return styles.title;
         case "heading":
             return styles.heading;
         case "subtitle":

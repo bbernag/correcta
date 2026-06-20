@@ -245,7 +245,7 @@ function CardTitle(props: AppTextProps) {
 }
 
 function CardMetric(props: AppTextProps) {
-    return <AppText tone="accent" variant="heading" {...props} />;
+    return <AppText tone="accent" variant="metric" {...props} />;
 }
 
 function useCardContext() {

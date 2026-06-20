@@ -3,14 +3,19 @@ import type {
     AppTextVariant,
     ButtonSize,
     ButtonVariant,
+    ChipVariant,
     GlassSurfaceVariant,
     IconButtonSize,
     IconButtonVariant,
     IconName,
     IconTone,
     NoticeCardTone,
+    ProgressBarTone,
+    ResultBadgeTone,
+    StatCardTone,
     SurfaceVariant,
     TextInputStatus,
+    WordChipStatus,
 } from "../../../components/common";
 import type {HapticFeedback} from "../../../native";
 import type {PropsWithChildren, ReactNode} from "react";
@@ -100,4 +105,39 @@ export type ComponentPlaygroundGlassExample = {
     icon: IconName;
     label: string;
     variant: GlassSurfaceVariant;
+};
+
+export type ComponentPlaygroundChipExample = {
+    disabled?: boolean;
+    icon?: IconName;
+    label: string;
+    selected?: boolean;
+    variant: ChipVariant;
+};
+
+export type ComponentPlaygroundWordChipExample = {
+    disabled?: boolean;
+    label: string;
+    status: WordChipStatus;
+};
+
+export type ComponentPlaygroundProgressExample = {
+    accessibilityLabel: string;
+    label: string;
+    max: number;
+    tone: ProgressBarTone;
+    value: number;
+};
+
+export type ComponentPlaygroundStatExample = {
+    helper: string;
+    icon: IconName;
+    label: string;
+    tone: StatCardTone;
+    value: string;
+};
+
+export type ComponentPlaygroundResultBadgeExample = {
+    label: string;
+    tone: ResultBadgeTone;
 };

@@ -1,6 +1,7 @@
-import {Platform, View} from "react-native";
+import {Platform} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
+import {SquircleSurface, type SquircleSurfaceRadius} from "../SquircleSurface";
 import type {GlassSurfaceProps, GlassSurfaceVariant} from "./GlassSurfaceTypes";
 
 export function GlassSurface({
@@ -10,12 +11,13 @@ export function GlassSurface({
     ...viewProps
 }: GlassSurfaceProps) {
     return (
-        <View
+        <SquircleSurface
+            radius={getGlassSurfaceRadius(variant)}
             style={[styles.root, getGlassSurfaceStyle(variant), style]}
             {...viewProps}
         >
             {children}
-        </View>
+        </SquircleSurface>
     );
 }
 
@@ -35,39 +37,32 @@ const styles = StyleSheet.create((theme) => {
     return {
         root: {
             borderWidth: 1,
-            overflow: "hidden",
         },
         floatingControl: {
             ...glassChrome,
-            borderRadius: theme.radii.pill,
             paddingHorizontal: theme.spacing.md,
             paddingVertical: theme.spacing.sm,
         },
         headerControl: {
             ...glassChrome,
-            borderRadius: theme.radii.lg,
             paddingHorizontal: theme.spacing.lg,
             paddingVertical: theme.spacing.md,
         },
         tabBar: {
             ...glassChrome,
-            borderRadius: theme.radii.sheet,
             paddingHorizontal: theme.spacing.xl,
             paddingVertical: theme.spacing.lg,
         },
         overlay: {
             ...glassChrome,
-            borderRadius: theme.radii.modal,
             padding: theme.spacing["2xl"],
         },
         menu: {
             ...glassChrome,
-            borderRadius: theme.radii.xl,
             padding: theme.spacing.md,
         },
         chip: {
             ...glassChrome,
-            borderRadius: theme.radii.pill,
             paddingHorizontal: theme.spacing.lg,
             paddingVertical: theme.spacing.sm,
         },
@@ -89,5 +84,22 @@ function getGlassSurfaceStyle(variant: GlassSurfaceVariant) {
         case "floatingControl":
         default:
             return styles.floatingControl;
+    }
+}
+
+function getGlassSurfaceRadius(
+    variant: GlassSurfaceVariant
+): SquircleSurfaceRadius {
+    switch (variant) {
+        case "floatingControl":
+        case "chip":
+            return "pill";
+        case "tabBar":
+        case "overlay":
+            return "default";
+        case "headerControl":
+        case "menu":
+        default:
+            return "compact";
     }
 }

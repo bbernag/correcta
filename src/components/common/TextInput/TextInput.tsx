@@ -6,6 +6,7 @@ import {AppText} from "../AppText";
 import type {AppTextTone} from "../AppText";
 import {Icon} from "../Icon";
 import type {IconName, IconTone} from "../Icon";
+import {SquircleSurface} from "../SquircleSurface";
 import type {TextInputProps} from "./TextInputTypes";
 
 export function TextInput({
@@ -58,7 +59,7 @@ export function TextInput({
             <AppText variant="label" tone={isDisabled ? "muted" : "primary"}>
                 {label}
             </AppText>
-            <View
+            <SquircleSurface
                 style={[
                     styles.inputFrame,
                     isFocused && styles.inputFocused,
@@ -86,7 +87,7 @@ export function TextInput({
                 {trailingIcon ? (
                     <Icon name={trailingIcon} size="default" tone={iconTone} />
                 ) : null}
-            </View>
+            </SquircleSurface>
             {supportText ? (
                 <View style={styles.supportRow}>
                     {supportIcon ? (
@@ -117,7 +118,6 @@ const styles = StyleSheet.create((theme) => ({
         alignItems: "center",
         backgroundColor: theme.colors.surfacePrimary,
         borderColor: theme.colors.borderSubtle,
-        borderRadius: theme.radii.input,
         borderWidth: 1,
         flexDirection: "row",
         gap: theme.spacing.sm,

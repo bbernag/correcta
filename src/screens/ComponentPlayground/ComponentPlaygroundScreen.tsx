@@ -15,6 +15,7 @@ import {
 import {
     PlaygroundCardSection,
     PlaygroundFoundationSection,
+    PlaygroundScaffoldSection,
     PlaygroundSection,
 } from "./components";
 import {
@@ -156,6 +157,7 @@ export function ComponentPlaygroundScreen() {
                 </PlaygroundSection.Body>
             </PlaygroundSection.Root>
             <PlaygroundCardSection />
+            <PlaygroundScaffoldSection />
             <PlaygroundSection.Root>
                 <PlaygroundSection.Header
                     description="Compact glass fallback only. Android uses tonal surfaces instead of iOS-style translucency."

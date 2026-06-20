@@ -1,0 +1,155 @@
+import {Pressable, View} from "react-native";
+import {StyleSheet} from "react-native-unistyles";
+
+import {AppText} from "../AppText";
+import {Icon} from "../Icon";
+import {SquircleSurface} from "../SquircleSurface";
+import type {
+    SegmentedControlOption,
+    SegmentedControlProps,
+} from "./SegmentedControlTypes";
+
+export function SegmentedControl({
+    accessibilityLabel,
+    disabled = false,
+    onChange,
+    options,
+    style,
+    value,
+}: SegmentedControlProps) {
+    return (
+        <SquircleSurface
+            accessibilityLabel={accessibilityLabel}
+            radius="pill"
+            style={[styles.root, style]}
+        >
+            {options.map((option) => {
+                const selected = option.value === value;
+                const optionDisabled = disabled || option.disabled;
+
+                return (
+                    <Pressable
+                        accessibilityLabel={
+                            option.accessibilityLabel ?? option.label
+                        }
+                        accessibilityRole="button"
+                        accessibilityState={{
+                            disabled: optionDisabled,
+                            selected,
+                        }}
+                        disabled={optionDisabled}
+                        key={option.value}
+                        onPress={() => onChange(option.value)}
+                        style={styles.optionPressable}
+                    >
+                        {({pressed}) => (
+                            <SegmentedControlOptionContent
+                                disabled={optionDisabled}
+                                option={option}
+                                pressed={pressed}
+                                selected={selected}
+                            />
+                        )}
+                    </Pressable>
+                );
+            })}
+        </SquircleSurface>
+    );
+}
+
+function SegmentedControlOptionContent({
+    disabled,
+    option,
+    pressed,
+    selected,
+}: {
+    disabled: boolean | undefined;
+    option: SegmentedControlOption;
+    pressed: boolean;
+    selected: boolean;
+}) {
+    const content = (
+        <View style={styles.optionContent}>
+            {option.icon ? (
+                <Icon
+                    name={option.icon}
+                    size="dense"
+                    tone={selected ? "inverted" : "accent"}
+                />
+            ) : null}
+            <AppText
+                numberOfLines={1}
+                tone={selected ? "inverted" : "accent"}
+                variant="label"
+            >
+                {option.label}
+            </AppText>
+        </View>
+    );
+
+    if (!selected) {
+        return (
+            <View
+                style={[
+                    styles.option,
+                    pressed && !disabled && styles.optionPressed,
+                    disabled && styles.disabled,
+                ]}
+            >
+                {content}
+            </View>
+        );
+    }
+
+    return (
+        <SquircleSurface
+            radius="pill"
+            style={[
+                styles.option,
+                styles.selectedOption,
+                pressed && !disabled && styles.optionPressed,
+                disabled && styles.disabled,
+            ]}
+        >
+            {content}
+        </SquircleSurface>
+    );
+}
+
+const styles = StyleSheet.create((theme) => ({
+    root: {
+        backgroundColor: theme.colors.surfaceTonal,
+        borderColor: theme.colors.borderSubtle,
+        borderWidth: 1,
+        flexDirection: "row",
+        gap: theme.spacing.xs,
+        padding: theme.spacing.xs,
+    },
+    optionPressable: {
+        flex: 1,
+        minWidth: 44,
+    },
+    option: {
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: 44,
+        paddingHorizontal: theme.spacing.lg,
+        paddingVertical: theme.spacing.sm,
+    },
+    selectedOption: {
+        backgroundColor: theme.colors.accentPrimary,
+        ...theme.shadows.surface,
+    },
+    optionContent: {
+        alignItems: "center",
+        flexDirection: "row",
+        gap: theme.spacing.xs,
+        justifyContent: "center",
+    },
+    optionPressed: {
+        opacity: theme.motion.pressOpacity,
+    },
+    disabled: {
+        opacity: theme.motion.disabledOpacity,
+    },
+}));

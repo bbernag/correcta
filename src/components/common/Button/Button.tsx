@@ -5,6 +5,7 @@ import {AppText} from "../AppText";
 import type {AppTextTone} from "../AppText";
 import {Icon} from "../Icon";
 import type {IconTone} from "../Icon";
+import {SquircleSurface} from "../SquircleSurface";
 import type {ButtonProps, ButtonSize, ButtonVariant} from "./ButtonTypes";
 
 export function Button({
@@ -43,48 +44,60 @@ export function Button({
                 disabled: isInteractionDisabled,
             }}
             disabled={isInteractionDisabled}
-            style={({pressed}) => [
-                styles.root,
-                getButtonVariantStyle(variant),
-                getButtonSizeStyle(size),
-                fullWidth && styles.fullWidth,
-                pressed && !isInteractionDisabled && styles.pressed,
-                disabled && styles.disabled,
-                style,
-            ]}
+            style={[styles.root, fullWidth && styles.fullWidth, style]}
             {...pressableProps}
         >
-            <View style={styles.content}>
-                {loading ? (
-                    <ActivityIndicator color={activityColor} size="small" />
-                ) : null}
-                {!loading && leadingIcon ? (
-                    <Icon name={leadingIcon} size="dense" tone={iconTone} />
-                ) : null}
-                <AppText variant="button" tone={labelTone}>
-                    {resolvedLabel}
-                </AppText>
-                {!loading && resolvedTrailingIcon ? (
-                    <Icon
-                        name={resolvedTrailingIcon}
-                        size="dense"
-                        tone={iconTone}
-                    />
-                ) : null}
-            </View>
+            {({pressed}) => (
+                <SquircleSurface
+                    style={[
+                        styles.surface,
+                        getButtonVariantStyle(variant),
+                        getButtonSizeStyle(size),
+                        pressed && !isInteractionDisabled && styles.pressed,
+                        disabled && styles.disabled,
+                    ]}
+                >
+                    <View style={styles.content}>
+                        {loading ? (
+                            <ActivityIndicator
+                                color={activityColor}
+                                size="small"
+                            />
+                        ) : null}
+                        {!loading && leadingIcon ? (
+                            <Icon
+                                name={leadingIcon}
+                                size="dense"
+                                tone={iconTone}
+                            />
+                        ) : null}
+                        <AppText variant="button" tone={labelTone}>
+                            {resolvedLabel}
+                        </AppText>
+                        {!loading && resolvedTrailingIcon ? (
+                            <Icon
+                                name={resolvedTrailingIcon}
+                                size="dense"
+                                tone={iconTone}
+                            />
+                        ) : null}
+                    </View>
+                </SquircleSurface>
+            )}
         </Pressable>
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
     root: {
+        minWidth: 44,
+    },
+    surface: {
         alignItems: "center",
         borderColor: "transparent",
         borderWidth: 1,
-        borderRadius: theme.radii.button,
         justifyContent: "center",
         minWidth: 44,
-        overflow: "hidden",
     },
     content: {
         alignItems: "center",

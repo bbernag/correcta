@@ -4,6 +4,7 @@ import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {playHapticFeedback} from "../../../native";
 import {Icon, type IconSize, type IconTone} from "../Icon";
+import {SquircleSurface} from "../SquircleSurface";
 import type {
     IconButtonProps,
     IconButtonSize,
@@ -44,33 +45,45 @@ export function IconButton({
             accessibilityState={{disabled: isDisabled, selected}}
             disabled={isDisabled}
             onPress={handlePress}
-            style={({pressed}) => [
-                styles.root,
-                getSizeStyle(size),
-                getVariantStyle({selected, variant}),
-                pressed && !isDisabled && styles.pressed,
-                isDisabled && styles.disabled,
-                style,
-            ]}
+            style={[styles.root, style]}
             {...pressableProps}
         >
-            <Icon
-                name={icon}
-                size={getIconSize(size)}
-                tone={getIconTone({disabled: isDisabled, selected, variant})}
-            />
+            {({pressed}) => (
+                <SquircleSurface
+                    radius="pill"
+                    style={[
+                        styles.visual,
+                        getSizeStyle(size),
+                        getVariantStyle({selected, variant}),
+                        pressed && !isDisabled && styles.pressed,
+                        isDisabled && styles.disabled,
+                    ]}
+                >
+                    <Icon
+                        name={icon}
+                        size={getIconSize(size)}
+                        tone={getIconTone({
+                            disabled: isDisabled,
+                            selected,
+                            variant,
+                        })}
+                    />
+                </SquircleSurface>
+            )}
         </Pressable>
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
     root: {
+        minHeight: 44,
+        minWidth: 44,
+    },
+    visual: {
         alignItems: "center",
         borderColor: "transparent",
         borderWidth: 1,
-        borderRadius: theme.radii.pill,
         justifyContent: "center",
-        overflow: "hidden",
     },
     small: {
         height: 44,
@@ -87,7 +100,7 @@ const styles = StyleSheet.create((theme) => ({
     ghost: {
         backgroundColor: "transparent",
     },
-    surface: {
+    surfaceVariant: {
         backgroundColor:
             Platform.OS === "ios"
                 ? theme.colors.surfaceGlassFallback
@@ -143,7 +156,7 @@ function getVariantStyle({
 
     switch (variant) {
         case "surface":
-            return styles.surface;
+            return styles.surfaceVariant;
         case "tonal":
             return styles.tonal;
         case "danger":

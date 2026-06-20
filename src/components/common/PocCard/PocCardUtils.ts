@@ -1,6 +1,6 @@
 export const POC_CARD_BRIDGE_SPAN_DEFAULT = 0.74;
 
-const POC_CARD_BRIDGE_SPAN_MIN = 0.6;
+const POC_CARD_BRIDGE_SPAN_MIN = 0.4;
 const POC_CARD_BRIDGE_SPAN_MAX = 0.9;
 
 export function getPocCardBridgeSpan(bridgeSpan: number) {

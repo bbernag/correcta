@@ -416,7 +416,7 @@ Expected files:
 - `src/screens/Home/components/TeacherTipCard.tsx`
 - `src/screens/Home/components/ContinueLearningCard.tsx`
 - `src/screens/Home/hooks/useHomeViewModel.ts`
-- `src/screens/Home/types/HomeTypes.ts`
+- `src/screens/Home/types/homeTypes.ts`
 
 Tasks:
 

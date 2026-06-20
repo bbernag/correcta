@@ -4,7 +4,7 @@ import {StyleSheet} from "react-native-unistyles";
 import {AppText, type AppTextTone} from "../AppText";
 import {Icon, type IconTone} from "../Icon";
 import {Surface} from "../Surface";
-import type {StatCardProps, StatCardTone} from "./StatCardTypes";
+import type {StatCardProps, StatCardTone} from "./statCardTypes";
 
 export function StatCard({
     helper,

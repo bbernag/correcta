@@ -1,6 +1,6 @@
 import type {ValidationStatus, PracticeSentence} from "../../../types";
 import type {HapticFeedback} from "../../../native";
-import type {WordBankItem} from "../types/PracticeTypes";
+import type {WordBankItem} from "../types/practiceTypes";
 
 export function createWordBankItems(
     sentence: PracticeSentence | null

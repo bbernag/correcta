@@ -3,7 +3,7 @@ import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Button, Surface} from "../../../components/common";
 import type {MonetizationState} from "../../../types";
-import type {ProgressRewardState} from "../types/ProgressTypes";
+import type {ProgressRewardState} from "../types/progressTypes";
 
 type MonetizationCardProps = {
     monetization: MonetizationState;

@@ -3,4 +3,4 @@ export type {
     ScreenBackground,
     ScreenProps,
     ScreenSafeArea,
-} from "./ScreenTypes";
+} from "./screenTypes";

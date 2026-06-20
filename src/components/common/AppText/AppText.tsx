@@ -3,7 +3,7 @@ import {Text} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {SurfaceContrastContext} from "../surfaceContrastContext";
-import type {AppTextProps, AppTextTone, AppTextVariant} from "./AppTextTypes";
+import type {AppTextProps, AppTextTone, AppTextVariant} from "./appTextTypes";
 
 export function AppText({
     children,

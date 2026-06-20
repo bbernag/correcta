@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import type {ComponentPlaygroundSectionRootProps} from "../types/ComponentPlaygroundTypes";
+import type {ComponentPlaygroundSectionRootProps} from "../types/componentPlaygroundTypes";
 
 export function PlaygroundSectionRoot({
     children,

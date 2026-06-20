@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Surface} from "../../../components/common";
-import type {LibraryRecords} from "../types/LibraryTypes";
+import type {LibraryRecords} from "../types/libraryTypes";
 
 type LibraryOverviewCardProps = {
     records: LibraryRecords;

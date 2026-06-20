@@ -1,2 +1,2 @@
 export {Surface} from "./Surface";
-export type {SurfaceProps, SurfaceVariant} from "./SurfaceTypes";
+export type {SurfaceProps, SurfaceVariant} from "./surfaceTypes";

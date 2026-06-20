@@ -1,6 +1,6 @@
 import {StyleSheet} from "react-native-unistyles";
 
-import type {PocCardTone} from "./PocCardTypes";
+import type {PocCardTone} from "./pocCardTypes";
 
 const toneStyles = StyleSheet.create((theme) => ({
     contrast: {

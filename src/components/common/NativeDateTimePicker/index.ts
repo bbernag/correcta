@@ -2,4 +2,4 @@ export {NativeDateTimePicker} from "./NativeDateTimePicker";
 export type {
     NativeDateTimePickerChangeEvent,
     NativeDateTimePickerProps,
-} from "./NativeDateTimePickerTypes";
+} from "./nativeDateTimePickerTypes";

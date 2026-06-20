@@ -4,7 +4,7 @@ import type {
     ReviewItem,
     ReviewSourceType,
 } from "../../../types";
-import type {ReviewDeckRecords} from "../types/ReviewTypes";
+import type {ReviewDeckRecords} from "../types/reviewTypes";
 
 const REVIEW_DECK_DEFINITIONS: (Omit<ReviewDeckSummary, "itemCount"> & {
     sourceTypes: ReviewSourceType[];

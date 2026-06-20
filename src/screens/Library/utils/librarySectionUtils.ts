@@ -2,7 +2,7 @@ import type {
     LibraryAttemptRecord,
     LibraryRecords,
     LibrarySection,
-} from "../types/LibraryTypes";
+} from "../types/libraryTypes";
 
 export function createLibrarySections({
     attempts,

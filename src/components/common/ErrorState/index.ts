@@ -1,2 +1,2 @@
 export {ErrorState} from "./ErrorState";
-export type {ErrorStateProps} from "./ErrorStateTypes";
+export type {ErrorStateProps} from "./errorStateTypes";

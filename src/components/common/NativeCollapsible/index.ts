@@ -1,2 +1,2 @@
 export {NativeCollapsible} from "./NativeCollapsible";
-export type {NativeCollapsibleProps} from "./NativeCollapsibleTypes";
+export type {NativeCollapsibleProps} from "./nativeCollapsibleTypes";

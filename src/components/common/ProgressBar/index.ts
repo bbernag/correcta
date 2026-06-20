@@ -1,2 +1,2 @@
 export {ProgressBar} from "./ProgressBar";
-export type {ProgressBarProps, ProgressBarTone} from "./ProgressBarTypes";
+export type {ProgressBarProps, ProgressBarTone} from "./progressBarTypes";

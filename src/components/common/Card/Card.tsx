@@ -21,8 +21,8 @@ import type {
     CardItemProps,
     CardLayout,
     CardProps,
-} from "./CardTypes";
-import {getCardGapStyle, getCardItemStyle} from "./CardUtils";
+} from "./cardTypes";
+import {getCardGapStyle, getCardItemStyle} from "./cardUtils";
 
 const CardContext = createContext<CardContextValue | null>(null);
 

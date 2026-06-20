@@ -8,7 +8,7 @@ import type {
     DailyGoalRecord,
     ProgressMetric,
     WeeklyActivityRecord,
-} from "../types/ProgressTypes";
+} from "../types/progressTypes";
 
 const DAILY_GOAL_TARGET = 5;
 

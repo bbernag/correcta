@@ -8,7 +8,7 @@ import type {
     NativeListItemSlotProps,
     NativeListItemSlots,
     NativeListProps,
-} from "./NativeListTypes";
+} from "./nativeListTypes";
 
 function NativeListRoot({
     children,

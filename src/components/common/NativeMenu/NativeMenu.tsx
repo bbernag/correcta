@@ -1,7 +1,7 @@
 import {MenuView as ExpoMenuView} from "@expo/ui/community/menu";
 import type {MenuAction} from "@expo/ui/community/menu";
 
-import type {NativeMenuAction, NativeMenuProps} from "./NativeMenuTypes";
+import type {NativeMenuAction, NativeMenuProps} from "./nativeMenuTypes";
 
 export function NativeMenu({
     actions,

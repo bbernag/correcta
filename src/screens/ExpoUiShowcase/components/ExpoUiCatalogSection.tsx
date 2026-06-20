@@ -3,7 +3,7 @@ import {StyleSheet} from "react-native-unistyles";
 
 import {ExpoUiCatalogItem} from "./ExpoUiCatalogItem";
 import {ExpoUiShowcaseSection} from "./ExpoUiShowcaseSection";
-import type {ExpoUiCatalogSectionProps} from "../types/ExpoUiShowcaseTypes";
+import type {ExpoUiCatalogSectionProps} from "../types/expoUiShowcaseTypes";
 
 export function ExpoUiCatalogSection({section}: ExpoUiCatalogSectionProps) {
     return (

@@ -55,11 +55,11 @@ src/screens/Tables/
   hooks/
     useTableFilters.ts
   types/
-    TablesTypes.ts
+    tablesTypes.ts
   utils/
-    TablesUtils.ts
+    tablesUtils.ts
   constants/
-    TablesConstants.ts
+    tablesConstants.ts
 ```
 
 If a screen grows into a multi-file feature, the screen folder remains the
@@ -68,10 +68,11 @@ ownership boundary until code is reused outside that screen.
 Screen support files must follow the screen name:
 
 - Hooks: `src/screens/<ScreenName>/hooks/useXxx.ts`
-- Types: `src/screens/<ScreenName>/types/<ScreenName>Types.ts`
-- Utils: `src/screens/<ScreenName>/utils/<ScreenName>Utils.ts`, or another
+- Types: `src/screens/<ScreenName>/types/<screenName>Types.ts`, where
+  `screenName` lowercases only the first character of the screen folder name
+- Utils: `src/screens/<ScreenName>/utils/<screenName>Utils.ts`, or another
   screen-prefixed utility file when split by responsibility
-- Constants: `src/screens/<ScreenName>/constants/<ScreenName>Constants.ts`
+- Constants: `src/screens/<ScreenName>/constants/<screenName>Constants.ts`
 
 ## Reusable UI
 
@@ -133,10 +134,14 @@ Screen component -> screen hook -> service workflow -> storage/http/native adapt
 ## Support File Naming
 
 - React component files use PascalCase names.
+- Support files that do not export React components use lower-camel-case
+  filenames. This includes types, constants, utils, contexts, registries, hooks,
+  services, and adapters.
 - Screen support files use dedicated folders and screen-prefixed filenames:
-  `hooks/useXxx.ts`, `types/<ScreenName>Types.ts`,
-  `utils/<ScreenName>Utils.ts`, screen-prefixed utility splits such as
-  `utils/<ScreenName>SectionUtils.ts`, and `constants/<ScreenName>Constants.ts`.
+  `hooks/useXxx.ts`, `types/<screenName>Types.ts`,
+  `utils/<screenName>Utils.ts`, screen-prefixed utility splits such as
+  `utils/<screenName>SectionUtils.ts`, and
+  `constants/<screenName>Constants.ts`.
 - Component-local support files can start with `utils.ts`, `types.ts`, and
   `constants.ts`. Split into dedicated folders once multiple support files are
   needed.

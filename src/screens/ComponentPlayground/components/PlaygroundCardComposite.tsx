@@ -2,7 +2,7 @@ import {Pressable, View} from "react-native";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {AppText, Card, Icon} from "../../../components/common";
-import {COMPONENT_PLAYGROUND_CARD_PROGRESS_SEGMENTS} from "../constants/ComponentPlaygroundConstants";
+import {COMPONENT_PLAYGROUND_CARD_PROGRESS_SEGMENTS} from "../constants/componentPlaygroundConstants";
 
 const ACTIVE_PROGRESS_SEGMENTS = 14;
 

@@ -4,7 +4,7 @@ import {useState} from "react";
 import {playHapticFeedback} from "../../../native";
 import {savePracticeSentence, savePracticeWord} from "../../../services/domain";
 import type {CorrectaServices, PracticeSentence} from "../../../types";
-import type {PracticeResult} from "../types/PracticeTypes";
+import type {PracticeResult} from "../types/practiceTypes";
 
 export function usePracticeSaveActions({
     currentSentence,

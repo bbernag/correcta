@@ -23,7 +23,7 @@ import {View} from "react-native";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {AppText} from "../../../components/common";
-import type {ExpoUiLivePreviewProps} from "../types/ExpoUiShowcaseTypes";
+import type {ExpoUiLivePreviewProps} from "../types/expoUiShowcaseTypes";
 
 const sparkleIcon = ExpoIcon.select({
     android: require("../../../assets/expo-ui/sparkle.xml"),

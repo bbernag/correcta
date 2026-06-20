@@ -1,6 +1,6 @@
 import {Chip, type ChipVariant} from "../Chip";
 import type {IconName} from "../Icon";
-import type {ResultBadgeProps, ResultBadgeTone} from "./ResultBadgeTypes";
+import type {ResultBadgeProps, ResultBadgeTone} from "./resultBadgeTypes";
 
 export function ResultBadge({label, style, tone}: ResultBadgeProps) {
     return (

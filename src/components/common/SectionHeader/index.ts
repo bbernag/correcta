@@ -1,2 +1,2 @@
 export {SectionHeader} from "./SectionHeader";
-export type {SectionHeaderProps} from "./SectionHeaderTypes";
+export type {SectionHeaderProps} from "./sectionHeaderTypes";

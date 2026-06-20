@@ -4,4 +4,4 @@ export type {
     NativeListItemSlotProps,
     NativeListItemSlots,
     NativeListProps,
-} from "./NativeListTypes";
+} from "./nativeListTypes";

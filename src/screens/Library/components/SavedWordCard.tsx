@@ -1,7 +1,7 @@
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Button, Surface} from "../../../components/common";
-import type {LibrarySavedWordRecord} from "../types/LibraryTypes";
+import type {LibrarySavedWordRecord} from "../types/libraryTypes";
 
 type SavedWordCardProps = {
     isPending: boolean;

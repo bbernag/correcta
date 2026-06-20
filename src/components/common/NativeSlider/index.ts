@@ -1,2 +1,2 @@
 export {NativeSlider} from "./NativeSlider";
-export type {NativeSliderProps} from "./NativeSliderTypes";
+export type {NativeSliderProps} from "./nativeSliderTypes";

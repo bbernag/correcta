@@ -7,7 +7,7 @@ import type {AppTextTone} from "../AppText";
 import {Icon} from "../Icon";
 import type {IconName, IconTone} from "../Icon";
 import {SquircleSurface} from "../SquircleSurface";
-import type {TextInputProps} from "./TextInputTypes";
+import type {TextInputProps} from "./textInputTypes";
 
 export function TextInput({
     label,

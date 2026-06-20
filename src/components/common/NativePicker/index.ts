@@ -3,4 +3,4 @@ export type {
     NativePickerItemProps,
     NativePickerItemValue,
     NativePickerProps,
-} from "./NativePickerTypes";
+} from "./nativePickerTypes";

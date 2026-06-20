@@ -1,7 +1,7 @@
 import {Checkbox as ExpoCheckbox} from "@expo/ui";
 
 import {NativeHost} from "../NativeHost";
-import type {NativeCheckboxProps} from "./NativeCheckboxTypes";
+import type {NativeCheckboxProps} from "./nativeCheckboxTypes";
 
 export function NativeCheckbox({
     accessibilityLabel,

@@ -5,7 +5,7 @@ import type {
     NativePickerItemProps,
     NativePickerItemValue,
     NativePickerProps,
-} from "./NativePickerTypes";
+} from "./nativePickerTypes";
 
 function NativePickerRoot<T extends NativePickerItemValue>({
     accessibilityLabel,

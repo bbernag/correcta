@@ -1,7 +1,7 @@
 import {Slider as ExpoSlider} from "@expo/ui";
 
 import {NativeHost} from "../NativeHost";
-import type {NativeSliderProps} from "./NativeSliderTypes";
+import type {NativeSliderProps} from "./nativeSliderTypes";
 
 export function NativeSlider({
     accessibilityLabel,

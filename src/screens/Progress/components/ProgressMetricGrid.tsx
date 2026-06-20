@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Surface} from "../../../components/common";
-import type {ProgressMetric} from "../types/ProgressTypes";
+import type {ProgressMetric} from "../types/progressTypes";
 
 type ProgressMetricGridProps = {
     metrics: ProgressMetric[];

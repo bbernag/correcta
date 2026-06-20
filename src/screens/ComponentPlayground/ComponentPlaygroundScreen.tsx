@@ -29,7 +29,7 @@ import {
     COMPONENT_PLAYGROUND_NOTICE_EXAMPLES,
     COMPONENT_PLAYGROUND_SURFACE_EXAMPLES,
     COMPONENT_PLAYGROUND_TEXT_EXAMPLES,
-} from "./constants/ComponentPlaygroundConstants";
+} from "./constants/componentPlaygroundConstants";
 
 export function ComponentPlaygroundScreen() {
     function handlePlaygroundPress() {

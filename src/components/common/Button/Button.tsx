@@ -6,7 +6,7 @@ import type {AppTextTone} from "../AppText";
 import {Icon} from "../Icon";
 import type {IconTone} from "../Icon";
 import {SquircleSurface} from "../SquircleSurface";
-import type {ButtonProps, ButtonSize, ButtonVariant} from "./ButtonTypes";
+import type {ButtonProps, ButtonSize, ButtonVariant} from "./buttonTypes";
 
 export function Button({
     label,

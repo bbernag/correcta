@@ -2,9 +2,9 @@ import {Pressable, ScrollView} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText} from "../../../components/common";
-import {LIBRARY_FILTERS} from "../constants/LibraryConstants";
-import type {LibraryFilter} from "../types/LibraryTypes";
-import {getFilterLabel} from "../utils/LibraryUtils";
+import {LIBRARY_FILTERS} from "../constants/libraryConstants";
+import type {LibraryFilter} from "../types/libraryTypes";
+import {getFilterLabel} from "../utils/libraryUtils";
 
 type LibraryFilterBarProps = {
     value: LibraryFilter;

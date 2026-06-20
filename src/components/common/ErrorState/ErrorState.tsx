@@ -4,7 +4,7 @@ import {AppText} from "../AppText";
 import {Button} from "../Button";
 import {Icon} from "../Icon";
 import {Surface} from "../Surface";
-import type {ErrorStateProps} from "./ErrorStateTypes";
+import type {ErrorStateProps} from "./errorStateTypes";
 
 export function ErrorState({
     message,

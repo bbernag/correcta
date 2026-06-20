@@ -6,4 +6,4 @@ export type {
     CardProps,
     CardSize,
     CardTone,
-} from "./CardTypes";
+} from "./cardTypes";

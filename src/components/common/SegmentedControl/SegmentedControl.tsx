@@ -7,7 +7,7 @@ import {SquircleSurface} from "../SquircleSurface";
 import type {
     SegmentedControlOption,
     SegmentedControlProps,
-} from "./SegmentedControlTypes";
+} from "./segmentedControlTypes";
 
 export function SegmentedControl({
     accessibilityLabel,

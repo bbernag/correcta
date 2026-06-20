@@ -10,7 +10,7 @@ import {
     LIBRARY_MISTAKE_CATEGORY_LABELS,
     LIBRARY_SAVED_REASON_LABELS,
     LIBRARY_STATUS_LABELS,
-} from "../constants/LibraryConstants";
+} from "../constants/libraryConstants";
 import type {
     LibraryAttemptRecord,
     LibraryFilter,
@@ -20,7 +20,7 @@ import type {
     LibrarySavedWordRecord,
     LibrarySourceData,
     LibraryTextTone,
-} from "../types/LibraryTypes";
+} from "../types/libraryTypes";
 
 export function createLibraryRecords({
     attempts,

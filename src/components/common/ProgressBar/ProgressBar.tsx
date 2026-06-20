@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {SquircleSurface} from "../SquircleSurface";
-import type {ProgressBarProps, ProgressBarTone} from "./ProgressBarTypes";
+import type {ProgressBarProps, ProgressBarTone} from "./progressBarTypes";
 
 export function ProgressBar({
     accessibilityLabel,

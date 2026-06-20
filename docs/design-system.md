@@ -383,7 +383,7 @@ Reason: learning content must stay readable before it is decorative.
 Files:
 
 - `src/components/common/AppText/AppText.tsx`
-- `src/components/common/AppText/AppTextTypes.ts`
+- `src/components/common/AppText/appTextTypes.ts`
 - `src/components/common/AppText/index.ts`
 
 Variants: all typography roles in this document.
@@ -401,7 +401,7 @@ Requirements:
 Files:
 
 - `src/components/common/Button/Button.tsx`
-- `src/components/common/Button/ButtonTypes.ts`
+- `src/components/common/Button/buttonTypes.ts`
 - `src/components/common/Button/index.ts`
 
 Variants:
@@ -431,7 +431,7 @@ Rules:
 Files:
 
 - `src/components/common/IconButton/IconButton.tsx`
-- `src/components/common/IconButton/IconButtonTypes.ts`
+- `src/components/common/IconButton/iconButtonTypes.ts`
 - `src/components/common/IconButton/index.ts`
 
 Variants: `ghost`, `surface`, `tonal`, `danger`.
@@ -454,7 +454,7 @@ Rules:
 Files:
 
 - `src/components/common/Surface/Surface.tsx`
-- `src/components/common/Surface/SurfaceTypes.ts`
+- `src/components/common/Surface/surfaceTypes.ts`
 - `src/components/common/Surface/index.ts`
 
 Variants: `flat`, `card`, `elevated`, `tonal`, `inverse`, `success`,
@@ -474,7 +474,7 @@ Rules:
 Files:
 
 - `src/components/common/NoticeCard/NoticeCard.tsx`
-- `src/components/common/NoticeCard/NoticeCardTypes.ts`
+- `src/components/common/NoticeCard/noticeCardTypes.ts`
 - `src/components/common/NoticeCard/index.ts`
 
 Tones: `success`, `warning`, `danger`, `info`.
@@ -497,7 +497,7 @@ Rules:
 Files:
 
 - `src/components/common/GlassSurface/GlassSurface.tsx`
-- `src/components/common/GlassSurface/GlassSurfaceTypes.ts`
+- `src/components/common/GlassSurface/glassSurfaceTypes.ts`
 - `src/components/common/GlassSurface/index.ts`
 
 Variants: `tabBar`, `floatingControl`, `overlay`, `chip`.
@@ -514,7 +514,7 @@ Rules:
 Files:
 
 - `src/components/common/TextInput/TextInput.tsx`
-- `src/components/common/TextInput/TextInputTypes.ts`
+- `src/components/common/TextInput/textInputTypes.ts`
 - `src/components/common/TextInput/index.ts`
 
 States: default, focused, filled, error, success, disabled.
@@ -531,7 +531,7 @@ Rules:
 Files:
 
 - `src/components/common/Chip/Chip.tsx`
-- `src/components/common/Chip/ChipTypes.ts`
+- `src/components/common/Chip/chipTypes.ts`
 - `src/components/common/Chip/index.ts`
 
 Variants: `neutral`, `selected`, `accent`, `success`, `warning`, `danger`,
@@ -549,7 +549,7 @@ Rules:
 Files:
 
 - `src/components/common/WordChip/WordChip.tsx`
-- `src/components/common/WordChip/WordChipTypes.ts`
+- `src/components/common/WordChip/wordChipTypes.ts`
 - `src/components/common/WordChip/index.ts`
 
 States: default, selected, correct, incorrect, disabled.
@@ -566,7 +566,7 @@ Rules:
 Files:
 
 - `src/components/common/ProgressBar/ProgressBar.tsx`
-- `src/components/common/ProgressBar/ProgressBarTypes.ts`
+- `src/components/common/ProgressBar/progressBarTypes.ts`
 - `src/components/common/ProgressBar/index.ts`
 
 Rules:
@@ -580,7 +580,7 @@ Rules:
 Files:
 
 - `src/components/common/SegmentedControl/SegmentedControl.tsx`
-- `src/components/common/SegmentedControl/SegmentedControlTypes.ts`
+- `src/components/common/SegmentedControl/segmentedControlTypes.ts`
 - `src/components/common/SegmentedControl/index.ts`
 
 Rules:
@@ -595,7 +595,7 @@ Rules:
 Files:
 
 - `src/components/common/ScreenHeader/ScreenHeader.tsx`
-- `src/components/common/ScreenHeader/ScreenHeaderTypes.ts`
+- `src/components/common/ScreenHeader/screenHeaderTypes.ts`
 - `src/components/common/ScreenHeader/index.ts`
 
 Rules:
@@ -610,7 +610,7 @@ Rules:
 Files:
 
 - `src/components/common/SectionHeader/SectionHeader.tsx`
-- `src/components/common/SectionHeader/SectionHeaderTypes.ts`
+- `src/components/common/SectionHeader/sectionHeaderTypes.ts`
 - `src/components/common/SectionHeader/index.ts`
 
 Rules:
@@ -623,7 +623,7 @@ Rules:
 Files:
 
 - `src/components/common/StatCard/StatCard.tsx`
-- `src/components/common/StatCard/StatCardTypes.ts`
+- `src/components/common/StatCard/statCardTypes.ts`
 - `src/components/common/StatCard/index.ts`
 
 Rules:
@@ -653,7 +653,7 @@ Rules:
 Files:
 
 - `src/components/common/ResultBadge/ResultBadge.tsx`
-- `src/components/common/ResultBadge/ResultBadgeTypes.ts`
+- `src/components/common/ResultBadge/resultBadgeTypes.ts`
 - `src/components/common/ResultBadge/index.ts`
 
 Variants: `correct`, `almost`, `incorrect`, `saved`, `reviewDue`.
@@ -669,7 +669,7 @@ Rules:
 Files:
 
 - `src/components/common/FeedbackHighlight/FeedbackHighlight.tsx`
-- `src/components/common/FeedbackHighlight/FeedbackHighlightTypes.ts`
+- `src/components/common/FeedbackHighlight/feedbackHighlightTypes.ts`
 - `src/components/common/FeedbackHighlight/index.ts`
 
 Variants: `missingWord`, `extraWord`, `wrongOrder`, `wrongTense`,

@@ -1,2 +1,2 @@
 export {AppText} from "./AppText";
-export type {AppTextProps, AppTextTone, AppTextVariant} from "./AppTextTypes";
+export type {AppTextProps, AppTextTone, AppTextVariant} from "./appTextTypes";

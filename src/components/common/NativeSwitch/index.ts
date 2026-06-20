@@ -1,2 +1,2 @@
 export {NativeSwitch} from "./NativeSwitch";
-export type {NativeSwitchProps} from "./NativeSwitchTypes";
+export type {NativeSwitchProps} from "./nativeSwitchTypes";

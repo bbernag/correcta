@@ -6,8 +6,8 @@ import {
     formatScore,
     getStatusLabel,
     getStatusTone,
-} from "../utils/PracticeUtils";
-import type {PracticeResult} from "../types/PracticeTypes";
+} from "../utils/practiceUtils";
+import type {PracticeResult} from "../types/practiceTypes";
 
 type FeedbackPanelProps = {
     isContinuing: boolean;

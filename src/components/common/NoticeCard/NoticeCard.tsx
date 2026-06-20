@@ -4,7 +4,7 @@ import {StyleSheet} from "react-native-unistyles";
 import {AppText} from "../AppText";
 import {Icon, type IconName} from "../Icon";
 import {PocCard} from "../PocCard";
-import type {NoticeCardProps, NoticeCardTone} from "./NoticeCardTypes";
+import type {NoticeCardProps, NoticeCardTone} from "./noticeCardTypes";
 
 const TONE_ICONS: Record<NoticeCardTone, IconName> = {
     success: "success",

@@ -294,8 +294,8 @@ the measured SVG surface. Verify that there are no one-pixel seams at `1x`,
 src/components/common/Card/
   Card.tsx
   CardSurface.tsx
-  CardTypes.ts
-  CardUtils.ts
+  cardTypes.ts
+  cardUtils.ts
   index.ts
 ```
 

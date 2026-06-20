@@ -1,7 +1,7 @@
 import {useUnistyles} from "react-native-unistyles";
 
 import type {AppTheme} from "../../../theme";
-import type {IconProps, IconSize, IconTone} from "./IconTypes";
+import type {IconProps, IconSize, IconTone} from "./iconTypes";
 import {iconRegistry} from "./iconRegistry";
 
 export function Icon({

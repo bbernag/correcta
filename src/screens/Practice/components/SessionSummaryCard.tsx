@@ -2,8 +2,8 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Button, Surface} from "../../../components/common";
-import {getAccuracyLabel} from "../utils/PracticeUtils";
-import type {PracticeSessionSummaryState} from "../types/PracticeTypes";
+import {getAccuracyLabel} from "../utils/practiceUtils";
+import type {PracticeSessionSummaryState} from "../types/practiceTypes";
 
 type SessionSummaryCardProps = {
     onRestart: () => void;

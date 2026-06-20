@@ -13,7 +13,7 @@ import type {
     ComponentPlaygroundSurfaceExample,
     ComponentPlaygroundTextExample,
     ComponentPlaygroundWordChipExample,
-} from "../types/ComponentPlaygroundTypes";
+} from "../types/componentPlaygroundTypes";
 
 export const COMPONENT_PLAYGROUND_TEXT_EXAMPLES: ComponentPlaygroundTextExample[] =
     [

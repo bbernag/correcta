@@ -1,7 +1,7 @@
 import type {ViewStyle} from "react-native";
 
 import type {AppTheme} from "../../../theme";
-import type {CardGap, CardLayout, CardOrientation, CardSize} from "./CardTypes";
+import type {CardGap, CardLayout, CardOrientation, CardSize} from "./cardTypes";
 
 type CardBridgeGeometry = {
     height: number;

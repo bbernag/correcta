@@ -7,8 +7,8 @@ import type {
     ReviewCardState,
     ReviewDeckRecords,
     ReviewPhase,
-} from "../types/ReviewTypes";
-import {createReviewDeckRecords} from "../utils/ReviewUtils";
+} from "../types/reviewTypes";
+import {createReviewDeckRecords} from "../utils/reviewUtils";
 
 const EMPTY_REVIEW_RECORDS: ReviewDeckRecords = {
     activeDeckId: "recommended",

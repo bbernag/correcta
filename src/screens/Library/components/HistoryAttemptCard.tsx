@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Button, Surface} from "../../../components/common";
-import type {LibraryAttemptRecord} from "../types/LibraryTypes";
+import type {LibraryAttemptRecord} from "../types/libraryTypes";
 
 type HistoryAttemptCardProps = {
     isPending: boolean;

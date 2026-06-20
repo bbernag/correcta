@@ -12,11 +12,11 @@ import type {
     LibraryAttemptRecord,
     LibraryFilter,
     LibraryRecords,
-} from "../types/LibraryTypes";
+} from "../types/libraryTypes";
 import {
     createLibraryRecords,
     filterAttemptRecords,
-} from "../utils/LibraryUtils";
+} from "../utils/libraryUtils";
 
 const EMPTY_LIBRARY_RECORDS: LibraryRecords = {
     attempts: [],

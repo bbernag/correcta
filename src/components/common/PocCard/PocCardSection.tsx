@@ -3,9 +3,9 @@ import {View} from "react-native";
 import FastSquircleView from "react-native-fast-squircle";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
-import {PocCardContext} from "./PocCardContext";
-import type {PocCardSectionProps} from "./PocCardTypes";
-import {getPocCardToneStyle} from "./PocCardTone";
+import {PocCardContext} from "./pocCardContext";
+import type {PocCardSectionProps} from "./pocCardTypes";
+import {getPocCardToneStyle} from "./pocCardTone";
 
 export function PocCardSection({
     children,

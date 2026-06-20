@@ -4,7 +4,7 @@ import {StyleSheet} from "react-native-unistyles";
 import {AppText} from "../AppText";
 import {Icon} from "../Icon";
 import {Surface} from "../Surface";
-import type {EmptyStateProps} from "./EmptyStateTypes";
+import type {EmptyStateProps} from "./emptyStateTypes";
 
 export function EmptyState({
     action,

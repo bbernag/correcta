@@ -1,2 +1,2 @@
 export {NativeMenu} from "./NativeMenu";
-export type {NativeMenuAction, NativeMenuProps} from "./NativeMenuTypes";
+export type {NativeMenuAction, NativeMenuProps} from "./nativeMenuTypes";

@@ -5,7 +5,7 @@ import {AppText, Surface} from "../../../components/common";
 import type {
     ExpoUiCatalogItem as ExpoUiCatalogItemModel,
     ExpoUiCatalogItemProps,
-} from "../types/ExpoUiShowcaseTypes";
+} from "../types/expoUiShowcaseTypes";
 
 export function ExpoUiCatalogItem({item}: ExpoUiCatalogItemProps) {
     return (

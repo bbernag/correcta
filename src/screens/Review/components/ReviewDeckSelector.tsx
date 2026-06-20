@@ -3,7 +3,7 @@ import {StyleSheet} from "react-native-unistyles";
 
 import {AppText} from "../../../components/common";
 import type {ReviewDeckId} from "../../../types";
-import type {ReviewDeckState} from "../types/ReviewTypes";
+import type {ReviewDeckState} from "../types/reviewTypes";
 
 type ReviewDeckSelectorProps = {
     decks: ReviewDeckState[];

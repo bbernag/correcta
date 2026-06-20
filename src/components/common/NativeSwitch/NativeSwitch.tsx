@@ -1,7 +1,7 @@
 import {Switch as ExpoSwitch} from "@expo/ui";
 
 import {NativeHost} from "../NativeHost";
-import type {NativeSwitchProps} from "./NativeSwitchTypes";
+import type {NativeSwitchProps} from "./nativeSwitchTypes";
 
 export function NativeSwitch({
     accessibilityLabel,

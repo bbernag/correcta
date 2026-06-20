@@ -1,2 +1,2 @@
 export {StatCard} from "./StatCard";
-export type {StatCardProps, StatCardTone} from "./StatCardTypes";
+export type {StatCardProps, StatCardTone} from "./statCardTypes";

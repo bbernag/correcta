@@ -1,7 +1,7 @@
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Surface} from "../../../components/common";
-import type {LibraryMistakeGroupRecord} from "../types/LibraryTypes";
+import type {LibraryMistakeGroupRecord} from "../types/libraryTypes";
 
 type MistakeNotebookCardProps = {
     record: LibraryMistakeGroupRecord;

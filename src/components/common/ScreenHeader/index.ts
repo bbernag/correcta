@@ -1,2 +1,2 @@
 export {ScreenHeader} from "./ScreenHeader";
-export type {ScreenHeaderProps} from "./ScreenHeaderTypes";
+export type {ScreenHeaderProps} from "./screenHeaderTypes";

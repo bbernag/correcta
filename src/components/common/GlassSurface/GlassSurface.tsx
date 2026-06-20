@@ -2,7 +2,7 @@ import {Platform} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {SquircleSurface, type SquircleSurfaceRadius} from "../SquircleSurface";
-import type {GlassSurfaceProps, GlassSurfaceVariant} from "./GlassSurfaceTypes";
+import type {GlassSurfaceProps, GlassSurfaceVariant} from "./glassSurfaceTypes";
 
 export function GlassSurface({
     children,

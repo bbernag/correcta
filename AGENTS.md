@@ -37,12 +37,16 @@ Use the task router below to read only the rules relevant to the current task.
 - Screen-specific code stays under `src/screens/<ScreenName>`.
 - Screen-specific hooks belong in `src/screens/<ScreenName>/hooks`.
 - Screen-specific types belong in
-  `src/screens/<ScreenName>/types/<ScreenName>Types.ts`.
+  `src/screens/<ScreenName>/types/<screenName>Types.ts`, where `screenName`
+  lowercases only the first character of the screen folder name.
 - Screen-specific utils belong in
-  `src/screens/<ScreenName>/utils/<ScreenName>Utils.ts` or another
+  `src/screens/<ScreenName>/utils/<screenName>Utils.ts` or another
   screen-prefixed utility file when split by responsibility.
 - Keep constants in `src/screens/<ScreenName>/constants` once a screen needs
   extracted constants.
+- Only React component files use PascalCase filenames. Support files such as
+  types, constants, utils, context, registries, and services use lower-camel-case
+  filenames.
 - Keep files under about 300 lines.
 - Use function declarations for React components.
 - Prefer named exports unless the framework requires default exports.

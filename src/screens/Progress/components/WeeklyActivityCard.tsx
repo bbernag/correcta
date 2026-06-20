@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Surface} from "../../../components/common";
-import type {WeeklyActivityRecord} from "../types/ProgressTypes";
+import type {WeeklyActivityRecord} from "../types/progressTypes";
 
 type WeeklyActivityCardProps = {
     records: WeeklyActivityRecord[];

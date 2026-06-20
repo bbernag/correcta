@@ -1,9 +1,9 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import type {PocCardConnectorProps} from "./PocCardTypes";
-import {getPocCardToneStyle} from "./PocCardTone";
-import {getPocCardCutoutSpan} from "./PocCardUtils";
+import type {PocCardConnectorProps} from "./pocCardTypes";
+import {getPocCardToneStyle} from "./pocCardTone";
+import {getPocCardCutoutSpan} from "./pocCardUtils";
 
 export function PocCardConnector({
     bridgeSpan,

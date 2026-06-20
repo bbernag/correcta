@@ -6,7 +6,7 @@ import {
 } from "../../../services/domain";
 import {playHapticFeedback} from "../../../native";
 import type {PracticeInputMode} from "../../../types";
-import {createWordBankItems, getBuilderAnswer} from "../utils/PracticeUtils";
+import {createWordBankItems, getBuilderAnswer} from "../utils/practiceUtils";
 import {usePracticeFlowActions} from "./usePracticeFlowActions";
 import {usePracticeSaveActions} from "./usePracticeSaveActions";
 import type {
@@ -14,7 +14,7 @@ import type {
     PracticeResult,
     PracticeSessionState,
     PracticeSessionSummaryState,
-} from "../types/PracticeTypes";
+} from "../types/practiceTypes";
 
 export function usePracticeSession({
     restartKey,

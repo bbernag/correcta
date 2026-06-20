@@ -7,13 +7,13 @@ import type {
     ProgressDashboard,
     ProgressPhase,
     ProgressRewardState,
-} from "../types/ProgressTypes";
+} from "../types/progressTypes";
 import {
     createAchievementRecords,
     createDailyGoalRecord,
     createProgressMetrics,
     createWeeklyActivity,
-} from "../utils/ProgressUtils";
+} from "../utils/progressUtils";
 
 export function useProgressDashboard() {
     const services = useMemo(() => {

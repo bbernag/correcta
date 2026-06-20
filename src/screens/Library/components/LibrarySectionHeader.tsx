@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText} from "../../../components/common";
-import type {LibrarySection} from "../types/LibraryTypes";
+import type {LibrarySection} from "../types/libraryTypes";
 
 type LibrarySectionHeaderProps = {
     section: LibrarySection;

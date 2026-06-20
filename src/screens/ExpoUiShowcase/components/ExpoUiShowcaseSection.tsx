@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText} from "../../../components/common";
-import type {ExpoUiShowcaseSectionProps} from "../types/ExpoUiShowcaseTypes";
+import type {ExpoUiShowcaseSectionProps} from "../types/expoUiShowcaseTypes";
 
 export function ExpoUiShowcaseSection({
     children,

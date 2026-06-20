@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText} from "../../../components/common";
-import type {ComponentPlaygroundSectionHeaderProps} from "../types/ComponentPlaygroundTypes";
+import type {ComponentPlaygroundSectionHeaderProps} from "../types/componentPlaygroundTypes";
 
 export function PlaygroundSectionHeader({
     action,

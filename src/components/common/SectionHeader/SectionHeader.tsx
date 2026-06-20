@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText} from "../AppText";
-import type {SectionHeaderProps} from "./SectionHeaderTypes";
+import type {SectionHeaderProps} from "./sectionHeaderTypes";
 
 export function SectionHeader({
     action,

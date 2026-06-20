@@ -1,5 +1,5 @@
 import {Chip, type ChipVariant} from "../Chip";
-import type {WordChipProps, WordChipStatus} from "./WordChipTypes";
+import type {WordChipProps, WordChipStatus} from "./wordChipTypes";
 
 export function WordChip({
     disabled = false,

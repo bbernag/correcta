@@ -3,7 +3,7 @@ import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {AppText} from "../AppText";
 import {Surface} from "../Surface";
-import type {LoadingStateProps} from "./LoadingStateTypes";
+import type {LoadingStateProps} from "./loadingStateTypes";
 
 export function LoadingState({message, style, title}: LoadingStateProps) {
     const {theme} = useUnistyles();

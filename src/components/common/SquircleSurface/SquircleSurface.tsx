@@ -5,7 +5,7 @@ import type {AppTheme} from "../../../theme";
 import type {
     SquircleSurfaceProps,
     SquircleSurfaceRadius,
-} from "./SquircleSurfaceTypes";
+} from "./squircleSurfaceTypes";
 
 export function SquircleSurface({
     children,

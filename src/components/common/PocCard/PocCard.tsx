@@ -4,14 +4,14 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {SurfaceContrastContext} from "../surfaceContrastContext";
-import {PocCardContext} from "./PocCardContext";
+import {PocCardContext} from "./pocCardContext";
 import {PocCardConnector} from "./PocCardConnector";
 import {PocCardSection} from "./PocCardSection";
-import type {PocCardProps} from "./PocCardTypes";
+import type {PocCardProps} from "./pocCardTypes";
 import {
     POC_CARD_BRIDGE_SPAN_DEFAULT,
     getPocCardBridgeSpan,
-} from "./PocCardUtils";
+} from "./pocCardUtils";
 
 function PocCardRoot({
     bridgeSpan = POC_CARD_BRIDGE_SPAN_DEFAULT,

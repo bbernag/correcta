@@ -5,7 +5,7 @@ import type {
     SavedSentenceReason,
     ValidationStatus,
 } from "../../../types";
-import type {LibraryFilter} from "../types/LibraryTypes";
+import type {LibraryFilter} from "../types/libraryTypes";
 
 export const LIBRARY_FILTERS: LibraryFilter[] = [
     "all",

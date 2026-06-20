@@ -2,8 +2,8 @@ import {View} from "react-native";
 import Svg, {Path} from "react-native-svg";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
-import type {CardSurfaceProps} from "./CardTypes";
-import {getCardCutoutPath, getCardSurfacePath} from "./CardUtils";
+import type {CardSurfaceProps} from "./cardTypes";
+import {getCardCutoutPath, getCardSurfacePath} from "./cardUtils";
 
 export function CardSurface({
     itemLayouts,

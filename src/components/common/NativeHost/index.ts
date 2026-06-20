@@ -1,2 +1,2 @@
 export {NativeHost} from "./NativeHost";
-export type {NativeHostProps} from "./NativeHostTypes";
+export type {NativeHostProps} from "./nativeHostTypes";

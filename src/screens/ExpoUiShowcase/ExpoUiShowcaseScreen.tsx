@@ -8,7 +8,7 @@ import {
     Screen,
     Surface,
 } from "../../components/common";
-import {EXPO_UI_CATALOG_SECTIONS} from "./constants/ExpoUiShowcaseConstants";
+import {EXPO_UI_CATALOG_SECTIONS} from "./constants/expoUiShowcaseConstants";
 import {
     ExpoUiCatalogSection,
     ExpoUiLivePreview,

@@ -1,7 +1,7 @@
 import type {
     ExpoUiCatalogItem,
     ExpoUiCatalogSection,
-} from "../types/ExpoUiShowcaseTypes";
+} from "../types/expoUiShowcaseTypes";
 
 const universalTone = "accent";
 const swiftTone = "info";

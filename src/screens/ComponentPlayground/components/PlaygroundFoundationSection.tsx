@@ -7,7 +7,7 @@ import {
     runFoundationChecks,
     type FoundationCheckResult,
 } from "../../../native/foundationChecks";
-import {COMPONENT_PLAYGROUND_HAPTIC_ACTIONS} from "../constants/ComponentPlaygroundConstants";
+import {COMPONENT_PLAYGROUND_HAPTIC_ACTIONS} from "../constants/componentPlaygroundConstants";
 import {PlaygroundSectionBody} from "./PlaygroundSectionBody";
 import {PlaygroundSectionHeader} from "./PlaygroundSectionHeader";
 import {PlaygroundSectionRoot} from "./PlaygroundSectionRoot";

@@ -1,6 +1,6 @@
 import {useCallback, useMemo, useState} from "react";
 
-import type {ExpoUiShowcaseState} from "../types/ExpoUiShowcaseTypes";
+import type {ExpoUiShowcaseState} from "../types/expoUiShowcaseTypes";
 
 export function useExpoUiShowcase(): ExpoUiShowcaseState {
     const [bottomSheetVisible, setBottomSheetVisible] = useState(false);

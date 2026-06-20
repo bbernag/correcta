@@ -10,7 +10,7 @@ import type {
     ScreenBackground,
     ScreenProps,
     ScreenSafeArea,
-} from "./ScreenTypes";
+} from "./screenTypes";
 
 export function Screen({
     children,

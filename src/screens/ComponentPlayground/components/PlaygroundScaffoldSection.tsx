@@ -24,7 +24,7 @@ import {
     COMPONENT_PLAYGROUND_RESULT_BADGE_EXAMPLES,
     COMPONENT_PLAYGROUND_STAT_EXAMPLES,
     COMPONENT_PLAYGROUND_WORD_CHIP_EXAMPLES,
-} from "../constants/ComponentPlaygroundConstants";
+} from "../constants/componentPlaygroundConstants";
 import {PlaygroundSectionBody} from "./PlaygroundSectionBody";
 import {PlaygroundSectionHeader} from "./PlaygroundSectionHeader";
 import {PlaygroundSectionRoot} from "./PlaygroundSectionRoot";

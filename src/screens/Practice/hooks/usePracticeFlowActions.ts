@@ -11,8 +11,8 @@ import type {
     PracticeResult,
     PracticeSessionState,
     PracticeSessionSummaryState,
-} from "../types/PracticeTypes";
-import {getPracticeResultHapticFeedback} from "../utils/PracticeUtils";
+} from "../types/practiceTypes";
+import {getPracticeResultHapticFeedback} from "../utils/practiceUtils";
 
 export function usePracticeFlowActions({
     answerText,

@@ -1,7 +1,7 @@
 import {Collapsible as ExpoCollapsible, RNHostView} from "@expo/ui";
 
 import {NativeHost} from "../NativeHost";
-import type {NativeCollapsibleProps} from "./NativeCollapsibleTypes";
+import type {NativeCollapsibleProps} from "./nativeCollapsibleTypes";
 
 export function NativeCollapsible({
     accessibilityLabel,

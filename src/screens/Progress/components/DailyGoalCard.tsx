@@ -3,7 +3,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Surface} from "../../../components/common";
-import type {DailyGoalRecord} from "../types/ProgressTypes";
+import type {DailyGoalRecord} from "../types/progressTypes";
 
 type DailyGoalCardProps = {
     dailyGoal: DailyGoalRecord;

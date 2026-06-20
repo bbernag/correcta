@@ -18,8 +18,8 @@ import {useLibraryRecords} from "./hooks/useLibraryRecords";
 import type {
     LibraryAttemptRecord,
     LibrarySectionItem,
-} from "./types/LibraryTypes";
-import {createLibrarySections} from "./utils/LibrarySectionUtils";
+} from "./types/libraryTypes";
+import {createLibrarySections} from "./utils/librarySectionUtils";
 
 type LibraryScreenProps = NativeBottomTabScreenProps<
     MainTabParamList,

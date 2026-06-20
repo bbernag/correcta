@@ -2,7 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Surface} from "../../../components/common";
-import type {AchievementRecord} from "../types/ProgressTypes";
+import type {AchievementRecord} from "../types/progressTypes";
 
 type AchievementsCardProps = {
     achievements: AchievementRecord[];

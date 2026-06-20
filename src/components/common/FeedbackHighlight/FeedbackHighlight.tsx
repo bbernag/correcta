@@ -2,7 +2,7 @@ import {StyleSheet} from "react-native-unistyles";
 
 import {AppText} from "../AppText";
 import {NoticeCard} from "../NoticeCard";
-import type {FeedbackHighlightProps} from "./FeedbackHighlightTypes";
+import type {FeedbackHighlightProps} from "./feedbackHighlightTypes";
 
 export function FeedbackHighlight({
     children,

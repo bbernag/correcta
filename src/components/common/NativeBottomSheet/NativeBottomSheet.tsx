@@ -7,7 +7,7 @@ import {
     BottomSheetView as ExpoBottomSheetView,
 } from "@expo/ui/community/bottom-sheet";
 
-import type {NativeBottomSheetProps} from "./NativeBottomSheetTypes";
+import type {NativeBottomSheetProps} from "./nativeBottomSheetTypes";
 
 function NativeBottomSheetRoot({
     children,

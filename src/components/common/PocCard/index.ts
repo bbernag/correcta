@@ -4,4 +4,4 @@ export type {
     PocCardProps,
     PocCardSectionProps,
     PocCardTone,
-} from "./PocCardTypes";
+} from "./pocCardTypes";

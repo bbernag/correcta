@@ -3,4 +3,4 @@ export type {
     IconButtonProps,
     IconButtonSize,
     IconButtonVariant,
-} from "./IconButtonTypes";
+} from "./iconButtonTypes";

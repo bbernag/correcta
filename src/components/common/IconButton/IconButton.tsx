@@ -9,7 +9,7 @@ import type {
     IconButtonProps,
     IconButtonSize,
     IconButtonVariant,
-} from "./IconButtonTypes";
+} from "./iconButtonTypes";
 
 export function IconButton({
     accessibilityLabel,

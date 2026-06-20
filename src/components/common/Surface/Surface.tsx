@@ -1,7 +1,7 @@
 import {StyleSheet} from "react-native-unistyles";
 
 import {SquircleSurface} from "../SquircleSurface";
-import type {SurfaceProps, SurfaceVariant} from "./SurfaceTypes";
+import type {SurfaceProps, SurfaceVariant} from "./surfaceTypes";
 
 export function Surface({
     children,

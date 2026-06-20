@@ -4,7 +4,7 @@ import {StyleSheet} from "react-native-unistyles";
 import {AppText, type AppTextTone} from "../AppText";
 import {Icon, type IconTone} from "../Icon";
 import {SquircleSurface} from "../SquircleSurface";
-import type {ChipProps, ChipSize, ChipVariant} from "./ChipTypes";
+import type {ChipProps, ChipSize, ChipVariant} from "./chipTypes";
 
 export function Chip({
     disabled = false,

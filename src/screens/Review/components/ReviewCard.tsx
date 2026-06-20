@@ -3,11 +3,11 @@ import {StyleSheet} from "react-native-unistyles";
 
 import {AppText, Button, Surface} from "../../../components/common";
 import type {ReviewGrade} from "../../../types";
-import type {ReviewCardState} from "../types/ReviewTypes";
+import type {ReviewCardState} from "../types/reviewTypes";
 import {
     getReviewMasteryLabel,
     getReviewSourceLabel,
-} from "../utils/ReviewUtils";
+} from "../utils/reviewUtils";
 
 type ReviewCardProps = {
     cardState: ReviewCardState;

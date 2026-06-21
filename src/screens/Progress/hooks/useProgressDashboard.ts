@@ -2,6 +2,7 @@ import {useFocusEffect} from "@react-navigation/native";
 import {useCallback, useMemo, useRef, useState} from "react";
 
 import {useCorrectaToast} from "../../../components/common";
+import {playHapticFeedback} from "../../../native";
 import {createCorrectaServices} from "../../../services/domain";
 import type {NotificationPreferences, RewardedAdMoment} from "../../../types";
 import type {
@@ -204,6 +205,7 @@ export function useProgressDashboard() {
                 return;
             }
 
+            playHapticFeedback("selection");
             void saveNotificationPreferences({
                 ...dashboard.notificationPreferences,
                 enabled: preset !== "none",

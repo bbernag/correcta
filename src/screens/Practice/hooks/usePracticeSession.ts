@@ -242,6 +242,7 @@ export function usePracticeSession({
             return;
         }
 
+        playHapticFeedback("selection");
         setRevealedHintCount((currentCount) => {
             return Math.min(currentCount + 1, currentSentence.hints.length);
         });

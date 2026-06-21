@@ -3,6 +3,7 @@ import {useCallback, useMemo, useRef, useState} from "react";
 import {Alert} from "react-native";
 
 import {useCorrectaToast} from "../../../components/common";
+import {playHapticFeedback} from "../../../native";
 import {
     createCorrectaServices,
     removeSavedPracticeSentence,
@@ -133,12 +134,14 @@ export function useLibraryRecords() {
 
     const handleSelectHistoryFilter = useCallback(
         (nextFilter: LibraryFilter) => {
+            playHapticFeedback("selection");
             setHistoryFilter(nextFilter);
         },
         []
     );
 
     const handleSelectSegment = useCallback((nextSegment: LibrarySegment) => {
+        playHapticFeedback("selection");
         setSegment(nextSegment);
     }, []);
 

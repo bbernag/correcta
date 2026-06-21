@@ -71,6 +71,7 @@ export function usePracticeFlowActions({
     }
 
     async function handleSkip() {
+        playHapticFeedback("selection");
         setAnswerText("");
         setSelectedItemIds([]);
         await checkAnswer({
@@ -127,6 +128,7 @@ export function usePracticeFlowActions({
 
             setSummaryState({sentences: sessionState.sentences, summary});
             setPhase("summary");
+            playHapticFeedback("success");
         } catch (summaryError) {
             if (!mountedRef.current) {
                 return;

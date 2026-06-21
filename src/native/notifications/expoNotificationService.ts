@@ -121,6 +121,10 @@ export function getLastNotificationResponseRoute() {
     );
 }
 
+export function clearLastNotificationResponseRoute() {
+    return Notifications.clearLastNotificationResponseAsync();
+}
+
 async function requestReminderPermission() {
     await ensureReminderChannel();
 

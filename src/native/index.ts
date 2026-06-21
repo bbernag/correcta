@@ -4,6 +4,7 @@ export {playHapticFeedback, setHapticsEnabled} from "./haptics";
 export type {HapticFeedback} from "./haptics";
 export {
     addNotificationResponseRouteListener,
+    clearLastNotificationResponseRoute,
     configureNotificationPresentation,
     createExpoNotificationScheduler,
     getLastNotificationResponseRoute,

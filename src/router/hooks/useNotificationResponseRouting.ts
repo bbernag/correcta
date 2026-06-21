@@ -3,6 +3,7 @@ import {useCallback, useEffect, useRef} from "react";
 
 import {
     addNotificationResponseRouteListener,
+    clearLastNotificationResponseRoute,
     configureNotificationPresentation,
     getLastNotificationResponseRoute,
     type NotificationResponseRoute,
@@ -18,6 +19,12 @@ export function useNotificationResponseRouting(
         (route: NotificationResponseRoute) => {
             if (!navigationRef.isReady()) {
                 pendingRouteRef.current = route;
+                return;
+            }
+
+            // Skip when already on the target tab so a duplicate response
+            // delivery (cold-start getLast + listener) does not navigate twice.
+            if (navigationRef.getCurrentRoute()?.name === route.routeName) {
                 return;
             }
 
@@ -46,6 +53,8 @@ export function useNotificationResponseRouting(
 
         if (initialRoute) {
             navigateToNotificationRoute(initialRoute);
+            // Clear it so a later remount does not re-navigate to a stale tap.
+            void clearLastNotificationResponseRoute();
         }
 
         const subscription = addNotificationResponseRouteListener(

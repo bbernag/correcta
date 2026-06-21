@@ -1,5 +1,6 @@
 export {
     addNotificationResponseRouteListener,
+    clearLastNotificationResponseRoute,
     configureNotificationPresentation,
     createExpoNotificationScheduler,
     getLastNotificationResponseRoute,

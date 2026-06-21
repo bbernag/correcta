@@ -92,14 +92,21 @@ describe("createNotificationReminderService", () => {
         );
     });
 
-    it("syncReminders schedules natively without prompting", async () => {
-        const fakes = createFakes(makePreferences());
-        const service = createNotificationReminderService(fakes);
-
-        await service.syncReminders();
+    it("syncReminders re-offers permission only when reminders are enabled", async () => {
+        const enabledFakes = createFakes(makePreferences({enabled: true}));
+        await createNotificationReminderService(enabledFakes).syncReminders();
 
         expect(
-            fakes.nativeNotifications.syncScheduledReminders
+            enabledFakes.nativeNotifications.syncScheduledReminders
+        ).toHaveBeenCalledWith(
+            expect.objectContaining({requestPermission: true})
+        );
+
+        const disabledFakes = createFakes(makePreferences({enabled: false}));
+        await createNotificationReminderService(disabledFakes).syncReminders();
+
+        expect(
+            disabledFakes.nativeNotifications.syncScheduledReminders
         ).toHaveBeenCalledWith(
             expect.objectContaining({requestPermission: false})
         );

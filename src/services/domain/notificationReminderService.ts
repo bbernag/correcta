@@ -64,10 +64,14 @@ export function createNotificationReminderService({
         return toReminderState({native, ...schedule});
     }
 
-    // Command: (re)schedules OS notifications without prompting. Intended for
-    // app launch so reminders re-arm without a destructive read on every screen.
+    // Command: (re)schedules OS notifications, intended for app launch so
+    // reminders re-arm without a destructive read on every screen. Re-offers the
+    // permission prompt when reminders are enabled but still undetermined, so a
+    // dismissed prompt does not leave reminders silently unscheduled.
     async function syncReminders() {
-        return syncReminderState({requestPermission: false});
+        const preferences = await notifications.getPreferences();
+
+        return syncReminderState({requestPermission: preferences.enabled});
     }
 
     async function syncReminderState({

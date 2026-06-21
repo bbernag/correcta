@@ -5,7 +5,13 @@ import type {
     SavedSentenceReason,
     ValidationStatus,
 } from "../../../types";
-import type {LibraryFilter} from "../types/libraryTypes";
+import type {LibraryFilter, LibrarySegment} from "../types/libraryTypes";
+
+export const LIBRARY_SEGMENTS: LibrarySegment[] = [
+    "words",
+    "sentences",
+    "history",
+];
 
 export const LIBRARY_FILTERS: LibraryFilter[] = [
     "all",

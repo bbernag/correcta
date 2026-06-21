@@ -26,29 +26,29 @@ verification files record evidence from completed or partially completed work.
 | `[~]`  | Notifications and learning reminders | `language-app-planning-docs/09-notifications-prd.md`          | `docs/verification/notifications-reminders.md`   | Local preferences and schedule metadata exist. Native permission prompts, OS scheduling, delivery, and notification-open routing still need a separate runtime phase.       |
 | `[~]`  | Backend and AI integration           | `language-app-planning-docs/10-backend-ai-integration-prd.md` | `docs/verification/backend-ai-integration.md`    | Backend-ready adapters and contracts exist. No live backend URL, auth, AI provider, production API, or generated client is enabled by default.                              |
 | `[~]`  | Monetization                         | `language-app-planning-docs/11-monetization-prd.md`           | `docs/verification/monetization.md`              | Product-level monetization boundary exists. No ad SDK, rewarded placement, subscription, purchase flow, or analytics integration is implemented.                            |
-| `[~]`  | Visual Design and Interaction Polish | `docs/phases/visual-design-interaction-polish.md`             | `docs/qa/visual-design-interaction-polish-qa.md` | Slices 1-11 are implemented and verified. Remaining work starts with Slice 12, Library Polish.                                                                              |
+| `[~]`  | Visual Design and Interaction Polish | `docs/phases/visual-design-interaction-polish.md`             | `docs/qa/visual-design-interaction-polish-qa.md` | Slices 1-12 are implemented and verified. Remaining work starts with Slice 13, Platform-Native Surface And Motion Polish.                                                   |
 
 ## Visual Design Slice Checklist
 
 These slices live inside `docs/phases/visual-design-interaction-polish.md`.
 
-| Status | Slice                                                   | Notes                                                                                                                                 |
-| ------ | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `[x]`  | 1. Theme Token Design System                            | Scribe Blue tokens are implemented in `src/theme`, wired through React Native Unistyles, and Android-verified in light and dark mode. |
-| `[x]`  | 2. Icons And Haptics Foundation                         | Lucide icons, SVG support, Pulsar haptics, shared Icon/IconButton wrappers, playground examples, and iOS/Android QA are complete.     |
-| `[~]`  | 3. Upgrade Existing Common Components                   | Technical primitive APIs are implemented, but visual direction is not approved as final native design.                                |
-| `[x]`  | 4. Native Elegance Pass For Common Primitives And Glass | GlassSurface fallback, softer primitive visuals, native playground sections, and iOS/Android QA are complete.                         |
-| `[x]`  | 5. Card And Linked Surface Foundation                   | Shared `Card` linked-surface source and playground examples exist. iOS and Android route evidence is recorded.                        |
-| `[x]`  | 6. Supporting Shared Visual Components                  | Chips, stat cards, progress, segmented controls, feedback, and state components exist with automated and device evidence.             |
-| `[x]`  | 7. ComponentPlayground Acceptance Gate                  | ComponentPlayground is verified as the shared primitive gate with iOS and Android screenshot/runtime evidence.                        |
-| `[x]`  | 8. Home Design Pilot                                    | Home now uses the accepted shared system through screen-owned components and a Home view model. iOS evidence is recorded.             |
-| `[x]`  | 9. Practice Core Loop Polish                            | Practice now has polished typing, builder, checking, feedback, save, and continue states with iOS evidence.                           |
-| `[x]`  | 10. Review And Feedback Polish                          | Review summary, active card, deck cards, queue preview, empty/error states, grading controls, haptics, and iOS evidence are complete. |
-| `[x]`  | 11. Progress Polish                                     | Progress hero, linked metric groups, weekly activity, mistake bars, achievements, recommendation, and iOS evidence are complete.      |
-| `[ ]`  | 12. Library Polish                                      | Active next slice: upgrade saved content, history, filters, retry actions, removal flows, and empty states.                           |
-| `[ ]`  | 13. Platform-Native Surface And Motion Polish           | Validate platform treatment, motion, haptics, keyboard transitions, safe areas, and any narrowly justified material effects.          |
-| `[ ]`  | 14. Accessibility And Reduced Motion Audit              | Verify React Native accessibility labels, contrast, text scaling, focus, touch targets, and reduced motion behavior.                  |
-| `[ ]`  | 15. Final QA And Evidence                               | Run automated checks plus iOS and Android visual/runtime QA, then update evidence docs.                                               |
+| Status | Slice                                                   | Notes                                                                                                                                  |
+| ------ | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `[x]`  | 1. Theme Token Design System                            | Scribe Blue tokens are implemented in `src/theme`, wired through React Native Unistyles, and Android-verified in light and dark mode.  |
+| `[x]`  | 2. Icons And Haptics Foundation                         | Lucide icons, SVG support, Pulsar haptics, shared Icon/IconButton wrappers, playground examples, and iOS/Android QA are complete.      |
+| `[~]`  | 3. Upgrade Existing Common Components                   | Technical primitive APIs are implemented, but visual direction is not approved as final native design.                                 |
+| `[x]`  | 4. Native Elegance Pass For Common Primitives And Glass | GlassSurface fallback, softer primitive visuals, native playground sections, and iOS/Android QA are complete.                          |
+| `[x]`  | 5. Card And Linked Surface Foundation                   | Shared `Card` linked-surface source and playground examples exist. iOS and Android route evidence is recorded.                         |
+| `[x]`  | 6. Supporting Shared Visual Components                  | Chips, stat cards, progress, segmented controls, feedback, and state components exist with automated and device evidence.              |
+| `[x]`  | 7. ComponentPlayground Acceptance Gate                  | ComponentPlayground is verified as the shared primitive gate with iOS and Android screenshot/runtime evidence.                         |
+| `[x]`  | 8. Home Design Pilot                                    | Home now uses the accepted shared system through screen-owned components and a Home view model. iOS evidence is recorded.              |
+| `[x]`  | 9. Practice Core Loop Polish                            | Practice now has polished typing, builder, checking, feedback, save, and continue states with iOS evidence.                            |
+| `[x]`  | 10. Review And Feedback Polish                          | Review summary, active card, deck cards, queue preview, empty/error states, grading controls, haptics, and iOS evidence are complete.  |
+| `[x]`  | 11. Progress Polish                                     | Progress hero, linked metric groups, weekly activity, mistake bars, achievements, recommendation, and iOS evidence are complete.       |
+| `[x]`  | 12. Library Polish                                      | Library now has Words, Sentences, and History segments, polished saved cards, history badges, retry/removal actions, and iOS evidence. |
+| `[ ]`  | 13. Platform-Native Surface And Motion Polish           | Active next slice: validate platform treatment, motion, haptics, keyboard transitions, safe areas, and narrowly justified materials.   |
+| `[ ]`  | 14. Accessibility And Reduced Motion Audit              | Verify React Native accessibility labels, contrast, text scaling, focus, touch targets, and reduced motion behavior.                   |
+| `[ ]`  | 15. Final QA And Evidence                               | Run automated checks plus iOS and Android visual/runtime QA, then update evidence docs.                                                |
 
 ## Phase Orchestration Checkpoint
 

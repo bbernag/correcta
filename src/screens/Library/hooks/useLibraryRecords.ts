@@ -12,6 +12,7 @@ import type {
     LibraryAttemptRecord,
     LibraryFilter,
     LibraryRecords,
+    LibrarySegment,
 } from "../types/libraryTypes";
 import {
     createLibraryRecords,
@@ -34,17 +35,18 @@ export function useLibraryRecords() {
     const [records, setRecords] = useState<LibraryRecords>(
         EMPTY_LIBRARY_RECORDS
     );
-    const [filter, setFilter] = useState<LibraryFilter>("all");
+    const [historyFilter, setHistoryFilter] = useState<LibraryFilter>("all");
+    const [segment, setSegment] = useState<LibrarySegment>("words");
     const [isLoading, setIsLoading] = useState(true);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [pendingActionId, setPendingActionId] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const filteredAttempts = useMemo(() => {
         return filterAttemptRecords({
-            filter,
+            filter: historyFilter,
             records: records.attempts,
         });
-    }, [filter, records.attempts]);
+    }, [historyFilter, records.attempts]);
 
     const loadRecords = useCallback(
         async ({refreshing = false}: {refreshing?: boolean} = {}) => {
@@ -126,8 +128,15 @@ export function useLibraryRecords() {
         void loadRecords({refreshing: true});
     }, [loadRecords]);
 
-    const handleSelectFilter = useCallback((nextFilter: LibraryFilter) => {
-        setFilter(nextFilter);
+    const handleSelectHistoryFilter = useCallback(
+        (nextFilter: LibraryFilter) => {
+            setHistoryFilter(nextFilter);
+        },
+        []
+    );
+
+    const handleSelectSegment = useCallback((nextSegment: LibrarySegment) => {
+        setSegment(nextSegment);
     }, []);
 
     const handleSaveAttemptSentence = useCallback(
@@ -192,17 +201,19 @@ export function useLibraryRecords() {
 
     return {
         error,
-        filter,
         filteredAttempts,
+        handleSelectHistoryFilter,
+        handleSelectSegment,
         handleRefresh,
         handleRemoveSavedSentence,
         handleRemoveSavedWord,
         handleSaveAttemptSentence,
-        handleSelectFilter,
+        historyFilter,
         isLoading,
         isRefreshing,
         pendingActionId,
         records,
+        segment,
     };
 }
 

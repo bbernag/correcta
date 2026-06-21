@@ -1,7 +1,7 @@
-import {Pressable, ScrollView} from "react-native";
+import {ScrollView} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, PressableMotionView} from "../../../components/common";
+import {Chip} from "../../../components/common";
 import {LIBRARY_FILTERS} from "../constants/libraryConstants";
 import type {LibraryFilter} from "../types/libraryTypes";
 import {getFilterLabel} from "../utils/libraryUtils";
@@ -22,32 +22,17 @@ export function LibraryFilterBar({onChange, value}: LibraryFilterBarProps) {
                 const isSelected = value === filter;
 
                 return (
-                    <Pressable
+                    <Chip
                         accessibilityLabel={`${getFilterLabel(filter)} history filter`}
-                        accessibilityRole="button"
-                        accessibilityState={{selected: isSelected}}
                         key={filter}
+                        label={getFilterLabel(filter)}
                         onPress={() => {
                             onChange(filter);
                         }}
-                    >
-                        {({pressed}) => (
-                            <PressableMotionView
-                                pressed={pressed}
-                                style={[
-                                    styles.chip,
-                                    isSelected && styles.chipSelected,
-                                ]}
-                            >
-                                <AppText
-                                    variant="label"
-                                    tone={isSelected ? "inverted" : "accent"}
-                                >
-                                    {getFilterLabel(filter)}
-                                </AppText>
-                            </PressableMotionView>
-                        )}
-                    </Pressable>
+                        selected={isSelected}
+                        size="small"
+                        variant="accent"
+                    />
                 );
             })}
         </ScrollView>
@@ -57,16 +42,5 @@ export function LibraryFilterBar({onChange, value}: LibraryFilterBarProps) {
 const styles = StyleSheet.create((theme) => ({
     content: {
         gap: theme.spacing.sm,
-    },
-    chip: {
-        backgroundColor: theme.colors.accentPrimarySoft,
-        borderRadius: theme.radii.lg,
-        minHeight: 44,
-        minWidth: 44,
-        paddingHorizontal: theme.spacing.md,
-        paddingVertical: theme.spacing.sm,
-    },
-    chipSelected: {
-        backgroundColor: theme.colors.accentPrimary,
     },
 }));

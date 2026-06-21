@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slices 1-11 are implemented and verified. The next visual
-polish work starts with Slice 12, Library Polish.
+Status: partial. Slices 1-12 are implemented and verified. The next visual
+polish work starts with Slice 13, Platform-Native Surface And Motion Polish.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -391,6 +391,34 @@ Current pass, 2026-06-20:
 - History cards show result state and timestamp.
 - Empty states are specific to each segment.
 - Long lists remain usable.
+
+## Slice 12 Evidence
+
+Recorded before starting Platform-Native Surface And Motion Polish.
+
+Current pass, 2026-06-20:
+
+- `LibraryScreen` uses the shared `ScreenHeader`, `LoadingState`,
+  `ErrorState`, and `SegmentedControl` through a screen-owned Library segment
+  wrapper.
+- Words, Sentences, and History are separate Library segments with selected
+  state exposed in the iOS accessibility snapshot.
+- Saved word cards show mastery, review state, saved date, and mistake badges.
+- Saved sentence cards show source and translation clearly, with reason, saved
+  date, and review chips.
+- History cards show result state, timestamp, score, mistake badges, retry, and
+  saved-sentence removal actions. The History result filter stays inside the
+  History segment.
+- `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
+- Metro status probe returned `packager-status:running`.
+- iOS simulator launch passed for app id `com.luisgarcia.correcta`.
+- `agent-device` iOS snapshots verified the Words, Sentences, History top, and
+  scrolled History attempt states.
+- iOS screenshots:
+  `/tmp/correcta-slice12-ios-library-words.png`,
+  `/tmp/correcta-slice12-ios-library-sentences.png`,
+  `/tmp/correcta-slice12-ios-library-history-top.png`, and
+  `/tmp/correcta-slice12-ios-library-history-attempts.png`.
 
 ## Progress
 

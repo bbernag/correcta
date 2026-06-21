@@ -1,7 +1,6 @@
-import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText} from "../../../components/common";
+import {SectionHeader} from "../../../components/common";
 import type {LibrarySection} from "../types/libraryTypes";
 
 type LibrarySectionHeaderProps = {
@@ -10,17 +9,17 @@ type LibrarySectionHeaderProps = {
 
 export function LibrarySectionHeader({section}: LibrarySectionHeaderProps) {
     return (
-        <View style={styles.root}>
-            <AppText variant="heading">{section.title}</AppText>
-            <AppText tone="secondary">{section.subtitle}</AppText>
-        </View>
+        <SectionHeader
+            style={styles.root}
+            subtitle={section.subtitle}
+            title={section.title}
+        />
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
     root: {
         backgroundColor: theme.colors.backgroundPrimary,
-        gap: theme.spacing.xs,
         paddingTop: theme.spacing.md,
     },
 }));

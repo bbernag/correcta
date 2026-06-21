@@ -1,9 +1,10 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slices 1-11 are complete. The shared component checkpoint has
+Status: partial. Slices 1-12 are complete. The shared component checkpoint has
 source-audit, automated, iOS, and Android evidence. Home, Practice, Review, and
-Progress production-screen polish have iOS evidence. The remaining visual polish
-work starts with Slice 12, Library Polish.
+Progress production-screen polish have iOS evidence, and Library polish now has
+iOS evidence. The remaining visual polish work starts with Slice 13,
+Platform-Native Surface And Motion Polish.
 
 ## Slice 1: Theme Token Design System
 
@@ -466,4 +467,62 @@ Known follow-ups:
 
 Next phase:
 
-- Start Slice 12, Library Polish.
+- Completed by Slice 12, Library Polish.
+
+## Slice 12: Library Polish
+
+Date: 2026-06-20.
+
+Result: pass. Library now uses the accepted shared visual system for saved
+words, saved sentences, practice history, mistake context, and action states.
+
+Implemented:
+
+- `LibraryScreen` now has Words, Sentences, and History segments backed by the
+  screen-owned Library hook.
+- The History result filter moved into the History segment instead of applying
+  across every Library category.
+- Saved word cards show mastery, review state, saved date, and mistake badges.
+- Saved sentence cards separate source and translation content, with reason,
+  saved date, and review chips.
+- History cards show result state, timestamp, score, topic, level, input mode,
+  mistake badges, retry, and save/remove actions.
+- Mistake notebook entries remain in History because they are derived from
+  practice attempts.
+- Segment-specific empty states now use the shared `EmptyState`.
+- Loading and action-error states now use the shared state components.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- Metro status probe: `packager-status:running`.
+- iOS simulator app id: `com.luisgarcia.correcta`.
+- iOS launch: `agent-device open com.luisgarcia.correcta --session
+slice12-library --platform ios --relaunch` succeeded.
+- iOS runtime path: app launch -> Library tab -> Words -> Sentences -> History
+  -> scrolled History attempts.
+- iOS snapshots confirmed the segment selected states, History result filter,
+  saved word mastery/review chips, saved sentence source/translation labels, and
+  History attempt result/timestamp/actions.
+
+Evidence:
+
+- iOS Library Words: `/tmp/correcta-slice12-ios-library-words.png`
+- iOS Library Sentences: `/tmp/correcta-slice12-ios-library-sentences.png`
+- iOS Library History top:
+  `/tmp/correcta-slice12-ios-library-history-top.png`
+- iOS Library History attempts:
+  `/tmp/correcta-slice12-ios-library-history-attempts.png`
+
+Known follow-ups:
+
+- Android Library evidence should be added during the next broader
+  cross-platform screen polish pass.
+- Slice 13 should focus on platform-native surface, motion, haptic restraint,
+  keyboard transitions, safe areas, and material usage across the app.
+
+Next phase:
+
+- Start Slice 13, Platform-Native Surface And Motion Polish.

@@ -1,3 +1,4 @@
+import type {IconName} from "../../../components/common";
 import type {
     MistakeCategory,
     PracticeAttempt,
@@ -8,6 +9,8 @@ import type {
     ValidationStatus,
 } from "../../../types";
 
+export type LibrarySegment = "words" | "sentences" | "history";
+
 export type LibraryFilter =
     | "all"
     | "correct"
@@ -16,12 +19,20 @@ export type LibraryFilter =
     | "skipped"
     | "saved";
 
-export type LibraryTextTone =
-    | "primary"
-    | "secondary"
-    | "muted"
+export type LibraryChipVariant =
+    | "neutral"
     | "accent"
-    | "danger";
+    | "success"
+    | "warning"
+    | "danger"
+    | "info";
+
+export type LibraryResultTone =
+    | "correct"
+    | "almost"
+    | "incorrect"
+    | "skipped"
+    | "info";
 
 export type LibraryAttemptRecord = {
     answerText: string;
@@ -33,7 +44,9 @@ export type LibraryAttemptRecord = {
     isSaved: boolean;
     levelLabel: string;
     mistakeLabel: string;
+    mistakeLabels: string[];
     preferredTranslation: string;
+    resultTone: LibraryResultTone;
     savedSentenceId?: string;
     scoreLabel: string;
     sentence: PracticeSentence | null;
@@ -41,7 +54,6 @@ export type LibraryAttemptRecord = {
     sourceText: string;
     status: ValidationStatus;
     statusLabel: string;
-    statusTone: LibraryTextTone;
     topicLabel: string;
 };
 
@@ -49,7 +61,9 @@ export type LibrarySavedWordRecord = {
     dateLabel: string;
     id: string;
     masteryLabel: string;
-    noteLabel: string;
+    masteryVariant: LibraryChipVariant;
+    mistakeLabel?: string;
+    reviewLabel: string;
     savedWord: SavedWord;
     text: string;
     translation: string;
@@ -59,6 +73,8 @@ export type LibrarySavedSentenceRecord = {
     dateLabel: string;
     id: string;
     reasonLabel: string;
+    reviewLabel: string;
+    reasonVariant: LibraryChipVariant;
     savedSentence: SavedSentence;
     sourceText: string;
     translation: string;
@@ -70,6 +86,7 @@ export type LibraryMistakeGroupRecord = {
     id: string;
     label: string;
     latestDateLabel: string;
+    statusVariant: LibraryChipVariant;
     statusLabel: string;
 };
 
@@ -90,7 +107,13 @@ export type LibrarySectionItem =
           record: LibrarySavedSentenceRecord;
       }
     | {id: string; kind: "mistake"; record: LibraryMistakeGroupRecord}
-    | {id: string; kind: "empty"; message: string; title: string};
+    | {
+          icon: IconName;
+          id: string;
+          kind: "empty";
+          message: string;
+          title: string;
+      };
 
 export type LibrarySection = {
     data: LibrarySectionItem[];

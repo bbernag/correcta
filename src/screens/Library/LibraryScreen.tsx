@@ -1,9 +1,15 @@
 import type {NativeBottomTabScreenProps} from "@bottom-tabs/react-navigation";
 import {useMemo} from "react";
-import {ActivityIndicator, SectionList, View} from "react-native";
+import {SectionList, View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Screen, Surface} from "../../components/common";
+import {
+    AppText,
+    ErrorState,
+    LoadingState,
+    Screen,
+    ScreenHeader,
+} from "../../components/common";
 import type {MainTabParamList} from "../../router/types";
 import {HistoryAttemptCard} from "./components/HistoryAttemptCard";
 import {LibraryEmptyState} from "./components/LibraryEmptyState";
@@ -11,6 +17,7 @@ import {LibraryFilterBar} from "./components/LibraryFilterBar";
 import {LibraryListSeparator} from "./components/LibraryListSeparator";
 import {LibraryOverviewCard} from "./components/LibraryOverviewCard";
 import {LibrarySectionHeader} from "./components/LibrarySectionHeader";
+import {LibrarySegmentControl} from "./components/LibrarySegmentControl";
 import {MistakeNotebookCard} from "./components/MistakeNotebookCard";
 import {SavedSentenceCard} from "./components/SavedSentenceCard";
 import {SavedWordCard} from "./components/SavedWordCard";
@@ -31,9 +38,16 @@ export function LibraryScreen({navigation}: LibraryScreenProps) {
     const sections = useMemo(() => {
         return createLibrarySections({
             attempts: library.filteredAttempts,
+            historyFilter: library.historyFilter,
             records: library.records,
+            segment: library.segment,
         });
-    }, [library.filteredAttempts, library.records]);
+    }, [
+        library.filteredAttempts,
+        library.historyFilter,
+        library.records,
+        library.segment,
+    ]);
     const hasRecords =
         library.records.attempts.length > 0 ||
         library.records.savedWords.length > 0 ||
@@ -50,14 +64,10 @@ export function LibraryScreen({navigation}: LibraryScreenProps) {
     if (library.isLoading && !hasRecords) {
         return (
             <Screen contentContainerStyle={styles.centered}>
-                <ActivityIndicator
-                    accessibilityLabel="Loading library records"
-                    size="large"
+                <LoadingState
+                    message="Finding your practice history and saved content."
+                    title="Loading Library"
                 />
-                <AppText variant="heading">Loading Library</AppText>
-                <AppText tone="secondary">
-                    Finding your practice history and saved content.
-                </AppText>
             </Screen>
         );
     }
@@ -67,28 +77,38 @@ export function LibraryScreen({navigation}: LibraryScreenProps) {
             <SectionList
                 ListHeaderComponent={
                     <View style={styles.header}>
-                        <AppText variant="title">Library</AppText>
-                        <AppText tone="secondary">
-                            Review attempts, saved content, and recurring
-                            mistake patterns from local practice.
-                        </AppText>
-                        <LibraryOverviewCard records={library.records} />
-                        <LibraryFilterBar
-                            onChange={library.handleSelectFilter}
-                            value={library.filter}
+                        <ScreenHeader
+                            eyebrow="Library"
+                            subtitle="Saved words, useful sentences, and practice history from local learning."
+                            title="Learning notebook"
                         />
+                        <LibraryOverviewCard records={library.records} />
+                        <LibrarySegmentControl
+                            onChange={library.handleSelectSegment}
+                            value={library.segment}
+                        />
+                        {library.segment === "history" ? (
+                            <View style={styles.filterGroup}>
+                                <AppText variant="label">
+                                    History result
+                                </AppText>
+                                <LibraryFilterBar
+                                    onChange={library.handleSelectHistoryFilter}
+                                    value={library.historyFilter}
+                                />
+                            </View>
+                        ) : null}
                         {library.error ? (
-                            <Surface variant="outline" style={styles.error}>
-                                <AppText variant="label" tone="danger">
-                                    Library action failed
-                                </AppText>
-                                <AppText tone="secondary">
-                                    {library.error}
-                                </AppText>
-                            </Surface>
+                            <ErrorState
+                                message={library.error}
+                                onRetry={library.handleRefresh}
+                                retryLabel="Refresh library"
+                                title="Library action failed"
+                            />
                         ) : null}
                     </View>
                 }
+                contentContainerStyle={styles.listContent}
                 ItemSeparatorComponent={LibraryListSeparator}
                 keyExtractor={(item) => {
                     return item.id;
@@ -162,7 +182,11 @@ function renderLibraryItem({
             return <MistakeNotebookCard record={item.record} />;
         case "empty":
             return (
-                <LibraryEmptyState message={item.message} title={item.title} />
+                <LibraryEmptyState
+                    icon={item.icon}
+                    message={item.message}
+                    title={item.title}
+                />
             );
     }
 }
@@ -173,11 +197,14 @@ const styles = StyleSheet.create((theme) => ({
         flexGrow: 1,
         justifyContent: "center",
     },
-    error: {
+    filterGroup: {
         gap: theme.spacing.sm,
     },
     header: {
         gap: theme.spacing.md,
         paddingBottom: theme.spacing.md,
+    },
+    listContent: {
+        paddingBottom: theme.spacing["3xl"],
     },
 }));

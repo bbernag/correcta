@@ -13,13 +13,14 @@ import {
 } from "../constants/libraryConstants";
 import type {
     LibraryAttemptRecord,
+    LibraryChipVariant,
     LibraryFilter,
     LibraryMistakeGroupRecord,
     LibraryRecords,
+    LibraryResultTone,
     LibrarySavedSentenceRecord,
     LibrarySavedWordRecord,
     LibrarySourceData,
-    LibraryTextTone,
 } from "../types/libraryTypes";
 
 export function createLibraryRecords({
@@ -120,7 +121,7 @@ function createLibraryAttemptRecords({
                 answerText: attempt.answer || "No answer submitted",
                 attempt,
                 canSaveSentence: Boolean(sentence),
-                dateLabel: formatDateLabel(attempt.attemptedAt),
+                dateLabel: formatDateTimeLabel(attempt.attemptedAt),
                 id: attempt.id,
                 inputModeLabel: LIBRARY_INPUT_MODE_LABELS[attempt.inputMode],
                 isSaved: Boolean(savedSentence),
@@ -128,9 +129,11 @@ function createLibraryAttemptRecords({
                     ? LIBRARY_LEVEL_LABELS[sentence.level]
                     : "Level",
                 mistakeLabel: getMistakeLabel(attempt.mistakeCategories),
+                mistakeLabels: getMistakeLabels(attempt.mistakeCategories),
                 preferredTranslation:
                     sentence?.acceptedTranslations[0]?.text ??
                     "Translation unavailable",
+                resultTone: getResultTone(attempt.status),
                 savedSentenceId: savedSentence?.id,
                 scoreLabel: `${Math.round(attempt.score * 100)}%`,
                 sentence,
@@ -138,7 +141,6 @@ function createLibraryAttemptRecords({
                 sourceText: sentence?.sourceText ?? "Sentence unavailable",
                 status: attempt.status,
                 statusLabel: LIBRARY_STATUS_LABELS[attempt.status],
-                statusTone: getStatusTone(attempt.status),
                 topicLabel: getTopicLabel(sentence),
             };
         });
@@ -154,13 +156,19 @@ function createSavedWordRecords({
             return rightWord.savedAt.localeCompare(leftWord.savedAt);
         })
         .map((savedWord) => {
+            const mastery = getSavedContentMastery(savedWord.lastReviewedAt);
+
             return {
                 dateLabel: formatDateLabel(savedWord.savedAt),
                 id: savedWord.id,
-                masteryLabel: savedWord.lastReviewedAt ? "Reviewing" : "New",
-                noteLabel: savedWord.mistakeCategory
-                    ? `Mistake: ${LIBRARY_MISTAKE_CATEGORY_LABELS[savedWord.mistakeCategory]}`
-                    : "Saved vocabulary",
+                masteryLabel: mastery.label,
+                masteryVariant: mastery.variant,
+                mistakeLabel: savedWord.mistakeCategory
+                    ? LIBRARY_MISTAKE_CATEGORY_LABELS[savedWord.mistakeCategory]
+                    : undefined,
+                reviewLabel: savedWord.lastReviewedAt
+                    ? `Reviewed ${formatDateLabel(savedWord.lastReviewedAt)}`
+                    : "Not reviewed yet",
                 savedWord,
                 text: savedWord.text,
                 translation: savedWord.translation,
@@ -182,6 +190,12 @@ function createSavedSentenceRecords({
                 dateLabel: formatDateLabel(savedSentence.savedAt),
                 id: savedSentence.id,
                 reasonLabel: LIBRARY_SAVED_REASON_LABELS[savedSentence.reason],
+                reviewLabel: savedSentence.lastReviewedAt
+                    ? `Reviewed ${formatDateLabel(savedSentence.lastReviewedAt)}`
+                    : "Not reviewed yet",
+                reasonVariant: getSavedSentenceReasonVariant(
+                    savedSentence.reason
+                ),
                 savedSentence,
                 sourceText: savedSentence.sourceText,
                 translation: savedSentence.preferredTranslation,
@@ -231,21 +245,26 @@ function createMistakeGroups({
                 id: `mistake-${category}`,
                 label: LIBRARY_MISTAKE_CATEGORY_LABELS[category],
                 latestDateLabel: formatDateLabel(group.latestAttemptAt),
+                statusVariant: group.count > 1 ? "warning" : "info",
                 statusLabel: group.count > 1 ? "Still difficult" : "New focus",
             };
         });
 }
 
-function getStatusTone(status: ValidationStatus): LibraryTextTone {
-    if (status === "correct" || status === "almostCorrect") {
-        return "accent";
+function getResultTone(status: ValidationStatus): LibraryResultTone {
+    switch (status) {
+        case "correct":
+            return "correct";
+        case "almostCorrect":
+            return "almost";
+        case "skipped":
+            return "skipped";
+        case "partial":
+        case "incorrect":
+            return "incorrect";
+        default:
+            return "info";
     }
-
-    if (status === "incorrect" || status === "partial") {
-        return "danger";
-    }
-
-    return "muted";
 }
 
 function getMistakeLabel(categories: MistakeCategory[]) {
@@ -258,6 +277,43 @@ function getMistakeLabel(categories: MistakeCategory[]) {
             return LIBRARY_MISTAKE_CATEGORY_LABELS[category];
         })
         .join(", ");
+}
+
+function getMistakeLabels(categories: MistakeCategory[]) {
+    return categories.map((category) => {
+        return LIBRARY_MISTAKE_CATEGORY_LABELS[category];
+    });
+}
+
+function getSavedContentMastery(lastReviewedAt: string | undefined): {
+    label: string;
+    variant: LibraryChipVariant;
+} {
+    if (lastReviewedAt) {
+        return {
+            label: "Reviewing",
+            variant: "accent",
+        };
+    }
+
+    return {
+        label: "New",
+        variant: "info",
+    };
+}
+
+function getSavedSentenceReasonVariant(
+    reason: LibrarySourceData["savedSentences"][number]["reason"]
+): LibraryChipVariant {
+    switch (reason) {
+        case "mistake":
+            return "warning";
+        case "favorite":
+            return "success";
+        case "useful":
+        default:
+            return "info";
+    }
 }
 
 function getTopicLabel(sentence: PracticeSentence | null) {
@@ -277,6 +333,21 @@ function formatDateLabel(value: string) {
 
     return new Intl.DateTimeFormat("en", {
         day: "numeric",
+        month: "short",
+    }).format(date);
+}
+
+function formatDateTimeLabel(value: string) {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return "Date unavailable";
+    }
+
+    return new Intl.DateTimeFormat("en", {
+        day: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
         month: "short",
     }).format(date);
 }

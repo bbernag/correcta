@@ -1,6 +1,6 @@
 # Visual Design & Interaction Polish
 
-Status: partial. Slices 1-11 are implemented and verified as foundation work.
+Status: partial. Slices 1-12 are implemented and verified as foundation work.
 Slice 3 is retained as technical foundation only; Slice 4 approved the native
 primitive direction. The ComponentPlayground shared-component checkpoint is
 closed, and Home is now the first production screen using the accepted shared
@@ -8,8 +8,9 @@ system. The Practice core loop is polished for typing, builder, feedback, and
 save/continue actions. Review now has a polished study summary, active card,
 deck selection, queue preview, grading controls, and feedback. Progress now has
 a polished learning score, linked metrics, weekly activity, mistake breakdown,
-achievements, and recommendation flow. The active next step is Slice 12, Library
-Polish.
+achievements, and recommendation flow. Library now has segmented notebook views,
+saved-content cards, history badges, retry/removal actions, and empty states.
+The active next step is Slice 13, Platform-Native Surface And Motion Polish.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -48,19 +49,20 @@ Review, Progress, and Library adoption.
 ## Current Checkpoint
 
 As of the latest documentation sync, the shared-component checkpoint, Home
-Design Pilot, Practice Core Loop Polish, Review And Feedback Polish, and
-Progress Polish are closed. The source contains the linked-surface `Card`
-family, supporting shared visual components, ComponentPlayground sections, the
-first production Home integration, the polished Practice loop, the polished
-Review study flow, and the polished Progress learning summary. Source audit,
-automated checks, iOS route evidence, and Android route evidence are recorded
-for the shared checkpoint; iOS Home evidence is recorded for Slice 8, iOS
-Practice evidence is recorded for Slice 9, iOS Review evidence is recorded for
-Slice 10, and iOS Progress evidence is recorded for Slice 11.
+Design Pilot, Practice Core Loop Polish, Review And Feedback Polish, Progress
+Polish, and Library Polish are closed. The source contains the linked-surface
+`Card` family, supporting shared visual components, ComponentPlayground
+sections, the first production Home integration, the polished Practice loop, the
+polished Review study flow, the polished Progress learning summary, and the
+segmented Library notebook. Source audit, automated checks, iOS route evidence,
+and Android route evidence are recorded for the shared checkpoint; iOS Home
+evidence is recorded for Slice 8, iOS Practice evidence is recorded for Slice 9,
+iOS Review evidence is recorded for Slice 10, iOS Progress evidence is recorded
+for Slice 11, and iOS Library evidence is recorded for Slice 12.
 
 Next:
 
-1. Start Slice 12, Library Polish.
+1. Start Slice 13, Platform-Native Surface And Motion Polish.
 2. Keep Android and iOS screenshots updated as each production screen adopts the
    accepted shared system.
 
@@ -631,7 +633,7 @@ Evidence:
 
 ### Slice 12: Library Polish
 
-Status: planned. Active next slice.
+Status: done.
 
 Goal: make saved content feel like a personal learning notebook.
 
@@ -648,7 +650,28 @@ Exit:
 
 - Library content feels organized and useful without adding complex new filters.
 
+Evidence:
+
+- `LibraryScreen` now uses a screen-owned segment state for Words, Sentences,
+  and History.
+- Saved word cards show mastery, review state, saved date, and mistake badges.
+- Saved sentence cards show source and translation as separate labeled content
+  with reason, saved date, and review chips.
+- History keeps the result filter inside the History segment and shows mistake
+  notebook entries plus attempt cards with result, timestamp, score, retry, and
+  saved-removal actions.
+- Typecheck, lint, and Prettier checks pass.
+- Metro status probe returned `packager-status:running`.
+- iOS simulator launch succeeded for app id `com.luisgarcia.correcta`.
+- iOS visual evidence:
+  `/tmp/correcta-slice12-ios-library-words.png`,
+  `/tmp/correcta-slice12-ios-library-sentences.png`,
+  `/tmp/correcta-slice12-ios-library-history-top.png`, and
+  `/tmp/correcta-slice12-ios-library-history-attempts.png`.
+
 ### Slice 13: Platform-Native Surface And Motion Polish
+
+Status: planned. Active next slice.
 
 Goal: platform-specific polish without Android pretending to be iOS.
 
@@ -738,8 +761,8 @@ Exit:
 - Slice 7 is closed; Home is unblocked as the next production integration pilot.
 - Home is the production integration pilot and blocks Practice.
 - Practice blocks Review because Review consumes Practice outcomes.
-- Progress and Library may proceed after Review, but the documented order
-  remains Progress followed by Library.
+- Progress and Library are closed. Platform-native surface and motion polish is
+  the next documented slice.
 - Accessibility requirements are continuous and must not be deferred entirely
   to Slice 14.
 

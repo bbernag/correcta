@@ -1,7 +1,13 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, Surface} from "../../../components/common";
+import {
+    AppText,
+    Button,
+    Chip,
+    ResultBadge,
+    Surface,
+} from "../../../components/common";
 import type {LibraryAttemptRecord} from "../types/libraryTypes";
 
 type HistoryAttemptCardProps = {
@@ -35,12 +41,22 @@ export function HistoryAttemptCard({
     return (
         <Surface style={styles.root}>
             <View style={styles.metaRow}>
-                <AppText variant="label" tone={record.statusTone}>
-                    {record.statusLabel}
-                </AppText>
-                <AppText variant="caption" tone="muted">
-                    {record.dateLabel} · {record.scoreLabel}
-                </AppText>
+                <ResultBadge
+                    label={record.statusLabel}
+                    tone={record.resultTone}
+                />
+                <Chip
+                    icon="time"
+                    label={record.dateLabel}
+                    size="small"
+                    variant="neutral"
+                />
+                <Chip
+                    icon="accuracy"
+                    label={record.scoreLabel}
+                    size="small"
+                    variant="info"
+                />
             </View>
             <AppText variant="heading">{record.sourceText}</AppText>
             <View style={styles.detailGroup}>
@@ -53,18 +69,55 @@ export function HistoryAttemptCard({
                     {record.preferredTranslation}
                 </AppText>
             </View>
-            <AppText variant="caption" tone="muted">
-                {record.topicLabel} · {record.levelLabel} ·{" "}
-                {record.inputModeLabel}
-            </AppText>
-            <AppText variant="caption" tone="muted">
-                {record.mistakeLabel}
-            </AppText>
+            <View style={styles.chipRow}>
+                <Chip
+                    icon="library"
+                    label={record.topicLabel}
+                    size="small"
+                    variant="neutral"
+                />
+                <Chip
+                    icon="goal"
+                    label={record.levelLabel}
+                    size="small"
+                    variant="neutral"
+                />
+                <Chip
+                    icon="practice"
+                    label={record.inputModeLabel}
+                    size="small"
+                    variant="neutral"
+                />
+            </View>
+            <View style={styles.chipRow}>
+                {record.mistakeLabels.length > 0 ? (
+                    record.mistakeLabels.map((mistakeLabel) => {
+                        return (
+                            <Chip
+                                icon="mistake"
+                                key={`${record.id}-${mistakeLabel}`}
+                                label={mistakeLabel}
+                                size="small"
+                                variant="warning"
+                            />
+                        );
+                    })
+                ) : (
+                    <Chip
+                        icon="success"
+                        label={record.mistakeLabel}
+                        size="small"
+                        variant="success"
+                    />
+                )}
+            </View>
             <View style={styles.actions}>
                 <Button
                     accessibilityLabel={`Retry ${record.sourceText}`}
                     label="Retry"
+                    leadingIcon="clear"
                     onPress={handleRetry}
+                    size="small"
                     variant="secondary"
                 />
                 <Button
@@ -75,9 +128,11 @@ export function HistoryAttemptCard({
                     }
                     disabled={!record.canSaveSentence}
                     label={record.isSaved ? "Remove saved" : "Save sentence"}
+                    leadingIcon={record.isSaved ? "close" : "save"}
                     loading={isPending}
                     onPress={handleSavePress}
-                    variant={record.isSaved ? "ghost" : "primary"}
+                    size="small"
+                    variant={record.isSaved ? "danger" : "primary"}
                 />
             </View>
         </Surface>
@@ -92,10 +147,15 @@ const styles = StyleSheet.create((theme) => ({
         alignItems: "center",
         flexDirection: "row",
         gap: theme.spacing.sm,
-        justifyContent: "space-between",
+        flexWrap: "wrap",
     },
     detailGroup: {
         gap: theme.spacing.xs,
+    },
+    chipRow: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        gap: theme.spacing.sm,
     },
     actions: {
         flexDirection: "row",

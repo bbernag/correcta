@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Card, ProgressBar} from "../../../components/common";
+import {AppText, ConnectedCard, ProgressBar} from "../../../components/common";
 import type {WeeklyActivityRecord} from "../types/progressTypes";
 
 type WeeklyActivityCardProps = {
@@ -15,12 +15,12 @@ export function WeeklyActivityCard({records}: WeeklyActivityCardProps) {
     );
 
     return (
-        <Card gap="compact">
-            <Card.Item>
-                <Card.Eyebrow>Trend</Card.Eyebrow>
+        <ConnectedCard gap="compact">
+            <ConnectedCard.Item>
+                <ConnectedCard.Eyebrow>Trend</ConnectedCard.Eyebrow>
                 <AppText variant="heading">Weekly activity</AppText>
-            </Card.Item>
-            <Card.Item>
+            </ConnectedCard.Item>
+            <ConnectedCard.Item>
                 <View style={styles.days}>
                     {records.map((record) => {
                         return (
@@ -47,8 +47,8 @@ export function WeeklyActivityCard({records}: WeeklyActivityCardProps) {
                         );
                     })}
                 </View>
-            </Card.Item>
-        </Card>
+            </ConnectedCard.Item>
+        </ConnectedCard>
     );
 }
 

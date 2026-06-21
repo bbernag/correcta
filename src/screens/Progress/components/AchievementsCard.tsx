@@ -1,7 +1,12 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Card, Icon, ResultBadge} from "../../../components/common";
+import {
+    AppText,
+    ConnectedCard,
+    Icon,
+    ResultBadge,
+} from "../../../components/common";
 import type {AchievementRecord} from "../types/progressTypes";
 
 type AchievementsCardProps = {
@@ -10,14 +15,14 @@ type AchievementsCardProps = {
 
 export function AchievementsCard({achievements}: AchievementsCardProps) {
     return (
-        <Card gap="compact">
-            <Card.Item>
-                <Card.Eyebrow>Milestones</Card.Eyebrow>
+        <ConnectedCard gap="compact">
+            <ConnectedCard.Item>
+                <ConnectedCard.Eyebrow>Milestones</ConnectedCard.Eyebrow>
                 <AppText variant="heading">Achievements</AppText>
-            </Card.Item>
+            </ConnectedCard.Item>
             {achievements.map((achievement) => {
                 return (
-                    <Card.Item key={achievement.id}>
+                    <ConnectedCard.Item key={achievement.id}>
                         <View style={styles.achievementHeader}>
                             <View style={styles.labelRow}>
                                 <Icon
@@ -33,7 +38,9 @@ export function AchievementsCard({achievements}: AchievementsCardProps) {
                                             : "muted"
                                     }
                                 />
-                                <Card.Title>{achievement.label}</Card.Title>
+                                <ConnectedCard.Title>
+                                    {achievement.label}
+                                </ConnectedCard.Title>
                             </View>
                             <ResultBadge
                                 label={
@@ -48,11 +55,13 @@ export function AchievementsCard({achievements}: AchievementsCardProps) {
                                 }
                             />
                         </View>
-                        <Card.Caption>{achievement.description}</Card.Caption>
-                    </Card.Item>
+                        <ConnectedCard.Caption>
+                            {achievement.description}
+                        </ConnectedCard.Caption>
+                    </ConnectedCard.Item>
                 );
             })}
-        </Card>
+        </ConnectedCard>
     );
 }
 

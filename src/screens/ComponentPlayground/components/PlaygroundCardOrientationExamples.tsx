@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Card} from "../../../components/common";
+import {AppText, ConnectedCard} from "../../../components/common";
 
 export function PlaygroundCardOrientationExamples() {
     return (
@@ -10,38 +10,46 @@ export function PlaygroundCardOrientationExamples() {
                 <AppText variant="caption" tone="muted">
                     Horizontal
                 </AppText>
-                <Card gap="default" orientation="horizontal">
-                    <Card.Item>
-                        <Card.Title>Best score</Card.Title>
-                        <Card.Caption>Expert mode</Card.Caption>
-                        <Card.Metric>7,593</Card.Metric>
-                    </Card.Item>
-                    <Card.Item>
-                        <Card.Title>Reaction speed</Card.Title>
-                        <Card.Caption>Average time</Card.Caption>
-                        <Card.Metric>285 ms</Card.Metric>
-                    </Card.Item>
-                </Card>
+                <ConnectedCard gap="default" orientation="horizontal">
+                    <ConnectedCard.Item>
+                        <ConnectedCard.Title>Best score</ConnectedCard.Title>
+                        <ConnectedCard.Caption>
+                            Expert mode
+                        </ConnectedCard.Caption>
+                        <ConnectedCard.Metric>7,593</ConnectedCard.Metric>
+                    </ConnectedCard.Item>
+                    <ConnectedCard.Item>
+                        <ConnectedCard.Title>
+                            Reaction speed
+                        </ConnectedCard.Title>
+                        <ConnectedCard.Caption>
+                            Average time
+                        </ConnectedCard.Caption>
+                        <ConnectedCard.Metric>285 ms</ConnectedCard.Metric>
+                    </ConnectedCard.Item>
+                </ConnectedCard>
             </View>
 
             <View style={styles.demo}>
                 <AppText variant="caption" tone="muted">
                     Vertical
                 </AppText>
-                <Card
+                <ConnectedCard
                     gap="default"
                     orientation="vertical"
                     style={styles.verticalSample}
                 >
-                    <Card.Item>
-                        <Card.Eyebrow>Daily streak</Card.Eyebrow>
-                        <Card.Metric>7 days</Card.Metric>
-                    </Card.Item>
-                    <Card.Item>
-                        <Card.Eyebrow>Accuracy</Card.Eyebrow>
-                        <Card.Metric>92%</Card.Metric>
-                    </Card.Item>
-                </Card>
+                    <ConnectedCard.Item>
+                        <ConnectedCard.Eyebrow>
+                            Daily streak
+                        </ConnectedCard.Eyebrow>
+                        <ConnectedCard.Metric>7 days</ConnectedCard.Metric>
+                    </ConnectedCard.Item>
+                    <ConnectedCard.Item>
+                        <ConnectedCard.Eyebrow>Accuracy</ConnectedCard.Eyebrow>
+                        <ConnectedCard.Metric>92%</ConnectedCard.Metric>
+                    </ConnectedCard.Item>
+                </ConnectedCard>
             </View>
         </View>
     );

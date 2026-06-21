@@ -1,7 +1,12 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Card, Icon, ProgressBar} from "../../../components/common";
+import {
+    AppText,
+    ConnectedCard,
+    Icon,
+    ProgressBar,
+} from "../../../components/common";
 import type {ProgressHeroRecord} from "../types/progressTypes";
 
 type ProgressHeroCardProps = {
@@ -10,19 +15,23 @@ type ProgressHeroCardProps = {
 
 export function ProgressHeroCard({hero}: ProgressHeroCardProps) {
     return (
-        <Card gap="compact" size="hero">
-            <Card.Item>
+        <ConnectedCard gap="compact" size="hero">
+            <ConnectedCard.Item>
                 <View style={styles.headingRow}>
                     <Icon name={hero.icon} size="hero" tone="accent" />
                     <View style={styles.headingCopy}>
-                        <Card.Eyebrow>{hero.label}</Card.Eyebrow>
+                        <ConnectedCard.Eyebrow>
+                            {hero.label}
+                        </ConnectedCard.Eyebrow>
                         <AppText variant="title">{hero.title}</AppText>
                     </View>
                 </View>
                 <View style={styles.scoreRow}>
                     <View>
-                        <Card.Metric>{hero.value}</Card.Metric>
-                        <Card.Caption>XP</Card.Caption>
+                        <ConnectedCard.Metric>
+                            {hero.value}
+                        </ConnectedCard.Metric>
+                        <ConnectedCard.Caption>XP</ConnectedCard.Caption>
                     </View>
                     <View style={styles.badge}>
                         <AppText variant="caption" tone="accent">
@@ -31,10 +40,10 @@ export function ProgressHeroCard({hero}: ProgressHeroCardProps) {
                     </View>
                 </View>
                 <AppText tone="secondary">{hero.body}</AppText>
-            </Card.Item>
-            <Card.Item>
+            </ConnectedCard.Item>
+            <ConnectedCard.Item>
                 <View style={styles.goalHeader}>
-                    <Card.Title>Today&apos;s goal</Card.Title>
+                    <ConnectedCard.Title>Today&apos;s goal</ConnectedCard.Title>
                     <AppText tone="accent" variant="label">
                         {hero.dailyGoal.label}
                     </AppText>
@@ -45,8 +54,8 @@ export function ProgressHeroCard({hero}: ProgressHeroCardProps) {
                     tone={hero.dailyGoal.tone}
                     value={hero.dailyGoal.completed}
                 />
-            </Card.Item>
-        </Card>
+            </ConnectedCard.Item>
+        </ConnectedCard>
     );
 }
 

@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {Card, Icon} from "../../../components/common";
+import {StatCard} from "../../../components/common";
 import type {HomeQuickStat} from "../types/homeTypes";
 
 type QuickStatGridProps = {
@@ -15,29 +15,24 @@ export function QuickStatGrid({stats}: QuickStatGridProps) {
         <View style={styles.root}>
             {pairs.map((pair) => {
                 return (
-                    <Card
+                    <View
                         key={pair.map((stat) => stat.id).join("-")}
-                        gap="compact"
-                        orientation="horizontal"
-                        size="compact"
+                        style={styles.row}
                     >
                         {pair.map((stat) => {
                             return (
-                                <Card.Item key={stat.id}>
-                                    <View style={styles.statHeader}>
-                                        <Card.Title>{stat.label}</Card.Title>
-                                        <Icon
-                                            name={stat.icon}
-                                            size="dense"
-                                            tone={stat.tone}
-                                        />
-                                    </View>
-                                    <Card.Metric>{stat.value}</Card.Metric>
-                                    <Card.Caption>{stat.helper}</Card.Caption>
-                                </Card.Item>
+                                <StatCard
+                                    helper={stat.helper}
+                                    icon={stat.icon}
+                                    key={stat.id}
+                                    label={stat.label}
+                                    style={styles.statCard}
+                                    tone={stat.tone}
+                                    value={stat.value}
+                                />
                             );
                         })}
-                    </Card>
+                    </View>
                 );
             })}
         </View>
@@ -58,10 +53,12 @@ const styles = StyleSheet.create((theme) => ({
     root: {
         gap: theme.spacing.sm,
     },
-    statHeader: {
-        alignItems: "center",
+    row: {
         flexDirection: "row",
         gap: theme.spacing.sm,
-        justifyContent: "space-between",
+    },
+    statCard: {
+        flex: 1,
+        minWidth: 0,
     },
 }));

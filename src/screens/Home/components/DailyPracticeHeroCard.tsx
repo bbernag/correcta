@@ -4,7 +4,7 @@ import {StyleSheet} from "react-native-unistyles";
 import {
     AppText,
     Button,
-    Card,
+    ConnectedCard,
     Icon,
     ProgressBar,
 } from "../../../components/common";
@@ -20,12 +20,14 @@ export function DailyPracticeHeroCard({
     onStartPractice,
 }: DailyPracticeHeroCardProps) {
     return (
-        <Card gap="compact">
-            <Card.Item>
+        <ConnectedCard gap="compact">
+            <ConnectedCard.Item>
                 <View style={styles.headingRow}>
                     <Icon name="practice" size="hero" tone="accent" />
                     <View style={styles.headingCopy}>
-                        <Card.Eyebrow>{hero.eyebrow}</Card.Eyebrow>
+                        <ConnectedCard.Eyebrow>
+                            {hero.eyebrow}
+                        </ConnectedCard.Eyebrow>
                         <AppText variant="title">{hero.title}</AppText>
                     </View>
                 </View>
@@ -33,10 +35,10 @@ export function DailyPracticeHeroCard({
                     <AppText variant="sentence">{hero.sourceText}</AppText>
                     <AppText tone="secondary">{hero.prompt}</AppText>
                 </View>
-            </Card.Item>
-            <Card.Item>
+            </ConnectedCard.Item>
+            <ConnectedCard.Item>
                 <View style={styles.goalHeader}>
-                    <Card.Title>Today&apos;s goal</Card.Title>
+                    <ConnectedCard.Title>Today&apos;s goal</ConnectedCard.Title>
                     <AppText tone="accent" variant="label">
                         {hero.dailyGoal.label}
                     </AppText>
@@ -54,8 +56,8 @@ export function DailyPracticeHeroCard({
                     leadingIcon="practice"
                     onPress={onStartPractice}
                 />
-            </Card.Item>
-        </Card>
+            </ConnectedCard.Item>
+        </ConnectedCard>
     );
 }
 

@@ -1,7 +1,13 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, Card, Chip, Icon} from "../../../components/common";
+import {
+    AppText,
+    Button,
+    Chip,
+    ConnectedCard,
+    Icon,
+} from "../../../components/common";
 import type {HomeContinueLearningCard} from "../types/homeTypes";
 
 type ContinueLearningCardProps = {
@@ -18,12 +24,14 @@ export function ContinueLearningCard({
     const action = getAction({card, onOpenLibrary, onOpenReview});
 
     return (
-        <Card gap="compact">
-            <Card.Item>
+        <ConnectedCard gap="compact">
+            <ConnectedCard.Item>
                 <View style={styles.headingRow}>
                     <Icon name="review" size="default" tone="accent" />
                     <View style={styles.headingCopy}>
-                        <Card.Eyebrow>{card.summaryLabel}</Card.Eyebrow>
+                        <ConnectedCard.Eyebrow>
+                            {card.summaryLabel}
+                        </ConnectedCard.Eyebrow>
                         <AppText variant="heading">{card.title}</AppText>
                     </View>
                 </View>
@@ -37,10 +45,10 @@ export function ContinueLearningCard({
                         variant="secondary"
                     />
                 ) : null}
-            </Card.Item>
+            </ConnectedCard.Item>
             {card.previewItems.length > 0 ? (
-                <Card.Item>
-                    <Card.Title>Review queue</Card.Title>
+                <ConnectedCard.Item>
+                    <ConnectedCard.Title>Review queue</ConnectedCard.Title>
                     <View style={styles.previewList}>
                         {card.previewItems.map((item) => {
                             return (
@@ -61,11 +69,11 @@ export function ContinueLearningCard({
                             );
                         })}
                     </View>
-                </Card.Item>
+                </ConnectedCard.Item>
             ) : null}
             {card.difficultWords.length > 0 ? (
-                <Card.Item>
-                    <Card.Title>Difficult words</Card.Title>
+                <ConnectedCard.Item>
+                    <ConnectedCard.Title>Difficult words</ConnectedCard.Title>
                     <View style={styles.chipRow}>
                         {card.difficultWords.map((word) => {
                             return (
@@ -79,9 +87,9 @@ export function ContinueLearningCard({
                             );
                         })}
                     </View>
-                </Card.Item>
+                </ConnectedCard.Item>
             ) : null}
-        </Card>
+        </ConnectedCard>
     );
 }
 

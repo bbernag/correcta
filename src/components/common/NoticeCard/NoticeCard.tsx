@@ -5,8 +5,8 @@ import {StyleSheet} from "react-native-unistyles";
 import {useReducedMotion} from "../../../hooks/useReducedMotion";
 import {motion} from "../../../theme";
 import {AppText} from "../AppText";
+import {ConnectedCard} from "../ConnectedCard";
 import {Icon, type IconName} from "../Icon";
-import {PocCard} from "../PocCard";
 import type {NoticeCardProps, NoticeCardTone} from "./noticeCardTypes";
 
 const TONE_ICONS: Record<NoticeCardTone, IconName> = {
@@ -47,14 +47,15 @@ export function NoticeCard({
     const isReducedMotionEnabled = useReducedMotion();
 
     return (
-        <PocCard
+        <ConnectedCard
             bridgeSpan={NOTICE_CARD_BRIDGE_SPAN}
             cutoutColor={cutoutColor}
+            size="compact"
             style={style}
             tone={tone}
             {...viewProps}
         >
-            <PocCard.Section style={styles.titleSection}>
+            <ConnectedCard.Item style={styles.titleSection}>
                 <EaseView
                     animate={{
                         opacity: 1,
@@ -85,8 +86,8 @@ export function NoticeCard({
                         </AppText>
                     </View>
                 </EaseView>
-            </PocCard.Section>
-            <PocCard.Section style={styles.bodySection}>
+            </ConnectedCard.Item>
+            <ConnectedCard.Item style={styles.bodySection}>
                 <EaseView
                     animate={{
                         opacity: 1,
@@ -104,8 +105,8 @@ export function NoticeCard({
                 >
                     {children}
                 </EaseView>
-            </PocCard.Section>
-        </PocCard>
+            </ConnectedCard.Item>
+        </ConnectedCard>
     );
 }
 

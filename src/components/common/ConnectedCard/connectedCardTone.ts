@@ -1,6 +1,6 @@
 import {StyleSheet} from "react-native-unistyles";
 
-import type {PocCardTone} from "./pocCardTypes";
+import type {ConnectedCardTone} from "./connectedCardTypes";
 
 const toneStyles = StyleSheet.create((theme) => ({
     contrast: {
@@ -20,6 +20,6 @@ const toneStyles = StyleSheet.create((theme) => ({
     },
 }));
 
-export function getPocCardToneStyle(tone: PocCardTone) {
+export function getConnectedCardToneStyle(tone: ConnectedCardTone) {
     return toneStyles[tone];
 }

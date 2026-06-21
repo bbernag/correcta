@@ -1,7 +1,12 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AnimatedMount, AppText, Card, Icon} from "../../../components/common";
+import {
+    AnimatedMount,
+    AppText,
+    ConnectedCard,
+    Icon,
+} from "../../../components/common";
 import type {PracticeSentence} from "../../../types";
 
 type SentencePromptCardProps = {
@@ -16,21 +21,23 @@ export function SentencePromptCard({
     const visibleHints = sentence.hints.slice(0, revealedHintCount);
 
     return (
-        <Card gap="compact">
-            <Card.Item>
+        <ConnectedCard gap="compact">
+            <ConnectedCard.Item>
                 <View style={styles.promptHeader}>
                     <Icon name="sentence" size="default" tone="accent" />
                     <View style={styles.promptCopy}>
-                        <Card.Eyebrow>{sentence.prompt}</Card.Eyebrow>
+                        <ConnectedCard.Eyebrow>
+                            {sentence.prompt}
+                        </ConnectedCard.Eyebrow>
                         <AppText accessibilityRole="text" variant="sentence">
                             {sentence.sourceText}
                         </AppText>
                     </View>
                 </View>
-            </Card.Item>
+            </ConnectedCard.Item>
             {visibleHints.length > 0 ? (
-                <Card.Item>
-                    <Card.Title>Hint</Card.Title>
+                <ConnectedCard.Item>
+                    <ConnectedCard.Title>Hint</ConnectedCard.Title>
                     <View style={styles.hints}>
                         {visibleHints.map((hint) => {
                             return (
@@ -40,9 +47,9 @@ export function SentencePromptCard({
                             );
                         })}
                     </View>
-                </Card.Item>
+                </ConnectedCard.Item>
             ) : null}
-        </Card>
+        </ConnectedCard>
     );
 }
 

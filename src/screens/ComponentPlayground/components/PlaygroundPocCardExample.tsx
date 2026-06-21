@@ -1,19 +1,67 @@
-import {View} from "react-native";
+import {useState} from "react";
+import {Pressable, View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {AppText} from "../../../components/common";
-import {PocCard} from "../../../components/common/PocCard";
+import {ConnectedCard} from "../../../components/common/ConnectedCard";
 
 export function PlaygroundPocCardExample() {
+    const [replayKey, setReplayKey] = useState(0);
+
     return (
         <View style={styles.root}>
+            <View style={styles.demo}>
+                <View style={styles.demoHeader}>
+                    <AppText variant="caption" tone="muted">
+                        Animated morph
+                    </AppText>
+                    <Pressable
+                        accessibilityLabel="Replay animation"
+                        accessibilityRole="button"
+                        hitSlop={8}
+                        onPress={() => setReplayKey((value) => value + 1)}
+                        style={styles.replayButton}
+                    >
+                        <AppText variant="caption">Replay</AppText>
+                    </Pressable>
+                </View>
+                <View style={styles.canvas}>
+                    <ConnectedCard animated key={replayKey}>
+                        <ConnectedCard.Item
+                            contentStyle={styles.sequenceContent}
+                            style={styles.sequenceSection}
+                        >
+                            <AppText variant="bodySmall">
+                                Learning progress
+                            </AppText>
+                            <AppText variant="heading">1 day streak</AppText>
+                        </ConnectedCard.Item>
+                        <ConnectedCard.Item
+                            contentStyle={styles.scoreContent}
+                            style={styles.scoreSection}
+                        >
+                            <View style={styles.statsRow}>
+                                <View style={styles.stat}>
+                                    <AppText variant="caption" tone="muted">
+                                        {"Today's goal"}
+                                    </AppText>
+                                    <AppText variant="heading">
+                                        5/5 attempts
+                                    </AppText>
+                                </View>
+                            </View>
+                        </ConnectedCard.Item>
+                    </ConnectedCard>
+                </View>
+            </View>
+
             <View style={styles.demo}>
                 <AppText variant="caption" tone="muted">
                     Vertical
                 </AppText>
                 <View style={styles.canvas}>
-                    <PocCard>
-                        <PocCard.Section
+                    <ConnectedCard>
+                        <ConnectedCard.Item
                             contentStyle={styles.sequenceContent}
                             style={styles.sequenceSection}
                         >
@@ -25,8 +73,8 @@ export function PlaygroundPocCardExample() {
                             >
                                 v
                             </AppText>
-                        </PocCard.Section>
-                        <PocCard.Section
+                        </ConnectedCard.Item>
+                        <ConnectedCard.Item
                             contentStyle={styles.scoreContent}
                             style={styles.scoreSection}
                         >
@@ -50,8 +98,8 @@ export function PlaygroundPocCardExample() {
                                     <AppText variant="heading">319 ms</AppText>
                                 </View>
                             </View>
-                        </PocCard.Section>
-                    </PocCard>
+                        </ConnectedCard.Item>
+                    </ConnectedCard>
                 </View>
             </View>
 
@@ -60,8 +108,8 @@ export function PlaygroundPocCardExample() {
                     Horizontal
                 </AppText>
                 <View style={styles.canvas}>
-                    <PocCard bridgeSpan={0.4} orientation="horizontal">
-                        <PocCard.Section
+                    <ConnectedCard bridgeSpan={0.4} orientation="horizontal">
+                        <ConnectedCard.Item
                             contentStyle={styles.horizontalSectionContent}
                             style={styles.horizontalSection}
                         >
@@ -71,8 +119,8 @@ export function PlaygroundPocCardExample() {
                                 </AppText>
                                 <AppText variant="heading">48</AppText>
                             </View>
-                        </PocCard.Section>
-                        <PocCard.Section
+                        </ConnectedCard.Item>
+                        <ConnectedCard.Item
                             contentStyle={styles.horizontalSectionContent}
                             style={styles.horizontalSection}
                         >
@@ -82,8 +130,8 @@ export function PlaygroundPocCardExample() {
                                 </AppText>
                                 <AppText variant="heading">6m</AppText>
                             </View>
-                        </PocCard.Section>
-                    </PocCard>
+                        </ConnectedCard.Item>
+                    </ConnectedCard>
                 </View>
             </View>
         </View>
@@ -96,6 +144,17 @@ const styles = StyleSheet.create((theme) => ({
     },
     demo: {
         gap: theme.spacing.sm,
+    },
+    demoHeader: {
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+    },
+    replayButton: {
+        backgroundColor: theme.colors.surfaceTonal,
+        borderRadius: theme.radii.pill,
+        paddingHorizontal: theme.spacing.md,
+        paddingVertical: theme.spacing.xs,
     },
     canvas: {
         backgroundColor: theme.colors.canvas,

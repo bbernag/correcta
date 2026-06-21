@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Card, Icon} from "../../../components/common";
+import {AppText, ConnectedCard, Icon} from "../../../components/common";
 import type {ReviewItem} from "../../../types";
 import {
     getReviewMasteryLabel,
@@ -19,14 +19,14 @@ export function ReviewQueuePreview({items}: ReviewQueuePreviewProps) {
     }
 
     return (
-        <Card gap="compact">
-            <Card.Item>
-                <Card.Eyebrow>Queue preview</Card.Eyebrow>
+        <ConnectedCard gap="compact">
+            <ConnectedCard.Item>
+                <ConnectedCard.Eyebrow>Queue preview</ConnectedCard.Eyebrow>
                 <AppText variant="heading">Next cards</AppText>
-            </Card.Item>
+            </ConnectedCard.Item>
             {items.map((item) => {
                 return (
-                    <Card.Item key={item.id}>
+                    <ConnectedCard.Item key={item.id}>
                         <View style={styles.itemHeader}>
                             <Icon
                                 name={getReviewSourceIcon(item.sourceType)}
@@ -34,17 +34,19 @@ export function ReviewQueuePreview({items}: ReviewQueuePreviewProps) {
                                 tone="accent"
                             />
                             <View style={styles.itemCopy}>
-                                <Card.Title>{item.prompt}</Card.Title>
-                                <Card.Caption>
+                                <ConnectedCard.Title>
+                                    {item.prompt}
+                                </ConnectedCard.Title>
+                                <ConnectedCard.Caption>
                                     {getReviewSourceLabel(item.sourceType)} -{" "}
                                     {getReviewMasteryLabel(item.mastery)}
-                                </Card.Caption>
+                                </ConnectedCard.Caption>
                             </View>
                         </View>
-                    </Card.Item>
+                    </ConnectedCard.Item>
                 );
             })}
-        </Card>
+        </ConnectedCard>
     );
 }
 

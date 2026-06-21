@@ -17,7 +17,7 @@ export function StatCard({
     const textTone = getStatTextTone(tone);
 
     return (
-        <Surface variant="card" style={[styles.root, style]}>
+        <Surface variant="outline" style={[styles.root, style]}>
             <View style={styles.headingRow}>
                 <AppText variant="label" tone="secondary">
                     {label}

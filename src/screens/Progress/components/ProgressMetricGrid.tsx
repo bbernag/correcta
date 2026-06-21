@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {Card, Icon} from "../../../components/common";
+import {StatCard} from "../../../components/common";
 import type {ProgressMetric} from "../types/progressTypes";
 
 type ProgressMetricGridProps = {
@@ -15,29 +15,24 @@ export function ProgressMetricGrid({metrics}: ProgressMetricGridProps) {
         <View style={styles.root}>
             {pairs.map((pair) => {
                 return (
-                    <Card
+                    <View
                         key={pair.map((metric) => metric.id).join("-")}
-                        gap="compact"
-                        orientation="horizontal"
-                        size="compact"
+                        style={styles.row}
                     >
                         {pair.map((metric) => {
                             return (
-                                <Card.Item key={metric.id}>
-                                    <View style={styles.metricHeader}>
-                                        <Card.Title>{metric.label}</Card.Title>
-                                        <Icon
-                                            name={metric.icon}
-                                            size="dense"
-                                            tone={metric.tone}
-                                        />
-                                    </View>
-                                    <Card.Metric>{metric.value}</Card.Metric>
-                                    <Card.Caption>{metric.helper}</Card.Caption>
-                                </Card.Item>
+                                <StatCard
+                                    helper={metric.helper}
+                                    icon={metric.icon}
+                                    key={metric.id}
+                                    label={metric.label}
+                                    style={styles.metricCard}
+                                    tone={metric.tone}
+                                    value={metric.value}
+                                />
                             );
                         })}
-                    </Card>
+                    </View>
                 );
             })}
         </View>
@@ -58,10 +53,12 @@ const styles = StyleSheet.create((theme) => ({
     root: {
         gap: theme.spacing.sm,
     },
-    metricHeader: {
-        alignItems: "center",
+    row: {
         flexDirection: "row",
         gap: theme.spacing.sm,
-        justifyContent: "space-between",
+    },
+    metricCard: {
+        flex: 1,
+        minWidth: 0,
     },
 }));

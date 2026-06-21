@@ -3,7 +3,7 @@ import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {
     AppText,
-    Card,
+    ConnectedCard,
     Icon,
     PressableMotionView,
 } from "../../../components/common";
@@ -31,8 +31,8 @@ export function PlaygroundCardComposite() {
                         pressed={pressed}
                         style={styles.wholeAction}
                     >
-                        <Card size="hero">
-                            <Card.Item>
+                        <ConnectedCard size="hero">
+                            <ConnectedCard.Item>
                                 <View style={styles.brandRow}>
                                     <View style={styles.brandMark}>
                                         <Icon
@@ -56,23 +56,25 @@ export function PlaygroundCardComposite() {
                                         </AppText>
                                     </View>
                                 </View>
-                            </Card.Item>
-                        </Card>
+                            </ConnectedCard.Item>
+                        </ConnectedCard>
 
-                        <Card size="hero">
-                            <Card.Item style={styles.welcomeItem}>
+                        <ConnectedCard size="hero">
+                            <ConnectedCard.Item style={styles.welcomeItem}>
                                 <AppText variant="titleLarge">
                                     Luis, welcome back
                                 </AppText>
-                                <Card.Caption variant="body">
+                                <ConnectedCard.Caption variant="body">
                                     Your grammar streak is waiting.
-                                </Card.Caption>
-                            </Card.Item>
-                            <Card.Item style={styles.progressItem}>
-                                <Card.Title>Your progress</Card.Title>
-                                <Card.Caption>
+                                </ConnectedCard.Caption>
+                            </ConnectedCard.Item>
+                            <ConnectedCard.Item style={styles.progressItem}>
+                                <ConnectedCard.Title>
+                                    Your progress
+                                </ConnectedCard.Title>
+                                <ConnectedCard.Caption>
                                     Complete one short review before practice.
-                                </Card.Caption>
+                                </ConnectedCard.Caption>
                                 <View style={styles.progressRow}>
                                     <AppText tone="accent" variant="metric">
                                         79%
@@ -93,8 +95,8 @@ export function PlaygroundCardComposite() {
                                         )}
                                     </View>
                                 </View>
-                            </Card.Item>
-                        </Card>
+                            </ConnectedCard.Item>
+                        </ConnectedCard>
                     </PressableMotionView>
                 )}
             </Pressable>
@@ -138,24 +140,24 @@ export function PlaygroundCardComposite() {
                 </Pressable>
             </View>
 
-            <Card orientation="horizontal" gap="default">
-                <Card.Item
+            <ConnectedCard orientation="horizontal" gap="default">
+                <ConnectedCard.Item
                     accessibilityLabel="Open best score details"
                     onPress={handleLinkedSurfacePress}
                 >
-                    <Card.Title>Best score</Card.Title>
-                    <Card.Caption>Expert mode</Card.Caption>
-                    <Card.Metric>7,593</Card.Metric>
-                </Card.Item>
-                <Card.Item
+                    <ConnectedCard.Title>Best score</ConnectedCard.Title>
+                    <ConnectedCard.Caption>Expert mode</ConnectedCard.Caption>
+                    <ConnectedCard.Metric>7,593</ConnectedCard.Metric>
+                </ConnectedCard.Item>
+                <ConnectedCard.Item
                     accessibilityLabel="Open reaction speed details"
                     onPress={handleLinkedSurfacePress}
                 >
-                    <Card.Title>Reaction speed</Card.Title>
-                    <Card.Caption>Average time</Card.Caption>
-                    <Card.Metric>285 ms</Card.Metric>
-                </Card.Item>
-            </Card>
+                    <ConnectedCard.Title>Reaction speed</ConnectedCard.Title>
+                    <ConnectedCard.Caption>Average time</ConnectedCard.Caption>
+                    <ConnectedCard.Metric>285 ms</ConnectedCard.Metric>
+                </ConnectedCard.Item>
+            </ConnectedCard>
         </View>
     );
 }

@@ -4,17 +4,17 @@ export {AppText} from "./AppText";
 export type {AppTextProps, AppTextTone, AppTextVariant} from "./AppText";
 export {Button} from "./Button";
 export type {ButtonProps, ButtonSize, ButtonVariant} from "./Button";
-export {Card} from "./Card";
-export type {
-    CardGap,
-    CardItemProps,
-    CardOrientation,
-    CardProps,
-    CardSize,
-    CardTone,
-} from "./Card";
 export {Chip} from "./Chip";
 export type {ChipProps, ChipSize, ChipVariant} from "./Chip";
+export {ConnectedCard} from "./ConnectedCard";
+export type {
+    ConnectedCardGap,
+    ConnectedCardItemProps,
+    ConnectedCardOrientation,
+    ConnectedCardProps,
+    ConnectedCardSize,
+    ConnectedCardTone,
+} from "./ConnectedCard";
 export {Crossfade} from "./Crossfade";
 export {EmptyState} from "./EmptyState";
 export type {EmptyStateProps} from "./EmptyState";

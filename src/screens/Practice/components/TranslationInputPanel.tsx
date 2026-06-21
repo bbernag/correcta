@@ -73,12 +73,7 @@ export function TranslationInputPanel({
 
     return (
         <Surface variant="card" style={styles.root}>
-            <View style={styles.heading}>
-                <AppText variant="heading">Answer</AppText>
-                <AppText tone="secondary" variant="bodySmall">
-                    Choose how you want to compose this translation.
-                </AppText>
-            </View>
+            <AppText variant="heading">Answer</AppText>
             <SegmentedControl
                 accessibilityLabel="Practice input mode"
                 disabled={disabled}
@@ -99,7 +94,6 @@ export function TranslationInputPanel({
                             autoCorrect
                             blurOnSubmit
                             disabled={disabled}
-                            helperText="Write the most natural translation you can."
                             inputStyle={styles.textInput}
                             label="Your translation"
                             multiline
@@ -129,9 +123,6 @@ export function TranslationInputPanel({
 const styles = StyleSheet.create((theme) => ({
     root: {
         gap: theme.spacing.md,
-    },
-    heading: {
-        gap: theme.spacing.xs,
     },
     body: {
         minHeight: 180,

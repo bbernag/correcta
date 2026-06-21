@@ -72,11 +72,6 @@ export function ReviewDeckSelector({
                                         <AppText variant="label" tone="accent">
                                             {deck.itemCount} due
                                         </AppText>
-                                        <AppText variant="caption" tone="muted">
-                                            {deck.state === "selected"
-                                                ? "Selected"
-                                                : "Tap to focus"}
-                                        </AppText>
                                     </View>
                                 </Surface>
                             </PressableMotionView>

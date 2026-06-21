@@ -81,34 +81,24 @@ export function ReviewCard({
                 />
             )}
             {isAnswerVisible ? (
-                <View style={styles.actions}>
-                    <View style={styles.gradeRow}>
-                        {gradeOptions.map((grade) => {
-                            return (
-                                <Button
-                                    key={grade}
-                                    label={getReviewGradeLabel(grade)}
-                                    loading={pendingGrade === grade}
-                                    loadingLabel="Saving"
-                                    onPress={() => {
-                                        onCompleteItem(grade);
-                                    }}
-                                    rightIcon={getReviewGradeIcon(grade)}
-                                    size="small"
-                                    style={styles.gradeButton}
-                                    variant={getReviewGradeButtonVariant(grade)}
-                                />
-                            );
-                        })}
-                    </View>
-                    <AppText
-                        variant="caption"
-                        tone="secondary"
-                        style={styles.actionHint}
-                    >
-                        Known spaces it out, unsure keeps it nearby, difficult
-                        brings it back sooner.
-                    </AppText>
+                <View style={styles.gradeRow}>
+                    {gradeOptions.map((grade) => {
+                        return (
+                            <Button
+                                key={grade}
+                                label={getReviewGradeLabel(grade)}
+                                loading={pendingGrade === grade}
+                                loadingLabel="Saving"
+                                onPress={() => {
+                                    onCompleteItem(grade);
+                                }}
+                                rightIcon={getReviewGradeIcon(grade)}
+                                size="small"
+                                style={styles.gradeButton}
+                                variant={getReviewGradeButtonVariant(grade)}
+                            />
+                        );
+                    })}
                 </View>
             ) : null}
         </Surface>
@@ -164,17 +154,11 @@ const styles = StyleSheet.create((theme) => ({
         gap: theme.spacing.sm,
         padding: theme.spacing.md,
     },
-    actions: {
-        gap: theme.spacing.sm,
-    },
     gradeRow: {
         flexDirection: "row",
         gap: theme.spacing.sm,
     },
     gradeButton: {
         flex: 1,
-    },
-    actionHint: {
-        textAlign: "center",
     },
 }));

@@ -4,6 +4,7 @@ import {Platform} from "react-native";
 import type {
     NativeNotificationScheduler,
     NotificationPermissionStatus,
+    ScheduledReminder,
 } from "../../types";
 import {
     parseNotificationResponseRoute,
@@ -54,42 +55,45 @@ export function createExpoNotificationScheduler(): NativeNotificationScheduler {
                 };
             }
 
-            let scheduledCount = 0;
-
-            for (const reminder of reminders) {
-                const scheduledDate = new Date(reminder.scheduledFor);
-
-                if (Number.isNaN(scheduledDate.getTime())) {
-                    continue;
-                }
-
-                await Notifications.scheduleNotificationAsync({
-                    content: {
-                        body: reminder.body,
-                        data: {
-                            [REMINDER_ID_DATA_KEY]: reminder.id,
-                            [REMINDER_KIND_DATA_KEY]: reminder.kind,
-                            [REMINDER_ROUTE_DATA_KEY]: reminder.routeName,
-                        },
-                        sound: false,
-                        title: reminder.title,
-                    },
-                    identifier: reminder.id,
-                    trigger: {
-                        channelId: REMINDER_CHANNEL_ID,
-                        date: scheduledDate,
-                        type: Notifications.SchedulableTriggerInputTypes.DATE,
-                    },
-                });
-                scheduledCount += 1;
-            }
+            const results = await Promise.all(
+                reminders.map((reminder) => scheduleReminder(reminder))
+            );
 
             return {
                 permissionStatus,
-                scheduledCount,
+                scheduledCount: results.filter(Boolean).length,
             };
         },
     };
+}
+
+async function scheduleReminder(reminder: ScheduledReminder) {
+    const scheduledDate = new Date(reminder.scheduledFor);
+
+    if (Number.isNaN(scheduledDate.getTime())) {
+        return false;
+    }
+
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            body: reminder.body,
+            data: {
+                [REMINDER_ID_DATA_KEY]: reminder.id,
+                [REMINDER_KIND_DATA_KEY]: reminder.kind,
+                [REMINDER_ROUTE_DATA_KEY]: reminder.routeName,
+            },
+            sound: false,
+            title: reminder.title,
+        },
+        identifier: reminder.id,
+        trigger: {
+            channelId: REMINDER_CHANNEL_ID,
+            date: scheduledDate,
+            type: Notifications.SchedulableTriggerInputTypes.DATE,
+        },
+    });
+
+    return true;
 }
 
 export function addNotificationResponseRouteListener(

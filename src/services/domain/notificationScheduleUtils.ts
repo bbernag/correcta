@@ -119,33 +119,35 @@ function getNextScheduledDate({
     now: Date;
     preferences: NotificationPreferences;
 }) {
-    const {hour, minute} = parseReminderTime(preferences.reminderTime);
+    const reminderTime = parseReminderTime(preferences.reminderTime);
+    const quietEnd = parseReminderTime(preferences.quietHoursEnd);
+    const quietStartMinute = toMinuteOfDay(
+        parseReminderTime(preferences.quietHoursStart)
+    );
+    const quietEndMinute = toMinuteOfDay(quietEnd);
 
     for (let dayOffset = 0; dayOffset < 14; dayOffset += 1) {
         const candidateDate = new Date(now);
 
         candidateDate.setDate(now.getDate() + dayOffset);
-        candidateDate.setHours(hour, minute, 0, 0);
+        candidateDate.setHours(reminderTime.hour, reminderTime.minute, 0, 0);
 
         if (candidateDate <= now || !isDayEnabled(candidateDate, preferences)) {
             continue;
         }
 
         if (
-            !isInsideQuietHours({
-                date: candidateDate,
-                quietHoursEnd: preferences.quietHoursEnd,
-                quietHoursStart: preferences.quietHoursStart,
-            })
+            !isInsideQuietHours(candidateDate, quietStartMinute, quietEndMinute)
         ) {
             return candidateDate;
         }
 
-        const quietEndDate = moveToQuietHoursEnd({
-            date: candidateDate,
-            quietHoursEnd: preferences.quietHoursEnd,
-            quietHoursStart: preferences.quietHoursStart,
-        });
+        const quietEndDate = moveToQuietHoursEnd(
+            candidateDate,
+            quietEnd,
+            quietStartMinute,
+            quietEndMinute
+        );
 
         // Quiet-hours end can roll into the next calendar day; only accept it
         // when that day is still one the user selected.
@@ -155,6 +157,14 @@ function getNextScheduledDate({
     }
 
     return null;
+}
+
+function toMinuteOfDay({hour, minute}: {hour: number; minute: number}) {
+    return hour * 60 + minute;
+}
+
+function dateMinuteOfDay(date: Date) {
+    return date.getHours() * 60 + date.getMinutes();
 }
 
 function parseReminderTime(time: string) {
@@ -198,24 +208,16 @@ function isDayEnabled(date: Date, preferences: NotificationPreferences) {
     );
 }
 
-function isInsideQuietHours({
-    date,
-    quietHoursEnd,
-    quietHoursStart,
-}: {
-    date: Date;
-    quietHoursEnd: string;
-    quietHoursStart: string;
-}) {
-    const {hour, minute} = parseReminderTime(quietHoursStart);
-    const quietStartMinute = hour * 60 + minute;
-    const quietEnd = parseReminderTime(quietHoursEnd);
-    const quietEndMinute = quietEnd.hour * 60 + quietEnd.minute;
-    const candidateMinute = date.getHours() * 60 + date.getMinutes();
-
+function isInsideQuietHours(
+    date: Date,
+    quietStartMinute: number,
+    quietEndMinute: number
+) {
     if (quietStartMinute === quietEndMinute) {
         return false;
     }
+
+    const candidateMinute = dateMinuteOfDay(date);
 
     if (quietStartMinute < quietEndMinute) {
         return (
@@ -229,26 +231,19 @@ function isInsideQuietHours({
     );
 }
 
-function moveToQuietHoursEnd({
-    date,
-    quietHoursEnd,
-    quietHoursStart,
-}: {
-    date: Date;
-    quietHoursEnd: string;
-    quietHoursStart: string;
-}) {
-    const quietEnd = parseReminderTime(quietHoursEnd);
-    const quietStart = parseReminderTime(quietHoursStart);
+function moveToQuietHoursEnd(
+    date: Date,
+    quietEnd: {hour: number; minute: number},
+    quietStartMinute: number,
+    quietEndMinute: number
+) {
     const quietEndDate = new Date(date);
 
     quietEndDate.setHours(quietEnd.hour, quietEnd.minute, 0, 0);
 
     if (
-        quietStart.hour * 60 + quietStart.minute >
-            quietEnd.hour * 60 + quietEnd.minute &&
-        date.getHours() * 60 + date.getMinutes() >=
-            quietStart.hour * 60 + quietStart.minute
+        quietStartMinute > quietEndMinute &&
+        dateMinuteOfDay(date) >= quietStartMinute
     ) {
         quietEndDate.setDate(quietEndDate.getDate() + 1);
     }

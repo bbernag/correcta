@@ -1,4 +1,8 @@
-import {NavigationContainer, type Theme} from "@react-navigation/native";
+import {
+    NavigationContainer,
+    type Theme,
+    useNavigationContainerRef,
+} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useMemo} from "react";
 import {useColorScheme} from "react-native";
@@ -7,6 +11,7 @@ import {enableFreeze} from "react-native-screens";
 import {ComponentPlaygroundScreen} from "../screens/ComponentPlayground";
 import {ExpoUiShowcaseScreen} from "../screens/ExpoUiShowcase";
 import {appThemes} from "../theme";
+import {useNotificationResponseRouting} from "./hooks/useNotificationResponseRouting";
 import {MainTabs} from "./MainTabs";
 import type {RootStackParamList} from "./types";
 
@@ -16,7 +21,10 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function RootNavigator() {
     const colorScheme = useColorScheme();
+    const navigationRef = useNavigationContainerRef<RootStackParamList>();
     const theme = colorScheme === "dark" ? appThemes.dark : appThemes.light;
+    const {handleNavigationReady} =
+        useNotificationResponseRouting(navigationRef);
 
     const navigationTheme = useMemo<Theme>(
         () => ({
@@ -52,7 +60,11 @@ export function RootNavigator() {
     );
 
     return (
-        <NavigationContainer theme={navigationTheme}>
+        <NavigationContainer
+            onReady={handleNavigationReady}
+            ref={navigationRef}
+            theme={navigationTheme}
+        >
             <Stack.Navigator
                 screenOptions={{
                     contentStyle: {

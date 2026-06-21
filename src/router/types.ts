@@ -1,6 +1,8 @@
+import type {NavigatorScreenParams} from "@react-navigation/native";
+
 export type RootStackParamList = {
     ExpoUiShowcase: undefined;
-    MainTabs: undefined;
+    MainTabs: NavigatorScreenParams<MainTabParamList> | undefined;
     ComponentPlayground: undefined;
 };
 

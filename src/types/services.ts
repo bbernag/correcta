@@ -1,5 +1,6 @@
 import type {NotificationPreferences, UserPreferences} from "./language";
 import type {
+    NotificationPermissionStatus,
     NotificationReminderState,
     ScheduledReminder,
 } from "./notifications";
@@ -114,6 +115,19 @@ export type NotificationReminderService = {
     savePreferences: (
         preferences: NotificationPreferences
     ) => Promise<NotificationReminderState>;
+};
+
+export type NativeNotificationSyncResult = {
+    permissionStatus: NotificationPermissionStatus;
+    scheduledCount: number;
+};
+
+export type NativeNotificationScheduler = {
+    getPermissionStatus: () => Promise<NotificationPermissionStatus>;
+    syncScheduledReminders: (params: {
+        reminders: ScheduledReminder[];
+        requestPermission: boolean;
+    }) => Promise<NativeNotificationSyncResult>;
 };
 
 export type BackendAiIntegrationService = {

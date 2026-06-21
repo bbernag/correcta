@@ -113,8 +113,9 @@ export function ReminderPreferencesCard({
                 variant="secondary"
             />
             <AppText variant="caption" tone="secondary">
-                {reminderState.preferencesSummary}. Quiet hours are respected in
-                local schedule metadata.
+                {reminderState.preferencesSummary}.{" "}
+                {getNativeScheduleSummary(reminderState)} Quiet hours are
+                respected in local schedule metadata.
             </AppText>
         </Surface>
     );
@@ -131,6 +132,30 @@ function getReminderOptionLabel({
     const selectedLabel = selected ? "Selected" : "Not selected";
 
     return `${option.label}. ${timeLabel}. ${selectedLabel}.`;
+}
+
+function getNativeScheduleSummary(reminderState: NotificationReminderState) {
+    if (reminderState.nativePermissionStatus === "denied") {
+        return "Notification permission is blocked in system settings.";
+    }
+
+    if (reminderState.scheduledNativeReminderCount > 0) {
+        const reminderLabel =
+            reminderState.scheduledNativeReminderCount === 1
+                ? "device reminder"
+                : "device reminders";
+
+        return `${reminderState.scheduledNativeReminderCount} ${reminderLabel} scheduled.`;
+    }
+
+    if (
+        reminderState.nativePermissionStatus === "undetermined" &&
+        reminderState.scheduledReminders.length > 0
+    ) {
+        return "Device reminders are waiting for notification permission.";
+    }
+
+    return "No device reminders scheduled.";
 }
 
 const styles = StyleSheet.create((theme) => ({

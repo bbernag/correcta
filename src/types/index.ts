@@ -9,6 +9,7 @@ export type {
     ValidationMode,
 } from "./language";
 export type {
+    NotificationPermissionStatus,
     NotificationReminderState,
     ScheduledReminder,
     ScheduledReminderKind,
@@ -60,6 +61,8 @@ export type {
 export type {
     CorrectaServices,
     BackendAiIntegrationService,
+    NativeNotificationScheduler,
+    NativeNotificationSyncResult,
     NotificationPreferencesRepository,
     NotificationReminderService,
     NotificationScheduleRepository,

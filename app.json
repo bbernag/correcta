@@ -26,6 +26,13 @@
                     }
                 }
             ],
+            [
+                "expo-notifications",
+                {
+                    "color": "#24478F",
+                    "defaultChannel": "correcta-reminders"
+                }
+            ],
             "react-native-nitro-fetch",
             "react-native-bottom-tabs"
         ],

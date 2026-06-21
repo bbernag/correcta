@@ -4,6 +4,7 @@ import {createMonetizationService} from "./monetizationService";
 import {createMockSentenceService} from "./mock/mockSentenceService";
 import {createMockTeacherFeedbackService} from "./mock/mockTeacherFeedbackService";
 import {createMockTranslationValidationService} from "./mock/mockTranslationValidationService";
+import {createExpoNotificationScheduler} from "../../native/notifications";
 import {createNotificationReminderService} from "./notificationReminderService";
 import {createProgressSummaryService} from "./progressSummaryService";
 import {createNotificationPreferencesRepository} from "./repositories/notificationPreferencesRepository";
@@ -34,6 +35,7 @@ export function createCorrectaServices(): CorrectaServices {
             savedContent,
         }),
         reminders: createNotificationReminderService({
+            nativeNotifications: createExpoNotificationScheduler(),
             notificationSchedule,
             notifications,
             reviewQueue,

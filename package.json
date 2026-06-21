@@ -33,6 +33,7 @@
         "expo": "~56.0.12",
         "expo-build-properties": "~56.0.19",
         "expo-dev-client": "~56.0.20",
+        "expo-notifications": "~56.0.18",
         "expo-status-bar": "~56.0.4",
         "expo-updates": "~56.0.19",
         "lucide-react-native": "^1.20.0",

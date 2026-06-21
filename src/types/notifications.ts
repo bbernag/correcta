@@ -14,9 +14,16 @@ export type ScheduledReminder = {
     createdAt: string;
 };
 
+export type NotificationPermissionStatus =
+    | "granted"
+    | "denied"
+    | "undetermined";
+
 export type NotificationReminderState = {
     dueReviewCount: number;
+    nativePermissionStatus: NotificationPermissionStatus;
     nextReminderLabel: string;
     preferencesSummary: string;
+    scheduledNativeReminderCount: number;
     scheduledReminders: ScheduledReminder[];
 };

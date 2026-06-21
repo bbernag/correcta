@@ -2,6 +2,7 @@ import type {NativeBottomTabScreenProps} from "@bottom-tabs/react-navigation";
 import {StyleSheet} from "react-native-unistyles";
 
 import {
+    AnimatedMount,
     AppText,
     Button,
     EmptyState,
@@ -60,10 +61,12 @@ export function PracticeScreen({route}: PracticeScreenProps) {
     if (practice.showSummary && summaryState) {
         return (
             <Screen>
-                <SessionSummaryCard
-                    onRestart={practice.handleRestart}
-                    summaryState={summaryState}
-                />
+                <AnimatedMount>
+                    <SessionSummaryCard
+                        onRestart={practice.handleRestart}
+                        summaryState={summaryState}
+                    />
+                </AnimatedMount>
             </Screen>
         );
     }

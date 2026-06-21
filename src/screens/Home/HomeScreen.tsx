@@ -49,7 +49,7 @@ export function HomeScreen({navigation}: HomeScreenProps) {
         navigation.navigate("Library");
     }
 
-    const headerAction = (
+    const headerAction = __DEV__ ? (
         <View style={styles.headerActions}>
             <IconButton
                 accessibilityLabel="Open component check"
@@ -64,7 +64,7 @@ export function HomeScreen({navigation}: HomeScreenProps) {
                 variant="surface"
             />
         </View>
-    );
+    ) : undefined;
 
     if (home.phase === "loading") {
         return (

@@ -82,21 +82,25 @@ export function RootNavigator() {
                     name="MainTabs"
                     options={{headerShown: false}}
                 />
-                <Stack.Screen
-                    component={ComponentPlaygroundScreen}
-                    name="ComponentPlayground"
-                    options={{
-                        presentation: "modal",
-                        title: "Component check",
-                    }}
-                />
-                <Stack.Screen
-                    component={ExpoUiShowcaseScreen}
-                    name="ExpoUiShowcase"
-                    options={{
-                        title: "Expo UI showcase",
-                    }}
-                />
+                {__DEV__ ? (
+                    <Stack.Group>
+                        <Stack.Screen
+                            component={ComponentPlaygroundScreen}
+                            name="ComponentPlayground"
+                            options={{
+                                presentation: "modal",
+                                title: "Component check",
+                            }}
+                        />
+                        <Stack.Screen
+                            component={ExpoUiShowcaseScreen}
+                            name="ExpoUiShowcase"
+                            options={{
+                                title: "Expo UI showcase",
+                            }}
+                        />
+                    </Stack.Group>
+                ) : null}
             </Stack.Navigator>
         </NavigationContainer>
     );

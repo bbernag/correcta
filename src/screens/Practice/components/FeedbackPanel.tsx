@@ -95,7 +95,9 @@ export function FeedbackPanel({
                         />
                     ) : null}
                     <Button
-                        label={isLastSentence ? "Show summary" : "Next prompt"}
+                        label={
+                            isLastSentence ? "Show summary" : "Next sentence"
+                        }
                         loading={isContinuing}
                         onPress={onContinue}
                         style={styles.continueAction}
@@ -113,9 +115,11 @@ export function FeedbackPanel({
                     </Surface>
                 </AnimatedMount>
             ) : null}
-            <AnimatedMount delayMs={120}>
-                <MistakeHighlights mistakes={result.validation.mistakes} />
-            </AnimatedMount>
+            {result.validation.mistakes.length > 0 ? (
+                <AnimatedMount delayMs={120}>
+                    <MistakeHighlights mistakes={result.validation.mistakes} />
+                </AnimatedMount>
+            ) : null}
         </View>
     );
 }

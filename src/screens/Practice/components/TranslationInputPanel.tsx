@@ -20,10 +20,10 @@ const INPUT_MODE_OPTIONS = [
         value: "typing",
     },
     {
-        accessibilityHint: "Switches to the word builder translation controls.",
-        accessibilityLabel: "Builder input mode",
+        accessibilityHint: "Switches to the word bank translation controls.",
+        accessibilityLabel: "Word bank input mode",
         icon: "word",
-        label: "Build",
+        label: "Word bank",
         value: "sentenceBuilder",
     },
 ] satisfies {

@@ -11,16 +11,7 @@ type MistakeHighlightsProps = {
 
 export function MistakeHighlights({mistakes}: MistakeHighlightsProps) {
     if (mistakes.length === 0) {
-        return (
-            <Surface variant="success" style={styles.root}>
-                <AppText variant="label" tone="success">
-                    No specific mistakes
-                </AppText>
-                <AppText tone="secondary">
-                    Your answer did not create a focused mistake card.
-                </AppText>
-            </Surface>
-        );
+        return null;
     }
 
     return (

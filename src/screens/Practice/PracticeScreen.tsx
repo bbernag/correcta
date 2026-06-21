@@ -103,7 +103,6 @@ export function PracticeScreen({route}: PracticeScreenProps) {
         <Screen contentContainerStyle={styles.content}>
             <PracticeHeader
                 currentIndex={sessionState.currentIndex}
-                inputMode={sessionState.inputMode}
                 preferences={sessionState.preferences}
                 totalCount={sessionState.sentences.length}
             />

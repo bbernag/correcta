@@ -1,23 +1,20 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Chip, ProgressBar} from "../../../components/common";
-import type {PracticeInputMode, UserPreferences} from "../../../types";
+import {AppText, ProgressBar} from "../../../components/common";
+import type {UserPreferences} from "../../../types";
 
 type PracticeHeaderProps = {
     currentIndex: number;
-    inputMode: PracticeInputMode;
     preferences: UserPreferences;
     totalCount: number;
 };
 
 export function PracticeHeader({
     currentIndex,
-    inputMode,
     preferences,
     totalCount,
 }: PracticeHeaderProps) {
-    const modeLabel = inputMode === "sentenceBuilder" ? "Builder" : "Typing";
     const currentStep = currentIndex + 1;
 
     return (
@@ -31,12 +28,6 @@ export function PracticeHeader({
                         Translate
                     </AppText>
                 </View>
-                <Chip
-                    icon="practice"
-                    label={modeLabel}
-                    size="small"
-                    variant="accent"
-                />
             </View>
             <ProgressBar
                 accessibilityLabel={`Practice progress ${currentStep} of ${totalCount}`}

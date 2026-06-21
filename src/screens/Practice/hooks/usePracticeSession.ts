@@ -9,7 +9,6 @@ import {playHapticFeedback} from "../../../native";
 import type {PracticeInputMode} from "../../../types";
 import {
     createWordBankItems,
-    formatScore,
     getBuilderAnswer,
     getStatusLabel,
 } from "../utils/practiceUtils";
@@ -174,9 +173,7 @@ export function usePracticeSession({
 
         if (phase === "feedback" && result) {
             announcePracticeState(
-                `${getStatusLabel(result.validation.status)}. ${formatScore(
-                    result.validation.score
-                )}.`
+                `${getStatusLabel(result.validation.status)}. ${result.feedback.simpleExplanation}`
             );
         }
 

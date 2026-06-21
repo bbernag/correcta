@@ -1,7 +1,8 @@
 # Visual Design & Interaction Polish QA
 
 Status: partial. Slices 1-13 are implemented and verified. Slice 14 has source
-fixes and iOS evidence; Android accessibility QA remains pending.
+fixes, iOS evidence, and Android visual/reduced-motion evidence; Android
+accessibility-tree or TalkBack validation remains pending.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -477,9 +478,20 @@ Current pass, 2026-06-21:
   Practice segmented input and builder word-chip states, Review deck labels,
   Progress top progress values, and Library segment selected state.
 - iOS dark-mode Home screenshot was captured after toggling appearance.
-- Android QA is pending because `agent-device apps --platform android` returned
-  `DEVICE_NOT_FOUND`.
-- Device-level reduced-motion toggle verification is pending because
+- Android emulator `Medium Phone API 36.1` was booted directly after
+  `agent-device boot --platform android` could not discover a target.
+- Android app launch passed through the Expo Dev Client
+  `Correcta, http://10.0.2.2:8081` entry.
+- Android visual/runtime checks passed for Home, Practice typing, Practice
+  builder, selected builder word state, Library segments, and Progress.
+- Android dark-mode Home rendered after `agent-device settings appearance dark`
+  and a dev-client relaunch.
+- Android reduced-motion Home rendered after
+  `agent-device settings animations off` and a dev-client relaunch.
+- Android filtered accessibility snapshots still returned `0` app nodes after
+  app-content launch, and a lower-level UIAutomator dump was killed by the
+  device, so Android accessibility-tree or TalkBack validation remains pending.
+- iOS device-level reduced-motion toggle verification remains pending because
   `agent-device settings animations off --platform ios` returned unsupported.
 - iOS screenshots:
   `/tmp/correcta-slice14-ios-component-selection.png`,
@@ -487,6 +499,15 @@ Current pass, 2026-06-21:
   `/tmp/correcta-slice14-ios-review-decks-a11y.png`,
   `/tmp/correcta-slice14-ios-progress-a11y.png`, and
   `/tmp/correcta-slice14-ios-dark-home.png`.
+- Android screenshots:
+  `/tmp/correcta-slice14-android-home.png`,
+  `/tmp/correcta-slice14-android-practice-typing.png`,
+  `/tmp/correcta-slice14-android-practice-builder.png`,
+  `/tmp/correcta-slice14-android-practice-builder-selected.png`,
+  `/tmp/correcta-slice14-android-library-segments.png`,
+  `/tmp/correcta-slice14-android-progress.png`,
+  `/tmp/correcta-slice14-android-dark-app-home.png`, and
+  `/tmp/correcta-slice14-android-reduced-motion-app-home.png`.
 
 ## Progress
 

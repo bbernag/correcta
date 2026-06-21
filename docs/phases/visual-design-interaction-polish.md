@@ -11,8 +11,9 @@ a polished learning score, linked metrics, weekly activity, mistake breakdown,
 achievements, and recommendation flow. Library now has segmented notebook views,
 saved-content cards, history badges, retry/removal actions, and empty states.
 Platform-native surface and motion polish is complete. Slice 14,
-Accessibility And Reduced Motion Audit, has source fixes and iOS evidence;
-Android accessibility QA remains pending.
+Accessibility And Reduced Motion Audit, has source fixes, iOS evidence, and
+Android visual/reduced-motion evidence; Android accessibility-tree or TalkBack
+validation remains pending.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -64,13 +65,15 @@ shared checkpoint; iOS Home evidence is recorded for Slice 8, iOS Practice
 evidence is recorded for Slice 9, iOS Review evidence is recorded for Slice 10,
 iOS Progress evidence is recorded for Slice 11, iOS Library evidence is recorded
 for Slice 12, iOS platform-surface/input evidence is recorded for Slice 13, and
-iOS accessibility evidence is recorded for Slice 14.
+iOS accessibility plus Android visual/reduced-motion evidence is recorded for
+Slice 14.
 
 Next:
 
-1. Finish Slice 14 Android accessibility QA when an Android device is
-   available.
-2. Keep Android and iOS screenshots updated during the final QA pass.
+1. Finish Slice 14 Android accessibility validation with TalkBack or a richer
+   accessibility-tree tool.
+2. Start Slice 15 Final QA And Evidence after the Slice 14 validation gap is
+   accepted or closed.
 
 ## Goal
 
@@ -722,9 +725,10 @@ Evidence:
 
 ### Slice 14: Accessibility And Reduced Motion Audit
 
-Status: partial. Source fixes and iOS runtime evidence are complete; Android
-accessibility QA remains pending because `agent-device apps --platform android`
-returned `DEVICE_NOT_FOUND`.
+Status: partial. Source fixes, iOS runtime evidence, and Android
+visual/reduced-motion evidence are complete. Android filtered accessibility
+snapshots still return an empty app tree, so Android TalkBack or another
+accessibility-tree validation pass remains pending.
 
 Goal: make the polished UI usable.
 
@@ -762,12 +766,22 @@ Evidence so far:
 - iOS runtime checks passed for Home, ComponentPlayground selection examples,
   Practice input mode and builder chips, Review deck options, Progress top
   metrics, Library segments, and dark-mode Home.
+- Android emulator `Medium Phone API 36.1` launched the app through the Expo
+  Dev Client `10.0.2.2:8081` entry.
+- Android visual/runtime checks passed for Home, Practice typing, Practice
+  builder, selected builder word state, Library segments, and Progress.
+- Android appearance dark-mode and animation-scale-off checks both relaunched
+  to app content and rendered Home without visible layout regressions.
+- Android filtered accessibility snapshots still returned `0` app nodes after
+  app-content launch; coordinate and screenshot fallback was used for runtime
+  navigation evidence.
 
 Remaining:
 
-- Android accessibility QA.
-- Device-level reduced-motion toggle verification; the available iOS
-  `agent-device settings animations off` command returned unsupported.
+- Android TalkBack or richer accessibility-tree validation.
+- iOS device-level reduced-motion toggle verification remains unavailable
+  because `agent-device settings animations off --platform ios` returned
+  unsupported; Android animation-scale-off verification is recorded.
 
 ### Slice 15: Final QA And Evidence
 

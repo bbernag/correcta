@@ -4,8 +4,9 @@ Status: partial. Slices 1-13 are complete. The shared component checkpoint has
 source-audit, automated, iOS, and Android evidence. Home, Practice, Review, and
 Progress production-screen polish have iOS evidence, and Library polish now has
 iOS evidence. Platform-native surface and motion polish has automated checks
-and iOS evidence. Slice 14 has source fixes and iOS accessibility evidence;
-Android accessibility QA remains pending.
+and iOS evidence. Slice 14 has source fixes, iOS accessibility evidence, and
+Android visual/reduced-motion evidence; Android accessibility-tree or TalkBack
+validation remains pending.
 
 ## Slice 1: Theme Token Design System
 
@@ -593,9 +594,10 @@ Next phase:
 
 Date: 2026-06-21.
 
-Result: partial. Source fixes, automated checks, and iOS accessibility runtime
-evidence passed. Android accessibility QA remains pending because no Android
-device was available.
+Result: partial. Source fixes, automated checks, iOS accessibility runtime
+evidence, and Android visual/reduced-motion runtime evidence passed. Android
+filtered accessibility snapshots remained empty, so Android accessibility-tree
+or TalkBack validation is still pending.
 
 Implemented:
 
@@ -638,6 +640,17 @@ slice14-ios --platform ios --relaunch` succeeded.
 - iOS runtime path: Review -> Progress tab -> top metrics and progress values.
 - iOS runtime path: Progress -> Library tab -> segment selected state.
 - iOS dark-mode launch after `agent-device settings appearance dark`.
+- Android emulator: `Medium Phone API 36.1`.
+- Android runtime path: Expo Dev Client launcher ->
+  `Correcta, http://10.0.2.2:8081` -> Home.
+- Android runtime path: Home -> Practice typing -> Builder -> selected builder
+  word.
+- Android runtime path: Practice -> Library segments -> Progress.
+- Android dark-mode Home after `agent-device settings appearance dark`.
+- Android reduced-motion Home after `agent-device settings animations off`.
+- Android accessibility probe: `agent-device snapshot -i` still returned
+  `0` filtered app nodes after app-content launch, and a lower-level
+  UIAutomator dump was killed by the device.
 
 Evidence:
 
@@ -650,18 +663,29 @@ Evidence:
 - iOS Progress accessibility:
   `/tmp/correcta-slice14-ios-progress-a11y.png`
 - iOS dark Home: `/tmp/correcta-slice14-ios-dark-home.png`
+- Android Home: `/tmp/correcta-slice14-android-home.png`
+- Android Practice typing:
+  `/tmp/correcta-slice14-android-practice-typing.png`
+- Android Practice builder:
+  `/tmp/correcta-slice14-android-practice-builder.png`
+- Android Practice builder selected word:
+  `/tmp/correcta-slice14-android-practice-builder-selected.png`
+- Android Library segments:
+  `/tmp/correcta-slice14-android-library-segments.png`
+- Android Progress: `/tmp/correcta-slice14-android-progress.png`
+- Android dark Home: `/tmp/correcta-slice14-android-dark-app-home.png`
+- Android reduced-motion Home:
+  `/tmp/correcta-slice14-android-reduced-motion-app-home.png`
 
 Known follow-ups:
 
-- Android accessibility QA is still required before Slice 14 can be marked
-  fully done; `agent-device apps --platform android` returned
-  `DEVICE_NOT_FOUND`.
-- Device-level reduced-motion setting verification is still pending;
+- Android accessibility-tree or TalkBack validation is still required before
+  Slice 14 can be marked fully done; visual/runtime Android QA is now recorded.
+- iOS device-level reduced-motion setting verification is still pending;
   `agent-device settings animations off --platform ios` returned unsupported in
-  this environment. Source verification confirms reduced-motion consumers now
-  default to motion-safe behavior until the native setting resolves.
+  this environment. Android animation-scale-off verification is recorded.
 
 Next phase:
 
-- Finish Slice 14 Android accessibility QA, then start Slice 15 Final QA And
-  Evidence.
+- Finish or explicitly accept the remaining Android accessibility validation
+  gap, then start Slice 15 Final QA And Evidence.

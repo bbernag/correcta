@@ -1,8 +1,9 @@
 # Visual Design & Interaction Polish QA
 
 Status: partial. Slices 1-13 and 15 are implemented and verified. Slice 14 has
-source fixes, iOS evidence, and Android visual/reduced-motion evidence; Android
-accessibility-tree or TalkBack validation remains pending.
+source fixes, iOS evidence, Android visual/reduced-motion evidence, and Android
+TalkBack reachability evidence; spoken-label capture/manual tree extraction
+remains pending.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -490,7 +491,19 @@ Current pass, 2026-06-21:
   `agent-device settings animations off` and a dev-client relaunch.
 - Android filtered accessibility snapshots still returned `0` app nodes after
   app-content launch, and a lower-level UIAutomator dump was killed by the
-  device, so Android accessibility-tree or TalkBack validation remains pending.
+  device.
+- Android TalkBack was enabled with
+  `com.google.android.marvin.talkback/.TalkBackService` after stopping the
+  device-side `com.callstack.agentdevice.snapshothelper`, which had kept a
+  UiAutomation service registered.
+- `dumpsys accessibility` confirmed `touchExplorationEnabled=true`, TalkBack as
+  a bound service, and Correcta as the active/accessibility-focused application
+  window.
+- ADB-only TalkBack interaction verified app reachability: tapping the Home CTA
+  navigated to Practice, and tapping `Show hint` revealed "The verb means need."
+  while TalkBack remained bound.
+- Logcat did not expose spoken utterance text, so manual spoken-label
+  confirmation or a richer accessibility-tree extraction pass remains pending.
 - iOS device-level reduced-motion toggle verification remains pending because
   `agent-device settings animations off --platform ios` returned unsupported.
 - iOS screenshots:
@@ -508,6 +521,10 @@ Current pass, 2026-06-21:
   `/tmp/correcta-slice14-android-progress.png`,
   `/tmp/correcta-slice14-android-dark-app-home.png`, and
   `/tmp/correcta-slice14-android-reduced-motion-app-home.png`.
+- Android TalkBack screenshots:
+  `/tmp/correcta-slice14-android-talkback-adb-home.png`,
+  `/tmp/correcta-slice14-android-talkback-home-cta-focus.png`, and
+  `/tmp/correcta-slice14-android-talkback-show-hint.png`.
 
 ## Slice 15 Evidence
 

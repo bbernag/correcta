@@ -12,10 +12,10 @@ achievements, and recommendation flow. Library now has segmented notebook views,
 saved-content cards, history badges, retry/removal actions, and empty states.
 Platform-native surface and motion polish is complete. Slice 14,
 Accessibility And Reduced Motion Audit, has source fixes, iOS evidence, and
-Android visual/reduced-motion evidence; Android accessibility-tree or TalkBack
-validation remains pending. Slice 15 final QA evidence is recorded, so the
-visual phase remains partial only because of that Slice 14 Android accessibility
-validation gap.
+Android visual/reduced-motion evidence plus Android TalkBack reachability
+evidence; spoken-label capture or manual accessibility-tree extraction remains
+pending. Slice 15 final QA evidence is recorded, so the visual phase remains
+partial only because of that Slice 14 Android accessibility validation gap.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -67,15 +67,15 @@ shared checkpoint; iOS Home evidence is recorded for Slice 8, iOS Practice
 evidence is recorded for Slice 9, iOS Review evidence is recorded for Slice 10,
 iOS Progress evidence is recorded for Slice 11, iOS Library evidence is recorded
 for Slice 12, iOS platform-surface/input evidence is recorded for Slice 13, and
-iOS accessibility plus Android visual/reduced-motion evidence is recorded for
-Slice 14. Slice 15 records the final automated checks, iOS and Android debug
-installs, cross-platform MVP runtime path, screenshots, and final iOS
-app-running evidence.
+iOS accessibility plus Android visual/reduced-motion and TalkBack reachability
+evidence is recorded for Slice 14. Slice 15 records the final automated checks,
+iOS and Android debug installs, cross-platform MVP runtime path, screenshots,
+and final iOS app-running evidence.
 
 Next:
 
-1. Finish or explicitly accept the Slice 14 Android accessibility validation
-   gap.
+1. Finish or explicitly accept the Slice 14 Android spoken-label/manual
+   accessibility-tree validation gap.
 2. Keep Visual Design and Interaction Polish partial until that gap is closed
    or accepted.
 
@@ -729,10 +729,12 @@ Evidence:
 
 ### Slice 14: Accessibility And Reduced Motion Audit
 
-Status: partial. Source fixes, iOS runtime evidence, and Android
-visual/reduced-motion evidence are complete. Android filtered accessibility
-snapshots still return an empty app tree, so Android TalkBack or another
-accessibility-tree validation pass remains pending.
+Status: partial. Source fixes, iOS runtime evidence, Android visual/reduced
+motion evidence, and Android TalkBack reachability evidence are complete.
+Android filtered accessibility snapshots still return an empty app tree, and
+the current emulator/tooling did not expose spoken-label logs, so manual
+spoken-label confirmation or another accessibility-tree extraction pass remains
+pending.
 
 Goal: make the polished UI usable.
 
@@ -779,10 +781,20 @@ Evidence so far:
 - Android filtered accessibility snapshots still returned `0` app nodes after
   app-content launch; coordinate and screenshot fallback was used for runtime
   navigation evidence.
+- Android TalkBack was enabled through
+  `com.google.android.marvin.talkback/.TalkBackService`; `dumpsys
+accessibility` confirmed touch exploration, TalkBack as a bound service, and
+  Correcta as the active/accessibility-focused application window.
+- ADB-only TalkBack interaction verified app reachability: the Home CTA opened
+  Practice, and the Practice `Show hint` control revealed the hint while
+  TalkBack remained bound.
+- Agent-device snapshots and UIAutomator dumps still could not extract app
+  labels in this environment; logcat did not expose spoken utterance text.
 
 Remaining:
 
-- Android TalkBack or richer accessibility-tree validation.
+- Android spoken-label confirmation through manual TalkBack audio review or a
+  richer accessibility-tree extraction tool.
 - iOS device-level reduced-motion toggle verification remains unavailable
   because `agent-device settings animations off --platform ios` returned
   unsupported; Android animation-scale-off verification is recorded.

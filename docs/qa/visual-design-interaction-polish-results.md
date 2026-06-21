@@ -5,8 +5,9 @@ checkpoint has source-audit, automated, iOS, and Android evidence. Home,
 Practice, Review, and Progress production-screen polish have iOS evidence, and
 Library polish now has iOS evidence. Platform-native surface and motion polish
 has automated checks and iOS evidence. Slice 14 has source fixes, iOS
-accessibility evidence, and Android visual/reduced-motion evidence; Android
-accessibility-tree or TalkBack validation remains pending.
+accessibility evidence, Android visual/reduced-motion evidence, and Android
+TalkBack reachability evidence; spoken-label capture/manual tree extraction
+remains pending.
 
 ## Slice 1: Theme Token Design System
 
@@ -595,9 +596,10 @@ Next phase:
 Date: 2026-06-21.
 
 Result: partial. Source fixes, automated checks, iOS accessibility runtime
-evidence, and Android visual/reduced-motion runtime evidence passed. Android
-filtered accessibility snapshots remained empty, so Android accessibility-tree
-or TalkBack validation is still pending.
+evidence, Android visual/reduced-motion runtime evidence, and Android TalkBack
+reachability evidence passed. Android filtered accessibility snapshots remained
+empty and the tooling did not expose spoken-label logs, so manual spoken-label
+confirmation or another accessibility-tree extraction pass is still pending.
 
 Implemented:
 
@@ -651,6 +653,17 @@ slice14-ios --platform ios --relaunch` succeeded.
 - Android accessibility probe: `agent-device snapshot -i` still returned
   `0` filtered app nodes after app-content launch, and a lower-level
   UIAutomator dump was killed by the device.
+- Android TalkBack setup: `com.google.android.marvin.talkback/.TalkBackService`
+  was enabled after stopping `com.callstack.agentdevice.snapshothelper`, which
+  had kept UiAutomation registered.
+- Android TalkBack state: `dumpsys accessibility` reported
+  `touchExplorationEnabled=true`, TalkBack as a bound service, Correcta as the
+  active window, and Correcta as the accessibility-focused window.
+- Android TalkBack reachability path: ADB-only interaction with TalkBack enabled
+  activated the Home CTA and opened Practice, then activated `Show hint` and
+  revealed the hint text.
+- Android TalkBack limitation: logcat did not expose spoken utterance text, and
+  UIAutomator still could not dump app labels.
 
 Evidence:
 
@@ -676,11 +689,18 @@ Evidence:
 - Android dark Home: `/tmp/correcta-slice14-android-dark-app-home.png`
 - Android reduced-motion Home:
   `/tmp/correcta-slice14-android-reduced-motion-app-home.png`
+- Android TalkBack Home:
+  `/tmp/correcta-slice14-android-talkback-adb-home.png`
+- Android TalkBack Home CTA to Practice:
+  `/tmp/correcta-slice14-android-talkback-home-cta-focus.png`
+- Android TalkBack Show hint:
+  `/tmp/correcta-slice14-android-talkback-show-hint.png`
 
 Known follow-ups:
 
-- Android accessibility-tree or TalkBack validation is still required before
-  Slice 14 can be marked fully done; visual/runtime Android QA is now recorded.
+- Manual Android TalkBack spoken-label confirmation or a richer
+  accessibility-tree extraction pass is still required before Slice 14 can be
+  marked fully done; Android TalkBack reachability is now recorded.
 - iOS device-level reduced-motion setting verification is still pending;
   `agent-device settings animations off --platform ios` returned unsupported in
   this environment. Android animation-scale-off verification is recorded.

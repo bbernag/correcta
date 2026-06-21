@@ -195,7 +195,6 @@ export function usePracticeSession({
         }
 
         setAnswerText(currentAnswer);
-        setSelectedItemIds([]);
         setSessionState({...sessionState, inputMode});
         playHapticFeedback("selection");
     }

@@ -34,6 +34,8 @@ const INPUT_MODE_OPTIONS = [
     value: PracticeInputMode;
 }[];
 
+const INPUT_MODE_CONTENT_MIN_HEIGHT = 260;
+
 type TranslationInputPanelProps = {
     answerText: string;
     disabled?: boolean;
@@ -77,7 +79,10 @@ export function TranslationInputPanel({
                 options={INPUT_MODE_OPTIONS}
                 value={inputMode}
             />
-            <Crossfade contentKey={inputMode} minHeight={180}>
+            <Crossfade
+                contentKey={inputMode}
+                minHeight={INPUT_MODE_CONTENT_MIN_HEIGHT}
+            >
                 {inputMode === "typing" ? (
                     <TextInput
                         autoCapitalize="sentences"

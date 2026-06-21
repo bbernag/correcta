@@ -15,9 +15,11 @@ import type {MainTabParamList} from "../../router/types";
 import {FeedbackPanel} from "./components/FeedbackPanel";
 import {PracticeActionBar} from "./components/PracticeActionBar";
 import {PracticeHeader} from "./components/PracticeHeader";
+import {PracticeSwipeSurface} from "./components/PracticeSwipeSurface";
 import {SentencePromptCard} from "./components/SentencePromptCard";
 import {SessionSummaryCard} from "./components/SessionSummaryCard";
 import {TranslationInputPanel} from "./components/TranslationInputPanel";
+import {usePracticeSwipeNavigation} from "./hooks/usePracticeSwipeNavigation";
 import {usePracticeViewModel} from "./hooks/usePracticeViewModel";
 
 type PracticeScreenProps = NativeBottomTabScreenProps<
@@ -32,6 +34,13 @@ export function PracticeScreen({route}: PracticeScreenProps) {
     });
     const {currentSentence, error, phase, result, sessionState, summaryState} =
         practice;
+    const swipeNavigation = usePracticeSwipeNavigation({
+        isChecking: practice.isChecking,
+        onContinue: practice.handleContinue,
+        onRetry: practice.handleRetry,
+        phase,
+        result,
+    });
 
     if (practice.isLoadingInitial) {
         return (
@@ -138,7 +147,12 @@ export function PracticeScreen({route}: PracticeScreenProps) {
                 </>
             ) : null}
             {result ? (
-                <>
+                <PracticeSwipeSurface
+                    canSwipeLeft={swipeNavigation.canSwipeLeft}
+                    canSwipeRight={swipeNavigation.canSwipeRight}
+                    onSwipeLeft={swipeNavigation.handleSwipeLeft}
+                    onSwipeRight={swipeNavigation.handleSwipeRight}
+                >
                     {error ? (
                         <Surface variant="danger" style={styles.section}>
                             <AppText variant="label" tone="danger">
@@ -160,7 +174,7 @@ export function PracticeScreen({route}: PracticeScreenProps) {
                         saveError={practice.saveError}
                         sourceText={currentSentence.sourceText}
                     />
-                </>
+                </PracticeSwipeSurface>
             ) : null}
         </Screen>
     );

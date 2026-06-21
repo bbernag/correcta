@@ -1,4 +1,7 @@
-import type {NavigationContainerRefWithCurrent} from "@react-navigation/native";
+import {
+    StackActions,
+    type NavigationContainerRefWithCurrent,
+} from "@react-navigation/native";
 import {useCallback, useEffect, useRef} from "react";
 
 import {
@@ -28,6 +31,9 @@ export function useNotificationResponseRouting(
                 return;
             }
 
+            // Dismiss any modal stacked above the tabs first, otherwise the tap
+            // only switches the tab hidden behind the still-visible modal.
+            navigationRef.dispatch(StackActions.popToTop());
             navigationRef.navigate("MainTabs", {
                 screen: route.routeName,
             });

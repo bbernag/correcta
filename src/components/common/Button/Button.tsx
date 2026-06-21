@@ -1,6 +1,9 @@
 import {ActivityIndicator, Pressable, View} from "react-native";
+import {EaseView, type Transition} from "react-native-ease";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
+import {useReducedMotion} from "../../../hooks/useReducedMotion";
+import {motion} from "../../../theme";
 import {AppText} from "../AppText";
 import type {AppTextTone} from "../AppText";
 import {Icon} from "../Icon";
@@ -8,6 +11,16 @@ import type {IconTone} from "../Icon";
 import {PressableMotionView} from "../PressableMotionView";
 import {SquircleSurface} from "../SquircleSurface";
 import type {ButtonProps, ButtonSize, ButtonVariant} from "./buttonTypes";
+
+const SPINNER_TRANSITION = {
+    duration: motion.duration.fast,
+    easing: "easeOut",
+    type: "timing",
+} satisfies Transition;
+
+const REDUCED_MOTION_TRANSITION = {
+    type: "none",
+} satisfies Transition;
 
 export function Button({
     accessibilityLabel,
@@ -26,6 +39,7 @@ export function Button({
     ...pressableProps
 }: ButtonProps) {
     const {theme} = useUnistyles();
+    const isReducedMotionEnabled = useReducedMotion();
     const isInteractionDisabled = disabled || loading;
     const labelTone = disabled ? "muted" : getButtonLabelTone(variant);
     const iconTone = disabled ? "muted" : getButtonIconTone(variant);
@@ -67,10 +81,23 @@ export function Button({
                     >
                         <View style={styles.content}>
                             {loading ? (
-                                <ActivityIndicator
-                                    color={activityColor}
-                                    size="small"
-                                />
+                                <EaseView
+                                    animate={{opacity: 1, scale: 1}}
+                                    initialAnimate={{
+                                        opacity: isReducedMotionEnabled ? 1 : 0,
+                                        scale: isReducedMotionEnabled ? 1 : 0.8,
+                                    }}
+                                    transition={
+                                        isReducedMotionEnabled
+                                            ? REDUCED_MOTION_TRANSITION
+                                            : SPINNER_TRANSITION
+                                    }
+                                >
+                                    <ActivityIndicator
+                                        color={activityColor}
+                                        size="small"
+                                    />
+                                </EaseView>
                             ) : null}
                             {!loading && leadingIcon ? (
                                 <Icon

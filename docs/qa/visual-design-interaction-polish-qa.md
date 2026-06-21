@@ -1,8 +1,7 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slices 1-4 are implemented and verified. Shared component
-source now reaches into Slices 5-7, but those slices still need the
-ComponentPlayground acceptance checkpoint before production screen adoption.
+Status: partial. Slices 1-7 are implemented and verified. The next visual
+polish work starts with Slice 8, Home Design Pilot.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -220,9 +219,9 @@ Known follow-ups:
 - Light mode looks intentional.
 - Dark mode looks intentional.
 
-## Active Checkpoint: Slices 5-7
+## Slice 5-7 Evidence
 
-Use this checkpoint before starting Home polish.
+Recorded before starting Home polish.
 
 Current pass, 2026-06-20:
 
@@ -237,7 +236,16 @@ Current pass, 2026-06-20:
   `iPhone 17`.
 - iOS screenshots: `/tmp/correcta-slice5-7-ios-launch.png` and
   `/tmp/correcta-slice5-7-ios-component-check-top.png`.
-- Android QA remains pending; `adb devices` returned no attached emulator/device.
+- Android emulator `Medium_Phone_API_36.1` was rebuilt with
+  `npm run android -- --no-bundler` after the stale dev client failed with
+  `Cannot find native module 'ExpoUI'`.
+- Android Home, ComponentPlayground top, fixed input examples, and linked-card
+  examples rendered after rebuild.
+- Android screenshots:
+  `/tmp/correcta-slice5-7-android-after-rebuild.png`,
+  `/tmp/correcta-slice5-7-android-component-check-top.png`,
+  `/tmp/correcta-slice5-7-android-component-check-mid-fixed.png`, and
+  `/tmp/correcta-slice5-7-android-component-check-linked-card.png`.
 
 - `Card` linked-surface examples render in ComponentPlayground.
 - Vertical linked surfaces preserve visible canvas cut-ins.
@@ -250,10 +258,9 @@ Current pass, 2026-06-20:
   `FeedbackHighlight`, `EmptyState`, `LoadingState`, and `ErrorState`.
 - ComponentPlayground is reviewed as the shared visual acceptance gate.
 - `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
-- iOS ComponentPlayground screenshots are captured; Android screenshots remain
-  pending until an emulator/device is available.
-- The MVP flow still works after the shared-component checkpoint:
-  Home -> Practice -> Check answer -> Feedback -> Save -> Review/Progress/Library.
+- iOS and Android ComponentPlayground screenshots are captured.
+- The app shell still launches after the shared-component checkpoint on iOS and
+  Android.
 - Text is readable on every surface.
 - Empty states, loading states, disabled states, and error states are explicit.
 - Icon-only controls have accessible names.

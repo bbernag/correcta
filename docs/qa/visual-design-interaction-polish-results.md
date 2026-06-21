@@ -1,9 +1,8 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slices 1-4 are complete. Shared component source now reaches
-into Slices 5-7. The current checkpoint has automated and iOS runtime evidence;
-Android ComponentPlayground evidence remains before the full visual polish phase
-can close.
+Status: partial. Slices 1-7 are complete. The shared component checkpoint has
+source-audit, automated, iOS, and Android evidence. The remaining visual polish
+work starts with Slice 8, Home Design Pilot.
 
 ## Slice 1: Theme Token Design System
 
@@ -185,8 +184,8 @@ Known follow-ups:
 
 Date: 2026-06-20.
 
-Result: partial pass. Source audit, automated checks, and iOS runtime smoke pass;
-Android visual QA is still pending because no Android emulator was attached.
+Result: pass. Source audit, automated checks, iOS runtime smoke, and Android
+runtime smoke passed.
 
 Accepted source state:
 
@@ -203,6 +202,8 @@ Accepted source state:
   public common-component barrel.
 - The native component rules now point to the shared `Card` folder and `card`
   token group instead of stale `CardUnion`/`cardUnion` names.
+- Android TextInput examples now render readable single-line text by avoiding a
+  too-short fixed native input height.
 
 Verification:
 
@@ -216,21 +217,30 @@ Verification:
 - iOS runtime path: Home -> Open component check.
 - iOS visual result: ComponentPlayground opened and rendered the shared
   component review surface.
-- Android device check: `adb devices` returned no attached emulator/device.
+- Android emulator: `Medium_Phone_API_36.1`.
+- Android build/install: `npm run android -- --no-bundler`.
+- Android runtime path: development build launcher -> Correcta Metro server ->
+  Home -> Open component check.
+- Android visual result: ComponentPlayground rendered top shared primitives,
+  fixed readable input examples, and linked-card examples.
+- Android native-module note: the first Android launch reached Metro but failed
+  with `Cannot find native module 'ExpoUI'`; rebuilding the debug dev client
+  resolved the stale native build.
 
 Evidence:
 
 - iOS Home launch: `/tmp/correcta-slice5-7-ios-launch.png`
 - iOS ComponentPlayground top:
   `/tmp/correcta-slice5-7-ios-component-check-top.png`
+- Android Home after rebuild:
+  `/tmp/correcta-slice5-7-android-after-rebuild.png`
+- Android ComponentPlayground top:
+  `/tmp/correcta-slice5-7-android-component-check-top.png`
+- Android inputs after TextInput fix:
+  `/tmp/correcta-slice5-7-android-component-check-mid-fixed.png`
+- Android linked cards:
+  `/tmp/correcta-slice5-7-android-component-check-linked-card.png`
 
-Acceptance work still required:
-
-- Run Android ComponentPlayground visual QA when an emulator/device is
-  available.
-- Capture Android screenshot/runtime evidence before marking Slices 5-7 fully
-  done.
-
-Next phase after acceptance:
+Next phase:
 
 - Start Slice 8, Home Design Pilot.

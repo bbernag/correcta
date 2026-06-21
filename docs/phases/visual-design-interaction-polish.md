@@ -1,10 +1,9 @@
 # Visual Design & Interaction Polish
 
-Status: partial. Slices 1-4 are implemented and verified as foundation work.
+Status: partial. Slices 1-7 are implemented and verified as foundation work.
 Slice 3 is retained as technical foundation only; Slice 4 approved the native
-primitive direction. Shared component source now reaches into Slices 5-7, so the
-active next step is the ComponentPlayground acceptance/evidence checkpoint
-before production screen polish.
+primitive direction. The ComponentPlayground shared-component checkpoint is
+closed, so the active next step is Slice 8, Home Design Pilot.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -42,19 +41,16 @@ Review, Progress, and Library adoption.
 
 ## Current Checkpoint
 
-As of the latest documentation sync, broad common-component building should
-pause. The source contains the linked-surface `Card` family, supporting shared
-visual components, and ComponentPlayground sections. Source audit, automated
-checks, and iOS route evidence are recorded; Android ComponentPlayground evidence
-still remains before the checkpoint is fully closed.
+As of the latest documentation sync, the shared-component checkpoint is closed.
+The source contains the linked-surface `Card` family, supporting shared visual
+components, and ComponentPlayground sections. Source audit, automated checks,
+iOS route evidence, and Android route evidence are recorded.
 
 Next:
 
-1. Run Android ComponentPlayground visual QA when an emulator/device is
-   available.
-2. Record Android evidence in
-   `docs/qa/visual-design-interaction-polish-results.md`.
-3. Then start Slice 8, Home Design Pilot.
+1. Start Slice 8, Home Design Pilot.
+2. Keep Android and iOS screenshots updated as Home adopts the accepted shared
+   system.
 
 ## Goal
 
@@ -324,10 +320,9 @@ Exit:
 
 ### Slice 5: Card And Linked Surface Foundation
 
-Status: partial. The shared `Card` compound component, linked-surface tokens,
-and focused playground examples exist in source. Source audit, automated checks,
-and iOS route evidence are recorded. Remaining work is Android visual QA before
-broad production use.
+Status: done. The shared `Card` compound component, linked-surface tokens, and
+focused playground examples exist in source. Source audit, automated checks, and
+iOS/Android route evidence are recorded.
 
 Goal: establish Linked Surface Groups as a tested shared layout primitive before
 applying the new direction to production screens.
@@ -380,9 +375,9 @@ Out of scope:
 
 ### Slice 6: Supporting Shared Visual Components
 
-Status: partial. The main supporting components exist in source and are covered
-by ComponentPlayground. Automated checks and iOS route evidence are recorded.
-Remaining work is Android visual QA before the first production screen.
+Status: done. The main supporting components exist in source and are covered by
+ComponentPlayground. Automated checks and iOS/Android route evidence are
+recorded.
 
 Goal: create or restyle the remaining reusable UI building blocks before screen
 polish.
@@ -412,10 +407,9 @@ Exit:
 
 ### Slice 7: ComponentPlayground Acceptance Gate
 
-Status: active checkpoint. ComponentPlayground already contains the shared
-component review surface. Source audit, automated checks, and iOS evidence are
-recorded; Android screenshot/runtime evidence remains before production screen
-adoption.
+Status: done. ComponentPlayground contains the shared component review surface,
+and source audit, automated checks, iOS evidence, and Android evidence are
+recorded before production screen adoption.
 
 Goal: make ComponentPlayground the visual QA source.
 
@@ -648,10 +642,9 @@ Exit:
 
 ## Slice Dependencies
 
-- Slice 5 and Slice 6 are source-implemented and have automated/iOS evidence,
-  but Android ComponentPlayground evidence still blocks full checkpoint closure.
-- Slice 7 blocks all production-screen polish until Android evidence is added or
-  the team explicitly accepts an iOS-first checkpoint.
+- Slice 5 and Slice 6 are source-implemented and verified through
+  ComponentPlayground.
+- Slice 7 is closed; Home is unblocked as the next production integration pilot.
 - Home is the production integration pilot and blocks Practice.
 - Practice blocks Review because Review consumes Practice outcomes.
 - Progress and Library may proceed after Review, but the documented order

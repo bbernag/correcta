@@ -209,9 +209,12 @@ const styles = StyleSheet.create((theme) => ({
         fontSize: theme.typography.body,
         fontWeight: theme.fontWeights.body,
         includeFontPadding: false,
+        lineHeight: theme.lineHeights.body,
+        paddingHorizontal: 0,
+        paddingVertical: 0,
     },
     inputSingleLine: {
-        height: theme.lineHeights.body,
+        minHeight: theme.lineHeights.body + theme.spacing.sm,
         textAlignVertical: "center",
     },
     inputDisabledText: {

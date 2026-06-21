@@ -74,26 +74,34 @@ async function scheduleReminder(reminder: ScheduledReminder) {
         return false;
     }
 
-    await Notifications.scheduleNotificationAsync({
-        content: {
-            body: reminder.body,
-            data: {
-                [REMINDER_ID_DATA_KEY]: reminder.id,
-                [REMINDER_KIND_DATA_KEY]: reminder.kind,
-                [REMINDER_ROUTE_DATA_KEY]: reminder.routeName,
+    try {
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                body: reminder.body,
+                data: {
+                    [REMINDER_ID_DATA_KEY]: reminder.id,
+                    [REMINDER_KIND_DATA_KEY]: reminder.kind,
+                    [REMINDER_ROUTE_DATA_KEY]: reminder.routeName,
+                },
+                sound: false,
+                title: reminder.title,
             },
-            sound: false,
-            title: reminder.title,
-        },
-        identifier: reminder.id,
-        trigger: {
-            channelId: REMINDER_CHANNEL_ID,
-            date: scheduledDate,
-            type: Notifications.SchedulableTriggerInputTypes.DATE,
-        },
-    });
+            identifier: reminder.id,
+            trigger: {
+                channelId: REMINDER_CHANNEL_ID,
+                date: scheduledDate,
+                type: Notifications.SchedulableTriggerInputTypes.DATE,
+            },
+        });
 
-    return true;
+        return true;
+    } catch (error) {
+        // One reminder failing to schedule must not reject the whole sync
+        // (which would wipe every reminder and surface as a screen error).
+        console.warn(`Failed to schedule reminder ${reminder.id}`, error);
+
+        return false;
+    }
 }
 
 export function addNotificationResponseRouteListener(

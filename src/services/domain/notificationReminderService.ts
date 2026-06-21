@@ -1,4 +1,5 @@
 import type {
+    NotificationPermissionStatus,
     NotificationPreferences,
     NotificationPreferencesRepository,
     NotificationReminderService,
@@ -282,7 +283,7 @@ function getNextReminderLabel({
     preferences,
     scheduledReminders,
 }: {
-    nativePermissionStatus: "granted" | "denied" | "undetermined";
+    nativePermissionStatus: NotificationPermissionStatus;
     preferences: NotificationPreferences;
     scheduledReminders: ScheduledReminder[];
 }) {

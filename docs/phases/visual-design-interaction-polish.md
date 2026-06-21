@@ -1,10 +1,12 @@
 # Visual Design & Interaction Polish
 
-Status: partial. Slices 1-8 are implemented and verified as foundation work.
+Status: partial. Slices 1-9 are implemented and verified as foundation work.
 Slice 3 is retained as technical foundation only; Slice 4 approved the native
 primitive direction. The ComponentPlayground shared-component checkpoint is
 closed, and Home is now the first production screen using the accepted shared
-system. The active next step is Slice 9, Practice Core Loop Polish.
+system. The Practice core loop is polished for typing, builder, feedback, and
+save/continue actions. The active next step is Slice 10, Review And Feedback
+Polish.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -42,16 +44,17 @@ Review, Progress, and Library adoption.
 
 ## Current Checkpoint
 
-As of the latest documentation sync, the shared-component checkpoint and Home
-Design Pilot are closed. The source contains the linked-surface `Card` family,
-supporting shared visual components, ComponentPlayground sections, and the
-first production Home integration. Source audit, automated checks, iOS route
-evidence, and Android route evidence are recorded for the shared checkpoint;
-iOS Home evidence is recorded for Slice 8.
+As of the latest documentation sync, the shared-component checkpoint, Home
+Design Pilot, and Practice Core Loop Polish are closed. The source contains the
+linked-surface `Card` family, supporting shared visual components,
+ComponentPlayground sections, the first production Home integration, and the
+polished Practice loop. Source audit, automated checks, iOS route evidence, and
+Android route evidence are recorded for the shared checkpoint; iOS Home evidence
+is recorded for Slice 8, and iOS Practice evidence is recorded for Slice 9.
 
 Next:
 
-1. Start Slice 9, Practice Core Loop Polish.
+1. Start Slice 10, Review And Feedback Polish.
 2. Keep Android and iOS screenshots updated as each production screen adopts the
    accepted shared system.
 
@@ -487,6 +490,8 @@ Evidence:
 
 ### Slice 9: Practice Core Loop Polish
 
+Status: done.
+
 Goal: make the core loop feel excellent.
 
 Expected files:
@@ -521,6 +526,30 @@ Exit:
 
 - Home -> Practice -> Check answer -> Feedback -> Save -> Continue feels
   premium and remains keyboard-safe on iOS and Android.
+
+Evidence:
+
+- `PracticeScreen` now composes the production Practice loop through
+  `usePracticeViewModel` and screen-owned Slice 9 components.
+- The existing `usePracticeSession` state machine, validation, retry, save, and
+  summary flow are preserved.
+- Typing mode uses the shared `TextInput`, stable action bar, explicit checking
+  state, and `Check answer` copy.
+- Builder mode uses screen-owned `ScrambledWordsInput`, `SelectedWordsRow`, and
+  `WordBank` components with selected/disabled word-chip states.
+- Feedback uses a teacher-style result banner, accepted answer alternatives,
+  compact save actions, a primary continuation action, and a separate mistake
+  focus surface.
+- Submit, result, save, selection, and skip haptics are covered by existing
+  haptic paths plus the new submit impact.
+- Checking, feedback, and summary states announce through React Native
+  accessibility APIs.
+- Typecheck, lint, and Prettier checks pass.
+- iOS simulator launch succeeded for app id `com.luisgarcia.correcta`.
+- iOS visual evidence:
+  `/tmp/correcta-slice9-ios-practice-answering.png`,
+  `/tmp/correcta-slice9-ios-practice-builder.png`, and
+  `/tmp/correcta-slice9-ios-practice-feedback.png`.
 
 ### Slice 10: Review And Feedback Polish
 

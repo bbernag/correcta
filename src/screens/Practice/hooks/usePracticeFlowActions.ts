@@ -52,6 +52,11 @@ export function usePracticeFlowActions({
     >;
 }) {
     async function handleSubmitAnswer() {
+        if (!sessionState || !currentSentence || phase === "checking") {
+            return;
+        }
+
+        playHapticFeedback("impact");
         await checkAnswer({
             answerText: currentAnswer,
             currentSentence,

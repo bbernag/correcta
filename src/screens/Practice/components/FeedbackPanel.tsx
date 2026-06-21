@@ -1,13 +1,11 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, Surface} from "../../../components/common";
-import {
-    formatScore,
-    getStatusLabel,
-    getStatusTone,
-} from "../utils/practiceUtils";
+import {Button, Surface} from "../../../components/common";
 import type {PracticeResult} from "../types/practiceTypes";
+import {AcceptedAlternatives} from "./AcceptedAlternatives";
+import {MistakeHighlights} from "./MistakeHighlights";
+import {ResultBanner} from "./ResultBanner";
 
 type FeedbackPanelProps = {
     isContinuing: boolean;
@@ -19,6 +17,7 @@ type FeedbackPanelProps = {
     onSaveSentence: () => void;
     onSaveWord: () => void;
     result: PracticeResult;
+    sourceText: string;
 };
 
 export function FeedbackPanel({
@@ -31,6 +30,7 @@ export function FeedbackPanel({
     onSaveSentence,
     onSaveWord,
     result,
+    sourceText,
 }: FeedbackPanelProps) {
     const hasSavedWord =
         Boolean(result.savedWordId) || result.attempt.savedWordIds.length > 0;
@@ -39,64 +39,20 @@ export function FeedbackPanel({
         result.attempt.savedSentenceIds.length > 0;
 
     return (
-        <Surface style={styles.root} variant="outline">
-            <View style={styles.header}>
-                <AppText
-                    variant="heading"
-                    tone={getStatusTone(result.validation.status)}
-                >
-                    {getStatusLabel(result.validation.status)}
-                </AppText>
-                <AppText variant="label" tone="secondary">
-                    {formatScore(result.validation.score)}
-                </AppText>
-            </View>
-            <AppText>{result.feedback.simpleExplanation}</AppText>
-            <AppText tone="secondary">{result.feedback.explanation}</AppText>
-            <View style={styles.answerBlock}>
-                <AppText variant="label">Your answer</AppText>
-                <AppText tone="secondary">
-                    {result.validation.userAnswer || "Skipped"}
-                </AppText>
-                <AppText variant="label">Accepted answer</AppText>
-                <AppText tone="secondary">
-                    {result.validation.preferredAnswer}
-                </AppText>
-            </View>
-            {result.validation.mistakes.length > 0 ? (
-                <View style={styles.answerBlock}>
-                    <AppText variant="label">Review focus</AppText>
-                    {result.validation.mistakes.map((mistake) => {
-                        return (
-                            <AppText key={mistake.id} tone="secondary">
-                                {mistake.explanation}
-                            </AppText>
-                        );
-                    })}
-                </View>
-            ) : null}
-            <View style={styles.actions}>
-                <View style={styles.primaryActions}>
-                    {result.validation.canRetry ? (
-                        <Button
-                            disabled={isContinuing}
-                            label="Retry"
-                            onPress={onRetry}
-                            style={styles.retryAction}
-                            variant="ghost"
-                        />
-                    ) : null}
-                    <Button
-                        label={isLastSentence ? "Show summary" : "Next prompt"}
-                        loading={isContinuing}
-                        onPress={onContinue}
-                        style={styles.continueAction}
-                    />
-                </View>
+        <View style={styles.root}>
+            <ResultBanner result={result} />
+            <AcceptedAlternatives
+                acceptedTranslations={result.validation.acceptedTranslations}
+                preferredAnswer={result.validation.preferredAnswer}
+                sourceText={sourceText}
+                userAnswer={result.validation.userAnswer}
+            />
+            <Surface variant="card" style={styles.actions}>
                 <View style={styles.secondaryActions}>
                     <Button
                         disabled={hasSavedWord || isContinuing}
                         label={hasSavedWord ? "Word saved" : "Save word"}
+                        leadingIcon={hasSavedWord ? "saved" : "save"}
                         loading={isSavingWord}
                         onPress={onSaveWord}
                         style={styles.secondaryAction}
@@ -109,14 +65,35 @@ export function FeedbackPanel({
                                 ? "Sentence saved"
                                 : "Save sentence"
                         }
+                        leadingIcon={hasSavedSentence ? "saved" : "sentence"}
                         loading={isSavingSentence}
                         onPress={onSaveSentence}
                         style={styles.secondaryAction}
                         variant="secondary"
                     />
                 </View>
-            </View>
-        </Surface>
+                <View style={styles.primaryActions}>
+                    {result.validation.canRetry ? (
+                        <Button
+                            disabled={isContinuing}
+                            label="Retry"
+                            leadingIcon="clear"
+                            onPress={onRetry}
+                            style={styles.retryAction}
+                            variant="ghost"
+                        />
+                    ) : null}
+                    <Button
+                        label={isLastSentence ? "Show summary" : "Next prompt"}
+                        loading={isContinuing}
+                        onPress={onContinue}
+                        style={styles.continueAction}
+                        trailingIcon="check"
+                    />
+                </View>
+            </Surface>
+            <MistakeHighlights mistakes={result.validation.mistakes} />
+        </View>
     );
 }
 
@@ -124,18 +101,8 @@ const styles = StyleSheet.create((theme) => ({
     root: {
         gap: theme.spacing.md,
     },
-    header: {
-        alignItems: "flex-start",
-        gap: theme.spacing.xs,
-    },
-    answerBlock: {
-        borderTopColor: theme.colors.borderSubtle,
-        borderTopWidth: 1,
-        gap: theme.spacing.xs,
-        paddingTop: theme.spacing.md,
-    },
     actions: {
-        gap: theme.spacing.sm,
+        gap: theme.spacing.md,
     },
     continueAction: {
         flex: 1,

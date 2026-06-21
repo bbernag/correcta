@@ -1,4 +1,5 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {AccessibilityInfo} from "react-native";
 
 import {
     createCorrectaServices,
@@ -6,7 +7,12 @@ import {
 } from "../../../services/domain";
 import {playHapticFeedback} from "../../../native";
 import type {PracticeInputMode} from "../../../types";
-import {createWordBankItems, getBuilderAnswer} from "../utils/practiceUtils";
+import {
+    createWordBankItems,
+    formatScore,
+    getBuilderAnswer,
+    getStatusLabel,
+} from "../utils/practiceUtils";
 import {usePracticeFlowActions} from "./usePracticeFlowActions";
 import {usePracticeSaveActions} from "./usePracticeSaveActions";
 import type {
@@ -156,6 +162,24 @@ export function usePracticeSession({
         };
     }, [handleRestart, restartKey]);
 
+    useEffect(() => {
+        if (phase === "checking") {
+            announcePracticeState("Checking answer");
+        }
+
+        if (phase === "feedback" && result) {
+            announcePracticeState(
+                `${getStatusLabel(result.validation.status)}. ${formatScore(
+                    result.validation.score
+                )}.`
+            );
+        }
+
+        if (phase === "summary" && summaryState) {
+            announcePracticeState("Practice summary ready");
+        }
+    }, [phase, result, summaryState]);
+
     function handleChangeAnswer(text: string) {
         setAnswerText(text);
     }
@@ -248,4 +272,12 @@ export function usePracticeSession({
         summaryState,
         wordBankItems,
     };
+}
+
+function announcePracticeState(message: string) {
+    try {
+        AccessibilityInfo.announceForAccessibility(message);
+    } catch {
+        // Announcements are best-effort and should not block practice.
+    }
 }

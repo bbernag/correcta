@@ -1,16 +1,23 @@
 import type {NativeBottomTabScreenProps} from "@bottom-tabs/react-navigation";
-import {ActivityIndicator, View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, Screen, Surface} from "../../components/common";
+import {
+    AppText,
+    Button,
+    EmptyState,
+    ErrorState,
+    LoadingState,
+    Screen,
+    Surface,
+} from "../../components/common";
 import type {MainTabParamList} from "../../router/types";
-import {AnswerComposer} from "./components/AnswerComposer";
 import {FeedbackPanel} from "./components/FeedbackPanel";
-import {InputModeControl} from "./components/InputModeControl";
-import {PracticeProgressHeader} from "./components/PracticeProgressHeader";
+import {PracticeActionBar} from "./components/PracticeActionBar";
+import {PracticeHeader} from "./components/PracticeHeader";
 import {SentencePromptCard} from "./components/SentencePromptCard";
 import {SessionSummaryCard} from "./components/SessionSummaryCard";
-import {usePracticeSession} from "./hooks/usePracticeSession";
+import {TranslationInputPanel} from "./components/TranslationInputPanel";
+import {usePracticeViewModel} from "./hooks/usePracticeViewModel";
 
 type PracticeScreenProps = NativeBottomTabScreenProps<
     MainTabParamList,
@@ -18,29 +25,20 @@ type PracticeScreenProps = NativeBottomTabScreenProps<
 >;
 
 export function PracticeScreen({route}: PracticeScreenProps) {
-    const practice = usePracticeSession({
+    const practice = usePracticeViewModel({
         restartKey: route.params?.restartKey,
         retrySentenceId: route.params?.retrySentenceId,
     });
     const {currentSentence, error, phase, result, sessionState, summaryState} =
         practice;
-    const isChecking = phase === "checking";
-    const canSubmit =
-        practice.currentAnswer.trim().length > 0 &&
-        phase !== "checking" &&
-        phase !== "feedback";
 
-    if (phase === "loading" && !sessionState) {
+    if (practice.isLoadingInitial) {
         return (
             <Screen contentContainerStyle={styles.centered}>
-                <ActivityIndicator
-                    accessibilityLabel="Loading practice session"
-                    size="large"
+                <LoadingState
+                    message="Loading your local sentence queue."
+                    title="Preparing practice"
                 />
-                <AppText variant="heading">Preparing practice</AppText>
-                <AppText tone="secondary">
-                    Loading your local sentence queue.
-                </AppText>
             </Screen>
         );
     }
@@ -49,23 +47,17 @@ export function PracticeScreen({route}: PracticeScreenProps) {
         return (
             <Screen>
                 <AppText variant="title">Practice</AppText>
-                <Surface variant="outline" style={styles.section}>
-                    <AppText variant="heading" tone="danger">
-                        Session unavailable
-                    </AppText>
-                    <AppText tone="secondary">
-                        {error ?? "Practice could not be loaded."}
-                    </AppText>
-                    <Button
-                        label="Try again"
-                        onPress={practice.handleRestart}
-                    />
-                </Surface>
+                <ErrorState
+                    message={error ?? "Practice could not be loaded."}
+                    onRetry={practice.handleRestart}
+                    retryLabel="Try again"
+                    title="Session unavailable"
+                />
             </Screen>
         );
     }
 
-    if (phase === "summary" && summaryState) {
+    if (practice.showSummary && summaryState) {
         return (
             <Screen>
                 <SessionSummaryCard
@@ -76,89 +68,74 @@ export function PracticeScreen({route}: PracticeScreenProps) {
         );
     }
 
-    if (!sessionState || !currentSentence) {
+    if (practice.isSessionUnavailable || !sessionState || !currentSentence) {
         return (
             <Screen>
                 <AppText variant="title">Practice</AppText>
-                <Surface variant="muted">
-                    <AppText tone="secondary">
-                        No practice prompt is ready.
-                    </AppText>
-                </Surface>
+                <EmptyState
+                    action={
+                        <Button
+                            label="Restart practice"
+                            onPress={practice.handleRestart}
+                        />
+                    }
+                    icon="practice"
+                    message="Restart the local practice queue to load the next sentence."
+                    title="No practice prompt is ready"
+                />
             </Screen>
         );
     }
 
-    const hasHiddenHints =
-        practice.revealedHintCount < currentSentence.hints.length;
-    const isLastSentence =
-        sessionState.currentIndex === sessionState.sentences.length - 1;
-
     return (
-        <Screen>
-            <PracticeProgressHeader
+        <Screen contentContainerStyle={styles.content}>
+            <PracticeHeader
                 currentIndex={sessionState.currentIndex}
                 inputMode={sessionState.inputMode}
                 preferences={sessionState.preferences}
                 totalCount={sessionState.sentences.length}
             />
-            <SentencePromptCard
-                revealedHintCount={practice.revealedHintCount}
-                sentence={currentSentence}
-            />
-            {phase === "answering" || (isChecking && !result) ? (
+            {practice.isAnswering ? (
                 <>
-                    <InputModeControl
-                        onChange={practice.handleSelectInputMode}
-                        value={sessionState.inputMode}
+                    <SentencePromptCard
+                        revealedHintCount={practice.revealedHintCount}
+                        sentence={currentSentence}
                     />
-                    <AnswerComposer
+                    <TranslationInputPanel
                         answerText={practice.answerText}
+                        disabled={practice.isChecking}
                         inputMode={sessionState.inputMode}
                         onChangeAnswer={practice.handleChangeAnswer}
                         onClearBuilder={practice.handleClearBuilder}
                         onRemoveWord={practice.handleRemoveWord}
+                        onSelectInputMode={practice.handleSelectInputMode}
                         onSelectWord={practice.handleSelectWord}
-                        remainingWordBankItems={practice.remainingWordBankItems}
+                        selectedItemIds={practice.selectedItemIds}
                         selectedWordBankItems={practice.selectedWordBankItems}
+                        wordBankItems={practice.wordBankItems}
                     />
                     {error ? (
-                        <Surface variant="outline">
+                        <Surface variant="danger" style={styles.section}>
                             <AppText variant="label" tone="danger">
                                 Check failed
                             </AppText>
                             <AppText tone="secondary">{error}</AppText>
                         </Surface>
                     ) : null}
-                    <View style={styles.actions}>
-                        <Button
-                            disabled={!canSubmit}
-                            fullWidth
-                            label="Submit answer"
-                            loading={isChecking}
-                            onPress={practice.handleSubmitAnswer}
-                        />
-                        <Button
-                            disabled={isChecking}
-                            label="Skip"
-                            onPress={practice.handleSkip}
-                            variant="secondary"
-                        />
-                        {hasHiddenHints ? (
-                            <Button
-                                disabled={isChecking}
-                                label="Show hint"
-                                onPress={practice.handleShowHint}
-                                variant="ghost"
-                            />
-                        ) : null}
-                    </View>
+                    <PracticeActionBar
+                        canSubmit={practice.canSubmit}
+                        hasHiddenHints={practice.hasHiddenHints}
+                        isChecking={practice.isChecking}
+                        onShowHint={practice.handleShowHint}
+                        onSkip={practice.handleSkip}
+                        onSubmitAnswer={practice.handleSubmitAnswer}
+                    />
                 </>
             ) : null}
             {result ? (
                 <FeedbackPanel
-                    isContinuing={isChecking}
-                    isLastSentence={isLastSentence}
+                    isContinuing={practice.isChecking}
+                    isLastSentence={practice.isLastSentence}
                     isSavingSentence={practice.isSavingSentence}
                     isSavingWord={practice.isSavingWord}
                     onContinue={practice.handleContinue}
@@ -166,6 +143,7 @@ export function PracticeScreen({route}: PracticeScreenProps) {
                     onSaveSentence={practice.handleSaveSentence}
                     onSaveWord={practice.handleSaveWord}
                     result={result}
+                    sourceText={currentSentence.sourceText}
                 />
             ) : null}
         </Screen>
@@ -173,13 +151,14 @@ export function PracticeScreen({route}: PracticeScreenProps) {
 }
 
 const styles = StyleSheet.create((theme) => ({
-    actions: {
-        gap: theme.spacing.sm,
-    },
     centered: {
         alignItems: "center",
         flexGrow: 1,
         justifyContent: "center",
+    },
+    content: {
+        gap: theme.spacing.lg,
+        paddingBottom: 72,
     },
     section: {
         gap: theme.spacing.md,

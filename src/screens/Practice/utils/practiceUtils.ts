@@ -1,4 +1,9 @@
-import type {ValidationStatus, PracticeSentence} from "../../../types";
+import type {NoticeCardTone, ResultBadgeTone} from "../../../components/common";
+import type {
+    MistakeCategory,
+    ValidationStatus,
+    PracticeSentence,
+} from "../../../types";
 import type {HapticFeedback} from "../../../native";
 import type {WordBankItem} from "../types/practiceTypes";
 
@@ -44,8 +49,8 @@ export function getStatusLabel(status: ValidationStatus) {
     const labels: Record<ValidationStatus, string> = {
         almostCorrect: "Almost correct",
         correct: "Correct",
-        incorrect: "Needs review",
-        partial: "Partially correct",
+        incorrect: "Needs work",
+        partial: "Needs work",
         skipped: "Skipped",
     };
 
@@ -64,6 +69,37 @@ export function getStatusTone(status: ValidationStatus) {
     return "danger";
 }
 
+export function getFeedbackTone(status: ValidationStatus): NoticeCardTone {
+    if (status === "correct") {
+        return "success";
+    }
+
+    if (status === "incorrect" || status === "partial") {
+        return "warning";
+    }
+
+    if (status === "skipped") {
+        return "info";
+    }
+
+    return "info";
+}
+
+export function getResultBadgeTone(status: ValidationStatus): ResultBadgeTone {
+    switch (status) {
+        case "correct":
+            return "correct";
+        case "almostCorrect":
+            return "almost";
+        case "skipped":
+            return "skipped";
+        case "incorrect":
+        case "partial":
+        default:
+            return "incorrect";
+    }
+}
+
 export function getPracticeResultHapticFeedback(
     status: ValidationStatus
 ): HapticFeedback {
@@ -80,6 +116,22 @@ export function getPracticeResultHapticFeedback(
 
 export function formatScore(score: number) {
     return `${Math.round(score * 100)}%`;
+}
+
+export function formatMistakeCategory(category: MistakeCategory) {
+    const labels: Record<MistakeCategory, string> = {
+        accent: "Accent",
+        agreement: "Agreement",
+        extraWord: "Extra word",
+        meaning: "Meaning",
+        missingWord: "Missing word",
+        punctuation: "Punctuation",
+        verbTense: "Verb tense",
+        wordChoice: "Word choice",
+        wordOrder: "Word order",
+    };
+
+    return labels[category];
 }
 
 export function getAccuracyLabel({

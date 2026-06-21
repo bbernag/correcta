@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Surface} from "../../../components/common";
+import {AppText, Card, Icon} from "../../../components/common";
 import type {PracticeSentence} from "../../../types";
 
 type SentencePromptCardProps = {
@@ -16,36 +16,47 @@ export function SentencePromptCard({
     const visibleHints = sentence.hints.slice(0, revealedHintCount);
 
     return (
-        <Surface style={styles.root}>
-            <AppText variant="label" tone="secondary">
-                {sentence.prompt}
-            </AppText>
-            <AppText accessibilityRole="text" variant="heading">
-                {sentence.sourceText}
-            </AppText>
-            {visibleHints.length > 0 ? (
-                <View style={styles.hints}>
-                    {visibleHints.map((hint) => {
-                        return (
-                            <AppText key={hint} tone="secondary">
-                                {hint}
-                            </AppText>
-                        );
-                    })}
+        <Card gap="compact">
+            <Card.Item>
+                <View style={styles.promptHeader}>
+                    <Icon name="sentence" size="default" tone="accent" />
+                    <View style={styles.promptCopy}>
+                        <Card.Eyebrow>{sentence.prompt}</Card.Eyebrow>
+                        <AppText accessibilityRole="text" variant="sentence">
+                            {sentence.sourceText}
+                        </AppText>
+                    </View>
                 </View>
+            </Card.Item>
+            {visibleHints.length > 0 ? (
+                <Card.Item>
+                    <Card.Title>Hint</Card.Title>
+                    <View style={styles.hints}>
+                        {visibleHints.map((hint) => {
+                            return (
+                                <AppText key={hint} tone="secondary">
+                                    {hint}
+                                </AppText>
+                            );
+                        })}
+                    </View>
+                </Card.Item>
             ) : null}
-        </Surface>
+        </Card>
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
-    root: {
+    promptHeader: {
+        alignItems: "center",
+        flexDirection: "row",
         gap: theme.spacing.md,
     },
+    promptCopy: {
+        flex: 1,
+        gap: theme.spacing.xs,
+    },
     hints: {
-        borderTopColor: theme.colors.borderSubtle,
-        borderTopWidth: 1,
         gap: theme.spacing.sm,
-        paddingTop: theme.spacing.md,
     },
 }));

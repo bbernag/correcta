@@ -289,4 +289,64 @@ Known follow-ups:
 
 Next phase:
 
-- Start Slice 9, Practice Core Loop Polish.
+- Completed by Slice 9, Practice Core Loop Polish.
+
+## Slice 9: Practice Core Loop Polish
+
+Date: 2026-06-20.
+
+Result: pass. Practice now uses the accepted shared visual system for the core
+typing, builder, feedback, save, and continuation flow.
+
+Implemented:
+
+- `PracticeScreen` now composes a thin `usePracticeViewModel` wrapper around the
+  existing practice session hook.
+- Added screen-owned Practice components for the header, translation input
+  panel, scrambled-word input, selected words row, word bank, action bar, result
+  banner, mistake highlights, and accepted alternatives.
+- The prompt card now uses the shared linked `Card` when hints belong with the
+  sentence.
+- Typing mode uses the shared `TextInput`, `Check answer` copy, explicit
+  checking state, and stable action placement.
+- Builder mode shows selected words, disables selected word-bank chips, supports
+  clear/remove behavior, and uses reduced-motion-aware chip entry animation.
+- Feedback uses a teacher-style result banner, accepted alternatives, compact
+  save actions, a primary continue action, and a separate review-focus surface.
+- Existing validation, retry, skip, save word, save sentence, continue, and
+  summary behavior was preserved.
+- Submit, result, save, selection, and skip haptic paths are covered.
+- Checking, feedback, and summary states announce through React Native
+  accessibility APIs.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- Metro status probe: `packager-status:running`.
+- iOS simulator: `iPhone 17`, app id `com.luisgarcia.correcta`.
+- iOS launch: `xcrun simctl launch booted com.luisgarcia.correcta` returned a
+  running process id.
+- iOS runtime path: Home -> Practice.
+- iOS visual result: answering, builder, and feedback states rendered without a
+  runtime error. Builder selected-word state and disabled word-bank state were
+  verified. Feedback showed accepted alternatives, save actions, retry, and the
+  primary next prompt action in the first feedback viewport.
+
+Evidence:
+
+- iOS Practice answering:
+  `/tmp/correcta-slice9-ios-practice-answering.png`
+- iOS Practice builder: `/tmp/correcta-slice9-ios-practice-builder.png`
+- iOS Practice feedback: `/tmp/correcta-slice9-ios-practice-feedback.png`
+
+Known follow-ups:
+
+- Android Practice evidence should be added during the next broader
+  cross-platform screen polish pass.
+- Review remains the active next production screen for Slice 10.
+
+Next phase:
+
+- Start Slice 10, Review And Feedback Polish.

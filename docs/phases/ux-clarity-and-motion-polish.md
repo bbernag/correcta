@@ -447,3 +447,44 @@ conventional-commit PRs per repo standards (one logical change each).
 - **Flashcard "flip."** PRD says "flip"; recommended a calm crossfade reveal
   (library-consistent, less motion). A literal `rotateY` 3D flip is possible
   with `EaseView` later if desired.
+
+## Implementation status
+
+Implemented on branch `feat/ux-clarity-and-motion-polish`. Every commit passes
+typecheck, lint, Prettier, and the jest suite independently.
+
+**P0 — done.** Silent-failure fixes (save/summary/reminder errors); dev screens
+gated behind `__DEV__`; dead code deleted; Type/Build crossfade; top
+instructional-text trims.
+
+**P1 — done.** `Toast` primitive + provider/hook; save/reminder/library-delete
+confirmations; haptics on hint/skip/summary/preset/filter; shared motion helpers
+(`AnimatedMount`, `Crossfade`, `AnimatedCounter`); applied motion (Home &
+feedback stagger, Crossfade-driven Type/Build, Review reveal/advance, Button
+spinner fade, summary count-up, linked-card surface fade-in).
+
+**P2 — done / decided.**
+
+- #11 card-density sweep — done.
+- #13 motion — `ResultBadge` scale-in done. Deck-color crossfade and skip-card
+  exit **deferred**: the app now has comprehensive purposeful motion, and these
+  micro-animations risk over-animating against the calm guardrail; skip-exit also
+  needs exit-orchestration the current flow doesn't support.
+- #14 celebration — calm session-completion celebration done (entry animation +
+  count-up + success haptic). Goal-complete/level-up-specific celebration
+  **deferred**: needs a domain "goal reached"/"level up" signal (same gap as the
+  streak/achievement-earned haptics in #8).
+- #12 navigation dedup — **no destructive change.** The genuinely confusing
+  duplicate (the dev-screen header buttons) was removed in P0. The remaining
+  Home/Progress shortcuts each carry a count or reason the tab can't, so they
+  satisfy the plan's own "contextual deep-link" rule and directly serve "the user
+  always knows what to do next." A stricter tabs-only collapse is an owner
+  preference call, available on request.
+- #15 hero CTA in load/empty — **descoped.** It would add another path to
+  Practice (counter to the one-path goal) for a transient moment the Practice tab
+  already covers; in the empty state, practice isn't available anyway.
+
+**Deferred follow-ups (need product/domain input, not just code):** Toast
+swipe-dismiss + declarative `Toast.Title/...` anatomy; streak/achievement/goal/
+level-up "unlocked" domain signals to drive milestone haptics and celebrations;
+optional stricter navigation collapse; visual QA pass on a simulator.

@@ -1,10 +1,25 @@
 import type {CompositeScreenProps} from "@react-navigation/native";
 import type {NativeStackScreenProps} from "@react-navigation/native-stack";
 import type {NativeBottomTabScreenProps} from "@bottom-tabs/react-navigation";
+import {View} from "react-native";
+import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, Screen, Surface} from "../../components/common";
+import {
+    Button,
+    EmptyState,
+    ErrorState,
+    IconButton,
+    LoadingState,
+    Screen,
+    ScreenHeader,
+} from "../../components/common";
 import {APP_NAME} from "../../constants/app";
 import type {MainTabParamList, RootStackParamList} from "../../router/types";
+import {ContinueLearningCard} from "./components/ContinueLearningCard";
+import {DailyPracticeHeroCard} from "./components/DailyPracticeHeroCard";
+import {QuickStatGrid} from "./components/QuickStatGrid";
+import {TeacherTipCard} from "./components/TeacherTipCard";
+import {useHomeViewModel} from "./hooks/useHomeViewModel";
 
 type HomeScreenProps = CompositeScreenProps<
     NativeBottomTabScreenProps<MainTabParamList, "Home">,
@@ -12,6 +27,8 @@ type HomeScreenProps = CompositeScreenProps<
 >;
 
 export function HomeScreen({navigation}: HomeScreenProps) {
+    const home = useHomeViewModel();
+
     function handleStartPractice() {
         navigation.navigate("Practice", {restartKey: Date.now()});
     }
@@ -24,36 +41,121 @@ export function HomeScreen({navigation}: HomeScreenProps) {
         navigation.navigate("ExpoUiShowcase");
     }
 
-    return (
-        <Screen>
-            <AppText variant="label" tone="accent">
-                {APP_NAME}
-            </AppText>
-            <AppText variant="title">Daily practice</AppText>
-            <Surface>
-                <AppText variant="heading">Next session</AppText>
-                <AppText tone="secondary">
-                    Five focused sentence prompts are queued for the first app
-                    shell build.
-                </AppText>
-            </Surface>
-            <Button
-                accessibilityLabel="Start practice session"
-                label="Start practice"
-                onPress={handleStartPractice}
-            />
-            <Button
+    function handleOpenReview() {
+        navigation.navigate("Review");
+    }
+
+    function handleOpenLibrary() {
+        navigation.navigate("Library");
+    }
+
+    const headerAction = (
+        <View style={styles.headerActions}>
+            <IconButton
                 accessibilityLabel="Open component check"
-                label="Open component check"
+                icon="settings"
                 onPress={handleOpenPlayground}
-                variant="secondary"
+                variant="surface"
             />
-            <Button
+            <IconButton
                 accessibilityLabel="Open Expo UI showcase"
-                label="Open Expo UI showcase"
+                icon="info"
                 onPress={handleOpenExpoUiShowcase}
-                variant="secondary"
+                variant="surface"
+            />
+        </View>
+    );
+
+    if (home.phase === "loading") {
+        return (
+            <Screen>
+                <ScreenHeader
+                    action={headerAction}
+                    eyebrow={APP_NAME}
+                    title="Daily practice"
+                />
+                <LoadingState
+                    message="Preparing your practice, review, and progress summary."
+                    title="Loading Home"
+                />
+            </Screen>
+        );
+    }
+
+    if (home.phase === "error") {
+        return (
+            <Screen>
+                <ScreenHeader
+                    action={headerAction}
+                    eyebrow={APP_NAME}
+                    title="Daily practice"
+                />
+                <ErrorState
+                    message={home.error ?? "Home could not be loaded."}
+                    onRetry={home.handleRefresh}
+                    retryLabel="Reload Home"
+                />
+            </Screen>
+        );
+    }
+
+    if (home.phase === "empty" || !home.dashboard) {
+        return (
+            <Screen>
+                <ScreenHeader
+                    action={headerAction}
+                    eyebrow={APP_NAME}
+                    title="Daily practice"
+                />
+                <EmptyState
+                    action={
+                        <Button
+                            accessibilityLabel="Reload practice sentences"
+                            label="Reload"
+                            loading={home.isRefreshing}
+                            onPress={home.handleRefresh}
+                        />
+                    }
+                    icon="practice"
+                    message="Practice sentences will appear here once the local sentence service has content for your level."
+                    title="No practice ready"
+                />
+            </Screen>
+        );
+    }
+
+    const {dashboard} = home;
+
+    return (
+        <Screen contentContainerStyle={styles.content}>
+            <ScreenHeader
+                action={headerAction}
+                eyebrow={APP_NAME}
+                subtitle="Start with one focused translation, then continue from review."
+                title="Daily practice"
+            />
+            <DailyPracticeHeroCard
+                hero={dashboard.hero}
+                onStartPractice={handleStartPractice}
+            />
+            <QuickStatGrid stats={dashboard.quickStats} />
+            <TeacherTipCard tip={dashboard.teacherTip} />
+            <ContinueLearningCard
+                card={dashboard.continueLearning}
+                onOpenLibrary={handleOpenLibrary}
+                onOpenReview={handleOpenReview}
             />
         </Screen>
     );
 }
+
+const styles = StyleSheet.create((theme) => ({
+    content: {
+        gap: theme.spacing.lg,
+        paddingBottom: 72,
+    },
+    headerActions: {
+        flexDirection: "row",
+        gap: theme.spacing.sm,
+    },
+}));

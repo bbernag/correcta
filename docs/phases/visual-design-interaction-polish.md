@@ -1,9 +1,10 @@
 # Visual Design & Interaction Polish
 
-Status: partial. Slices 1-7 are implemented and verified as foundation work.
+Status: partial. Slices 1-8 are implemented and verified as foundation work.
 Slice 3 is retained as technical foundation only; Slice 4 approved the native
 primitive direction. The ComponentPlayground shared-component checkpoint is
-closed, so the active next step is Slice 8, Home Design Pilot.
+closed, and Home is now the first production screen using the accepted shared
+system. The active next step is Slice 9, Practice Core Loop Polish.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -41,16 +42,18 @@ Review, Progress, and Library adoption.
 
 ## Current Checkpoint
 
-As of the latest documentation sync, the shared-component checkpoint is closed.
-The source contains the linked-surface `Card` family, supporting shared visual
-components, and ComponentPlayground sections. Source audit, automated checks,
-iOS route evidence, and Android route evidence are recorded.
+As of the latest documentation sync, the shared-component checkpoint and Home
+Design Pilot are closed. The source contains the linked-surface `Card` family,
+supporting shared visual components, ComponentPlayground sections, and the
+first production Home integration. Source audit, automated checks, iOS route
+evidence, and Android route evidence are recorded for the shared checkpoint;
+iOS Home evidence is recorded for Slice 8.
 
 Next:
 
-1. Start Slice 8, Home Design Pilot.
-2. Keep Android and iOS screenshots updated as Home adopts the accepted shared
-   system.
+1. Start Slice 9, Practice Core Loop Polish.
+2. Keep Android and iOS screenshots updated as each production screen adopts the
+   accepted shared system.
 
 ## Goal
 
@@ -436,7 +439,7 @@ Exit:
 
 ### Slice 8: Home Design Pilot
 
-Status: next after the Slice 7 acceptance checkpoint.
+Status: done.
 
 Goal: use Home as the first production integration of the accepted shared
 system.
@@ -449,6 +452,7 @@ Expected files:
 - `src/screens/Home/components/ContinueLearningCard.tsx`
 - `src/screens/Home/hooks/useHomeViewModel.ts`
 - `src/screens/Home/types/homeTypes.ts`
+- `src/screens/Home/utils/homeUtils.ts`
 
 Tasks:
 
@@ -467,6 +471,19 @@ Tasks:
 Exit:
 
 - Home has one obvious next action and looks polished in light/dark mode.
+
+Evidence:
+
+- `HomeScreen` now composes the production Home pilot from screen-owned
+  components and `useHomeViewModel`.
+- The Home view model reads the existing local services for preferences,
+  practice sentences, progress, review queue, saved words, and saved sentences.
+- The hero, quick stats, teacher tip, and continue-learning sections use shared
+  components rather than local copies of linked-surface or progress geometry.
+- Loading, empty, and error states are explicit.
+- Typecheck, lint, and Prettier checks pass.
+- iOS simulator launch succeeded for app id `com.luisgarcia.correcta`.
+- iOS visual evidence: `/tmp/correcta-slice8-ios-home.png`.
 
 ### Slice 9: Practice Core Loop Polish
 

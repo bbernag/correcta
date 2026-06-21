@@ -26,7 +26,7 @@ verification files record evidence from completed or partially completed work.
 | `[~]`  | Notifications and learning reminders | `language-app-planning-docs/09-notifications-prd.md`          | `docs/verification/notifications-reminders.md`   | Local preferences and schedule metadata exist. Native permission prompts, OS scheduling, delivery, and notification-open routing still need a separate runtime phase.       |
 | `[~]`  | Backend and AI integration           | `language-app-planning-docs/10-backend-ai-integration-prd.md` | `docs/verification/backend-ai-integration.md`    | Backend-ready adapters and contracts exist. No live backend URL, auth, AI provider, production API, or generated client is enabled by default.                              |
 | `[~]`  | Monetization                         | `language-app-planning-docs/11-monetization-prd.md`           | `docs/verification/monetization.md`              | Product-level monetization boundary exists. No ad SDK, rewarded placement, subscription, purchase flow, or analytics integration is implemented.                            |
-| `[~]`  | Visual Design and Interaction Polish | `docs/phases/visual-design-interaction-polish.md`             | `docs/qa/visual-design-interaction-polish-qa.md` | Slices 1-7 are implemented and verified. Remaining work starts with Slice 8, Home Design Pilot.                                                                             |
+| `[~]`  | Visual Design and Interaction Polish | `docs/phases/visual-design-interaction-polish.md`             | `docs/qa/visual-design-interaction-polish-qa.md` | Slices 1-8 are implemented and verified. Remaining work starts with Slice 9, Practice Core Loop Polish.                                                                     |
 
 ## Visual Design Slice Checklist
 
@@ -41,8 +41,8 @@ These slices live inside `docs/phases/visual-design-interaction-polish.md`.
 | `[x]`  | 5. Card And Linked Surface Foundation                   | Shared `Card` linked-surface source and playground examples exist. iOS and Android route evidence is recorded.                        |
 | `[x]`  | 6. Supporting Shared Visual Components                  | Chips, stat cards, progress, segmented controls, feedback, and state components exist with automated and device evidence.             |
 | `[x]`  | 7. ComponentPlayground Acceptance Gate                  | ComponentPlayground is verified as the shared primitive gate with iOS and Android screenshot/runtime evidence.                        |
-| `[ ]`  | 8. Home Design Pilot                                    | Apply the accepted shared system to Home as the first production screen.                                                              |
-| `[ ]`  | 9. Practice Core Loop Polish                            | Apply richer correction, input, feedback, animation, and haptic treatment to Practice after Home validates the system.                |
+| `[x]`  | 8. Home Design Pilot                                    | Home now uses the accepted shared system through screen-owned components and a Home view model. iOS evidence is recorded.             |
+| `[ ]`  | 9. Practice Core Loop Polish                            | Active next slice: apply richer correction, input, feedback, animation, and haptic treatment to Practice.                             |
 | `[ ]`  | 10. Review And Feedback Polish                          | Upgrade Review, grading, explanations, accepted alternatives, retry, and continuation flows.                                          |
 | `[ ]`  | 11. Progress Polish                                     | Upgrade progress metrics, achievements, trends, and summaries using linked surfaces only where semantically meaningful.               |
 | `[ ]`  | 12. Library Polish                                      | Upgrade saved content, history, filters, retry actions, removal flows, and empty states.                                              |

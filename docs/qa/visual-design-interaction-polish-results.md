@@ -243,4 +243,50 @@ Evidence:
 
 Next phase:
 
-- Start Slice 8, Home Design Pilot.
+- Completed by Slice 8, Home Design Pilot.
+
+## Slice 8: Home Design Pilot
+
+Date: 2026-06-20.
+
+Result: pass. Home is now the first production screen using the accepted shared
+visual system.
+
+Implemented:
+
+- `HomeScreen` now uses a screen-owned `useHomeViewModel` hook.
+- The Home view model reads local preferences, practice sentences, progress,
+  review queue, saved words, and saved sentences from existing services.
+- Added screen-owned Home components for the daily practice hero, quick stat
+  grid, teacher tip, and continue-learning surface.
+- Home now has one dominant practice CTA, compact accessible header actions,
+  linked summary/progress surfaces, horizontal stat pairs, and explicit loading,
+  empty, and error states.
+- The previous placeholder Home copy was replaced with variable product data
+  from the local learning services.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- Metro status probe: `packager-status:running`.
+- iOS simulator: `iPhone 17`, app id `com.luisgarcia.correcta`.
+- iOS launch: `xcrun simctl launch booted com.luisgarcia.correcta` returned a
+  running process id.
+- iOS visual result: Home rendered the compact daily practice hero, primary
+  practice CTA, progress bar, and four quick stats above the tab bar.
+
+Evidence:
+
+- iOS Home: `/tmp/correcta-slice8-ios-home.png`
+
+Known follow-ups:
+
+- Android Home evidence should be added during the next broader cross-platform
+  screen polish pass.
+- Practice remains the active next production screen for Slice 9.
+
+Next phase:
+
+- Start Slice 9, Practice Core Loop Polish.

@@ -1,4 +1,5 @@
 import {View} from "react-native";
+import {EaseView} from "react-native-ease";
 import {StyleSheet} from "react-native-unistyles";
 
 import {
@@ -8,6 +9,7 @@ import {
     TextInput,
 } from "../../../components/common";
 import type {PracticeInputMode} from "../../../types";
+import {usePracticeAnimations} from "../hooks/usePracticeAnimations";
 import type {WordBankItem} from "../types/practiceTypes";
 import {ScrambledWordsInput} from "./ScrambledWordsInput";
 
@@ -61,6 +63,8 @@ export function TranslationInputPanel({
     selectedWordBankItems,
     wordBankItems,
 }: TranslationInputPanelProps) {
+    const animations = usePracticeAnimations();
+
     function handleChangeInputMode(value: string) {
         if (value === "typing" || value === "sentenceBuilder") {
             onSelectInputMode(value);
@@ -82,33 +86,42 @@ export function TranslationInputPanel({
                 options={INPUT_MODE_OPTIONS}
                 value={inputMode}
             />
-            {inputMode === "typing" ? (
-                <TextInput
-                    autoCapitalize="sentences"
-                    autoCorrect
-                    blurOnSubmit
-                    disabled={disabled}
-                    helperText="Write the most natural translation you can."
-                    inputStyle={styles.textInput}
-                    label="Your translation"
-                    multiline
-                    onChangeText={onChangeAnswer}
-                    placeholder="Type your answer"
-                    returnKeyType="done"
-                    textAlignVertical="top"
-                    value={answerText}
-                />
-            ) : (
-                <ScrambledWordsInput
-                    disabled={disabled}
-                    onClearBuilder={onClearBuilder}
-                    onRemoveWord={onRemoveWord}
-                    onSelectWord={onSelectWord}
-                    selectedItemIds={selectedItemIds}
-                    selectedWordBankItems={selectedWordBankItems}
-                    wordBankItems={wordBankItems}
-                />
-            )}
+            <View style={styles.body}>
+                <EaseView
+                    animate={animations.visible}
+                    initialAnimate={animations.initialFadeSlide}
+                    key={inputMode}
+                    transition={animations.entryTransition}
+                >
+                    {inputMode === "typing" ? (
+                        <TextInput
+                            autoCapitalize="sentences"
+                            autoCorrect
+                            blurOnSubmit
+                            disabled={disabled}
+                            helperText="Write the most natural translation you can."
+                            inputStyle={styles.textInput}
+                            label="Your translation"
+                            multiline
+                            onChangeText={onChangeAnswer}
+                            placeholder="Type your answer"
+                            returnKeyType="done"
+                            textAlignVertical="top"
+                            value={answerText}
+                        />
+                    ) : (
+                        <ScrambledWordsInput
+                            disabled={disabled}
+                            onClearBuilder={onClearBuilder}
+                            onRemoveWord={onRemoveWord}
+                            onSelectWord={onSelectWord}
+                            selectedItemIds={selectedItemIds}
+                            selectedWordBankItems={selectedWordBankItems}
+                            wordBankItems={wordBankItems}
+                        />
+                    )}
+                </EaseView>
+            </View>
         </Surface>
     );
 }
@@ -119,6 +132,9 @@ const styles = StyleSheet.create((theme) => ({
     },
     heading: {
         gap: theme.spacing.xs,
+    },
+    body: {
+        minHeight: 180,
     },
     textInput: {
         minHeight: 112,

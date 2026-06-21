@@ -1,6 +1,8 @@
 import {useFocusEffect} from "@react-navigation/native";
 import {useCallback, useMemo, useRef, useState} from "react";
+import {Alert} from "react-native";
 
+import {useCorrectaToast} from "../../../components/common";
 import {
     createCorrectaServices,
     removeSavedPracticeSentence,
@@ -31,6 +33,7 @@ export function useLibraryRecords() {
     const services = useMemo(() => {
         return createCorrectaServices();
     }, []);
+    const {showToast} = useCorrectaToast();
     const mountedRef = useRef(true);
     const [records, setRecords] = useState<LibraryRecords>(
         EMPTY_LIBRARY_RECORDS
@@ -154,49 +157,78 @@ export function useLibraryRecords() {
                         services,
                     });
                     await loadRecords({refreshing: true});
+                    showToast({title: "Sentence saved", variant: "success"});
                 },
                 actionId: `save-${record.id}`,
                 setError,
                 setPendingActionId,
             });
         },
-        [loadRecords, services]
+        [loadRecords, services, showToast]
     );
 
     const handleRemoveSavedSentence = useCallback(
         async (savedSentenceId: string) => {
-            await runRecordAction({
-                action: async () => {
-                    await removeSavedPracticeSentence({
-                        savedSentenceId,
-                        services,
-                    });
-                    await loadRecords({refreshing: true});
-                },
-                actionId: `remove-sentence-${savedSentenceId}`,
-                setError,
-                setPendingActionId,
-            });
+            Alert.alert(
+                "Remove sentence?",
+                "This removes the saved sentence from your library.",
+                [
+                    {style: "cancel", text: "Cancel"},
+                    {
+                        onPress: () => {
+                            void runRecordAction({
+                                action: async () => {
+                                    await removeSavedPracticeSentence({
+                                        savedSentenceId,
+                                        services,
+                                    });
+                                    await loadRecords({refreshing: true});
+                                    showToast({title: "Sentence removed"});
+                                },
+                                actionId: `remove-sentence-${savedSentenceId}`,
+                                setError,
+                                setPendingActionId,
+                            });
+                        },
+                        style: "destructive",
+                        text: "Remove",
+                    },
+                ]
+            );
         },
-        [loadRecords, services]
+        [loadRecords, services, showToast]
     );
 
     const handleRemoveSavedWord = useCallback(
         async (savedWordId: string) => {
-            await runRecordAction({
-                action: async () => {
-                    await removeSavedPracticeWord({
-                        savedWordId,
-                        services,
-                    });
-                    await loadRecords({refreshing: true});
-                },
-                actionId: `remove-word-${savedWordId}`,
-                setError,
-                setPendingActionId,
-            });
+            Alert.alert(
+                "Remove word?",
+                "This removes the saved word from your library.",
+                [
+                    {style: "cancel", text: "Cancel"},
+                    {
+                        onPress: () => {
+                            void runRecordAction({
+                                action: async () => {
+                                    await removeSavedPracticeWord({
+                                        savedWordId,
+                                        services,
+                                    });
+                                    await loadRecords({refreshing: true});
+                                    showToast({title: "Word removed"});
+                                },
+                                actionId: `remove-word-${savedWordId}`,
+                                setError,
+                                setPendingActionId,
+                            });
+                        },
+                        style: "destructive",
+                        text: "Remove",
+                    },
+                ]
+            );
         },
-        [loadRecords, services]
+        [loadRecords, services, showToast]
     );
 
     return {

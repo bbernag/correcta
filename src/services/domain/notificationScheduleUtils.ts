@@ -100,10 +100,6 @@ function getNextScheduledDate({
     now: Date;
     preferences: NotificationPreferences;
 }) {
-    if (preferences.days.length === 0) {
-        return null;
-    }
-
     const {hour, minute} = parseReminderTime(preferences.reminderTime);
 
     for (let dayOffset = 0; dayOffset < 14; dayOffset += 1) {
@@ -112,10 +108,7 @@ function getNextScheduledDate({
         candidateDate.setDate(now.getDate() + dayOffset);
         candidateDate.setHours(hour, minute, 0, 0);
 
-        if (
-            candidateDate <= now ||
-            !preferences.days.includes(getNotificationDay(candidateDate))
-        ) {
+        if (candidateDate <= now || !isDayEnabled(candidateDate, preferences)) {
             continue;
         }
 
@@ -175,6 +168,13 @@ function getNotificationDay(
         default:
             return "saturday";
     }
+}
+
+function isDayEnabled(date: Date, preferences: NotificationPreferences) {
+    return (
+        preferences.days.length === 0 ||
+        preferences.days.includes(getNotificationDay(date))
+    );
 }
 
 function isInsideQuietHours({

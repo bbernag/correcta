@@ -44,6 +44,17 @@ describe("buildScheduledReminders", () => {
             "review",
         ]);
     });
+
+    it("treats an empty day list as every day so reminders are not dropped", () => {
+        const reminders = buildScheduledReminders({
+            dueReviewCount: 0,
+            now: WEDNESDAY_NOON,
+            preferences: makePreferences({days: []}),
+        });
+
+        expect(reminders).toHaveLength(1);
+        expect(reminders[0].kind).toBe("dailyPractice");
+    });
 });
 
 describe("getNextReminderLabel", () => {

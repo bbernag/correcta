@@ -45,6 +45,23 @@ describe("buildScheduledReminders", () => {
         ]);
     });
 
+    it("staggers the review reminder so it does not coincide with the daily one", () => {
+        const reminders = buildScheduledReminders({
+            dueReviewCount: 3,
+            now: WEDNESDAY_NOON,
+            preferences: makePreferences(),
+        });
+
+        const daily = reminders.find(
+            (reminder) => reminder.kind === "dailyPractice"
+        );
+        const review = reminders.find((reminder) => reminder.kind === "review");
+
+        expect(daily?.scheduledFor).toBeDefined();
+        expect(review?.scheduledFor).toBeDefined();
+        expect(review?.scheduledFor).not.toBe(daily?.scheduledFor);
+    });
+
     it("treats an empty day list as every day so reminders are not dropped", () => {
         const reminders = buildScheduledReminders({
             dueReviewCount: 0,

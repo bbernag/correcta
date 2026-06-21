@@ -8,6 +8,11 @@ import type {
 // is reserved for a future server-synced schedule and is intentionally not applied
 // here, so a reminder set for 19:00 fires at 19:00 on the device.
 
+// The review reminder is staggered slightly after the daily reminder so the two
+// never deliver at the same instant.
+const REVIEW_REMINDER_OFFSET_MINUTES = 1;
+const MINUTE_IN_MS = 60_000;
+
 export function buildScheduledReminders({
     dueReviewCount,
     now,
@@ -45,13 +50,18 @@ export function buildScheduledReminders({
     }
 
     if (preferences.reviewReminderEnabled && dueReviewCount > 0) {
+        const reviewScheduledFor = new Date(
+            scheduledFor.getTime() +
+                REVIEW_REMINDER_OFFSET_MINUTES * MINUTE_IN_MS
+        );
+
         reminders.push({
             body: `${dueReviewCount} review cards are ready.`,
             createdAt: now.toISOString(),
-            id: `review-${scheduledFor.toISOString().slice(0, 10)}`,
+            id: `review-${reviewScheduledFor.toISOString().slice(0, 10)}`,
             kind: "review",
             routeName: "Review",
-            scheduledFor: scheduledFor.toISOString(),
+            scheduledFor: reviewScheduledFor.toISOString(),
             title: "Review what matters",
         });
     }

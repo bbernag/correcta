@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {AccessibilityInfo} from "react-native";
 
 export function useReducedMotion() {
-    const [isReducedMotionEnabled, setIsReducedMotionEnabled] = useState(false);
+    const [isReducedMotionEnabled, setIsReducedMotionEnabled] = useState(true);
 
     useEffect(() => {
         let isMounted = true;

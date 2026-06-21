@@ -10,8 +10,9 @@ deck selection, queue preview, grading controls, and feedback. Progress now has
 a polished learning score, linked metrics, weekly activity, mistake breakdown,
 achievements, and recommendation flow. Library now has segmented notebook views,
 saved-content cards, history badges, retry/removal actions, and empty states.
-Platform-native surface and motion polish is complete. The active next step is
-Slice 14, Accessibility And Reduced Motion Audit.
+Platform-native surface and motion polish is complete. Slice 14,
+Accessibility And Reduced Motion Audit, has source fixes and iOS evidence;
+Android accessibility QA remains pending.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -62,11 +63,13 @@ checks, iOS route evidence, and Android route evidence are recorded for the
 shared checkpoint; iOS Home evidence is recorded for Slice 8, iOS Practice
 evidence is recorded for Slice 9, iOS Review evidence is recorded for Slice 10,
 iOS Progress evidence is recorded for Slice 11, iOS Library evidence is recorded
-for Slice 12, and iOS platform-surface/input evidence is recorded for Slice 13.
+for Slice 12, iOS platform-surface/input evidence is recorded for Slice 13, and
+iOS accessibility evidence is recorded for Slice 14.
 
 Next:
 
-1. Start Slice 14, Accessibility And Reduced Motion Audit.
+1. Finish Slice 14 Android accessibility QA when an Android device is
+   available.
 2. Keep Android and iOS screenshots updated during the final QA pass.
 
 ## Goal
@@ -719,7 +722,9 @@ Evidence:
 
 ### Slice 14: Accessibility And Reduced Motion Audit
 
-Status: planned. Active next slice.
+Status: partial. Source fixes and iOS runtime evidence are complete; Android
+accessibility QA remains pending because `agent-device apps --platform android`
+returned `DEVICE_NOT_FOUND`.
 
 Goal: make the polished UI usable.
 
@@ -736,6 +741,33 @@ Tasks:
 Exit:
 
 - Accessibility QA passes on iOS and Android.
+
+Evidence so far:
+
+- Shared `Button`, `IconButton`, and `Chip` preserve component-owned
+  accessibility state while still accepting caller accessibility props.
+- Shared `SegmentedControl` accepts option hints and keeps selected button state
+  visible in iOS snapshots.
+- Shared `NativeSlider` exposes `accessibilityValue`.
+- Practice builder word chips now distinguish word-bank options, selected words,
+  and already-added words.
+- Practice save actions announce saved word and saved sentence confirmations.
+- Review deck options expose explicit deck labels and selected state.
+- Progress reminder presets expose radio semantics and checked state.
+- Light-mode success and warning tokens were darkened to clear normal-text
+  contrast against their soft backgrounds.
+- `useReducedMotion` defaults to motion-safe behavior until the native reduce
+  motion value resolves.
+- `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
+- iOS runtime checks passed for Home, ComponentPlayground selection examples,
+  Practice input mode and builder chips, Review deck options, Progress top
+  metrics, Library segments, and dark-mode Home.
+
+Remaining:
+
+- Android accessibility QA.
+- Device-level reduced-motion toggle verification; the available iOS
+  `agent-device settings animations off` command returned unsupported.
 
 ### Slice 15: Final QA And Evidence
 

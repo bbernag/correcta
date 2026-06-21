@@ -13,18 +13,21 @@ import {ScrambledWordsInput} from "./ScrambledWordsInput";
 
 const INPUT_MODE_OPTIONS = [
     {
+        accessibilityHint: "Switches to the keyboard translation field.",
         accessibilityLabel: "Typing input mode",
         icon: "practice",
         label: "Type",
         value: "typing",
     },
     {
+        accessibilityHint: "Switches to the word builder translation controls.",
         accessibilityLabel: "Builder input mode",
         icon: "word",
         label: "Build",
         value: "sentenceBuilder",
     },
 ] satisfies {
+    accessibilityHint: string;
     accessibilityLabel: string;
     icon: "practice" | "word";
     label: string;

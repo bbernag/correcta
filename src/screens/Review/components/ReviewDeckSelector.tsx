@@ -25,6 +25,8 @@ export function ReviewDeckSelector({
             {decks.map((deck) => {
                 return (
                     <Pressable
+                        accessibilityHint="Changes the active review deck."
+                        accessibilityLabel={getDeckAccessibilityLabel(deck)}
                         accessibilityRole="button"
                         accessibilityState={{
                             selected: deck.state === "selected",
@@ -90,6 +92,13 @@ function getDeckIcon(deck: ReviewDeckState) {
     return deck.sourceTypes[0]
         ? getReviewSourceIcon(deck.sourceTypes[0])
         : "review";
+}
+
+function getDeckAccessibilityLabel(deck: ReviewDeckState) {
+    const selectedLabel =
+        deck.state === "selected" ? "Selected deck" : "Available deck";
+
+    return `${deck.title}. ${deck.itemCount} due. ${selectedLabel}.`;
 }
 
 const styles = StyleSheet.create((theme) => ({

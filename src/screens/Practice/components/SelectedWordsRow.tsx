@@ -31,6 +31,8 @@ export function SelectedWordsRow({
                             transition={animations.chipEntryTransition}
                         >
                             <WordChip
+                                accessibilityHint="Removes this word from your answer."
+                                accessibilityLabel={`${item.label}. Selected word.`}
                                 disabled={disabled}
                                 label={item.label}
                                 onPress={() => {

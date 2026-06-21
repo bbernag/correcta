@@ -2,6 +2,8 @@ import {Chip, type ChipVariant} from "../Chip";
 import type {WordChipProps, WordChipStatus} from "./wordChipTypes";
 
 export function WordChip({
+    accessibilityHint,
+    accessibilityLabel,
     disabled = false,
     label,
     onPress,
@@ -10,7 +12,8 @@ export function WordChip({
 }: WordChipProps) {
     return (
         <Chip
-            accessibilityLabel={label}
+            accessibilityHint={accessibilityHint}
+            accessibilityLabel={accessibilityLabel ?? label}
             disabled={disabled}
             icon={getWordChipIcon(status)}
             label={label}

@@ -35,6 +35,7 @@ export function SegmentedControl({
     accessibilityLabel,
     disabled = false,
     onChange,
+    optionRole = "button",
     options,
     style,
     value,
@@ -44,6 +45,7 @@ export function SegmentedControl({
     return (
         <SquircleSurface
             accessibilityLabel={accessibilityLabel}
+            accessibilityRole={optionRole === "tab" ? "tablist" : undefined}
             radius="pill"
             style={[styles.root, style]}
         >
@@ -59,7 +61,8 @@ export function SegmentedControl({
                         accessibilityLabel={
                             option.accessibilityLabel ?? option.label
                         }
-                        accessibilityRole="button"
+                        accessibilityHint={option.accessibilityHint}
+                        accessibilityRole={optionRole}
                         accessibilityState={{
                             disabled: optionDisabled,
                             selected,

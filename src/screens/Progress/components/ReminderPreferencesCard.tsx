@@ -60,8 +60,13 @@ export function ReminderPreferencesCard({
 
                     return (
                         <Pressable
-                            accessibilityRole="button"
-                            accessibilityState={{selected}}
+                            accessibilityHint="Changes the daily reminder time."
+                            accessibilityLabel={getReminderOptionLabel({
+                                option,
+                                selected,
+                            })}
+                            accessibilityRole="radio"
+                            accessibilityState={{checked: selected}}
                             key={option.id}
                             onPress={() => {
                                 onSelectReminderPreset({
@@ -113,6 +118,19 @@ export function ReminderPreferencesCard({
             </AppText>
         </Surface>
     );
+}
+
+function getReminderOptionLabel({
+    option,
+    selected,
+}: {
+    option: ReminderPresetOption;
+    selected: boolean;
+}) {
+    const timeLabel = option.time === "none" ? "No alerts" : option.time;
+    const selectedLabel = selected ? "Selected" : "Not selected";
+
+    return `${option.label}. ${timeLabel}. ${selectedLabel}.`;
 }
 
 const styles = StyleSheet.create((theme) => ({

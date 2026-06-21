@@ -14,6 +14,7 @@ import type {
 
 export function IconButton({
     accessibilityLabel,
+    accessibilityState,
     disabled = false,
     hapticFeedback,
     icon,
@@ -37,17 +38,21 @@ export function IconButton({
 
     return (
         <Pressable
+            {...pressableProps}
             android_ripple={{
                 borderless: false,
                 color: theme.colors.accentPrimarySoft,
             }}
             accessibilityLabel={accessibilityLabel}
             accessibilityRole="button"
-            accessibilityState={{disabled: isDisabled, selected}}
+            accessibilityState={{
+                ...accessibilityState,
+                disabled: isDisabled,
+                selected,
+            }}
             disabled={isDisabled}
             onPress={handlePress}
             style={[styles.root, style]}
-            {...pressableProps}
         >
             {({pressed}) => (
                 <PressableMotionView disabled={isDisabled} pressed={pressed}>

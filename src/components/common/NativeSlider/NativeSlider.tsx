@@ -19,6 +19,11 @@ export function NativeSlider({
             accessibilityLabel={accessibilityLabel}
             accessibilityRole="adjustable"
             accessibilityState={{disabled}}
+            accessibilityValue={{
+                max,
+                min,
+                now: value,
+            }}
             matchContents
             style={style}
         >

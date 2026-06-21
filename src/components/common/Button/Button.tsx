@@ -10,6 +10,8 @@ import {SquircleSurface} from "../SquircleSurface";
 import type {ButtonProps, ButtonSize, ButtonVariant} from "./buttonTypes";
 
 export function Button({
+    accessibilityLabel,
+    accessibilityState,
     label,
     variant = "primary",
     size = "medium",
@@ -36,17 +38,19 @@ export function Button({
 
     return (
         <Pressable
+            {...pressableProps}
             android_ripple={{
                 color: getButtonRippleColor({theme, variant}),
             }}
+            accessibilityLabel={accessibilityLabel ?? resolvedLabel}
             accessibilityRole="button"
             accessibilityState={{
+                ...accessibilityState,
                 busy: loading,
                 disabled: isInteractionDisabled,
             }}
             disabled={isInteractionDisabled}
             style={[styles.root, fullWidth && styles.fullWidth, style]}
-            {...pressableProps}
         >
             {({pressed}) => (
                 <PressableMotionView

@@ -7,18 +7,21 @@ import type {LibrarySegment} from "../types/libraryTypes";
 
 const LIBRARY_SEGMENT_OPTIONS: SegmentedControlOption[] = [
     {
+        accessibilityHint: "Shows saved words.",
         accessibilityLabel: "Saved words library segment",
         icon: "word",
         label: "Words",
         value: "words",
     },
     {
+        accessibilityHint: "Shows saved sentences.",
         accessibilityLabel: "Saved sentences library segment",
         icon: "sentence",
         label: "Sentences",
         value: "sentences",
     },
     {
+        accessibilityHint: "Shows practice history.",
         accessibilityLabel: "Practice history library segment",
         icon: "time",
         label: "History",

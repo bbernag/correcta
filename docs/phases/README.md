@@ -26,7 +26,7 @@ verification files record evidence from completed or partially completed work.
 | `[~]`  | Notifications and learning reminders | `language-app-planning-docs/09-notifications-prd.md`          | `docs/verification/notifications-reminders.md`   | Local preferences and schedule metadata exist. Native permission prompts, OS scheduling, delivery, and notification-open routing still need a separate runtime phase.       |
 | `[~]`  | Backend and AI integration           | `language-app-planning-docs/10-backend-ai-integration-prd.md` | `docs/verification/backend-ai-integration.md`    | Backend-ready adapters and contracts exist. No live backend URL, auth, AI provider, production API, or generated client is enabled by default.                              |
 | `[~]`  | Monetization                         | `language-app-planning-docs/11-monetization-prd.md`           | `docs/verification/monetization.md`              | Product-level monetization boundary exists. No ad SDK, rewarded placement, subscription, purchase flow, or analytics integration is implemented.                            |
-| `[~]`  | Visual Design and Interaction Polish | `docs/phases/visual-design-interaction-polish.md`             | `docs/qa/visual-design-interaction-polish-qa.md` | Slices 1-13 are implemented and verified. Remaining work starts with Slice 14, Accessibility And Reduced Motion Audit.                                                      |
+| `[~]`  | Visual Design and Interaction Polish | `docs/phases/visual-design-interaction-polish.md`             | `docs/qa/visual-design-interaction-polish-qa.md` | Slices 1-13 are implemented and verified. Slice 14 has source fixes and iOS evidence; Android accessibility QA is still pending.                                            |
 
 ## Visual Design Slice Checklist
 
@@ -47,7 +47,7 @@ These slices live inside `docs/phases/visual-design-interaction-polish.md`.
 | `[x]`  | 11. Progress Polish                                     | Progress hero, linked metric groups, weekly activity, mistake bars, achievements, recommendation, and iOS evidence are complete.               |
 | `[x]`  | 12. Library Polish                                      | Library now has Words, Sentences, and History segments, polished saved cards, history badges, retry/removal actions, and iOS evidence.         |
 | `[x]`  | 13. Platform-Native Surface And Motion Polish           | Platform press, reduced-motion, elevation, ripple, solid surfaces, and no-general-glass decisions are implemented with iOS evidence.           |
-| `[ ]`  | 14. Accessibility And Reduced Motion Audit              | Active next slice: verify React Native accessibility labels, contrast, text scaling, focus, touch targets, and reduced motion behavior.        |
+| `[~]`  | 14. Accessibility And Reduced Motion Audit              | Source fixes and iOS evidence are complete; Android accessibility QA is pending because no Android device was available.                       |
 | `[ ]`  | 15. Final QA And Evidence                               | Run automated checks plus iOS and Android visual/runtime QA, then update evidence docs.                                                        |
 
 ## Phase Orchestration Checkpoint

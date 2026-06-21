@@ -88,9 +88,9 @@ const lightSemanticColors = {
         secondary: "#4F6F8F",
     },
     feedback: {
-        success: "#16803C",
+        success: "#13733A",
         successSoft: "#E3F5EA",
-        warning: "#B26A00",
+        warning: "#8A5200",
         warningSoft: "#FFF1D6",
         danger: "#B42318",
         dangerSoft: "#FDE8E6",

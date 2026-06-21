@@ -4,8 +4,8 @@ Status: partial. Slices 1-13 are complete. The shared component checkpoint has
 source-audit, automated, iOS, and Android evidence. Home, Practice, Review, and
 Progress production-screen polish have iOS evidence, and Library polish now has
 iOS evidence. Platform-native surface and motion polish has automated checks
-and iOS evidence. The remaining visual polish work starts with Slice 14,
-Accessibility And Reduced Motion Audit.
+and iOS evidence. Slice 14 has source fixes and iOS accessibility evidence;
+Android accessibility QA remains pending.
 
 ## Slice 1: Theme Token Design System
 
@@ -587,4 +587,81 @@ Known follow-ups:
 
 Next phase:
 
-- Start Slice 14, Accessibility And Reduced Motion Audit.
+- Continued by Slice 14, Accessibility And Reduced Motion Audit.
+
+## Slice 14: Accessibility And Reduced Motion Audit
+
+Date: 2026-06-21.
+
+Result: partial. Source fixes, automated checks, and iOS accessibility runtime
+evidence passed. Android accessibility QA remains pending because no Android
+device was available.
+
+Implemented:
+
+- `Button`, `IconButton`, and `Chip` now preserve internal accessibility state
+  such as disabled, selected, and busy while accepting caller accessibility
+  props.
+- `Button` and `Chip` now provide fallback accessibility labels from their
+  visible labels.
+- `SegmentedControl` now accepts per-option accessibility hints and keeps the
+  existing button/selected semantics as the default because iOS exposed custom
+  tab semantics as generic cells in runtime snapshots.
+- `NativeSlider` now exposes `accessibilityValue`.
+- `WordChip` now accepts explicit accessibility labels and hints.
+- Practice builder word-bank chips now distinguish addable words, selected
+  words, and already-added disabled words.
+- Practice save actions now announce word and sentence save confirmations.
+- Review deck options now expose explicit labels including due count and
+  selected state.
+- Progress reminder presets now use radio roles with checked state.
+- Light success and warning foreground tokens were darkened to clear
+  normal-text contrast against their soft backgrounds.
+- `useReducedMotion` now defaults to motion-safe behavior until the native
+  reduce-motion value resolves.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- Contrast calculation for common semantic foreground/background pairs.
+- Metro status probe: `packager-status:running`.
+- iOS simulator app id: `com.luisgarcia.correcta`.
+- iOS launch: `agent-device open com.luisgarcia.correcta --session
+slice14-ios --platform ios --relaunch` succeeded.
+- iOS runtime path: app launch -> Home.
+- iOS runtime path: Home -> Open component check -> selection examples.
+- iOS runtime path: app launch -> Practice tab -> Builder input mode -> select
+  a word.
+- iOS runtime path: Practice -> Review tab -> scrolled Review decks.
+- iOS runtime path: Review -> Progress tab -> top metrics and progress values.
+- iOS runtime path: Progress -> Library tab -> segment selected state.
+- iOS dark-mode launch after `agent-device settings appearance dark`.
+
+Evidence:
+
+- iOS ComponentPlayground selection:
+  `/tmp/correcta-slice14-ios-component-selection.png`
+- iOS Practice builder accessibility:
+  `/tmp/correcta-slice14-ios-practice-builder-a11y.png`
+- iOS Review decks accessibility:
+  `/tmp/correcta-slice14-ios-review-decks-a11y.png`
+- iOS Progress accessibility:
+  `/tmp/correcta-slice14-ios-progress-a11y.png`
+- iOS dark Home: `/tmp/correcta-slice14-ios-dark-home.png`
+
+Known follow-ups:
+
+- Android accessibility QA is still required before Slice 14 can be marked
+  fully done; `agent-device apps --platform android` returned
+  `DEVICE_NOT_FOUND`.
+- Device-level reduced-motion setting verification is still pending;
+  `agent-device settings animations off --platform ios` returned unsupported in
+  this environment. Source verification confirms reduced-motion consumers now
+  default to motion-safe behavior until the native setting resolves.
+
+Next phase:
+
+- Finish Slice 14 Android accessibility QA, then start Slice 15 Final QA And
+  Evidence.

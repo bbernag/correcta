@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slices 1-13 are implemented and verified. The next visual
-polish work starts with Slice 14, Accessibility And Reduced Motion Audit.
+Status: partial. Slices 1-13 are implemented and verified. Slice 14 has source
+fixes and iOS evidence; Android accessibility QA remains pending.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -450,6 +450,43 @@ Current pass, 2026-06-21:
   `/tmp/correcta-slice13-ios-component-overlay-refs.png`,
   `/tmp/correcta-slice13-ios-component-surfaces.png`, and
   `/tmp/correcta-slice13-ios-practice-input.png`.
+
+## Slice 14 Evidence
+
+Current pass, 2026-06-21:
+
+- Shared control accessibility state merging was tightened for `Button`,
+  `IconButton`, and `Chip`.
+- `SegmentedControl` now supports option hints and keeps selected state visible
+  through the existing button semantics.
+- `NativeSlider` now exposes min, max, and current accessibility value.
+- Practice builder word chips now announce word-bank options, selected words,
+  and already-added disabled words.
+- Practice save actions now announce "Word saved." and "Sentence saved."
+- Review deck options now expose explicit deck labels and selected state.
+- Progress reminder presets now use radio semantics with checked state.
+- Light success and warning foreground tokens were darkened after contrast
+  calculation showed the previous warning pair below normal-text contrast and
+  success just below threshold.
+- `useReducedMotion` now defaults to motion-safe behavior until the native
+  reduce-motion preference resolves.
+- `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
+- Metro status probe returned `packager-status:running`.
+- iOS simulator launch passed for app id `com.luisgarcia.correcta`.
+- iOS snapshots verified Home labels, ComponentPlayground selection examples,
+  Practice segmented input and builder word-chip states, Review deck labels,
+  Progress top progress values, and Library segment selected state.
+- iOS dark-mode Home screenshot was captured after toggling appearance.
+- Android QA is pending because `agent-device apps --platform android` returned
+  `DEVICE_NOT_FOUND`.
+- Device-level reduced-motion toggle verification is pending because
+  `agent-device settings animations off --platform ios` returned unsupported.
+- iOS screenshots:
+  `/tmp/correcta-slice14-ios-component-selection.png`,
+  `/tmp/correcta-slice14-ios-practice-builder-a11y.png`,
+  `/tmp/correcta-slice14-ios-review-decks-a11y.png`,
+  `/tmp/correcta-slice14-ios-progress-a11y.png`, and
+  `/tmp/correcta-slice14-ios-dark-home.png`.
 
 ## Progress
 

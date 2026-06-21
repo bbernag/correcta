@@ -24,6 +24,16 @@ export function WordBank({
 
                 return (
                     <WordChip
+                        accessibilityHint={
+                            isSelected
+                                ? "Already added to your answer."
+                                : "Adds this word to your answer."
+                        }
+                        accessibilityLabel={
+                            isSelected
+                                ? `${item.label}. Already added.`
+                                : `${item.label}. Word bank option.`
+                        }
                         disabled={disabled || isSelected}
                         key={item.id}
                         label={item.label}

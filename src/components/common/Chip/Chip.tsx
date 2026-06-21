@@ -23,6 +23,8 @@ const REDUCED_MOTION_TRANSITION = {
 } satisfies Transition;
 
 export function Chip({
+    accessibilityLabel,
+    accessibilityState,
     disabled = false,
     icon,
     label,
@@ -95,14 +97,15 @@ export function Chip({
 
     return (
         <Pressable
+            {...pressableProps}
             android_ripple={{
                 color: theme.colors.accentPrimarySoft,
             }}
+            accessibilityLabel={accessibilityLabel ?? label}
             accessibilityRole="button"
-            accessibilityState={{disabled, selected}}
+            accessibilityState={{...accessibilityState, disabled, selected}}
             disabled={disabled}
             onPress={onPress}
-            {...pressableProps}
         >
             {({pressed}) => (
                 <PressableMotionView disabled={disabled} pressed={pressed}>

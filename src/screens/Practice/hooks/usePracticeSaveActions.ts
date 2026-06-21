@@ -1,5 +1,6 @@
 import type {Dispatch, MutableRefObject, SetStateAction} from "react";
 import {useState} from "react";
+import {AccessibilityInfo} from "react-native";
 
 import {playHapticFeedback} from "../../../native";
 import {savePracticeSentence, savePracticeWord} from "../../../services/domain";
@@ -52,6 +53,7 @@ export function usePracticeSaveActions({
                 savedWordId: savedWord.id,
             });
             playHapticFeedback("success");
+            AccessibilityInfo.announceForAccessibility("Word saved.");
         } finally {
             if (mountedRef.current) {
                 setIsSavingWord(false);
@@ -90,6 +92,7 @@ export function usePracticeSaveActions({
                 savedSentenceId: savedSentence.id,
             });
             playHapticFeedback("success");
+            AccessibilityInfo.announceForAccessibility("Sentence saved.");
         } finally {
             if (mountedRef.current) {
                 setIsSavingSentence(false);

@@ -1,10 +1,21 @@
 import type {
     ReviewDeckId,
     ReviewDeckSummary,
+    ReviewGrade,
     ReviewItem,
+    ReviewMastery,
     ReviewSourceType,
 } from "../../../types";
-import type {ReviewDeckRecords} from "../types/reviewTypes";
+import type {
+    ButtonVariant,
+    IconName,
+    StatCardTone,
+} from "../../../components/common";
+import type {
+    ReviewDeckRecords,
+    ReviewDeckState,
+    ReviewSummaryState,
+} from "../types/reviewTypes";
 
 const REVIEW_DECK_DEFINITIONS: (Omit<ReviewDeckSummary, "itemCount"> & {
     sourceTypes: ReviewSourceType[];
@@ -103,6 +114,16 @@ export function getReviewSourceLabel(sourceType: ReviewSourceType) {
     return labels[sourceType];
 }
 
+export function getReviewSourceIcon(sourceType: ReviewSourceType): IconName {
+    const icons: Record<ReviewSourceType, IconName> = {
+        mistake: "mistake",
+        sentence: "sentence",
+        word: "word",
+    };
+
+    return icons[sourceType];
+}
+
 export function getReviewMasteryLabel(mastery: ReviewItem["mastery"]) {
     const labels: Record<ReviewItem["mastery"], string> = {
         learning: "Learning",
@@ -112,6 +133,95 @@ export function getReviewMasteryLabel(mastery: ReviewItem["mastery"]) {
     };
 
     return labels[mastery];
+}
+
+export function getReviewMasteryTone(mastery: ReviewMastery): StatCardTone {
+    if (mastery === "mastered") {
+        return "success";
+    }
+
+    if (mastery === "learning") {
+        return "warning";
+    }
+
+    if (mastery === "reviewing") {
+        return "accent";
+    }
+
+    return "info";
+}
+
+export function getReviewGradeButtonVariant(grade: ReviewGrade): ButtonVariant {
+    switch (grade) {
+        case "known":
+            return "success";
+        case "difficult":
+            return "danger";
+        case "unsure":
+        default:
+            return "secondary";
+    }
+}
+
+export function getReviewGradeLabel(grade: ReviewGrade) {
+    const labels: Record<ReviewGrade, string> = {
+        difficult: "Difficult",
+        known: "Known",
+        unsure: "Unsure",
+    };
+
+    return labels[grade];
+}
+
+export function createReviewSummary({
+    activeDeck,
+    activeItems,
+    dueItems,
+}: {
+    activeDeck: ReviewDeckState | null;
+    activeItems: ReviewItem[];
+    dueItems: ReviewItem[];
+}): ReviewSummaryState {
+    const learningCount = dueItems.filter((item) => {
+        return item.mastery === "learning";
+    }).length;
+
+    return {
+        activeDeckTitle: activeDeck?.title ?? "Recommended",
+        metrics: [
+            {
+                helper: "Cards ready now",
+                icon: "review",
+                id: "due",
+                label: "Due",
+                tone: dueItems.length > 0 ? "warning" : "success",
+                value: String(dueItems.length),
+            },
+            {
+                helper: "In selected deck",
+                icon: "saved",
+                id: "active",
+                label: "Queue",
+                tone: activeItems.length > 0 ? "accent" : "info",
+                value: String(activeItems.length),
+            },
+            {
+                helper: "Marked learning",
+                icon: "mistake",
+                id: "learning",
+                label: "Difficult",
+                tone: learningCount > 0 ? "warning" : "success",
+                value: String(learningCount),
+            },
+        ],
+        progressLabel:
+            dueItems.length > 0
+                ? `${activeItems.length}/${dueItems.length} cards in this pass`
+                : "Review queue complete",
+        progressMax: Math.max(dueItems.length, 1),
+        progressTone: dueItems.length === 0 ? "success" : "accent",
+        progressValue: activeItems.length,
+    };
 }
 
 function countItemsBySourceTypes({

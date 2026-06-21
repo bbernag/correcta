@@ -1,6 +1,8 @@
 import {useFocusEffect} from "@react-navigation/native";
 import {useCallback, useMemo, useRef, useState} from "react";
+import {AccessibilityInfo} from "react-native";
 
+import {playHapticFeedback} from "../../../native";
 import {createCorrectaServices} from "../../../services/domain";
 import type {ReviewDeckId, ReviewGrade, ReviewItem} from "../../../types";
 import type {
@@ -8,7 +10,10 @@ import type {
     ReviewDeckRecords,
     ReviewPhase,
 } from "../types/reviewTypes";
-import {createReviewDeckRecords} from "../utils/reviewUtils";
+import {
+    createReviewDeckRecords,
+    getReviewGradeLabel,
+} from "../utils/reviewUtils";
 
 const EMPTY_REVIEW_RECORDS: ReviewDeckRecords = {
     activeDeckId: "recommended",
@@ -107,10 +112,13 @@ export function useReviewDeck() {
 
     function handleSelectDeck(deckId: ReviewDeckId) {
         setActiveDeckId(deckId);
+        playHapticFeedback("selection");
     }
 
     function handleRevealAnswer() {
         setIsAnswerVisible(true);
+        playHapticFeedback("impact");
+        announceReviewState("Answer revealed");
     }
 
     function handleRefresh() {
@@ -120,18 +128,21 @@ export function useReviewDeck() {
     const handleCompleteItem = useCallback(
         async (grade: ReviewGrade, item: ReviewItem) => {
             setPendingGrade(grade);
+            playHapticFeedback(getReviewGradeHapticFeedback(grade));
 
             try {
                 await services.reviewWorkflow.completeReviewItem({
                     grade,
                     item,
                 });
+                announceReviewState(`${getReviewGradeLabel(grade)} recorded`);
                 await loadRecords({refreshing: true});
             } catch (reviewError) {
                 if (!mountedRef.current) {
                     return;
                 }
 
+                playHapticFeedback("error");
                 setError(
                     reviewError instanceof Error
                         ? reviewError.message
@@ -159,4 +170,24 @@ export function useReviewDeck() {
         phase,
         records,
     };
+}
+
+function getReviewGradeHapticFeedback(grade: ReviewGrade) {
+    if (grade === "known") {
+        return "success";
+    }
+
+    if (grade === "difficult") {
+        return "warning";
+    }
+
+    return "impact";
+}
+
+function announceReviewState(message: string) {
+    try {
+        AccessibilityInfo.announceForAccessibility(message);
+    } catch {
+        // Review announcements are best-effort and should not block grading.
+    }
 }

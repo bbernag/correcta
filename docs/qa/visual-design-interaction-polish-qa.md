@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slices 1-7 are implemented and verified. The next visual
-polish work starts with Slice 8, Home Design Pilot.
+Status: partial. Slices 1-10 are implemented and verified. The next visual
+polish work starts with Slice 11, Progress Polish.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -357,10 +357,30 @@ Feedback:
 
 - Review summary card explains what is due.
 - Deck cards include icons, labels, counts, and due status.
+- Active review card appears before the deck list when due cards exist.
+- Revealed answer exposes Known, Unsure, and Difficult grading controls without
+  hiding the primary actions behind the tab bar.
 - Empty state explains how saved words and mistakes create review content.
 - Press feedback feels responsive.
 - Haptics are not excessive.
 - Review completion state is clear.
+
+## Slice 10 Evidence
+
+Recorded before starting Progress polish.
+
+Current pass, 2026-06-20:
+
+- `ReviewScreen` uses `useReviewViewModel` and screen-owned Review components.
+- Summary metrics, active card, queue preview, deck cards, empty state, error
+  state, reveal feedback, and grade feedback are implemented.
+- `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
+- Metro status probe returned `packager-status:running`.
+- iOS simulator launch passed on `iPhone 17` for app id
+  `com.luisgarcia.correcta`.
+- iOS screenshots:
+  `/tmp/correcta-slice10-ios-review.png` and
+  `/tmp/correcta-slice10-ios-review-revealed.png`.
 
 ## Library
 

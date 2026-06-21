@@ -1,4 +1,4 @@
-import {AppText, Button, Surface} from "../../../components/common";
+import {ErrorState} from "../../../components/common";
 
 type ReviewErrorStateProps = {
     message: string;
@@ -7,12 +7,10 @@ type ReviewErrorStateProps = {
 
 export function ReviewErrorState({message, onRetry}: ReviewErrorStateProps) {
     return (
-        <Surface variant="outline">
-            <AppText variant="heading" tone="danger">
-                Review unavailable
-            </AppText>
-            <AppText tone="secondary">{message}</AppText>
-            <Button label="Try again" onPress={onRetry} />
-        </Surface>
+        <ErrorState
+            message={message}
+            onRetry={onRetry}
+            title="Review unavailable"
+        />
     );
 }

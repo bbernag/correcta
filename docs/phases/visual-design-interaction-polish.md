@@ -1,12 +1,13 @@
 # Visual Design & Interaction Polish
 
-Status: partial. Slices 1-9 are implemented and verified as foundation work.
+Status: partial. Slices 1-10 are implemented and verified as foundation work.
 Slice 3 is retained as technical foundation only; Slice 4 approved the native
 primitive direction. The ComponentPlayground shared-component checkpoint is
 closed, and Home is now the first production screen using the accepted shared
 system. The Practice core loop is polished for typing, builder, feedback, and
-save/continue actions. The active next step is Slice 10, Review And Feedback
-Polish.
+save/continue actions. Review now has a polished study summary, active card,
+deck selection, queue preview, grading controls, and feedback. The active next
+step is Slice 11, Progress Polish.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -45,16 +46,18 @@ Review, Progress, and Library adoption.
 ## Current Checkpoint
 
 As of the latest documentation sync, the shared-component checkpoint, Home
-Design Pilot, and Practice Core Loop Polish are closed. The source contains the
-linked-surface `Card` family, supporting shared visual components,
-ComponentPlayground sections, the first production Home integration, and the
-polished Practice loop. Source audit, automated checks, iOS route evidence, and
-Android route evidence are recorded for the shared checkpoint; iOS Home evidence
-is recorded for Slice 8, and iOS Practice evidence is recorded for Slice 9.
+Design Pilot, Practice Core Loop Polish, and Review And Feedback Polish are
+closed. The source contains the linked-surface `Card` family, supporting shared
+visual components, ComponentPlayground sections, the first production Home
+integration, the polished Practice loop, and the polished Review study flow.
+Source audit, automated checks, iOS route evidence, and Android route evidence
+are recorded for the shared checkpoint; iOS Home evidence is recorded for Slice
+8, iOS Practice evidence is recorded for Slice 9, and iOS Review evidence is
+recorded for Slice 10.
 
 Next:
 
-1. Start Slice 10, Review And Feedback Polish.
+1. Start Slice 11, Progress Polish.
 2. Keep Android and iOS screenshots updated as each production screen adopts the
    accepted shared system.
 
@@ -553,6 +556,8 @@ Evidence:
 
 ### Slice 10: Review And Feedback Polish
 
+Status: done.
+
 Goal: make Review feel like an intentional study area.
 
 Tasks:
@@ -567,7 +572,24 @@ Exit:
 
 - Review clearly tells the user what to practice next.
 
+Evidence:
+
+- `ReviewScreen` now composes a screen-owned `useReviewViewModel` over the
+  existing review deck workflow.
+- Review shows a summary card, active study card, queue preview, and icon-driven
+  deck cards with due counts and selected state.
+- Empty and error states use the accepted shared state components.
+- Reveal and grade actions use haptic feedback and accessibility
+  announcements.
+- Typecheck, lint, and Prettier checks pass.
+- iOS simulator launch succeeded for app id `com.luisgarcia.correcta`.
+- iOS visual evidence:
+  `/tmp/correcta-slice10-ios-review.png` and
+  `/tmp/correcta-slice10-ios-review-revealed.png`.
+
 ### Slice 11: Progress Polish
+
+Status: planned. Active next slice.
 
 Goal: make progress feel motivating without heavy analytics.
 

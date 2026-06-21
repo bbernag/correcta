@@ -1,73 +1,86 @@
-import {ActivityIndicator} from "react-native";
+import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Screen, Surface} from "../../components/common";
+import {
+    LoadingState,
+    Screen,
+    ScreenHeader,
+    SectionHeader,
+} from "../../components/common";
 import {ReviewCard} from "./components/ReviewCard";
 import {ReviewDeckSelector} from "./components/ReviewDeckSelector";
 import {ReviewEmptyState} from "./components/ReviewEmptyState";
 import {ReviewErrorState} from "./components/ReviewErrorState";
-import {useReviewDeck} from "./hooks/useReviewDeck";
+import {ReviewQueuePreview} from "./components/ReviewQueuePreview";
+import {ReviewSummaryCard} from "./components/ReviewSummaryCard";
+import {useReviewViewModel} from "./hooks/useReviewViewModel";
 
 export function ReviewScreen() {
-    const review = useReviewDeck();
+    const review = useReviewViewModel();
+    const cardState = review.cardState;
 
     if (review.phase === "loading") {
         return (
             <Screen contentContainerStyle={styles.centered}>
-                <ActivityIndicator
-                    accessibilityLabel="Loading review cards"
-                    size="large"
+                <LoadingState
+                    message="Finding due words, sentences, and mistakes."
+                    title="Preparing review"
                 />
-                <AppText variant="heading">Preparing Review</AppText>
-                <AppText tone="secondary">
-                    Finding due words, sentences, and mistakes.
-                </AppText>
             </Screen>
         );
     }
 
     return (
-        <Screen>
-            <AppText variant="title">Review</AppText>
-            <Surface variant="outline" style={styles.section}>
-                <AppText variant="heading">Recommended decks</AppText>
-                <AppText tone="secondary">
-                    Choose a focused queue, reveal the answer, then mark each
-                    card known, unsure, or difficult.
-                </AppText>
-                <ReviewDeckSelector
-                    decks={review.records.decks}
-                    onSelectDeck={review.handleSelectDeck}
-                />
-            </Surface>
+        <Screen contentContainerStyle={styles.content}>
+            <ScreenHeader
+                eyebrow="Review"
+                subtitle="Choose a focused queue, reveal the answer, then grade your recall."
+                title="Due cards"
+            />
             {review.phase === "error" ? (
                 <ReviewErrorState
                     message={review.error ?? "Review could not be loaded."}
                     onRetry={review.handleRefresh}
                 />
             ) : null}
-            {review.phase === "empty" ? <ReviewEmptyState /> : null}
-            {review.phase === "ready" && !review.cardState ? (
-                <ReviewEmptyState
-                    message="Choose another deck or complete more practice to add cards here."
-                    title="No cards in this deck"
-                />
-            ) : null}
-            {review.cardState ? (
-                <ReviewCard
-                    cardState={review.cardState}
-                    isAnswerVisible={review.isAnswerVisible}
-                    onCompleteItem={(grade) => {
-                        if (review.cardState) {
-                            void review.handleCompleteItem(
-                                grade,
-                                review.cardState.item
-                            );
-                        }
-                    }}
-                    onRevealAnswer={review.handleRevealAnswer}
-                    pendingGrade={review.pendingGrade}
-                />
+            {review.phase !== "error" ? (
+                <>
+                    <ReviewSummaryCard summary={review.summary} />
+                    {review.isReviewComplete ? <ReviewEmptyState /> : null}
+                    {review.isActiveDeckEmpty ? (
+                        <ReviewEmptyState
+                            message="Choose another deck or complete more practice to add cards here."
+                            title="No cards in this deck"
+                        />
+                    ) : null}
+                    {cardState ? (
+                        <>
+                            <ReviewCard
+                                cardState={cardState}
+                                isAnswerVisible={review.isAnswerVisible}
+                                onCompleteItem={(grade) => {
+                                    void review.handleCompleteItem(
+                                        grade,
+                                        cardState.item
+                                    );
+                                }}
+                                onRevealAnswer={review.handleRevealAnswer}
+                                pendingGrade={review.pendingGrade}
+                            />
+                            <ReviewQueuePreview items={review.queuePreview} />
+                        </>
+                    ) : null}
+                    <View style={styles.section}>
+                        <SectionHeader
+                            subtitle="Each deck shows the cards due right now."
+                            title="Review decks"
+                        />
+                        <ReviewDeckSelector
+                            decks={review.records.decks}
+                            onSelectDeck={review.handleSelectDeck}
+                        />
+                    </View>
+                </>
             ) : null}
         </Screen>
     );
@@ -78,6 +91,9 @@ const styles = StyleSheet.create((theme) => ({
         alignItems: "center",
         flexGrow: 1,
         justifyContent: "center",
+    },
+    content: {
+        paddingBottom: theme.spacing["3xl"],
     },
     section: {
         gap: theme.spacing.md,

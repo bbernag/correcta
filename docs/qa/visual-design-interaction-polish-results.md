@@ -1,8 +1,9 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slices 1-7 are complete. The shared component checkpoint has
-source-audit, automated, iOS, and Android evidence. The remaining visual polish
-work starts with Slice 8, Home Design Pilot.
+Status: partial. Slices 1-10 are complete. The shared component checkpoint has
+source-audit, automated, iOS, and Android evidence. Home, Practice, and Review
+production-screen polish have iOS evidence. The remaining visual polish work
+starts with Slice 11, Progress Polish.
 
 ## Slice 1: Theme Token Design System
 
@@ -345,8 +346,65 @@ Known follow-ups:
 
 - Android Practice evidence should be added during the next broader
   cross-platform screen polish pass.
-- Review remains the active next production screen for Slice 10.
+- Review was completed in Slice 10; Progress remains the active next production
+  screen for Slice 11.
 
 Next phase:
 
-- Start Slice 10, Review And Feedback Polish.
+- Completed by Slice 10, Review And Feedback Polish.
+
+## Slice 10: Review And Feedback Polish
+
+Date: 2026-06-20.
+
+Result: pass. Review now uses the accepted shared visual system for due
+summary, active study card, deck selection, queue preview, empty/error states,
+and revealed-answer grading.
+
+Implemented:
+
+- `ReviewScreen` now uses a screen-owned `useReviewViewModel` wrapper around the
+  existing `useReviewDeck` workflow.
+- Added a review summary card with active deck, due count, selected queue count,
+  difficult count, and progress value.
+- Added an active study card above deck selection so the next review action is
+  visible in the first pass.
+- Added compact revealed-answer grading controls for Known, Unsure, and
+  Difficult.
+- Added icon-driven deck cards with due counts, descriptions, and selected
+  state.
+- Added a queue preview for upcoming cards.
+- Empty and error states now use the shared `EmptyState` and `ErrorState`.
+- Reveal, deck selection, grade success, grade warning, and grade error paths
+  use the shared haptics wrapper.
+- Reveal and grade actions announce meaningful state changes through React
+  Native accessibility APIs.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- Metro status probe: `packager-status:running`.
+- iOS simulator: `iPhone 17`, app id `com.luisgarcia.correcta`.
+- iOS launch: `xcrun simctl launch booted com.luisgarcia.correcta` returned a
+  running process id.
+- iOS runtime path: Practice -> Review tab.
+- iOS visual result: Review rendered summary metrics, active card, queue
+  preview, deck cards, and revealed-answer grading without a runtime error.
+
+Evidence:
+
+- iOS Review main state: `/tmp/correcta-slice10-ios-review.png`
+- iOS Review revealed answer:
+  `/tmp/correcta-slice10-ios-review-revealed.png`
+
+Known follow-ups:
+
+- Android Review evidence should be added during the next broader
+  cross-platform screen polish pass.
+- Progress remains the active next production screen for Slice 11.
+
+Next phase:
+
+- Start Slice 11, Progress Polish.

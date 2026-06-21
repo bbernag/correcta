@@ -1,9 +1,21 @@
-import {View} from "react-native";
+import {EaseView, type Transition} from "react-native-ease";
 import Svg, {Path} from "react-native-svg";
 import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
+import {useReducedMotion} from "../../../hooks/useReducedMotion";
+import {motion} from "../../../theme";
 import type {CardSurfaceProps} from "./cardTypes";
 import {getCardCutoutPath, getCardSurfacePath} from "./cardUtils";
+
+const SURFACE_TRANSITION = {
+    duration: motion.duration.fast,
+    easing: "easeOut",
+    type: "timing",
+} satisfies Transition;
+
+const REDUCED_MOTION_TRANSITION = {
+    type: "none",
+} satisfies Transition;
 
 export function CardSurface({
     itemLayouts,
@@ -12,6 +24,10 @@ export function CardSurface({
     size,
 }: CardSurfaceProps) {
     const {theme} = useUnistyles();
+    const isReducedMotionEnabled = useReducedMotion();
+    const surfaceTransition = isReducedMotionEnabled
+        ? REDUCED_MOTION_TRANSITION
+        : SURFACE_TRANSITION;
     const surfacePath = getCardSurfacePath({
         itemLayouts,
         orientation,
@@ -29,12 +45,15 @@ export function CardSurface({
 
     return (
         <>
-            <View
+            <EaseView
                 accessibilityElementsHidden
                 accessible={false}
+                animate={{opacity: 1}}
                 importantForAccessibility="no-hide-descendants"
+                initialAnimate={{opacity: isReducedMotionEnabled ? 1 : 0}}
                 pointerEvents="none"
                 style={[styles.layer, styles.surfaceLayer]}
+                transition={surfaceTransition}
             >
                 <Svg
                     height={rootLayout.height}
@@ -44,14 +63,17 @@ export function CardSurface({
                 >
                     <Path d={surfacePath} fill={theme.colors.surfaceContrast} />
                 </Svg>
-            </View>
+            </EaseView>
             {cutoutPath ? (
-                <View
+                <EaseView
                     accessibilityElementsHidden
                     accessible={false}
+                    animate={{opacity: 1}}
                     importantForAccessibility="no-hide-descendants"
+                    initialAnimate={{opacity: isReducedMotionEnabled ? 1 : 0}}
                     pointerEvents="none"
                     style={[styles.layer, styles.cutoutLayer]}
+                    transition={surfaceTransition}
                 >
                     <Svg
                         height={rootLayout.height}
@@ -61,7 +83,7 @@ export function CardSurface({
                     >
                         <Path d={cutoutPath} fill={theme.colors.canvas} />
                     </Svg>
-                </View>
+                </EaseView>
             ) : null}
         </>
     );

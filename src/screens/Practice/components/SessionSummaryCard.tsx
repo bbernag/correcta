@@ -1,7 +1,12 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, Surface} from "../../../components/common";
+import {
+    AnimatedCounter,
+    AppText,
+    Button,
+    Surface,
+} from "../../../components/common";
 import {getAccuracyLabel} from "../utils/practiceUtils";
 import type {PracticeSessionSummaryState} from "../types/practiceTypes";
 
@@ -37,37 +42,48 @@ export function SessionSummaryCard({
                     </AppText>
                 </View>
                 <View style={styles.metric}>
-                    <AppText variant="heading">{summary.correctCount}</AppText>
+                    <AnimatedCounter
+                        value={summary.correctCount}
+                        variant="heading"
+                    />
                     <AppText variant="caption" tone="secondary">
                         Correct
                     </AppText>
                 </View>
                 <View style={styles.metric}>
-                    <AppText variant="heading">
-                        {summary.almostCorrectCount}
-                    </AppText>
+                    <AnimatedCounter
+                        value={summary.almostCorrectCount}
+                        variant="heading"
+                    />
                     <AppText variant="caption" tone="secondary">
                         Almost
                     </AppText>
                 </View>
                 <View style={styles.metric}>
-                    <AppText variant="heading">
-                        {summary.incorrectCount}
-                    </AppText>
+                    <AnimatedCounter
+                        value={summary.incorrectCount}
+                        variant="heading"
+                    />
                     <AppText variant="caption" tone="secondary">
                         Review
                     </AppText>
                 </View>
                 <View style={styles.metric}>
-                    <AppText variant="heading">{summary.skippedCount}</AppText>
+                    <AnimatedCounter
+                        value={summary.skippedCount}
+                        variant="heading"
+                    />
                     <AppText variant="caption" tone="secondary">
                         Skipped
                     </AppText>
                 </View>
                 <View style={styles.metric}>
-                    <AppText variant="heading">
-                        {summary.savedWordCount + summary.savedSentenceCount}
-                    </AppText>
+                    <AnimatedCounter
+                        value={
+                            summary.savedWordCount + summary.savedSentenceCount
+                        }
+                        variant="heading"
+                    />
                     <AppText variant="caption" tone="secondary">
                         Saved
                     </AppText>

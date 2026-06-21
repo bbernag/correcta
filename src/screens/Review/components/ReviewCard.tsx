@@ -1,7 +1,13 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, Icon, Surface} from "../../../components/common";
+import {
+    AnimatedMount,
+    AppText,
+    Button,
+    Icon,
+    Surface,
+} from "../../../components/common";
 import type {IconName} from "../../../components/common";
 import type {ReviewGrade} from "../../../types";
 import type {ReviewCardState} from "../types/reviewTypes";
@@ -65,12 +71,14 @@ export function ReviewCard({
                 </AppText>
             </View>
             {isAnswerVisible ? (
-                <View style={styles.answer}>
-                    <AppText variant="label" tone="accent">
-                        Answer
-                    </AppText>
-                    <AppText variant="answer">{item.answer}</AppText>
-                </View>
+                <AnimatedMount>
+                    <View style={styles.answer}>
+                        <AppText variant="label" tone="accent">
+                            Answer
+                        </AppText>
+                        <AppText variant="answer">{item.answer}</AppText>
+                    </View>
+                </AnimatedMount>
             ) : (
                 <Button
                     fullWidth
@@ -81,25 +89,27 @@ export function ReviewCard({
                 />
             )}
             {isAnswerVisible ? (
-                <View style={styles.gradeRow}>
-                    {gradeOptions.map((grade) => {
-                        return (
-                            <Button
-                                key={grade}
-                                label={getReviewGradeLabel(grade)}
-                                loading={pendingGrade === grade}
-                                loadingLabel="Saving"
-                                onPress={() => {
-                                    onCompleteItem(grade);
-                                }}
-                                rightIcon={getReviewGradeIcon(grade)}
-                                size="small"
-                                style={styles.gradeButton}
-                                variant={getReviewGradeButtonVariant(grade)}
-                            />
-                        );
-                    })}
-                </View>
+                <AnimatedMount delayMs={80}>
+                    <View style={styles.gradeRow}>
+                        {gradeOptions.map((grade) => {
+                            return (
+                                <Button
+                                    key={grade}
+                                    label={getReviewGradeLabel(grade)}
+                                    loading={pendingGrade === grade}
+                                    loadingLabel="Saving"
+                                    onPress={() => {
+                                        onCompleteItem(grade);
+                                    }}
+                                    rightIcon={getReviewGradeIcon(grade)}
+                                    size="small"
+                                    style={styles.gradeButton}
+                                    variant={getReviewGradeButtonVariant(grade)}
+                                />
+                            );
+                        })}
+                    </View>
+                </AnimatedMount>
             ) : null}
         </Surface>
     );

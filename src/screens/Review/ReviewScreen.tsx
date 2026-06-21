@@ -2,6 +2,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {
+    AnimatedMount,
     LoadingState,
     Screen,
     ScreenHeader,
@@ -55,18 +56,20 @@ export function ReviewScreen() {
                     ) : null}
                     {cardState ? (
                         <>
-                            <ReviewCard
-                                cardState={cardState}
-                                isAnswerVisible={review.isAnswerVisible}
-                                onCompleteItem={(grade) => {
-                                    void review.handleCompleteItem(
-                                        grade,
-                                        cardState.item
-                                    );
-                                }}
-                                onRevealAnswer={review.handleRevealAnswer}
-                                pendingGrade={review.pendingGrade}
-                            />
+                            <AnimatedMount key={String(cardState.currentIndex)}>
+                                <ReviewCard
+                                    cardState={cardState}
+                                    isAnswerVisible={review.isAnswerVisible}
+                                    onCompleteItem={(grade) => {
+                                        void review.handleCompleteItem(
+                                            grade,
+                                            cardState.item
+                                        );
+                                    }}
+                                    onRevealAnswer={review.handleRevealAnswer}
+                                    pendingGrade={review.pendingGrade}
+                                />
+                            </AnimatedMount>
                             <ReviewQueuePreview items={review.queuePreview} />
                         </>
                     ) : null}

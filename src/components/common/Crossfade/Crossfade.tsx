@@ -1,7 +1,6 @@
 import type {ReactNode} from "react";
 import {View} from "react-native";
 import {EaseView, type Transition} from "react-native-ease";
-import {StyleSheet} from "react-native-unistyles";
 
 import {useReducedMotion} from "../../../hooks/useReducedMotion";
 import {motion} from "../../../theme";
@@ -34,7 +33,6 @@ export function Crossfade({children, contentKey, minHeight}: CrossfadeProps) {
                     translateY: isReducedMotionEnabled ? 0 : 8,
                 }}
                 key={contentKey}
-                style={styles.content}
                 transition={
                     isReducedMotionEnabled
                         ? REDUCED_MOTION_TRANSITION
@@ -46,9 +44,3 @@ export function Crossfade({children, contentKey, minHeight}: CrossfadeProps) {
         </View>
     );
 }
-
-const styles = StyleSheet.create(() => ({
-    content: {
-        flex: 1,
-    },
-}));

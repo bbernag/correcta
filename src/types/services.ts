@@ -112,6 +112,7 @@ export type ReviewWorkflowService = {
 
 export type NotificationReminderService = {
     getReminderState: () => Promise<NotificationReminderState>;
+    syncReminders: () => Promise<NotificationReminderState>;
     savePreferences: (
         preferences: NotificationPreferences
     ) => Promise<NotificationReminderState>;
@@ -124,6 +125,7 @@ export type NativeNotificationSyncResult = {
 
 export type NativeNotificationScheduler = {
     getPermissionStatus: () => Promise<NotificationPermissionStatus>;
+    getScheduledCount: () => Promise<number>;
     syncScheduledReminders: (params: {
         reminders: ScheduledReminder[];
         requestPermission: boolean;

@@ -12,6 +12,7 @@ import {ComponentPlaygroundScreen} from "../screens/ComponentPlayground";
 import {ExpoUiShowcaseScreen} from "../screens/ExpoUiShowcase";
 import {appThemes} from "../theme";
 import {useNotificationResponseRouting} from "./hooks/useNotificationResponseRouting";
+import {useReminderLaunchSync} from "./hooks/useReminderLaunchSync";
 import {MainTabs} from "./MainTabs";
 import type {RootStackParamList} from "./types";
 
@@ -25,6 +26,8 @@ export function RootNavigator() {
     const theme = colorScheme === "dark" ? appThemes.dark : appThemes.light;
     const {handleNavigationReady} =
         useNotificationResponseRouting(navigationRef);
+
+    useReminderLaunchSync();
 
     const navigationTheme = useMemo<Theme>(
         () => ({

@@ -30,28 +30,21 @@ export function configureNotificationPresentation() {
 export function createExpoNotificationScheduler(): NativeNotificationScheduler {
     return {
         getPermissionStatus,
+        getScheduledCount,
         async syncScheduledReminders({reminders, requestPermission}) {
-            await Notifications.cancelAllScheduledNotificationsAsync();
+            const permissionStatus = await resolvePermission(requestPermission);
 
-            if (reminders.length === 0) {
-                const permissionStatus = await getPermissionStatus();
-
+            // Without permission we cannot manage the OS schedule, so report
+            // the current state without cancelling what is already there.
+            if (permissionStatus !== "granted") {
                 return {
                     permissionStatus,
-                    scheduledCount: 0,
+                    scheduledCount: await getScheduledCount(),
                 };
             }
 
             await ensureReminderChannel();
-
-            const permissionStatus = await resolvePermission(requestPermission);
-
-            if (permissionStatus !== "granted") {
-                return {
-                    permissionStatus,
-                    scheduledCount: 0,
-                };
-            }
+            await Notifications.cancelAllScheduledNotificationsAsync();
 
             const results = await Promise.all(
                 reminders.map((reminder) => scheduleReminder(reminder))
@@ -146,6 +139,12 @@ async function getPermissionStatus() {
     const permissions = await Notifications.getPermissionsAsync();
 
     return getPermissionStatusFromResponse(permissions);
+}
+
+async function getScheduledCount() {
+    const scheduled = await Notifications.getAllScheduledNotificationsAsync();
+
+    return scheduled.length;
 }
 
 async function resolvePermission(requestPermission: boolean) {

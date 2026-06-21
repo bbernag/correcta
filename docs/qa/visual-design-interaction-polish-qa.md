@@ -1,7 +1,8 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slices 1-3 are implemented and verified. Remaining
-visual polish slices are still open.
+Status: partial. Slices 1-4 are implemented and verified. Shared component
+source now reaches into Slices 5-7, but those slices still need the
+ComponentPlayground acceptance checkpoint before production screen adoption.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -218,6 +219,25 @@ Known follow-ups:
 - Files stay around the 300-line target unless there is a clear reason.
 - Light mode looks intentional.
 - Dark mode looks intentional.
+
+## Active Checkpoint: Slices 5-7
+
+Use this checkpoint before starting Home polish.
+
+- `Card` linked-surface examples render in ComponentPlayground.
+- Vertical linked surfaces preserve visible canvas cut-ins.
+- Horizontal linked surfaces keep paired items equal-height.
+- Bridges and cut-ins do not receive touch, focus, haptics, or accessibility.
+- `Card` and `PocCard` responsibilities are documented before broad feature
+  usage.
+- Supporting components render in ComponentPlayground: `Chip`, `WordChip`,
+  `ProgressBar`, `SegmentedControl`, `StatCard`, `ResultBadge`,
+  `FeedbackHighlight`, `EmptyState`, `LoadingState`, and `ErrorState`.
+- ComponentPlayground is reviewed as the shared visual acceptance gate.
+- `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
+- iOS and Android ComponentPlayground screenshots are captured.
+- The MVP flow still works after the shared-component checkpoint:
+  Home -> Practice -> Check answer -> Feedback -> Save -> Review/Progress/Library.
 - Text is readable on every surface.
 - Empty states, loading states, disabled states, and error states are explicit.
 - Icon-only controls have accessible names.
@@ -400,17 +420,19 @@ Feedback:
 
 Inspect `package.json` and use project scripts:
 
-- `yarn typecheck`
-- `yarn lint`
-- `yarn ios`
-- `yarn android`
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- `npm run ios`
+- `npm run android`
 
 Current known scripts:
 
-- `yarn typecheck`
-- `yarn lint`
-- `yarn android`
-- `yarn ios`
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- `npm run android`
+- `npm run ios`
 
 ## QA Evidence To Record
 

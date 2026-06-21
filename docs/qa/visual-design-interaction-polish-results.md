@@ -1,7 +1,9 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slices 1-4 are complete. Remaining visual polish slices
-are still open.
+Status: partial. Slices 1-4 are complete. Shared component source now reaches
+into Slices 5-7, but those slices are not closed until the
+ComponentPlayground acceptance checkpoint records automated and iOS/Android
+visual QA evidence.
 
 ## Slice 1: Theme Token Design System
 
@@ -178,3 +180,40 @@ Known follow-ups:
   unavailable.
 - Metro logged a React Navigation deprecation warning during navigation, but no
   visible runtime overlay appeared during this QA pass.
+
+## Slice 5-7: Shared Component Acceptance Checkpoint
+
+Date: pending.
+
+Result: pending.
+
+Current source state:
+
+- The linked-surface implementation is the shared `Card` family in
+  `src/components/common/Card`, not a separate `CardUnion` folder.
+- Supporting shared visual components exist under `src/components/common`,
+  including chips, word chips, progress, segmented controls, stat cards,
+  feedback/status components, and native wrappers.
+- ComponentPlayground contains the review surface for shared primitives.
+
+Acceptance work still required:
+
+- Audit `Card` linked-surface geometry against the Linked Surface Group rules.
+- Decide whether `PocCard` remains internal to `NoticeCard`, is renamed, or is
+  retired before broad production-screen usage.
+- Verify supporting components in ComponentPlayground with long copy, dynamic
+  content, disabled/loading/selected states, light/dark mode, and reduced
+  motion expectations.
+- Run automated checks.
+- Run iOS and Android ComponentPlayground visual QA.
+- Record screenshot/runtime evidence before marking Slices 5-7 done.
+
+Recommended commands:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+
+Next phase after acceptance:
+
+- Start Slice 8, Home Design Pilot.

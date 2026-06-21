@@ -1,8 +1,10 @@
 # Visual Design & Interaction Polish
 
-Status: partial. Slices 1-4 are implemented as foundation work. Slice 3 is not
-the approved final visual direction; Slice 4 improved native primitive polish.
-The next approved direction starts with CardUnion and Linked Surface Groups.
+Status: partial. Slices 1-4 are implemented and verified as foundation work.
+Slice 3 is retained as technical foundation only; Slice 4 approved the native
+primitive direction. Shared component source now reaches into Slices 5-7, so the
+active next step is the ComponentPlayground acceptance/evidence checkpoint
+before production screen polish.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -29,10 +31,30 @@ tokens, platform rules, component specs, motion, haptics, copy, screen
 blueprints, and QA. This document combines the completed Pro Extended plan with
 those stricter design requirements.
 
-A later Pro Extended orchestration checkpoint confirmed that CardUnion and
-Linked Surface Groups should become a dedicated Slice 5 before broader shared
-components or production screen polish. ComponentPlayground should become an
-acceptance gate before Home, Practice, Review, Progress, and Library adoption.
+A later Pro Extended orchestration checkpoint confirmed that Linked Surface
+Groups should become a dedicated Slice 5 before broader shared components or
+production screen polish. The current repo implements that production direction
+through the shared `Card` compound component under `src/components/common/Card`;
+older `CardUnion` wording in planning notes should be read as the linked-surface
+`Card` foundation unless the team explicitly chooses to rename it.
+ComponentPlayground should become an acceptance gate before Home, Practice,
+Review, Progress, and Library adoption.
+
+## Current Checkpoint
+
+As of the latest documentation sync, broad common-component building should
+pause. The source contains the linked-surface `Card` family, supporting shared
+visual components, and ComponentPlayground sections. These are ready enough to
+validate, but not yet closed as fully accepted because the QA evidence still
+stops at Slice 4.
+
+Next:
+
+1. Audit `Card`, supporting shared components, and ComponentPlayground against
+   the Slice 5-7 exit criteria.
+2. Run automated checks and iOS/Android ComponentPlayground visual QA.
+3. Record evidence in `docs/qa/visual-design-interaction-polish-results.md`.
+4. Then start Slice 8, Home Design Pilot.
 
 ## Goal
 
@@ -83,15 +105,15 @@ tactile, trustworthy, and clearly designed for repeated sentence practice.
 - Shared components own visual rules; screens compose them.
 - Dynamic text and reduced motion are first-class design requirements.
 
-## Dependencies To Add
+## Dependencies Added For This Phase
 
-Add only when starting implementation:
+Already added during earlier visual-polish slices:
 
 - `lucide-react-native`
 - `react-native-svg`
 - `react-native-pulsar`
 
-Do not add:
+Continue to avoid:
 
 - Moti.
 - Lottie.
@@ -139,8 +161,8 @@ Common components:
 
 - `src/components/common/Icon/*`
 - `src/components/common/IconButton/*`
-- `src/components/common/CardUnion/*`
-- `src/components/common/AnimatedPressable/*`
+- `src/components/common/Card/*`
+- `src/components/common/PressableMotionView/*`
 - `src/components/common/Chip/*`
 - `src/components/common/WordChip/*`
 - `src/components/common/ScreenHeader/*`
@@ -300,7 +322,12 @@ Exit:
 - `GlassSurface` fallback exists and is only used in approved compact contexts.
 - Android uses tonal/elevated native treatment instead of fake iOS glass.
 
-### Slice 5: CardUnion And Linked Surface Foundation
+### Slice 5: Card And Linked Surface Foundation
+
+Status: partial. The shared `Card` compound component, linked-surface tokens,
+and focused playground examples exist in source. Remaining work is acceptance:
+verify geometry, accessibility, light/dark treatment, dynamic content, and the
+Card/PocCard consolidation path before broad production use.
 
 Goal: establish Linked Surface Groups as a tested shared layout primitive before
 applying the new direction to production screens.
@@ -310,9 +337,9 @@ Tasks:
 - Add or extend Unistyles tokens for `canvas`, `surfaceContrast`,
   `surfaceContrastForeground`, `surfaceContrastMutedForeground`,
   `surfaceContrastAccent`, `surfaceContrastPressed`, `surfaceContrastFocus`,
-  CardUnion radii, gaps, bridge overlap, and min/default/max bridge spans.
-- Create `src/components/common/CardUnion/*`.
-- Add `CardUnion` and `CardUnion.Item` compound anatomy.
+  `Card` radii, gaps, bridge overlap, and min/default/max bridge spans.
+- Create or refine `src/components/common/Card/*`.
+- Add `Card` and `Card.Item` compound anatomy.
 - Support vertical and horizontal axes.
 - Support two or more vertical items.
 - Support a two-item horizontal interlocking pair.
@@ -328,12 +355,12 @@ Tasks:
 - Do not independently scale an interactive item inside a union.
 - Do not use gradients, blur, glass, masks, image assets, SVG geometry, Skia,
   Canvas, or custom native drawing.
-- Add focused CardUnion examples to ComponentPlayground without redesigning the
-  whole playground in this slice.
+- Add focused `Card` linked-surface examples to ComponentPlayground without
+  redesigning the whole playground in this slice.
 
 Exit:
 
-- CardUnion geometry matches the documented Linked Surface Group rules.
+- `Card` geometry matches the documented Linked Surface Group rules.
 - The bridge occupies `66%` to `78%` of the shared edge.
 - Rounded canvas cut-ins remain visible.
 - Vertical and horizontal variants work on iOS and Android.
@@ -353,12 +380,17 @@ Out of scope:
 
 ### Slice 6: Supporting Shared Visual Components
 
+Status: partial. The main supporting components exist in source and are ready
+for acceptance review. Remaining work is motion/accessibility hardening,
+ComponentPlayground coverage, and deciding whether any pending component, such
+as Toast, is required before the first production screen.
+
 Goal: create or restyle the remaining reusable UI building blocks before screen
 polish.
 
 Tasks:
 
-- Add `AnimatedPressable` only when the existing press primitive does not
+- Add `PressableMotionView` only when the existing press primitive does not
   already satisfy the required behavior.
 - Add `Chip` and `WordChip`.
 - Add `ScreenHeader` and `SectionHeader`.
@@ -366,12 +398,12 @@ Tasks:
 - Add shared empty/loading/error states.
 - Add `ResultBadge` and `FeedbackHighlight`.
 - Keep `StatCard` focused on metric content and state, not union geometry.
-  Screens compose `StatCard` inside `CardUnion` when metrics are semantically
+  Screens compose `StatCard` inside `Card` when metrics are semantically
   related.
 - Use solid colors only for progress bars, badges, tabs, chips, and pressed
   states.
-- Do not include `GlassSurface` fallback in this slice. CardUnion must not
-  depend on glass.
+- Do not include `GlassSurface` fallback in this slice. Linked-surface `Card`
+  must not depend on glass.
 
 Exit:
 
@@ -381,14 +413,19 @@ Exit:
 
 ### Slice 7: ComponentPlayground Acceptance Gate
 
+Status: active checkpoint. ComponentPlayground already contains the shared
+component review surface. The remaining work is to audit it as the formal gate,
+fill any small coverage gaps, run checks and device QA, then record the
+evidence before production screen adoption.
+
 Goal: make ComponentPlayground the visual QA source.
 
 Tasks:
 
-- Redesign ComponentPlayground into a coherent native component index grouped
-  by actions, inputs, selection controls, feedback, status and progress,
-  surfaces and Linked Surface Groups, headers and navigation-adjacent elements,
-  and empty/loading/error states.
+- Verify ComponentPlayground as a coherent native component index grouped by
+  actions, inputs, selection controls, feedback, status and progress, surfaces
+  and Linked Surface Groups, headers and navigation-adjacent elements, and
+  empty/loading/error states.
 - Show supported variants and sizes.
 - Show light and dark themes.
 - Show enabled, pressed, focused, disabled, and loading states where applicable.
@@ -402,9 +439,11 @@ Exit:
 
 - Design system can be reviewed from one screen.
 - Production-screen adoption does not begin until the shared visual system has
-  been reviewed in the playground.
+  been reviewed in the playground and evidence has been recorded.
 
 ### Slice 8: Home Design Pilot
+
+Status: next after the Slice 7 acceptance checkpoint.
 
 Goal: use Home as the first production integration of the accepted shared
 system.
@@ -429,7 +468,7 @@ Tasks:
 - Add icons and progress animation.
 - Use real product copy and variable data.
 - Cover loading, empty, and error states.
-- Do not introduce screen-local copies of CardUnion geometry.
+- Do not introduce screen-local copies of `Card` linked-surface geometry.
 - Do not refactor Home product logic unless required for visual integration.
 
 Exit:
@@ -457,8 +496,8 @@ Expected files:
 Tasks:
 
 - Upgrade sentence card and input panel.
-- Do not force CardUnion onto every Practice surface. Use it only where adjacent
-  content is semantically related.
+- Do not force linked-surface `Card` onto every Practice surface. Use it only
+  where adjacent content is semantically related.
 - Preserve keyboard behavior, input focus, sentence-builder interaction,
   validation state, and stable action placement.
 - Add scrambled-word beginner mode.
@@ -539,8 +578,8 @@ Tasks:
 - Validate native focus behavior.
 - Validate Android tonal and elevation treatment.
 - Use iOS platform-material treatment only where it has a concrete use outside
-  CardUnion.
-- Keep CardUnion opaque and solid on both platforms.
+  linked-surface `Card`.
+- Keep linked-surface `Card` opaque and solid on both platforms.
 - Do not create or retain a general GlassSurface abstraction without an
   approved production use case.
 - Do not add gradients.
@@ -549,7 +588,7 @@ Exit:
 
 - No readability regressions.
 - Android does not look like an iOS clone.
-- CardUnion remains solid, opaque, and platform-consistent.
+- Linked-surface `Card` remains solid, opaque, and platform-consistent.
 
 ### Slice 14: Accessibility And Reduced Motion Audit
 
@@ -575,8 +614,9 @@ Goal: close the phase with verified evidence.
 
 Tasks:
 
-- Run `yarn typecheck`.
-- Run `yarn lint`.
+- Run `npm run typecheck`.
+- Run `npm run lint`.
+- Run `npm run format:check`.
 - Run iOS debug.
 - Run Android debug.
 - Run release builds if feasible.
@@ -595,7 +635,7 @@ Exit:
 3. `feat: add icon and haptics foundations`
 4. `feat: add common primitive API foundation`
 5. `feat: add native elegance primitive pass`
-6. `feat: add card union linked surface foundation`
+6. `feat: add card linked surface foundation`
 7. `feat: add supporting shared visual components`
 8. `feat: redesign component playground acceptance gate`
 9. `feat: polish home design pilot`
@@ -609,8 +649,8 @@ Exit:
 
 ## Slice Dependencies
 
-- Slice 5 blocks Slice 6.
-- Slices 5 and 6 block Slice 7.
+- Slice 5 and Slice 6 are source-implemented enough to enter acceptance review,
+  but they still block broad production use until Slice 7 records evidence.
 - Slice 7 blocks all production-screen polish.
 - Home is the production integration pilot and blocks Practice.
 - Practice blocks Review because Review consumes Practice outcomes.

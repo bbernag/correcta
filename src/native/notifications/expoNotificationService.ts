@@ -44,9 +44,7 @@ export function createExpoNotificationScheduler(): NativeNotificationScheduler {
 
             await ensureReminderChannel();
 
-            const permissionStatus = requestPermission
-                ? await requestReminderPermission()
-                : await getPermissionStatus();
+            const permissionStatus = await resolvePermission(requestPermission);
 
             if (permissionStatus !== "granted") {
                 return {
@@ -148,6 +146,18 @@ async function getPermissionStatus() {
     const permissions = await Notifications.getPermissionsAsync();
 
     return getPermissionStatusFromResponse(permissions);
+}
+
+async function resolvePermission(requestPermission: boolean) {
+    const current = await getPermissionStatus();
+
+    // Only surface the OS prompt when the user has not decided yet; changing an
+    // unrelated setting while already granted or denied must not re-prompt.
+    if (requestPermission && current === "undetermined") {
+        return requestReminderPermission();
+    }
+
+    return current;
 }
 
 async function ensureReminderChannel() {

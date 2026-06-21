@@ -1,3 +1,4 @@
+import {Platform} from "react-native";
 import {EaseView, type Transition} from "react-native-ease";
 import {useUnistyles} from "react-native-unistyles";
 
@@ -19,11 +20,17 @@ const PRESS_TRANSITION = {
     },
 } satisfies Transition;
 
+const REDUCED_MOTION_TRANSITION = {
+    type: "none",
+} satisfies Transition;
+
+const DEFAULT_PRESS_SCALE = Platform.OS === "android" ? 0.985 : 0.98;
+
 export function PressableMotionView({
     children,
     disabled = false,
     pressed,
-    pressScale = 0.97,
+    pressScale = DEFAULT_PRESS_SCALE,
     style,
 }: PressableMotionViewProps) {
     const {theme} = useUnistyles();
@@ -37,7 +44,11 @@ export function PressableMotionView({
                 scale: isPressed && !isReducedMotionEnabled ? pressScale : 1,
             }}
             style={style}
-            transition={PRESS_TRANSITION}
+            transition={
+                isReducedMotionEnabled
+                    ? REDUCED_MOTION_TRANSITION
+                    : PRESS_TRANSITION
+            }
         >
             {children}
         </EaseView>

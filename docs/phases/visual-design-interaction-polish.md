@@ -1,6 +1,6 @@
 # Visual Design & Interaction Polish
 
-Status: partial. Slices 1-12 are implemented and verified as foundation work.
+Status: partial. Slices 1-13 are implemented and verified as foundation work.
 Slice 3 is retained as technical foundation only; Slice 4 approved the native
 primitive direction. The ComponentPlayground shared-component checkpoint is
 closed, and Home is now the first production screen using the accepted shared
@@ -10,7 +10,8 @@ deck selection, queue preview, grading controls, and feedback. Progress now has
 a polished learning score, linked metrics, weekly activity, mistake breakdown,
 achievements, and recommendation flow. Library now has segmented notebook views,
 saved-content cards, history badges, retry/removal actions, and empty states.
-The active next step is Slice 13, Platform-Native Surface And Motion Polish.
+Platform-native surface and motion polish is complete. The active next step is
+Slice 14, Accessibility And Reduced Motion Audit.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -28,7 +29,8 @@ Pro Extended produced the implementation sequence and recommended:
 - `lucide-react-native`, `react-native-svg`, and `react-native-pulsar`.
 - No extra animation or charting library for this phase.
 - Shared wrappers for icons, haptics, motion, and native surfaces.
-- Liquid Glass only as an iOS-only spike behind a fallback `GlassSurface`.
+- Liquid Glass deferred until a concrete production use case exists; no public
+  general glass abstraction is retained in the current shared component API.
 - Android tonal/elevated surfaces instead of iOS glass imitation.
 - Practice flow polish as the highest-priority milestone.
 
@@ -50,21 +52,22 @@ Review, Progress, and Library adoption.
 
 As of the latest documentation sync, the shared-component checkpoint, Home
 Design Pilot, Practice Core Loop Polish, Review And Feedback Polish, Progress
-Polish, and Library Polish are closed. The source contains the linked-surface
-`Card` family, supporting shared visual components, ComponentPlayground
-sections, the first production Home integration, the polished Practice loop, the
-polished Review study flow, the polished Progress learning summary, and the
-segmented Library notebook. Source audit, automated checks, iOS route evidence,
-and Android route evidence are recorded for the shared checkpoint; iOS Home
-evidence is recorded for Slice 8, iOS Practice evidence is recorded for Slice 9,
-iOS Review evidence is recorded for Slice 10, iOS Progress evidence is recorded
-for Slice 11, and iOS Library evidence is recorded for Slice 12.
+Polish, Library Polish, and Platform-Native Surface And Motion Polish are
+closed. The source contains the linked-surface `Card` family, supporting shared
+visual components, ComponentPlayground sections, the first production Home
+integration, the polished Practice loop, the polished Review study flow, the
+polished Progress learning summary, the segmented Library notebook, and
+platform-native press/elevation/ripple refinements. Source audit, automated
+checks, iOS route evidence, and Android route evidence are recorded for the
+shared checkpoint; iOS Home evidence is recorded for Slice 8, iOS Practice
+evidence is recorded for Slice 9, iOS Review evidence is recorded for Slice 10,
+iOS Progress evidence is recorded for Slice 11, iOS Library evidence is recorded
+for Slice 12, and iOS platform-surface/input evidence is recorded for Slice 13.
 
 Next:
 
-1. Start Slice 13, Platform-Native Surface And Motion Polish.
-2. Keep Android and iOS screenshots updated as each production screen adopts the
-   accepted shared system.
+1. Start Slice 14, Accessibility And Reduced Motion Audit.
+2. Keep Android and iOS screenshots updated during the final QA pass.
 
 ## Goal
 
@@ -129,8 +132,8 @@ Continue to avoid:
 - Lottie.
 - Skia.
 - Chart libraries.
-- Liquid Glass dependency until the fallback design is implemented and an iOS
-  spike confirms it is worth adding.
+- Liquid Glass dependency until a concrete production use case exists and an
+  iOS spike confirms it is worth adding.
 
 ## Files To Create Or Update
 
@@ -185,7 +188,6 @@ Common components:
 - `src/components/common/ErrorState/*`
 - `src/components/common/ResultBadge/*`
 - `src/components/common/FeedbackHighlight/*`
-- `src/components/common/GlassSurface/*`
 
 Upgrade existing components:
 
@@ -329,7 +331,8 @@ Exit:
 - ComponentPlayground no longer looks like generic web card UI.
 - Existing primitives feel native and elegant in iOS and Android light/dark
   mode.
-- `GlassSurface` fallback exists and is only used in approved compact contexts.
+- The temporary glass fallback from this historical slice was retired in Slice
+  13 because no approved production use case remained.
 - Android uses tonal/elevated native treatment instead of fake iOS glass.
 
 ### Slice 5: Card And Linked Surface Foundation
@@ -383,7 +386,7 @@ Out of scope:
 - Practice redesign.
 - New product behavior.
 - Repository or service changes.
-- GlassSurface work.
+- Platform material work.
 - Broad common-component redesign.
 - Backend, notification, or monetization work.
 
@@ -410,8 +413,8 @@ Tasks:
   related.
 - Use solid colors only for progress bars, badges, tabs, chips, and pressed
   states.
-- Do not include `GlassSurface` fallback in this slice. Linked-surface `Card`
-  must not depend on glass.
+- Do not include a glass fallback in this slice. Linked-surface `Card` must not
+  depend on glass.
 
 Exit:
 
@@ -671,7 +674,7 @@ Evidence:
 
 ### Slice 13: Platform-Native Surface And Motion Polish
 
-Status: planned. Active next slice.
+Status: done.
 
 Goal: platform-specific polish without Android pretending to be iOS.
 
@@ -687,8 +690,8 @@ Tasks:
 - Use iOS platform-material treatment only where it has a concrete use outside
   linked-surface `Card`.
 - Keep linked-surface `Card` opaque and solid on both platforms.
-- Do not create or retain a general GlassSurface abstraction without an
-  approved production use case.
+- Do not create or retain a general glass abstraction without an approved
+  production use case.
 - Do not add gradients.
 
 Exit:
@@ -697,7 +700,26 @@ Exit:
 - Android does not look like an iOS clone.
 - Linked-surface `Card` remains solid, opaque, and platform-consistent.
 
+Evidence:
+
+- `PressableMotionView` now uses platform-specific default press scale and a
+  no-transform transition when reduced motion is enabled.
+- `Chip` and `SegmentedControl` expose Android ripple feedback while keeping
+  existing iOS press treatment.
+- Theme shadows now choose iOS shadow props on iOS and Android elevation on
+  Android.
+- The public general glass abstraction was removed from shared common exports,
+  ComponentPlayground, and Expo UI showcase examples.
+- `NoticeCard` and `PocCard.Section` use solid tone fills only; no gradients are
+  used for notice hierarchy.
+- Linked-surface `Card` remains opaque and solid.
+- `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
+- iOS simulator launch, ComponentPlayground surface review, and Practice input
+  with keyboard open passed.
+
 ### Slice 14: Accessibility And Reduced Motion Audit
+
+Status: planned. Active next slice.
 
 Goal: make the polished UI usable.
 
@@ -761,8 +783,8 @@ Exit:
 - Slice 7 is closed; Home is unblocked as the next production integration pilot.
 - Home is the production integration pilot and blocks Practice.
 - Practice blocks Review because Review consumes Practice outcomes.
-- Progress and Library are closed. Platform-native surface and motion polish is
-  the next documented slice.
+- Progress, Library, and platform-native surface/motion polish are closed.
+  Accessibility and reduced motion audit is the next documented slice.
 - Accessibility requirements are continuous and must not be deferred entirely
   to Slice 14.
 

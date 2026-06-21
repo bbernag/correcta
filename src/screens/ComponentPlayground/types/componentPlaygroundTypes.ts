@@ -4,7 +4,6 @@ import type {
     ButtonSize,
     ButtonVariant,
     ChipVariant,
-    GlassSurfaceVariant,
     IconButtonSize,
     IconButtonVariant,
     IconName,
@@ -100,12 +99,6 @@ export type ComponentPlaygroundHapticAction = {
     icon: IconName;
     label: string;
     variant: IconButtonVariant;
-};
-
-export type ComponentPlaygroundGlassExample = {
-    icon: IconName;
-    label: string;
-    variant: GlassSurfaceVariant;
 };
 
 export type ComponentPlaygroundSquircleExample = {

@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slices 1-12 are implemented and verified. The next visual
-polish work starts with Slice 13, Platform-Native Surface And Motion Polish.
+Status: partial. Slices 1-13 are implemented and verified. The next visual
+polish work starts with Slice 14, Accessibility And Reduced Motion Audit.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -420,6 +420,37 @@ Current pass, 2026-06-20:
   `/tmp/correcta-slice12-ios-library-history-top.png`, and
   `/tmp/correcta-slice12-ios-library-history-attempts.png`.
 
+## Slice 13 Evidence
+
+Recorded before starting Accessibility And Reduced Motion Audit.
+
+Current pass, 2026-06-21:
+
+- `PressableMotionView` now uses platform-specific press scale defaults and a
+  reduced-motion transition that removes transform animation.
+- `Chip` and `SegmentedControl` now expose Android ripple feedback through
+  React Native `Pressable`.
+- Theme shadows now select platform-native treatment: iOS shadow props on iOS
+  and Android elevation on Android.
+- The public general glass abstraction was removed from shared common exports
+  and showcase-only surfaces.
+- ComponentPlayground now describes and renders platform surfaces and
+  SquircleSurface examples without a glass section.
+- Notice surfaces use solid tone fills instead of gradient backgrounds.
+- `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
+- Metro status probe returned `packager-status:running`.
+- iOS simulator launch passed for app id `com.luisgarcia.correcta`.
+- iOS snapshots verified Home, ComponentPlayground top, ComponentPlayground
+  surface/shape sections, and Practice input with the keyboard open.
+- `agent-device react-native dismiss-overlay` reported no safe dismiss target
+  for a tool-detected overlay; annotated screenshot evidence showed normal app
+  content instead of a visible warning body.
+- iOS screenshots:
+  `/tmp/correcta-slice13-ios-component-top.png`,
+  `/tmp/correcta-slice13-ios-component-overlay-refs.png`,
+  `/tmp/correcta-slice13-ios-component-surfaces.png`, and
+  `/tmp/correcta-slice13-ios-practice-input.png`.
+
 ## Progress
 
 - Progress hero card summarizes improvement clearly.
@@ -466,7 +497,7 @@ Current pass, 2026-06-20:
 - Large text does not clip cards.
 - VoiceOver reads icon-only buttons correctly.
 - Important feedback result is announced when useful.
-- Glass surfaces, if enabled, do not reduce readability.
+- Platform material effects, if introduced later, do not reduce readability.
 - Dark mode surfaces are separated clearly.
 
 ## Android QA

@@ -1,10 +1,11 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slices 1-12 are complete. The shared component checkpoint has
+Status: partial. Slices 1-13 are complete. The shared component checkpoint has
 source-audit, automated, iOS, and Android evidence. Home, Practice, Review, and
 Progress production-screen polish have iOS evidence, and Library polish now has
-iOS evidence. The remaining visual polish work starts with Slice 13,
-Platform-Native Surface And Motion Polish.
+iOS evidence. Platform-native surface and motion polish has automated checks
+and iOS evidence. The remaining visual polish work starts with Slice 14,
+Accessibility And Reduced Motion Audit.
 
 ## Slice 1: Theme Token Design System
 
@@ -138,7 +139,7 @@ Result: pass.
 
 Implemented:
 
-- `GlassSurface` fallback abstraction in `src/components/common/GlassSurface`.
+- Temporary public glass fallback abstraction, later removed in Slice 13.
 - Softer Button, IconButton, Surface, and TextInput visual states.
 - Loading buttons keep their active variant treatment while disabling
   interaction and exposing busy state.
@@ -520,9 +521,70 @@ Known follow-ups:
 
 - Android Library evidence should be added during the next broader
   cross-platform screen polish pass.
-- Slice 13 should focus on platform-native surface, motion, haptic restraint,
-  keyboard transitions, safe areas, and material usage across the app.
+- Android Library evidence should be covered in the final cross-platform QA
+  pass.
 
 Next phase:
 
-- Start Slice 13, Platform-Native Surface And Motion Polish.
+- Completed by Slice 13, Platform-Native Surface And Motion Polish.
+
+## Slice 13: Platform-Native Surface And Motion Polish
+
+Date: 2026-06-21.
+
+Result: pass. Platform press feedback, reduced-motion fallback, Android ripple,
+platform elevation, and no-general-glass decisions are implemented. iOS launch,
+ComponentPlayground, and Practice input paths still run.
+
+Implemented:
+
+- `PressableMotionView` now defaults to a slightly different press scale per
+  platform and removes transform animation when reduced motion is enabled.
+- `Chip` and `SegmentedControl` now use Android ripple feedback.
+- Theme shadows now use iOS shadow props on iOS and Android elevation on
+  Android.
+- The public general glass abstraction was removed from shared common exports,
+  ComponentPlayground, and Expo UI showcase examples.
+- ComponentPlayground now renders platform surface examples and SquircleSurface
+  examples without a glass section.
+- `NoticeCard` and `PocCard.Section` no longer use gradient backgrounds.
+- Linked-surface `Card` remains solid, opaque, and unchanged by the material
+  cleanup.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- Source audit: no remaining source references to the removed public glass
+  component or notice gradient helpers.
+- Metro status probe: `packager-status:running`.
+- iOS simulator app id: `com.luisgarcia.correcta`.
+- iOS launch: `agent-device open com.luisgarcia.correcta --session
+slice13-ios --platform ios --relaunch` succeeded.
+- iOS runtime path: app launch -> Home -> Open component check -> surface and
+  shape sections.
+- iOS runtime path: app launch -> Practice tab -> fill answer field with
+  keyboard open.
+
+Evidence:
+
+- iOS ComponentPlayground top:
+  `/tmp/correcta-slice13-ios-component-top.png`
+- iOS ComponentPlayground annotated overlay check:
+  `/tmp/correcta-slice13-ios-component-overlay-refs.png`
+- iOS ComponentPlayground surfaces:
+  `/tmp/correcta-slice13-ios-component-surfaces.png`
+- iOS Practice input with keyboard:
+  `/tmp/correcta-slice13-ios-practice-input.png`
+
+Known follow-ups:
+
+- Android runtime screenshots for ripple/elevation should be captured during
+  Slice 15 final cross-platform QA.
+- The accessibility audit in Slice 14 should verify labels, focus, text
+  scaling, contrast, and reduced motion behavior across the polished screens.
+
+Next phase:
+
+- Start Slice 14, Accessibility And Reduced Motion Audit.

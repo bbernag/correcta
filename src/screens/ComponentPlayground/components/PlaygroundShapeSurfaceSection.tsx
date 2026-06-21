@@ -1,16 +1,8 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {
-    AppText,
-    GlassSurface,
-    Icon,
-    SquircleSurface,
-} from "../../../components/common";
-import {
-    COMPONENT_PLAYGROUND_GLASS_EXAMPLES,
-    COMPONENT_PLAYGROUND_SQUIRCLE_EXAMPLES,
-} from "../constants/componentPlaygroundConstants";
+import {AppText, SquircleSurface} from "../../../components/common";
+import {COMPONENT_PLAYGROUND_SQUIRCLE_EXAMPLES} from "../constants/componentPlaygroundConstants";
 import {PlaygroundComponentSample} from "./PlaygroundComponentSample";
 import {PlaygroundSectionBody} from "./PlaygroundSectionBody";
 import {PlaygroundSectionHeader} from "./PlaygroundSectionHeader";
@@ -20,7 +12,7 @@ export function PlaygroundShapeSurfaceSection() {
     return (
         <PlaygroundSectionRoot>
             <PlaygroundSectionHeader
-                description="Direct radius and glass wrappers, including the variants used by compact controls and tab shells."
+                description="Direct radius wrappers used by compact controls and platform-native surface shells."
                 eyebrow="Containers"
                 title="Shape surfaces"
             />
@@ -44,38 +36,6 @@ export function PlaygroundShapeSurfaceSection() {
                             >
                                 <AppText variant="label">{item.label}</AppText>
                             </SquircleSurface>
-                        </PlaygroundComponentSample>
-                    ))}
-                </View>
-                <AppText variant="label">GlassSurface</AppText>
-                <View style={styles.sampleGrid}>
-                    {COMPONENT_PLAYGROUND_GLASS_EXAMPLES.map((item) => (
-                        <PlaygroundComponentSample
-                            key={item.variant}
-                            title={`GlassSurface / ${item.variant}`}
-                            style={styles.sample}
-                        >
-                            <GlassSurface
-                                variant={item.variant}
-                                style={[
-                                    styles.glassSample,
-                                    item.variant === "overlay"
-                                        ? styles.overlayGlassSample
-                                        : undefined,
-                                    item.variant === "tabBar"
-                                        ? styles.tabBarGlassSample
-                                        : undefined,
-                                ]}
-                            >
-                                <Icon
-                                    name={item.icon}
-                                    size="dense"
-                                    tone="accent"
-                                />
-                                <AppText variant="caption" tone="accent">
-                                    {item.label}
-                                </AppText>
-                            </GlassSurface>
                         </PlaygroundComponentSample>
                     ))}
                 </View>
@@ -108,17 +68,5 @@ const styles = StyleSheet.create((theme) => ({
     pillSquircleSample: {
         alignItems: "center",
         minWidth: 148,
-    },
-    glassSample: {
-        alignItems: "center",
-        flexDirection: "row",
-        gap: theme.spacing.xs,
-    },
-    overlayGlassSample: {
-        alignItems: "flex-start",
-        minWidth: 160,
-    },
-    tabBarGlassSample: {
-        minWidth: 180,
     },
 }));

@@ -3,6 +3,10 @@
 Status: implemented and verified on iOS simulator and Android emulator. This
 phase ran after Slice 3 and before adding new shared visual components.
 
+Historical note: this Slice 4 document describes the temporary glass fallback
+that existed during the native elegance pass. Slice 13 later retired the public
+general glass abstraction because no approved production use case remained.
+
 ## Status Correction
 
 Slice 3 completed the technical primitive foundation: typed APIs, variants,
@@ -39,8 +43,8 @@ more editorial: a precise annotation mark, not a heavy warning stripe.
 
 ## Liquid Glass Rules
 
-Use a `GlassSurface` abstraction before adopting any required Liquid Glass
-dependency.
+Use a shared platform-material abstraction before adopting any required Liquid
+Glass dependency. The earlier public glass fallback was retired in Slice 13.
 
 - iOS: allow glass only for compact controls, floating headers, tab/floating
   action backgrounds, small menus, and session overlays.
@@ -51,11 +55,12 @@ dependency.
 
 Dependency decision:
 
-1. Build `GlassSurface` fallback first.
+1. Build a narrowly scoped fallback only after a concrete production use case is
+   approved.
 2. Verify fallback in iOS and Android light/dark mode.
 3. Spike the Liquid Glass dependency only if the fallback cannot achieve the
    desired native iOS feel.
-4. Keep dependency usage behind `GlassSurface` so screens never import it.
+4. Keep dependency usage behind a shared wrapper so screens never import it.
 
 ## Component Specs
 
@@ -76,9 +81,9 @@ surface treatment, not washed-out brand color.
 
 ### IconButton
 
-Icon buttons should feel like native toolbar controls. iOS surface variants may
-use `GlassSurface` when floating. Android should use tonal circles/squircles
-with ripple. Touch target remains at least 44 dp.
+Icon buttons should feel like native toolbar controls. Floating iOS material
+treatment requires a concrete production use case. Android should use tonal
+circles/squircles with ripple. Touch target remains at least 44 dp.
 
 ### Screen
 
@@ -93,11 +98,12 @@ separation is needed. Prefer soft fill, subtle shadow on iOS, and tonal
 elevation on Android. Status surfaces use a slim correction rail plus semantic
 copy, not loud full-card color.
 
-### GlassSurface
+### Platform Material Treatment
 
-Variants: `floatingControl`, `headerControl`, `tabBar`, `overlay`, `menu`.
-Long-form content is not allowed inside this component. The component owns all
-platform differences and fallbacks.
+No public shared component currently exists for general glass/material use.
+Future variants, if approved, should be narrowly scoped to compact controls such
+as floating controls, header controls, tab bars, overlays, or menus. Long-form
+content is not allowed inside material treatment.
 
 ### TextInput
 
@@ -152,7 +158,6 @@ least a 44 dp target.
 - `src/components/common/Screen/*`
 - `src/components/common/Surface/*`
 - `src/components/common/TextInput/*`
-- `src/components/common/GlassSurface/*`
 - `src/screens/ComponentPlayground/*`
 - `src/theme/*` only if token gaps block the native direction.
 
@@ -164,7 +169,8 @@ screen business logic.
 - ComponentPlayground no longer looks like generic web card UI.
 - The primitives feel native on iOS and Android using platform-appropriate
   treatment.
-- `GlassSurface` fallback exists and is used only in approved compact contexts.
+- No general public glass abstraction remains unless a concrete production use
+  case is approved.
 - Buttons, inputs, icon buttons, and surfaces have approved light and dark
   visual states.
 - Learning content remains more readable than decorative surfaces.
@@ -176,7 +182,7 @@ screen business logic.
 - Launch iOS simulator and Android emulator.
 - Capture ComponentPlayground screenshots in light and dark mode.
 - Verify button, input, surface, icon button, disabled, loading, error, success,
-  and glass fallback states.
+  and any approved platform-material states.
 - Verify no React Native runtime errors or LogBox overlays.
 
 ## QA Evidence
@@ -227,7 +233,8 @@ Notes:
 ## AI Implementation Checklist
 
 - Treat Slice 3 visuals as rejected.
-- Build or refine `GlassSurface` before applying glass treatment.
+- Build or refine a narrowly scoped shared wrapper before applying any platform
+  material treatment.
 - Remove unnecessary borders from default surfaces.
 - Reduce card stacking in ComponentPlayground.
 - Make primary buttons native, calm, and Scribe Blue.

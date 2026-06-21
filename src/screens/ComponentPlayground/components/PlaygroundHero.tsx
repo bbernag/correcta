@@ -1,21 +1,21 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, GlassSurface, Icon} from "../../../components/common";
+import {AppText, Icon, Surface} from "../../../components/common";
 
 export function PlaygroundHero() {
     return (
         <View style={styles.hero}>
-            <GlassSurface variant="headerControl" style={styles.passBadge}>
+            <Surface variant="tonal" style={styles.passBadge}>
                 <Icon name="check" size="dense" tone="accent" />
                 <AppText variant="caption" tone="accent">
                     Native elegance pass
                 </AppText>
-            </GlassSurface>
+            </Surface>
             <AppText variant="titleLarge">Common primitives</AppText>
             <AppText variant="bodySmall" tone="secondary">
                 A device QA surface for Scribe Blue typography, controls,
-                feedback states, glass fallback, and haptics.
+                feedback states, platform surfaces, and haptics.
             </AppText>
         </View>
     );

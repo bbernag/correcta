@@ -315,7 +315,8 @@ Shared surface family:
 - `PocCard`: POC linked surface group using `FastSquircleView` sections and
   bridge/cutout views.
 - `NoticeCard`: status/feedback notice built on `PocCard`.
-- `GlassSurface`: compact platform-aware glass/tonal fallback surface.
+- No general shared glass component is currently approved. Compact platform
+  material treatment needs a concrete production use case before implementation.
 
 Card rules:
 

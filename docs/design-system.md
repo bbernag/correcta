@@ -68,7 +68,7 @@ Alternate directions considered:
 | `surface.elevated`      | `#FBFCFE`   | Raised cards and floating panels              |
 | `surface.tonal`         | `#E8EEF8`   | Soft selected areas and quiet panels          |
 | `surface.inverse`       | `#111827`   | Inverse surfaces                              |
-| `surface.glassFallback` | `#FFFFFFE6` | iOS glass fallback or floating nav fallback   |
+| `surface.glassFallback` | `#FFFFFFE6` | Compact floating-surface fallback             |
 | `text.primary`          | `#111827`   | Main text                                     |
 | `text.secondary`        | `#3F4B5B`   | Secondary copy                                |
 | `text.muted`            | `#6B7280`   | Metadata and helper text                      |
@@ -100,7 +100,7 @@ Alternate directions considered:
 | `surface.elevated`      | `#1E2633`   | Raised cards and floating panels              |
 | `surface.tonal`         | `#202A3A`   | Soft selected areas and quiet panels          |
 | `surface.inverse`       | `#F6F7FA`   | Inverse surfaces                              |
-| `surface.glassFallback` | `#171E28E6` | iOS glass fallback or floating nav fallback   |
+| `surface.glassFallback` | `#171E28E6` | Compact floating-surface fallback             |
 | `text.primary`          | `#F4F7FB`   | Main text                                     |
 | `text.secondary`        | `#C6CFDB`   | Secondary copy                                |
 | `text.muted`            | `#8E9AAC`   | Metadata and helper text                      |
@@ -248,7 +248,8 @@ iOS:
 
 - Use subtle shadow tokens for elevated surfaces.
 - Use opacity and shadow sparingly. The app should not look like stacked cards.
-- Use glass fallback only on compact controls, not reading surfaces.
+- Use compact floating-surface treatment only for controls, not reading
+  surfaces.
 
 | Token                  | Shadow color  | Opacity | Radius | Offset                   | Use                               |
 | ---------------------- | ------------- | ------: | -----: | ------------------------ | --------------------------------- |
@@ -339,23 +340,26 @@ and at least a 44 by 44 touch target.
 | Inputs          | Soft focus ring, gentle surface change                                | Stronger outline/fill contrast, keyboard-safe spacing                |
 | Press feedback  | Scale/opacity plus subtle haptic                                      | Ripple plus subtle scale only when helpful                           |
 | Haptics         | Selection/success/warning on meaningful actions                       | Use if supported; never depend on haptics for feedback               |
-| Sheets/overlays | May use glass fallback for compact controls                           | Use tonal elevated surface, no glass imitation                       |
+| Sheets/overlays | Use solid or platform material treatment only with a concrete need    | Use tonal elevated surface, no glass imitation                       |
 | Dark mode       | Deep cool surfaces with soft contrast                                 | Similar tokens, stronger containment and ripple visibility           |
 | Keyboard        | Preserve input visibility and submit flow                             | Preserve keyboard checkmark and dismissal behavior                   |
 
 ## Liquid Glass Decision
 
-Do not make a Liquid Glass dependency required for this phase.
+Do not make a Liquid Glass dependency required for this phase. The current
+shared component API does not retain a general glass abstraction because no
+approved production use case exists.
 
-Build `GlassSurface` first with a safe fallback:
+Use existing solid surfaces first:
 
-- iOS fallback: `surface.glassFallback`, subtle border, mild shadow, optional
-  backdrop-like opacity only on compact controls.
-- Android fallback: `surface.tonal` or `surface.elevated`, clear border, ripple
+- iOS: solid or subtly elevated controls unless a future spike proves a
+  platform material is necessary.
+- Android: `surface.tonal` or `surface.elevated`, clear containment, and ripple
   on interactive controls.
 
 Liquid Glass may apply only after a separate iOS build spike proves
-compatibility. Even then, it is allowed only for:
+compatibility and the team approves a concrete production use case. Candidate
+areas remain limited to:
 
 - Bottom tab background.
 - Floating Practice action bar.
@@ -491,23 +495,6 @@ Rules:
   so screen readers announce it.
 - On a non-canvas background, pass `cutoutColor` so the notch cutouts match the
   surface behind the note.
-
-### GlassSurface
-
-Files:
-
-- `src/components/common/GlassSurface/GlassSurface.tsx`
-- `src/components/common/GlassSurface/glassSurfaceTypes.ts`
-- `src/components/common/GlassSurface/index.ts`
-
-Variants: `tabBar`, `floatingControl`, `overlay`, `chip`.
-
-Rules:
-
-- Use safe fallback first.
-- Do not put long text content inside glass surfaces.
-- Android uses tonal fallback.
-- The component owns platform differences.
 
 ### TextInput
 
@@ -940,8 +927,9 @@ Feedback language:
 10. Polish Review.
 11. Polish Library.
 12. Polish Progress.
-13. Add platform-specific GlassSurface/native polish.
-14. Run accessibility, reduced motion, and device QA.
+13. Add platform-native surface and motion polish.
+14. Run accessibility and reduced motion audit.
+15. Run final device QA and evidence capture.
 
 ## Design Risks
 

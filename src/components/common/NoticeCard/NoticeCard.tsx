@@ -1,14 +1,12 @@
 import {View} from "react-native";
 import {EaseView, type Transition} from "react-native-ease";
-import {StyleSheet, useUnistyles} from "react-native-unistyles";
+import {StyleSheet} from "react-native-unistyles";
 
 import {useReducedMotion} from "../../../hooks/useReducedMotion";
-import type {AppColors} from "../../../theme/colors";
 import {motion} from "../../../theme";
 import {AppText} from "../AppText";
 import {Icon, type IconName} from "../Icon";
 import {PocCard} from "../PocCard";
-import {getNoticeCardGradient} from "./noticeCardColors";
 import type {NoticeCardProps, NoticeCardTone} from "./noticeCardTypes";
 
 const TONE_ICONS: Record<NoticeCardTone, IconName> = {
@@ -23,20 +21,6 @@ const TONE_LABELS: Record<NoticeCardTone, string> = {
     warning: "Warning",
     danger: "Error",
     info: "Note",
-};
-
-const TONE_SOFT_COLORS: Record<NoticeCardTone, keyof AppColors> = {
-    success: "feedbackSuccessSoft",
-    warning: "feedbackWarningSoft",
-    danger: "feedbackDangerSoft",
-    info: "feedbackInfoSoft",
-};
-
-const TONE_STRONG_COLORS: Record<NoticeCardTone, keyof AppColors> = {
-    success: "feedbackSuccess",
-    warning: "feedbackWarning",
-    danger: "feedbackDanger",
-    info: "feedbackInfo",
 };
 
 const NOTICE_CARD_BRIDGE_SPAN = 0.8;
@@ -60,26 +44,17 @@ export function NoticeCard({
     tone,
     ...viewProps
 }: NoticeCardProps) {
-    const {theme} = useUnistyles();
     const isReducedMotionEnabled = useReducedMotion();
-    const gradient = getNoticeCardGradient(
-        theme.colors[TONE_SOFT_COLORS[tone]],
-        theme.colors[TONE_STRONG_COLORS[tone]]
-    );
 
     return (
         <PocCard
-            bridgeColor={gradient.seam}
             bridgeSpan={NOTICE_CARD_BRIDGE_SPAN}
             cutoutColor={cutoutColor}
             style={style}
             tone={tone}
             {...viewProps}
         >
-            <PocCard.Section
-                gradient={{from: gradient.top, to: gradient.seam}}
-                style={styles.titleSection}
-            >
+            <PocCard.Section style={styles.titleSection}>
                 <EaseView
                     animate={{
                         opacity: 1,
@@ -111,10 +86,7 @@ export function NoticeCard({
                     </View>
                 </EaseView>
             </PocCard.Section>
-            <PocCard.Section
-                gradient={{from: gradient.seam, to: gradient.bottom}}
-                style={styles.bodySection}
-            >
+            <PocCard.Section style={styles.bodySection}>
                 <EaseView
                     animate={{
                         opacity: 1,

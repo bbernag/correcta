@@ -19,8 +19,6 @@ export {ErrorState} from "./ErrorState";
 export type {ErrorStateProps} from "./ErrorState";
 export {FeedbackHighlight} from "./FeedbackHighlight";
 export type {FeedbackHighlightProps} from "./FeedbackHighlight";
-export {GlassSurface} from "./GlassSurface";
-export type {GlassSurfaceProps, GlassSurfaceVariant} from "./GlassSurface";
 export {Icon} from "./Icon";
 export type {IconName, IconProps, IconSize, IconTone} from "./Icon";
 export {IconButton} from "./IconButton";

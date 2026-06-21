@@ -422,7 +422,8 @@ relevant.
 - Screen container with safe areas and scrolling variants.
 - Surface with primary, elevated, muted, outline, tonal, and inverse variants.
 - Card / Linked Surface Group with one-card, two-card, and multi-card layouts.
-- GlassSurface for compact iOS-only/fallback use.
+- Compact platform material treatment only after a concrete production use case
+  is approved; do not assume a general glass component exists.
 - Icon and IconButton.
 
 ### Actions

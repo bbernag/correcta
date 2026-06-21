@@ -1,7 +1,6 @@
 import type {
     ComponentPlaygroundButtonExample,
     ComponentPlaygroundChipExample,
-    ComponentPlaygroundGlassExample,
     ComponentPlaygroundHapticAction,
     ComponentPlaygroundIconButtonExample,
     ComponentPlaygroundIconSample,
@@ -236,40 +235,6 @@ export const COMPONENT_PLAYGROUND_HAPTIC_ACTIONS: ComponentPlaygroundHapticActio
             icon: "error",
             label: "Error",
             variant: "danger",
-        },
-    ];
-
-export const COMPONENT_PLAYGROUND_GLASS_EXAMPLES: ComponentPlaygroundGlassExample[] =
-    [
-        {
-            icon: "settings",
-            label: "Header",
-            variant: "headerControl",
-        },
-        {
-            icon: "goal",
-            label: "Tab bar",
-            variant: "tabBar",
-        },
-        {
-            icon: "sentence",
-            label: "Overlay",
-            variant: "overlay",
-        },
-        {
-            icon: "hint",
-            label: "Floating",
-            variant: "floatingControl",
-        },
-        {
-            icon: "menu",
-            label: "Menu",
-            variant: "menu",
-        },
-        {
-            icon: "check",
-            label: "Chip",
-            variant: "chip",
         },
     ];
 

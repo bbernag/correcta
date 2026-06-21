@@ -1,13 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {
-    AppText,
-    GlassSurface,
-    Icon,
-    Screen,
-    Surface,
-} from "../../components/common";
+import {AppText, Icon, Screen, Surface} from "../../components/common";
 import {EXPO_UI_CATALOG_SECTIONS} from "./constants/expoUiShowcaseConstants";
 import {
     ExpoUiCatalogSection,
@@ -28,12 +22,12 @@ export function ExpoUiShowcaseScreen() {
     return (
         <Screen contentContainerStyle={styles.screenContent}>
             <View style={styles.hero}>
-                <GlassSurface variant="headerControl" style={styles.badge}>
+                <Surface variant="tonal" style={styles.badge}>
                     <Icon name="settings" size="dense" tone="accent" />
                     <AppText variant="caption" tone="accent">
                         Expo UI SDK 56
                     </AppText>
-                </GlassSurface>
+                </Surface>
                 <AppText variant="titleLarge">Expo UI showcase</AppText>
                 <AppText variant="bodySmall" tone="secondary">
                     Native universal controls, drop-in replacements, SwiftUI,

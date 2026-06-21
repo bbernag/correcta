@@ -21,15 +21,9 @@ export type PocCardProps = PropsWithChildren<
     }
 >;
 
-export type PocCardSectionGradient = {
-    from: string;
-    to: string;
-};
-
 export type PocCardSectionProps = PropsWithChildren<
     Omit<ViewProps, "style"> & {
         contentStyle?: StyleProp<ViewStyle>;
-        gradient?: PocCardSectionGradient;
         style?: StyleProp<ViewStyle>;
     }
 >;

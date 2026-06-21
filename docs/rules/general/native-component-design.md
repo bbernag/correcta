@@ -368,7 +368,6 @@ Shared components:
 src/components/common/AppText/
 src/components/common/Button/
 src/components/common/Card/
-src/components/common/GlassSurface/
 src/components/common/IconButton/
 src/components/common/Surface/
 src/components/common/TextInput/

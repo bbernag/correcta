@@ -1,6 +1,6 @@
 import {Pressable, View} from "react-native";
 import {EaseView, type Transition} from "react-native-ease";
-import {StyleSheet} from "react-native-unistyles";
+import {StyleSheet, useUnistyles} from "react-native-unistyles";
 
 import {useReducedMotion} from "../../../hooks/useReducedMotion";
 import {motion} from "../../../theme";
@@ -39,6 +39,8 @@ export function SegmentedControl({
     style,
     value,
 }: SegmentedControlProps) {
+    const {theme} = useUnistyles();
+
     return (
         <SquircleSurface
             accessibilityLabel={accessibilityLabel}
@@ -51,6 +53,9 @@ export function SegmentedControl({
 
                 return (
                     <Pressable
+                        android_ripple={{
+                            color: theme.colors.accentPrimarySoft,
+                        }}
                         accessibilityLabel={
                             option.accessibilityLabel ?? option.label
                         }

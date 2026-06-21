@@ -95,6 +95,9 @@ export function Chip({
 
     return (
         <Pressable
+            android_ripple={{
+                color: theme.colors.accentPrimarySoft,
+            }}
             accessibilityRole="button"
             accessibilityState={{disabled, selected}}
             disabled={disabled}

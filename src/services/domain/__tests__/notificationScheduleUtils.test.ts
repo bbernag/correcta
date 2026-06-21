@@ -135,6 +135,30 @@ describe("getNextReminderLabel", () => {
             })
         ).toBe("Notifications are blocked in system settings");
     });
+
+    it("labels the actual scheduled time after a quiet-hours deferral", () => {
+        const fridayNoon = new Date(2026, 5, 19, 12, 0, 0);
+        const preferences = makePreferences({
+            days: ["friday", "saturday"],
+            reminderTime: "22:00",
+            quietHoursStart: "21:00",
+            quietHoursEnd: "07:00",
+        });
+        const scheduledReminders = buildScheduledReminders({
+            dueReviewCount: 0,
+            now: fridayNoon,
+            preferences,
+        });
+
+        // Requested 22:00 but deferred to 07:00 — the label must show 07:00.
+        expect(
+            getNextReminderLabel({
+                nativePermissionStatus: "granted",
+                preferences,
+                scheduledReminders,
+            })
+        ).toBe("Practice with Correcta at 07:00");
+    });
 });
 
 describe("getPreferencesSummary", () => {

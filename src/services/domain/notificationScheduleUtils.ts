@@ -82,7 +82,9 @@ export function getNextReminderLabel({
         return "No reminders scheduled";
     }
 
-    return `${nextReminder.title} at ${preferences.reminderTime}`;
+    return `${nextReminder.title} at ${formatClockTime(
+        new Date(nextReminder.scheduledFor)
+    )}`;
 }
 
 export function getPreferencesSummary(preferences: NotificationPreferences) {
@@ -91,6 +93,13 @@ export function getPreferencesSummary(preferences: NotificationPreferences) {
     }
 
     return `${preferences.days.length} days, quiet ${preferences.quietHoursStart}-${preferences.quietHoursEnd}`;
+}
+
+function formatClockTime(date: Date) {
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${hours}:${minutes}`;
 }
 
 function getNextScheduledDate({

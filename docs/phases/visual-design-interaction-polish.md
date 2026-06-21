@@ -13,7 +13,9 @@ saved-content cards, history badges, retry/removal actions, and empty states.
 Platform-native surface and motion polish is complete. Slice 14,
 Accessibility And Reduced Motion Audit, has source fixes, iOS evidence, and
 Android visual/reduced-motion evidence; Android accessibility-tree or TalkBack
-validation remains pending.
+validation remains pending. Slice 15 final QA evidence is recorded, so the
+visual phase remains partial only because of that Slice 14 Android accessibility
+validation gap.
 
 This phase turns the working local MVP into a polished native app experience
 before real backend and AI integration. The design target lives in
@@ -66,14 +68,16 @@ evidence is recorded for Slice 9, iOS Review evidence is recorded for Slice 10,
 iOS Progress evidence is recorded for Slice 11, iOS Library evidence is recorded
 for Slice 12, iOS platform-surface/input evidence is recorded for Slice 13, and
 iOS accessibility plus Android visual/reduced-motion evidence is recorded for
-Slice 14.
+Slice 14. Slice 15 records the final automated checks, iOS and Android debug
+installs, cross-platform MVP runtime path, screenshots, and final iOS
+app-running evidence.
 
 Next:
 
-1. Finish Slice 14 Android accessibility validation with TalkBack or a richer
-   accessibility-tree tool.
-2. Start Slice 15 Final QA And Evidence after the Slice 14 validation gap is
-   accepted or closed.
+1. Finish or explicitly accept the Slice 14 Android accessibility validation
+   gap.
+2. Keep Visual Design and Interaction Polish partial until that gap is closed
+   or accepted.
 
 ## Goal
 
@@ -785,6 +789,11 @@ Remaining:
 
 ### Slice 15: Final QA And Evidence
 
+Status: done. Automated checks, debug installs, iOS and Android visual/runtime
+QA, the MVP flow, and screenshot evidence are recorded. Release builds were not
+run because this repo exposes debug dev-client scripts in `package.json`; this
+slice used those project scripts as the feasible native build verification.
+
 Goal: close the phase with verified evidence.
 
 Tasks:
@@ -802,6 +811,20 @@ Tasks:
 Exit:
 
 - Current MVP behavior remains intact and visual QA evidence exists.
+
+Evidence:
+
+- `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
+- `npm run ios -- --no-bundler` succeeds on `iPhone 17`.
+- `npm run android -- --no-bundler` succeeds on `Medium Phone API 36.1`.
+- iOS runtime path passes: Home -> Practice -> Check answer -> Feedback ->
+  Save word -> Save sentence -> Next prompt -> Review -> Progress -> Library.
+- Android runtime path passes: Home -> Practice builder -> Check answer ->
+  Feedback -> Save word -> Save sentence -> Next prompt -> Review -> Progress
+  -> Library.
+- Final iOS relaunch after all checks shows the app running on Home.
+- Android filtered accessibility snapshots still return an empty app tree; this
+  remains tracked under Slice 14 rather than Slice 15.
 
 ## Recommended Commit Order
 

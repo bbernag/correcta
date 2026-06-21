@@ -1,12 +1,12 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slices 1-13 are complete. The shared component checkpoint has
-source-audit, automated, iOS, and Android evidence. Home, Practice, Review, and
-Progress production-screen polish have iOS evidence, and Library polish now has
-iOS evidence. Platform-native surface and motion polish has automated checks
-and iOS evidence. Slice 14 has source fixes, iOS accessibility evidence, and
-Android visual/reduced-motion evidence; Android accessibility-tree or TalkBack
-validation remains pending.
+Status: partial. Slices 1-13 and 15 are complete. The shared component
+checkpoint has source-audit, automated, iOS, and Android evidence. Home,
+Practice, Review, and Progress production-screen polish have iOS evidence, and
+Library polish now has iOS evidence. Platform-native surface and motion polish
+has automated checks and iOS evidence. Slice 14 has source fixes, iOS
+accessibility evidence, and Android visual/reduced-motion evidence; Android
+accessibility-tree or TalkBack validation remains pending.
 
 ## Slice 1: Theme Token Design System
 
@@ -687,5 +687,69 @@ Known follow-ups:
 
 Next phase:
 
-- Finish or explicitly accept the remaining Android accessibility validation
-  gap, then start Slice 15 Final QA And Evidence.
+- Continued by Slice 15 Final QA And Evidence.
+
+## Slice 15: Final QA And Evidence
+
+Date: 2026-06-21.
+
+Result: pass for final automated checks, debug installs, MVP runtime flow, and
+cross-platform visual evidence. The overall visual polish phase remains partial
+because the Slice 14 Android accessibility-tree or TalkBack validation gap is
+still open.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- Metro status probe: `packager-status:running`.
+- iOS debug: `npm run ios -- --no-bundler` built, installed, and opened on
+  `iPhone 17`; result was build succeeded with warnings only.
+- Android debug: `npm run android -- --no-bundler` built, installed, and opened
+  on `Medium Phone API 36.1`; result was build successful with Gradle
+  deprecation warnings only.
+- iOS runtime path: Home -> Start daily practice -> enter answer -> Check
+  answer -> Feedback -> Save word -> Save sentence -> Next prompt -> Review ->
+  Progress -> Library.
+- Android runtime path: Home -> Start practice -> Builder mode -> select
+  `I need a coffee` -> Check answer -> Feedback -> Save word -> Save sentence
+  -> Next prompt -> Review -> Progress -> Library.
+- Final iOS app-running check after all commands: app relaunched to Home.
+- Android post-debug-install check: app rendered Home after reinstall.
+- Android filtered accessibility snapshot still returned `0` filtered app nodes
+  after `43` raw nodes; this remains tracked by Slice 14.
+- Release builds were not run because `package.json` exposes debug dev-client
+  scripts only; this pass used the feasible project-owned debug scripts.
+
+Evidence:
+
+- iOS Home: `/tmp/correcta-slice15-ios-home.png`
+- iOS Practice feedback:
+  `/tmp/correcta-slice15-ios-practice-feedback.png`
+- iOS Review: `/tmp/correcta-slice15-ios-review.png`
+- iOS Progress: `/tmp/correcta-slice15-ios-progress.png`
+- iOS Library: `/tmp/correcta-slice15-ios-library.png`
+- iOS final Home after all checks:
+  `/tmp/correcta-slice15-ios-final-home.png`
+- Android Home: `/tmp/correcta-slice15-android-home.png`
+- Android Practice: `/tmp/correcta-slice15-android-practice.png`
+- Android Practice builder:
+  `/tmp/correcta-slice15-android-practice-builder.png`
+- Android Practice builder completed answer:
+  `/tmp/correcta-slice15-android-practice-builder-complete.png`
+- Android Practice feedback:
+  `/tmp/correcta-slice15-android-practice-feedback.png`
+- Android Practice next prompt:
+  `/tmp/correcta-slice15-android-practice-next.png`
+- Android Review: `/tmp/correcta-slice15-android-review.png`
+- Android Progress: `/tmp/correcta-slice15-android-progress.png`
+- Android Library: `/tmp/correcta-slice15-android-library.png`
+- Android Home after debug install:
+  `/tmp/correcta-slice15-android-after-debug-install.png`
+
+Known follow-ups:
+
+- Finish or explicitly accept the remaining Android accessibility-tree or
+  TalkBack validation gap from Slice 14 before marking Visual Design and
+  Interaction Polish fully done.

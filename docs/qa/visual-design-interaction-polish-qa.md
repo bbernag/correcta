@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slices 1-13 are implemented and verified. Slice 14 has source
-fixes, iOS evidence, and Android visual/reduced-motion evidence; Android
+Status: partial. Slices 1-13 and 15 are implemented and verified. Slice 14 has
+source fixes, iOS evidence, and Android visual/reduced-motion evidence; Android
 accessibility-tree or TalkBack validation remains pending.
 
 Use this checklist when implementing and closing the Visual Design &
@@ -508,6 +508,51 @@ Current pass, 2026-06-21:
   `/tmp/correcta-slice14-android-progress.png`,
   `/tmp/correcta-slice14-android-dark-app-home.png`, and
   `/tmp/correcta-slice14-android-reduced-motion-app-home.png`.
+
+## Slice 15 Evidence
+
+Current pass, 2026-06-21:
+
+- `npm run typecheck` passed.
+- `npm run lint` passed.
+- `npm run format:check` passed.
+- Metro status probe returned `packager-status:running`.
+- `npm run ios -- --no-bundler` built, installed, and opened the iOS debug dev
+  client on `iPhone 17`; it completed with warnings only.
+- `npm run android -- --no-bundler` built, installed, and opened the Android
+  debug dev client on `Medium Phone API 36.1`; it completed with Gradle
+  deprecation warnings only.
+- iOS runtime path passed: Home -> Start daily practice -> enter answer ->
+  Check answer -> Feedback -> Save word -> Save sentence -> Next prompt ->
+  Review -> Progress -> Library.
+- Android runtime path passed: Home -> Start practice -> Builder mode -> select
+  `I need a coffee` -> Check answer -> Feedback -> Save word -> Save sentence
+  -> Next prompt -> Review -> Progress -> Library.
+- Final iOS app-running check passed after all debug installs and QA with
+  `agent-device open com.luisgarcia.correcta --session slice15-ios --platform ios --device "iPhone 17" --relaunch`.
+- Android post-debug-install Home check passed.
+- Android filtered accessibility snapshot still returned `0` filtered app nodes
+  after `43` raw nodes; this remains the Slice 14 validation gap.
+- Release builds were not run because `package.json` exposes debug dev-client
+  scripts only; this pass used the feasible project-owned debug scripts.
+- iOS screenshots:
+  `/tmp/correcta-slice15-ios-home.png`,
+  `/tmp/correcta-slice15-ios-practice-feedback.png`,
+  `/tmp/correcta-slice15-ios-review.png`,
+  `/tmp/correcta-slice15-ios-progress.png`,
+  `/tmp/correcta-slice15-ios-library.png`, and
+  `/tmp/correcta-slice15-ios-final-home.png`.
+- Android screenshots:
+  `/tmp/correcta-slice15-android-home.png`,
+  `/tmp/correcta-slice15-android-practice.png`,
+  `/tmp/correcta-slice15-android-practice-builder.png`,
+  `/tmp/correcta-slice15-android-practice-builder-complete.png`,
+  `/tmp/correcta-slice15-android-practice-feedback.png`,
+  `/tmp/correcta-slice15-android-practice-next.png`,
+  `/tmp/correcta-slice15-android-review.png`,
+  `/tmp/correcta-slice15-android-progress.png`,
+  `/tmp/correcta-slice15-android-library.png`, and
+  `/tmp/correcta-slice15-android-after-debug-install.png`.
 
 ## Progress
 

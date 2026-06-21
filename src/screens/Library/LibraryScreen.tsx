@@ -1,4 +1,6 @@
 import type {NativeBottomTabScreenProps} from "@bottom-tabs/react-navigation";
+import type {CompositeScreenProps} from "@react-navigation/native";
+import type {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {useMemo} from "react";
 import {SectionList, View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
@@ -10,7 +12,7 @@ import {
     Screen,
     ScreenHeader,
 } from "../../components/common";
-import type {MainTabParamList} from "../../router/types";
+import type {MainTabParamList, RootStackParamList} from "../../router/types";
 import {HistoryAttemptCard} from "./components/HistoryAttemptCard";
 import {LibraryEmptyState} from "./components/LibraryEmptyState";
 import {LibraryFilterBar} from "./components/LibraryFilterBar";
@@ -28,9 +30,9 @@ import type {
 } from "./types/libraryTypes";
 import {createLibrarySections} from "./utils/librarySectionUtils";
 
-type LibraryScreenProps = NativeBottomTabScreenProps<
-    MainTabParamList,
-    "Library"
+type LibraryScreenProps = CompositeScreenProps<
+    NativeBottomTabScreenProps<MainTabParamList, "Library">,
+    NativeStackScreenProps<RootStackParamList>
 >;
 
 export function LibraryScreen({navigation}: LibraryScreenProps) {
@@ -55,7 +57,7 @@ export function LibraryScreen({navigation}: LibraryScreenProps) {
         library.records.mistakeGroups.length > 0;
 
     function handleRetryAttempt(record: LibraryAttemptRecord) {
-        navigation.navigate("Practice", {
+        navigation.navigate("PracticeSession", {
             restartKey: Date.now(),
             retrySentenceId: record.sentenceId,
         });

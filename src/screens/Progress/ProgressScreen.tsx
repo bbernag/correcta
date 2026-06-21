@@ -1,3 +1,5 @@
+import type {CompositeScreenProps} from "@react-navigation/native";
+import type {NativeStackScreenProps} from "@react-navigation/native-stack";
 import type {NativeBottomTabScreenProps} from "@bottom-tabs/react-navigation";
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
@@ -11,7 +13,7 @@ import {
     SectionHeader,
     Surface,
 } from "../../components/common";
-import type {MainTabParamList} from "../../router/types";
+import type {MainTabParamList, RootStackParamList} from "../../router/types";
 import {AchievementsCard} from "./components/AchievementsCard";
 import {BackendAiStatusCard} from "./components/BackendAiStatusCard";
 import {MistakeBreakdownCard} from "./components/MistakeBreakdownCard";
@@ -24,9 +26,9 @@ import {ReminderPreferencesCard} from "./components/ReminderPreferencesCard";
 import {WeeklyActivityCard} from "./components/WeeklyActivityCard";
 import {useProgressDashboard} from "./hooks/useProgressDashboard";
 
-type ProgressScreenProps = NativeBottomTabScreenProps<
-    MainTabParamList,
-    "Progress"
+type ProgressScreenProps = CompositeScreenProps<
+    NativeBottomTabScreenProps<MainTabParamList, "Progress">,
+    NativeStackScreenProps<RootStackParamList>
 >;
 
 export function ProgressScreen({navigation}: ProgressScreenProps) {
@@ -73,14 +75,16 @@ export function ProgressScreen({navigation}: ProgressScreenProps) {
     function handleRecommendationPress() {
         switch (dashboard.recommendation.action) {
             case "review":
-                navigation.navigate("Review");
+                navigation.navigate("ReviewSession");
                 return;
             case "library":
                 navigation.navigate("Library");
                 return;
             case "practice":
             default:
-                navigation.navigate("Practice", {restartKey: Date.now()});
+                navigation.navigate("PracticeSession", {
+                    restartKey: Date.now(),
+                });
         }
     }
 

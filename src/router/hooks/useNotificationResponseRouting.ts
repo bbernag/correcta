@@ -25,18 +25,29 @@ export function useNotificationResponseRouting(
                 return;
             }
 
-            // Skip when already on the target tab so a duplicate response
+            const currentRouteName = navigationRef.getCurrentRoute()?.name;
+
+            // Skip when already on the target route so a duplicate response
             // delivery (cold-start getLast + listener) does not navigate twice.
-            if (navigationRef.getCurrentRoute()?.name === route.routeName) {
+            if (isAlreadyOnNotificationTarget(currentRouteName, route)) {
                 return;
             }
 
             // Dismiss any modal stacked above the tabs first, otherwise the tap
             // only switches the tab hidden behind the still-visible modal.
             navigationRef.dispatch(StackActions.popToTop());
-            navigationRef.navigate("MainTabs", {
-                screen: route.routeName,
-            });
+            switch (route.routeName) {
+                case "Practice":
+                    navigationRef.navigate("PracticeSession");
+                    return;
+                case "Review":
+                    navigationRef.navigate("ReviewSession");
+                    return;
+                case "Progress":
+                    navigationRef.navigate("MainTabs", {
+                        screen: route.routeName,
+                    });
+            }
         },
         [navigationRef]
     );
@@ -73,4 +84,18 @@ export function useNotificationResponseRouting(
     }, [navigateToNotificationRoute]);
 
     return {handleNavigationReady};
+}
+
+function isAlreadyOnNotificationTarget(
+    currentRouteName: string | undefined,
+    route: NotificationResponseRoute
+) {
+    switch (route.routeName) {
+        case "Practice":
+            return currentRouteName === "PracticeSession";
+        case "Review":
+            return currentRouteName === "ReviewSession";
+        case "Progress":
+            return currentRouteName === "Progress";
+    }
 }

@@ -10,6 +10,8 @@ import {enableFreeze} from "react-native-screens";
 
 import {ComponentPlaygroundScreen} from "../screens/ComponentPlayground";
 import {ExpoUiShowcaseScreen} from "../screens/ExpoUiShowcase";
+import {PracticeScreen} from "../screens/Practice";
+import {ReviewScreen} from "../screens/Review";
 import {appThemes} from "../theme";
 import {useNotificationResponseRouting} from "./hooks/useNotificationResponseRouting";
 import {useReminderLaunchSync} from "./hooks/useReminderLaunchSync";
@@ -80,6 +82,16 @@ export function RootNavigator() {
                 <Stack.Screen
                     component={MainTabs}
                     name="MainTabs"
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    component={PracticeScreen}
+                    name="PracticeSession"
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    component={ReviewScreen}
+                    name="ReviewSession"
                     options={{headerShown: false}}
                 />
                 {__DEV__ ? (

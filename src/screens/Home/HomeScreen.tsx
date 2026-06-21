@@ -31,7 +31,7 @@ export function HomeScreen({navigation}: HomeScreenProps) {
     const home = useHomeViewModel();
 
     function handleStartPractice() {
-        navigation.navigate("Practice", {restartKey: Date.now()});
+        navigation.navigate("PracticeSession", {restartKey: Date.now()});
     }
 
     function handleOpenPlayground() {
@@ -43,7 +43,7 @@ export function HomeScreen({navigation}: HomeScreenProps) {
     }
 
     function handleOpenReview() {
-        navigation.navigate("Review");
+        navigation.navigate("ReviewSession");
     }
 
     function handleOpenLibrary() {

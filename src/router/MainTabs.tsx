@@ -4,9 +4,9 @@ import {useColorScheme} from "react-native";
 import {appThemes} from "../theme";
 import {HomeScreen} from "../screens/Home";
 import {LibraryScreen} from "../screens/Library";
-import {PracticeScreen} from "../screens/Practice";
+import {PracticeEntryScreen} from "../screens/Practice";
 import {ProgressScreen} from "../screens/Progress";
-import {ReviewScreen} from "../screens/Review";
+import {ReviewEntryScreen} from "../screens/Review";
 import type {MainTabParamList} from "./types";
 
 const Tab = createNativeBottomTabNavigator<MainTabParamList>();
@@ -36,7 +36,7 @@ export function MainTabs() {
                 options={{tabBarButtonTestID: "tab-home", title: "Home"}}
             />
             <Tab.Screen
-                component={PracticeScreen}
+                component={PracticeEntryScreen}
                 name="Practice"
                 options={{
                     tabBarButtonTestID: "tab-practice",
@@ -44,7 +44,7 @@ export function MainTabs() {
                 }}
             />
             <Tab.Screen
-                component={ReviewScreen}
+                component={ReviewEntryScreen}
                 name="Review"
                 options={{tabBarButtonTestID: "tab-review", title: "Review"}}
             />

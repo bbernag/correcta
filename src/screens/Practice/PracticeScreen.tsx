@@ -1,4 +1,4 @@
-import type {NativeBottomTabScreenProps} from "@bottom-tabs/react-navigation";
+import type {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {StyleSheet} from "react-native-unistyles";
 
 import {
@@ -11,7 +11,7 @@ import {
     Screen,
     Surface,
 } from "../../components/common";
-import type {MainTabParamList} from "../../router/types";
+import type {RootStackParamList} from "../../router/types";
 import {FeedbackPanel} from "./components/FeedbackPanel";
 import {PracticeActionBar} from "./components/PracticeActionBar";
 import {PracticeHeader} from "./components/PracticeHeader";
@@ -22,9 +22,9 @@ import {TranslationInputPanel} from "./components/TranslationInputPanel";
 import {usePracticeSwipeNavigation} from "./hooks/usePracticeSwipeNavigation";
 import {usePracticeViewModel} from "./hooks/usePracticeViewModel";
 
-type PracticeScreenProps = NativeBottomTabScreenProps<
-    MainTabParamList,
-    "Practice"
+type PracticeScreenProps = NativeStackScreenProps<
+    RootStackParamList,
+    "PracticeSession"
 >;
 
 export function PracticeScreen({route}: PracticeScreenProps) {

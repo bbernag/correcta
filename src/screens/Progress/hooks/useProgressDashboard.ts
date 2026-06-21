@@ -77,6 +77,7 @@ export function useProgressDashboard() {
                 const difficultReviewCount = reviewItems.filter((item) => {
                     return item.mastery === "learning";
                 }).length;
+                const weeklyActivity = createWeeklyActivity(attempts);
 
                 setDashboard({
                     achievements: createAchievementRecords({
@@ -86,13 +87,12 @@ export function useProgressDashboard() {
                     backendAi,
                     hero: createProgressHeroRecord({
                         dailyGoal,
-                        dueReviewCount: dueReviewItems.length,
                         snapshot,
                     }),
                     metrics: createProgressMetrics({
-                        dueReviewCount: dueReviewItems.length,
                         reviewItems,
                         snapshot,
+                        weeklyActivity,
                     }),
                     mistakeBreakdown: createMistakeBreakdown(attempts),
                     monetization,
@@ -104,7 +104,7 @@ export function useProgressDashboard() {
                     }),
                     reminderState,
                     snapshot,
-                    weeklyActivity: createWeeklyActivity(attempts),
+                    weeklyActivity,
                 });
                 setError(null);
                 setPhase("ready");

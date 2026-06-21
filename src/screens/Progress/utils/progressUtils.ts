@@ -15,17 +15,6 @@ import type {
 } from "../types/progressTypes";
 
 const DAILY_GOAL_TARGET = 5;
-const EMPTY_MISTAKE_BREAKDOWN: MistakeBreakdownRecord[] = [
-    {
-        category: "wordChoice",
-        helper: "No focused mistakes yet",
-        id: "mistake-empty-wordChoice",
-        label: "Word choice",
-        max: 1,
-        tone: "info",
-        value: 0,
-    },
-];
 const MISTAKE_CATEGORY_LABELS: Record<MistakeCategory, string> = {
     accent: "Accent",
     agreement: "Agreement",
@@ -39,61 +28,55 @@ const MISTAKE_CATEGORY_LABELS: Record<MistakeCategory, string> = {
 };
 
 export function createProgressMetrics({
-    dueReviewCount,
     reviewItems,
     snapshot,
+    weeklyActivity,
 }: {
-    dueReviewCount: number;
     reviewItems: ReviewItem[];
     snapshot: ProgressSnapshot;
+    weeklyActivity: WeeklyActivityRecord[];
 }): ProgressMetric[] {
     const difficultItems = reviewItems.filter((item) => {
         return item.mastery === "learning";
     });
-    const savedCount = snapshot.savedWords + snapshot.savedSentences;
+    const weeklyCompletedCount = weeklyActivity.reduce((total, record) => {
+        return total + record.completedCount;
+    }, 0);
     const metrics: ProgressMetric[] = [];
+
+    if (snapshot.streakDays > 0) {
+        metrics.push({
+            helper: "Current streak",
+            icon: "progress",
+            id: "streak",
+            label: "Streak",
+            tone: "success",
+            value: `${snapshot.streakDays}d`,
+        });
+    }
+
+    if (weeklyCompletedCount > 0) {
+        metrics.push({
+            helper: "Completed this week",
+            icon: "practice",
+            id: "weekly-completed",
+            label: "Sentences",
+            tone: "accent",
+            value: String(weeklyCompletedCount),
+        });
+    }
 
     if (snapshot.attemptsCompleted > 0) {
         metrics.push({
-            helper: "Completed locally",
-            icon: "practice",
-            id: "attempts",
-            label: "Attempts",
-            tone: "accent",
-            value: String(snapshot.attemptsCompleted),
-        });
-        metrics.push({
             helper:
                 snapshot.attemptsCompleted === 1
-                    ? "1 attempt"
-                    : `${snapshot.attemptsCompleted} attempts`,
+                    ? "Across 1 attempt"
+                    : `Across ${snapshot.attemptsCompleted} attempts`,
             icon: "accuracy",
             id: "accuracy",
-            label: "Accuracy",
+            label: "First try",
             tone: snapshot.correctRate >= 0.8 ? "success" : "warning",
             value: formatPercent(snapshot.correctRate),
-        });
-    }
-
-    if (savedCount > 0) {
-        metrics.push({
-            helper: "Words and sentences",
-            icon: "saved",
-            id: "saved",
-            label: "Saved",
-            tone: "success",
-            value: String(savedCount),
-        });
-    }
-
-    if (dueReviewCount > 0) {
-        metrics.push({
-            helper: "Cards ready today",
-            icon: "review",
-            id: "due-review",
-            label: "Due review",
-            tone: "warning",
-            value: String(dueReviewCount),
         });
     }
 
@@ -127,30 +110,27 @@ export function createDailyGoalRecord(
 
 export function createProgressHeroRecord({
     dailyGoal,
-    dueReviewCount,
     snapshot,
 }: {
     dailyGoal: DailyGoalRecord;
-    dueReviewCount: number;
     snapshot: ProgressSnapshot;
 }): ProgressHeroRecord {
     return {
         badgeLabel:
-            dueReviewCount > 0
-                ? `${dueReviewCount} due for review`
-                : "Review queue clear",
+            dailyGoal.completed >= dailyGoal.target
+                ? "Goal complete"
+                : "Daily goal in progress",
         body:
             snapshot.attemptsCompleted > 0
-                ? `${formatPercent(snapshot.correctRate)} accuracy across ${snapshot.attemptsCompleted} practice attempts.`
+                ? `${formatPercent(snapshot.correctRate)} first-try accuracy across ${snapshot.attemptsCompleted} practice attempts.`
                 : "Complete one translation to start building a progress trail.",
         dailyGoal,
         icon: "progress",
-        label: "Learning progress",
+        label: "Progress trend",
         title:
             snapshot.streakDays > 0
                 ? `${snapshot.streakDays} day streak`
-                : "Ready for the first practice day",
-        value: String(getProgressXp(snapshot)),
+                : "First practice complete",
     };
 }
 
@@ -212,7 +192,7 @@ export function createMistakeBreakdown(
         })
         .slice(0, 4);
 
-    return records.length > 0 ? records : EMPTY_MISTAKE_BREAKDOWN;
+    return records;
 }
 
 export function createAchievementRecords({
@@ -239,16 +219,19 @@ export function createAchievementRecords({
                     : "locked",
         },
         {
-            description: "Build a review queue from practice.",
+            description: "Create a review set from practice.",
             id: "review-ready",
             label: "Review ready",
             state: dueReviewCount > 0 ? "earned" : "locked",
         },
         {
-            description: "Reach 80% accuracy locally.",
+            description: "Reach 80% first-try accuracy.",
             id: "accuracy-80",
             label: "Accurate practice",
-            state: snapshot.correctRate >= 0.8 ? "earned" : "locked",
+            state:
+                snapshot.attemptsCompleted > 0 && snapshot.correctRate >= 0.8
+                    ? "earned"
+                    : "locked",
         },
     ];
 }
@@ -299,21 +282,7 @@ export function formatPercent(value: number) {
 }
 
 export function hasProgressStarted(snapshot: ProgressSnapshot) {
-    return (
-        snapshot.attemptsCompleted > 0 ||
-        snapshot.savedWords > 0 ||
-        snapshot.savedSentences > 0 ||
-        snapshot.sessionsCompleted > 0
-    );
-}
-
-function getProgressXp(snapshot: ProgressSnapshot) {
-    return (
-        snapshot.sessionsCompleted * 20 +
-        snapshot.attemptsCompleted * 10 +
-        snapshot.savedWords * 6 +
-        snapshot.savedSentences * 8
-    );
+    return snapshot.attemptsCompleted > 0;
 }
 
 function getMistakeTone(value: number): MistakeBreakdownRecord["tone"] {

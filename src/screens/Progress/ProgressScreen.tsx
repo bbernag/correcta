@@ -63,7 +63,7 @@ export function ProgressScreen({navigation}: ProgressScreenProps) {
                 <ScreenHeader
                     action={headerAction}
                     eyebrow="Progress"
-                    title="Learning score"
+                    title="Progress"
                 />
                 <ProgressErrorState
                     message={progress.error ?? "Progress could not be loaded."}
@@ -74,6 +74,10 @@ export function ProgressScreen({navigation}: ProgressScreenProps) {
     }
 
     const {dashboard} = progress;
+    const hasWeeklyActivity = dashboard.weeklyActivity.some((record) => {
+        return record.completedCount > 0;
+    });
+    const hasMistakeBreakdown = dashboard.mistakeBreakdown.length > 0;
 
     function handleRecommendationPress() {
         switch (dashboard.recommendation.action) {
@@ -126,21 +130,25 @@ export function ProgressScreen({navigation}: ProgressScreenProps) {
             <ScreenHeader
                 action={headerAction}
                 eyebrow="Progress"
-                subtitle="Local trends from practice, review, and saved content."
-                title="Learning score"
+                subtitle="Trends from practice and review."
+                title="Progress"
             />
             <ProgressHeroCard hero={dashboard.hero} />
             {dashboard.metrics.length > 0 ? (
                 <View style={styles.section}>
                     <SectionHeader
-                        subtitle="A quick scan of what changed through local practice."
-                        title="Scoreboard"
+                        subtitle="Only signals with enough practice data are shown."
+                        title="This week"
                     />
                     <ProgressMetricGrid metrics={dashboard.metrics} />
                 </View>
             ) : null}
-            <WeeklyActivityCard records={dashboard.weeklyActivity} />
-            <MistakeBreakdownCard records={dashboard.mistakeBreakdown} />
+            {hasWeeklyActivity ? (
+                <WeeklyActivityCard records={dashboard.weeklyActivity} />
+            ) : null}
+            {hasMistakeBreakdown ? (
+                <MistakeBreakdownCard records={dashboard.mistakeBreakdown} />
+            ) : null}
             <AchievementsCard achievements={dashboard.achievements} />
             <ProgressRecommendationCard
                 onPress={handleRecommendationPress}

@@ -52,7 +52,6 @@ export type ProgressHeroRecord = {
     icon: IconName;
     label: string;
     title: string;
-    value: string;
 };
 
 export type MistakeBreakdownRecord = {

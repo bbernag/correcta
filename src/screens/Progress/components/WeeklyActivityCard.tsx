@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, ConnectedCard, ProgressBar} from "../../../components/common";
+import {AppText, ProgressBar, Surface} from "../../../components/common";
 import type {WeeklyActivityRecord} from "../types/progressTypes";
 
 type WeeklyActivityCardProps = {
@@ -15,44 +15,50 @@ export function WeeklyActivityCard({records}: WeeklyActivityCardProps) {
     );
 
     return (
-        <ConnectedCard gap="compact">
-            <ConnectedCard.Item>
-                <ConnectedCard.Eyebrow>Trend</ConnectedCard.Eyebrow>
+        <Surface variant="outline" style={styles.root}>
+            <View style={styles.header}>
                 <AppText variant="heading">Weekly activity</AppText>
-            </ConnectedCard.Item>
-            <ConnectedCard.Item>
-                <View style={styles.days}>
-                    {records.map((record) => {
-                        return (
-                            <View key={record.id} style={styles.day}>
-                                <View style={styles.dayHeader}>
-                                    <AppText variant="caption" tone="muted">
-                                        {record.dayLabel}
-                                    </AppText>
-                                    <AppText variant="label">
-                                        {record.completedCount}
-                                    </AppText>
-                                </View>
-                                <ProgressBar
-                                    accessibilityLabel={`${record.dayLabel} ${record.completedCount} completed attempts`}
-                                    max={maxCompleted}
-                                    tone={
-                                        record.completedCount > 0
-                                            ? "accent"
-                                            : "info"
-                                    }
-                                    value={record.completedCount}
-                                />
+                <AppText tone="secondary">
+                    Completed practice from the last seven days.
+                </AppText>
+            </View>
+            <View style={styles.days}>
+                {records.map((record) => {
+                    return (
+                        <View key={record.id} style={styles.day}>
+                            <View style={styles.dayHeader}>
+                                <AppText variant="caption" tone="muted">
+                                    {record.dayLabel}
+                                </AppText>
+                                <AppText variant="label">
+                                    {record.completedCount}
+                                </AppText>
                             </View>
-                        );
-                    })}
-                </View>
-            </ConnectedCard.Item>
-        </ConnectedCard>
+                            <ProgressBar
+                                accessibilityLabel={`${record.dayLabel} ${record.completedCount} completed attempts`}
+                                max={maxCompleted}
+                                tone={
+                                    record.completedCount > 0
+                                        ? "accent"
+                                        : "info"
+                                }
+                                value={record.completedCount}
+                            />
+                        </View>
+                    );
+                })}
+            </View>
+        </Surface>
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
+    root: {
+        gap: theme.spacing.lg,
+    },
+    header: {
+        gap: theme.spacing.xs,
+    },
     days: {
         gap: theme.spacing.sm,
     },

@@ -26,18 +26,10 @@ export function ProgressHeroCard({hero}: ProgressHeroCardProps) {
                         <AppText variant="title">{hero.title}</AppText>
                     </View>
                 </View>
-                <View style={styles.scoreRow}>
-                    <View>
-                        <ConnectedCard.Metric>
-                            {hero.value}
-                        </ConnectedCard.Metric>
-                        <ConnectedCard.Caption>XP</ConnectedCard.Caption>
-                    </View>
-                    <View style={styles.badge}>
-                        <AppText variant="caption" tone="accent">
-                            {hero.badgeLabel}
-                        </AppText>
-                    </View>
+                <View style={styles.badge}>
+                    <AppText variant="caption" tone="accent">
+                        {hero.badgeLabel}
+                    </AppText>
                 </View>
                 <AppText tone="secondary">{hero.body}</AppText>
             </ConnectedCard.Item>
@@ -69,13 +61,8 @@ const styles = StyleSheet.create((theme) => ({
         flex: 1,
         gap: theme.spacing.xs,
     },
-    scoreRow: {
-        alignItems: "center",
-        flexDirection: "row",
-        gap: theme.spacing.lg,
-        justifyContent: "space-between",
-    },
     badge: {
+        alignSelf: "flex-start",
         backgroundColor: theme.colors.accentPrimarySoft,
         borderRadius: theme.radii.pill,
         paddingHorizontal: theme.spacing.md,

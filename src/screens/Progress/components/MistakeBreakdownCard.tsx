@@ -10,7 +10,7 @@ type MistakeBreakdownCardProps = {
 
 export function MistakeBreakdownCard({records}: MistakeBreakdownCardProps) {
     return (
-        <Surface variant="card" style={styles.root}>
+        <Surface variant="outline" style={styles.root}>
             <View style={styles.header}>
                 <View style={styles.titleRow}>
                     <Icon name="mistake" size="default" tone="warning" />

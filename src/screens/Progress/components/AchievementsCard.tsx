@@ -1,12 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {
-    AppText,
-    ConnectedCard,
-    Icon,
-    ResultBadge,
-} from "../../../components/common";
+import {AppText, Icon, ResultBadge, Surface} from "../../../components/common";
 import type {AchievementRecord} from "../types/progressTypes";
 
 type AchievementsCardProps = {
@@ -15,14 +10,16 @@ type AchievementsCardProps = {
 
 export function AchievementsCard({achievements}: AchievementsCardProps) {
     return (
-        <ConnectedCard gap="compact">
-            <ConnectedCard.Item>
-                <ConnectedCard.Eyebrow>Milestones</ConnectedCard.Eyebrow>
+        <Surface variant="outline" style={styles.root}>
+            <View style={styles.header}>
                 <AppText variant="heading">Achievements</AppText>
-            </ConnectedCard.Item>
+                <AppText tone="secondary">
+                    Milestones unlock as practice history grows.
+                </AppText>
+            </View>
             {achievements.map((achievement) => {
                 return (
-                    <ConnectedCard.Item key={achievement.id}>
+                    <View key={achievement.id} style={styles.achievement}>
                         <View style={styles.achievementHeader}>
                             <View style={styles.labelRow}>
                                 <Icon
@@ -38,9 +35,9 @@ export function AchievementsCard({achievements}: AchievementsCardProps) {
                                             : "muted"
                                     }
                                 />
-                                <ConnectedCard.Title>
+                                <AppText variant="bodyStrong">
                                     {achievement.label}
-                                </ConnectedCard.Title>
+                                </AppText>
                             </View>
                             <ResultBadge
                                 label={
@@ -55,17 +52,26 @@ export function AchievementsCard({achievements}: AchievementsCardProps) {
                                 }
                             />
                         </View>
-                        <ConnectedCard.Caption>
+                        <AppText variant="caption" tone="secondary">
                             {achievement.description}
-                        </ConnectedCard.Caption>
-                    </ConnectedCard.Item>
+                        </AppText>
+                    </View>
                 );
             })}
-        </ConnectedCard>
+        </Surface>
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
+    root: {
+        gap: theme.spacing.lg,
+    },
+    header: {
+        gap: theme.spacing.xs,
+    },
+    achievement: {
+        gap: theme.spacing.sm,
+    },
     achievementHeader: {
         alignItems: "center",
         flexDirection: "row",

@@ -1,7 +1,8 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, PocCard} from "../../../components/common";
+import {AppText} from "../../../components/common";
+import {PocCard} from "../../../components/common/PocCard";
 
 export function PlaygroundPocCardExample() {
     return (

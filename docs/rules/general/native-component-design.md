@@ -280,8 +280,8 @@ Controls such as switches, checkboxes, segmented controls, chips, and sliders
 must have semantic selected, unselected, disabled, and pressed states. Minimum
 touch target is `44x44`; compact visuals may sit inside larger hit slop.
 
-Use Card Union for related modules; continue using standalone cards for
-unrelated content. Rounded inputs should use a solid tonal fill, not a
+Use linked-surface `Card` groups for related modules; continue using standalone
+cards for unrelated content. Rounded inputs should use a solid tonal fill, not a
 border-only floating rectangle. Focused inputs receive a solid focus ring and a
 subtle tonal fill change without changing radius or size. Badges and timers use
 compact solid pills.
@@ -340,7 +340,7 @@ elevation: { none, level1, level2, level3, level4 }
 motion: { fast, normal, slow, pressScale, surfacePressScale }
 opacity: { pressed, disabled, separator, overlay }
 hitSlop: { compact, standard }
-cardUnion: { radiusCompact, radiusDefault, radiusHero, gapCompact, gapDefault, gapRelaxed, bridgeInset, bridgeOverlap, bridgeCapRadius }
+card: { radiusCompact, radiusDefault, radiusHero, gapCompact, gapDefault, gapRelaxed, bridgeInset, bridgeOverlap, bridgeCapRadius }
 controls: { inputHeight, inputRadius, segmentedHeight, segmentedInset, segmentedRadius }
 ```
 
@@ -367,7 +367,7 @@ Shared components:
 ```txt
 src/components/common/AppText/
 src/components/common/Button/
-src/components/common/CardUnion/
+src/components/common/Card/
 src/components/common/GlassSurface/
 src/components/common/IconButton/
 src/components/common/Surface/
@@ -423,5 +423,5 @@ src/screens/<ScreenName>/components/
 - Minimum touch target is respected.
 - Playground covers all states with realistic content.
 - No component looks like a plain generic flat card.
-- Related cards use the Linked Surface Group and Card Union rules when they
+- Related cards use the Linked Surface Group and shared `Card` rules when they
   should feel visually connected.

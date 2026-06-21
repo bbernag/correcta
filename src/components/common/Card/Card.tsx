@@ -205,7 +205,7 @@ function CardItem({
                 {({pressed}) => (
                     <PressableMotionView
                         disabled={disabled}
-                        pressScale={0.985}
+                        pressScale={1}
                         pressed={pressed}
                     >
                         <FastSquircleView

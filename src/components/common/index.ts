@@ -65,13 +65,6 @@ export {NativeSwitch} from "./NativeSwitch";
 export type {NativeSwitchProps} from "./NativeSwitch";
 export {NoticeCard} from "./NoticeCard";
 export type {NoticeCardProps, NoticeCardTone} from "./NoticeCard";
-export {PocCard} from "./PocCard";
-export type {
-    PocCardOrientation,
-    PocCardProps,
-    PocCardSectionProps,
-    PocCardTone,
-} from "./PocCard";
 export {ProgressBar} from "./ProgressBar";
 export type {ProgressBarProps, ProgressBarTone} from "./ProgressBar";
 export {PressableMotionView} from "./PressableMotionView";

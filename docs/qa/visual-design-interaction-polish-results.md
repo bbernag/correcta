@@ -1,9 +1,9 @@
 # Visual Design & Interaction Polish Results
 
 Status: partial. Slices 1-4 are complete. Shared component source now reaches
-into Slices 5-7, but those slices are not closed until the
-ComponentPlayground acceptance checkpoint records automated and iOS/Android
-visual QA evidence.
+into Slices 5-7. The current checkpoint has automated and iOS runtime evidence;
+Android ComponentPlayground evidence remains before the full visual polish phase
+can close.
 
 ## Slice 1: Theme Token Design System
 
@@ -183,36 +183,53 @@ Known follow-ups:
 
 ## Slice 5-7: Shared Component Acceptance Checkpoint
 
-Date: pending.
+Date: 2026-06-20.
 
-Result: pending.
+Result: partial pass. Source audit, automated checks, and iOS runtime smoke pass;
+Android visual QA is still pending because no Android emulator was attached.
 
-Current source state:
+Accepted source state:
 
 - The linked-surface implementation is the shared `Card` family in
   `src/components/common/Card`, not a separate `CardUnion` folder.
+- `Card.Item` now uses opacity-only press feedback inside a linked group, so
+  related items do not scale independently and break the group geometry.
 - Supporting shared visual components exist under `src/components/common`,
   including chips, word chips, progress, segmented controls, stat cards,
   feedback/status components, and native wrappers.
 - ComponentPlayground contains the review surface for shared primitives.
+- `PocCard` remains an internal/experimental linked-surface implementation used
+  by `NoticeCard` and the playground example; it is no longer exported from the
+  public common-component barrel.
+- The native component rules now point to the shared `Card` folder and `card`
+  token group instead of stale `CardUnion`/`cardUnion` names.
 
-Acceptance work still required:
-
-- Audit `Card` linked-surface geometry against the Linked Surface Group rules.
-- Decide whether `PocCard` remains internal to `NoticeCard`, is renamed, or is
-  retired before broad production-screen usage.
-- Verify supporting components in ComponentPlayground with long copy, dynamic
-  content, disabled/loading/selected states, light/dark mode, and reduced
-  motion expectations.
-- Run automated checks.
-- Run iOS and Android ComponentPlayground visual QA.
-- Record screenshot/runtime evidence before marking Slices 5-7 done.
-
-Recommended commands:
+Verification:
 
 - `npm run typecheck`
 - `npm run lint`
 - `npm run format:check`
+- Metro status probe: `packager-status:running`.
+- iOS simulator: `iPhone 17`, app id `com.luisgarcia.correcta`.
+- iOS launch: `xcrun simctl launch booted com.luisgarcia.correcta` returned a
+  running process id.
+- iOS runtime path: Home -> Open component check.
+- iOS visual result: ComponentPlayground opened and rendered the shared
+  component review surface.
+- Android device check: `adb devices` returned no attached emulator/device.
+
+Evidence:
+
+- iOS Home launch: `/tmp/correcta-slice5-7-ios-launch.png`
+- iOS ComponentPlayground top:
+  `/tmp/correcta-slice5-7-ios-component-check-top.png`
+
+Acceptance work still required:
+
+- Run Android ComponentPlayground visual QA when an emulator/device is
+  available.
+- Capture Android screenshot/runtime evidence before marking Slices 5-7 fully
+  done.
 
 Next phase after acceptance:
 

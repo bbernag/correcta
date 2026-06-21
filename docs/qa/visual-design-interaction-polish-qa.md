@@ -224,6 +224,21 @@ Known follow-ups:
 
 Use this checkpoint before starting Home polish.
 
+Current pass, 2026-06-20:
+
+- Source audit passed for the shared `Card` linked-surface family, supporting
+  shared visual components, and ComponentPlayground route ownership.
+- `Card.Item` keeps linked-surface geometry stable by avoiding independent scale
+  transforms inside the group.
+- `PocCard` is treated as internal/experimental and is not exported from the
+  public common-component barrel.
+- `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
+- iOS simulator launch and Home -> Open component check route pass on
+  `iPhone 17`.
+- iOS screenshots: `/tmp/correcta-slice5-7-ios-launch.png` and
+  `/tmp/correcta-slice5-7-ios-component-check-top.png`.
+- Android QA remains pending; `adb devices` returned no attached emulator/device.
+
 - `Card` linked-surface examples render in ComponentPlayground.
 - Vertical linked surfaces preserve visible canvas cut-ins.
 - Horizontal linked surfaces keep paired items equal-height.
@@ -235,7 +250,8 @@ Use this checkpoint before starting Home polish.
   `FeedbackHighlight`, `EmptyState`, `LoadingState`, and `ErrorState`.
 - ComponentPlayground is reviewed as the shared visual acceptance gate.
 - `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
-- iOS and Android ComponentPlayground screenshots are captured.
+- iOS ComponentPlayground screenshots are captured; Android screenshots remain
+  pending until an emulator/device is available.
 - The MVP flow still works after the shared-component checkpoint:
   Home -> Practice -> Check answer -> Feedback -> Save -> Review/Progress/Library.
 - Text is readable on every surface.

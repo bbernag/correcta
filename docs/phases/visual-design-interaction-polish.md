@@ -44,17 +44,17 @@ Review, Progress, and Library adoption.
 
 As of the latest documentation sync, broad common-component building should
 pause. The source contains the linked-surface `Card` family, supporting shared
-visual components, and ComponentPlayground sections. These are ready enough to
-validate, but not yet closed as fully accepted because the QA evidence still
-stops at Slice 4.
+visual components, and ComponentPlayground sections. Source audit, automated
+checks, and iOS route evidence are recorded; Android ComponentPlayground evidence
+still remains before the checkpoint is fully closed.
 
 Next:
 
-1. Audit `Card`, supporting shared components, and ComponentPlayground against
-   the Slice 5-7 exit criteria.
-2. Run automated checks and iOS/Android ComponentPlayground visual QA.
-3. Record evidence in `docs/qa/visual-design-interaction-polish-results.md`.
-4. Then start Slice 8, Home Design Pilot.
+1. Run Android ComponentPlayground visual QA when an emulator/device is
+   available.
+2. Record Android evidence in
+   `docs/qa/visual-design-interaction-polish-results.md`.
+3. Then start Slice 8, Home Design Pilot.
 
 ## Goal
 
@@ -325,9 +325,9 @@ Exit:
 ### Slice 5: Card And Linked Surface Foundation
 
 Status: partial. The shared `Card` compound component, linked-surface tokens,
-and focused playground examples exist in source. Remaining work is acceptance:
-verify geometry, accessibility, light/dark treatment, dynamic content, and the
-Card/PocCard consolidation path before broad production use.
+and focused playground examples exist in source. Source audit, automated checks,
+and iOS route evidence are recorded. Remaining work is Android visual QA before
+broad production use.
 
 Goal: establish Linked Surface Groups as a tested shared layout primitive before
 applying the new direction to production screens.
@@ -380,10 +380,9 @@ Out of scope:
 
 ### Slice 6: Supporting Shared Visual Components
 
-Status: partial. The main supporting components exist in source and are ready
-for acceptance review. Remaining work is motion/accessibility hardening,
-ComponentPlayground coverage, and deciding whether any pending component, such
-as Toast, is required before the first production screen.
+Status: partial. The main supporting components exist in source and are covered
+by ComponentPlayground. Automated checks and iOS route evidence are recorded.
+Remaining work is Android visual QA before the first production screen.
 
 Goal: create or restyle the remaining reusable UI building blocks before screen
 polish.
@@ -414,9 +413,9 @@ Exit:
 ### Slice 7: ComponentPlayground Acceptance Gate
 
 Status: active checkpoint. ComponentPlayground already contains the shared
-component review surface. The remaining work is to audit it as the formal gate,
-fill any small coverage gaps, run checks and device QA, then record the
-evidence before production screen adoption.
+component review surface. Source audit, automated checks, and iOS evidence are
+recorded; Android screenshot/runtime evidence remains before production screen
+adoption.
 
 Goal: make ComponentPlayground the visual QA source.
 
@@ -649,9 +648,10 @@ Exit:
 
 ## Slice Dependencies
 
-- Slice 5 and Slice 6 are source-implemented enough to enter acceptance review,
-  but they still block broad production use until Slice 7 records evidence.
-- Slice 7 blocks all production-screen polish.
+- Slice 5 and Slice 6 are source-implemented and have automated/iOS evidence,
+  but Android ComponentPlayground evidence still blocks full checkpoint closure.
+- Slice 7 blocks all production-screen polish until Android evidence is added or
+  the team explicitly accepts an iOS-first checkpoint.
 - Home is the production integration pilot and blocks Practice.
 - Practice blocks Review because Review consumes Practice outcomes.
 - Progress and Library may proceed after Review, but the documented order

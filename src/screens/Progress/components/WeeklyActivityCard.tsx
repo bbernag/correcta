@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Surface} from "../../../components/common";
+import {AppText, Card, ProgressBar} from "../../../components/common";
 import type {WeeklyActivityRecord} from "../types/progressTypes";
 
 type WeeklyActivityCardProps = {
@@ -9,44 +9,62 @@ type WeeklyActivityCardProps = {
 };
 
 export function WeeklyActivityCard({records}: WeeklyActivityCardProps) {
+    const maxCompleted = Math.max(
+        ...records.map((record) => record.completedCount),
+        1
+    );
+
     return (
-        <Surface variant="muted" style={styles.root}>
-            <AppText variant="heading">Weekly activity</AppText>
-            <View style={styles.days}>
-                {records.map((record) => {
-                    return (
-                        <View key={record.id} style={styles.day}>
-                            <AppText variant="caption" tone="secondary">
-                                {record.dayLabel}
-                            </AppText>
-                            <AppText variant="heading">
-                                {record.completedCount}
-                            </AppText>
-                        </View>
-                    );
-                })}
-            </View>
-        </Surface>
+        <Card gap="compact">
+            <Card.Item>
+                <Card.Eyebrow>Trend</Card.Eyebrow>
+                <AppText variant="heading">Weekly activity</AppText>
+                <Card.Caption>
+                    Completed attempts for the last seven days.
+                </Card.Caption>
+            </Card.Item>
+            <Card.Item>
+                <View style={styles.days}>
+                    {records.map((record) => {
+                        return (
+                            <View key={record.id} style={styles.day}>
+                                <View style={styles.dayHeader}>
+                                    <AppText variant="caption" tone="muted">
+                                        {record.dayLabel}
+                                    </AppText>
+                                    <AppText variant="label">
+                                        {record.completedCount}
+                                    </AppText>
+                                </View>
+                                <ProgressBar
+                                    accessibilityLabel={`${record.dayLabel} ${record.completedCount} completed attempts`}
+                                    max={maxCompleted}
+                                    tone={
+                                        record.completedCount > 0
+                                            ? "accent"
+                                            : "info"
+                                    }
+                                    value={record.completedCount}
+                                />
+                            </View>
+                        );
+                    })}
+                </View>
+            </Card.Item>
+        </Card>
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
-    root: {
-        gap: theme.spacing.md,
-    },
     days: {
-        flexDirection: "row",
-        flexWrap: "wrap",
         gap: theme.spacing.sm,
     },
     day: {
-        alignItems: "center",
-        backgroundColor: theme.colors.surfaceElevated,
-        borderRadius: theme.radii.sm,
-        flexBasis: "12%",
-        flexGrow: 1,
         gap: theme.spacing.xs,
-        minWidth: 44,
-        padding: theme.spacing.sm,
+    },
+    dayHeader: {
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
 }));

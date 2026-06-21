@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Surface} from "../../../components/common";
+import {AppText, Card, Icon, ResultBadge} from "../../../components/common";
 import type {AchievementRecord} from "../types/progressTypes";
 
 type AchievementsCardProps = {
@@ -10,40 +10,66 @@ type AchievementsCardProps = {
 
 export function AchievementsCard({achievements}: AchievementsCardProps) {
     return (
-        <Surface style={styles.root}>
-            <AppText variant="heading">Achievements</AppText>
+        <Card gap="compact">
+            <Card.Item>
+                <Card.Eyebrow>Milestones</Card.Eyebrow>
+                <AppText variant="heading">Achievements</AppText>
+                <Card.Caption>
+                    Earned locally from practice, saved content, and review.
+                </Card.Caption>
+            </Card.Item>
             {achievements.map((achievement) => {
                 return (
-                    <View key={achievement.id} style={styles.achievement}>
-                        <AppText
-                            variant="label"
-                            tone={
-                                achievement.state === "earned"
-                                    ? "accent"
-                                    : "muted"
-                            }
-                        >
-                            {achievement.label}
-                        </AppText>
-                        <AppText variant="caption" tone="secondary">
-                            {achievement.description}
-                        </AppText>
-                    </View>
+                    <Card.Item key={achievement.id}>
+                        <View style={styles.achievementHeader}>
+                            <View style={styles.labelRow}>
+                                <Icon
+                                    name={
+                                        achievement.state === "earned"
+                                            ? "success"
+                                            : "lock"
+                                    }
+                                    size="dense"
+                                    tone={
+                                        achievement.state === "earned"
+                                            ? "success"
+                                            : "muted"
+                                    }
+                                />
+                                <Card.Title>{achievement.label}</Card.Title>
+                            </View>
+                            <ResultBadge
+                                label={
+                                    achievement.state === "earned"
+                                        ? "Earned"
+                                        : "Locked"
+                                }
+                                tone={
+                                    achievement.state === "earned"
+                                        ? "correct"
+                                        : "info"
+                                }
+                            />
+                        </View>
+                        <Card.Caption>{achievement.description}</Card.Caption>
+                    </Card.Item>
                 );
             })}
-        </Surface>
+        </Card>
     );
 }
 
 const styles = StyleSheet.create((theme) => ({
-    root: {
+    achievementHeader: {
+        alignItems: "center",
+        flexDirection: "row",
         gap: theme.spacing.md,
+        justifyContent: "space-between",
     },
-    achievement: {
-        borderColor: theme.colors.borderSubtle,
-        borderRadius: theme.radii.sm,
-        borderWidth: 1,
-        gap: theme.spacing.xs,
-        padding: theme.spacing.md,
+    labelRow: {
+        alignItems: "center",
+        flex: 1,
+        flexDirection: "row",
+        gap: theme.spacing.sm,
     },
 }));

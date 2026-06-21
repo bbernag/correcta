@@ -53,9 +53,10 @@ export function ReminderPreferencesCard({
             </View>
             <View style={styles.options}>
                 {REMINDER_OPTIONS.map((option) => {
-                    const selected =
-                        option.time === preferences.reminderTime ||
-                        (option.id === "none" && !preferences.enabled);
+                    const selected = preferences.enabled
+                        ? option.id !== "none" &&
+                          option.time === preferences.reminderTime
+                        : option.id === "none";
 
                     return (
                         <Pressable

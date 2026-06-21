@@ -1,31 +1,51 @@
-import {ActivityIndicator} from "react-native";
+import type {NativeBottomTabScreenProps} from "@bottom-tabs/react-navigation";
+import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, Screen} from "../../components/common";
+import {
+    IconButton,
+    LoadingState,
+    Screen,
+    ScreenHeader,
+    SectionHeader,
+} from "../../components/common";
+import type {MainTabParamList} from "../../router/types";
 import {AchievementsCard} from "./components/AchievementsCard";
 import {BackendAiStatusCard} from "./components/BackendAiStatusCard";
-import {DailyGoalCard} from "./components/DailyGoalCard";
+import {MistakeBreakdownCard} from "./components/MistakeBreakdownCard";
 import {MonetizationCard} from "./components/MonetizationCard";
 import {ProgressErrorState} from "./components/ProgressErrorState";
+import {ProgressHeroCard} from "./components/ProgressHeroCard";
 import {ProgressMetricGrid} from "./components/ProgressMetricGrid";
+import {ProgressRecommendationCard} from "./components/ProgressRecommendationCard";
 import {ReminderPreferencesCard} from "./components/ReminderPreferencesCard";
 import {WeeklyActivityCard} from "./components/WeeklyActivityCard";
 import {useProgressDashboard} from "./hooks/useProgressDashboard";
 
-export function ProgressScreen() {
+type ProgressScreenProps = NativeBottomTabScreenProps<
+    MainTabParamList,
+    "Progress"
+>;
+
+export function ProgressScreen({navigation}: ProgressScreenProps) {
     const progress = useProgressDashboard();
+    const headerAction = (
+        <IconButton
+            accessibilityLabel="Refresh progress"
+            disabled={progress.isRefreshing}
+            icon="clear"
+            onPress={progress.handleRefresh}
+            variant="surface"
+        />
+    );
 
     if (progress.phase === "loading") {
         return (
             <Screen contentContainerStyle={styles.centered}>
-                <ActivityIndicator
-                    accessibilityLabel="Loading progress"
-                    size="large"
+                <LoadingState
+                    message="Preparing local learning summaries."
+                    title="Loading Progress"
                 />
-                <AppText variant="heading">Loading Progress</AppText>
-                <AppText tone="secondary">
-                    Preparing local learning summaries.
-                </AppText>
             </Screen>
         );
     }
@@ -33,7 +53,11 @@ export function ProgressScreen() {
     if (progress.phase === "error" || !progress.dashboard) {
         return (
             <Screen>
-                <AppText variant="title">Progress</AppText>
+                <ScreenHeader
+                    action={headerAction}
+                    eyebrow="Progress"
+                    title="Learning score"
+                />
                 <ProgressErrorState
                     message={progress.error ?? "Progress could not be loaded."}
                     onRetry={progress.handleRefresh}
@@ -44,45 +68,79 @@ export function ProgressScreen() {
 
     const {dashboard} = progress;
 
+    function handleRecommendationPress() {
+        switch (dashboard.recommendation.action) {
+            case "review":
+                navigation.navigate("Review");
+                return;
+            case "library":
+                navigation.navigate("Library");
+                return;
+            case "practice":
+            default:
+                navigation.navigate("Practice", {restartKey: Date.now()});
+        }
+    }
+
     return (
         <Screen contentContainerStyle={styles.content} scroll>
-            <AppText variant="title">Progress</AppText>
-            <ProgressMetricGrid metrics={dashboard.metrics} />
-            <DailyGoalCard dailyGoal={dashboard.dailyGoal} />
+            <ScreenHeader
+                action={headerAction}
+                eyebrow="Progress"
+                subtitle="Local trends from practice, review, and saved content."
+                title="Learning score"
+            />
+            <ProgressHeroCard hero={dashboard.hero} />
+            <View style={styles.section}>
+                <SectionHeader
+                    subtitle="A quick scan of what changed through local practice."
+                    title="Scoreboard"
+                />
+                <ProgressMetricGrid metrics={dashboard.metrics} />
+            </View>
             <WeeklyActivityCard records={dashboard.weeklyActivity} />
+            <MistakeBreakdownCard records={dashboard.mistakeBreakdown} />
             <AchievementsCard achievements={dashboard.achievements} />
-            <ReminderPreferencesCard
-                onSelectReminderPreset={progress.handleSelectReminderPreset}
-                onToggleReminders={progress.handleToggleReminders}
-                onToggleReviewReminder={progress.handleToggleReviewReminder}
-                preferences={dashboard.notificationPreferences}
-                reminderState={dashboard.reminderState}
+            <ProgressRecommendationCard
+                onPress={handleRecommendationPress}
+                recommendation={dashboard.recommendation}
             />
-            <BackendAiStatusCard status={dashboard.backendAi} />
-            <MonetizationCard
-                monetization={dashboard.monetization}
-                onRequestReward={() => {
-                    void progress.handleRequestReward("bonusReviewPack");
-                }}
-                rewardState={progress.rewardState}
-            />
-            <Button
-                label={progress.isRefreshing ? "Refreshing" : "Refresh"}
-                loading={progress.isRefreshing}
-                onPress={progress.handleRefresh}
-                variant="ghost"
-            />
+            <View style={styles.section}>
+                <SectionHeader
+                    subtitle="Settings and integration readiness stay visible, but separate from learning progress."
+                    title="Status"
+                />
+                <ReminderPreferencesCard
+                    onSelectReminderPreset={progress.handleSelectReminderPreset}
+                    onToggleReminders={progress.handleToggleReminders}
+                    onToggleReviewReminder={progress.handleToggleReviewReminder}
+                    preferences={dashboard.notificationPreferences}
+                    reminderState={dashboard.reminderState}
+                />
+                <BackendAiStatusCard status={dashboard.backendAi} />
+                <MonetizationCard
+                    monetization={dashboard.monetization}
+                    onRequestReward={() => {
+                        void progress.handleRequestReward("bonusReviewPack");
+                    }}
+                    rewardState={progress.rewardState}
+                />
+            </View>
         </Screen>
     );
 }
 
-const styles = StyleSheet.create(() => ({
+const styles = StyleSheet.create((theme) => ({
     centered: {
         alignItems: "center",
         flexGrow: 1,
         justifyContent: "center",
     },
     content: {
-        paddingBottom: 40,
+        gap: theme.spacing.lg,
+        paddingBottom: theme.spacing["3xl"],
+    },
+    section: {
+        gap: theme.spacing.md,
     },
 }));

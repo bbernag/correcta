@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Surface} from "../../../components/common";
+import {Card, Icon} from "../../../components/common";
 import type {ProgressMetric} from "../types/progressTypes";
 
 type ProgressMetricGridProps = {
@@ -9,35 +9,59 @@ type ProgressMetricGridProps = {
 };
 
 export function ProgressMetricGrid({metrics}: ProgressMetricGridProps) {
+    const pairs = createMetricPairs(metrics);
+
     return (
-        <Surface style={styles.root}>
-            {metrics.map((metric) => {
+        <View style={styles.root}>
+            {pairs.map((pair) => {
                 return (
-                    <View key={metric.id} style={styles.metric}>
-                        <AppText variant="heading">{metric.value}</AppText>
-                        <AppText variant="label">{metric.label}</AppText>
-                        <AppText variant="caption" tone="secondary">
-                            {metric.caption}
-                        </AppText>
-                    </View>
+                    <Card
+                        key={pair.map((metric) => metric.id).join("-")}
+                        gap="compact"
+                        orientation="horizontal"
+                        size="compact"
+                    >
+                        {pair.map((metric) => {
+                            return (
+                                <Card.Item key={metric.id}>
+                                    <View style={styles.metricHeader}>
+                                        <Card.Title>{metric.label}</Card.Title>
+                                        <Icon
+                                            name={metric.icon}
+                                            size="dense"
+                                            tone={metric.tone}
+                                        />
+                                    </View>
+                                    <Card.Metric>{metric.value}</Card.Metric>
+                                    <Card.Caption>{metric.helper}</Card.Caption>
+                                </Card.Item>
+                            );
+                        })}
+                    </Card>
                 );
             })}
-        </Surface>
+        </View>
     );
+}
+
+function createMetricPairs(metrics: ProgressMetric[]) {
+    const pairs: ProgressMetric[][] = [];
+
+    for (let index = 0; index < metrics.length; index += 2) {
+        pairs.push(metrics.slice(index, index + 2));
+    }
+
+    return pairs;
 }
 
 const styles = StyleSheet.create((theme) => ({
     root: {
-        flexDirection: "row",
-        flexWrap: "wrap",
         gap: theme.spacing.sm,
     },
-    metric: {
-        backgroundColor: theme.colors.surfaceTonal,
-        borderRadius: theme.radii.sm,
-        flexBasis: "47%",
-        flexGrow: 1,
-        gap: theme.spacing.xs,
-        padding: theme.spacing.md,
+    metricHeader: {
+        alignItems: "center",
+        flexDirection: "row",
+        gap: theme.spacing.sm,
+        justifyContent: "space-between",
     },
 }));

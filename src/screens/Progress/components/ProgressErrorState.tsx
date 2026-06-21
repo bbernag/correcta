@@ -1,4 +1,4 @@
-import {AppText, Button, Surface} from "../../../components/common";
+import {ErrorState} from "../../../components/common";
 
 type ProgressErrorStateProps = {
     message: string;
@@ -10,12 +10,10 @@ export function ProgressErrorState({
     onRetry,
 }: ProgressErrorStateProps) {
     return (
-        <Surface variant="outline">
-            <AppText variant="heading" tone="danger">
-                Progress unavailable
-            </AppText>
-            <AppText tone="secondary">{message}</AppText>
-            <Button label="Try again" onPress={onRetry} />
-        </Surface>
+        <ErrorState
+            message={message}
+            onRetry={onRetry}
+            title="Progress unavailable"
+        />
     );
 }

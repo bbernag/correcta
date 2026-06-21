@@ -11,7 +11,10 @@ import type {
 import {
     createAchievementRecords,
     createDailyGoalRecord,
+    createMistakeBreakdown,
+    createProgressHeroRecord,
     createProgressMetrics,
+    createProgressRecommendation,
     createWeeklyActivity,
 } from "../utils/progressUtils";
 
@@ -63,20 +66,35 @@ export function useProgressDashboard() {
                     return;
                 }
 
+                const dailyGoal = createDailyGoalRecord(snapshot);
+                const difficultReviewCount = reviewItems.filter((item) => {
+                    return item.mastery === "learning";
+                }).length;
+
                 setDashboard({
                     achievements: createAchievementRecords({
                         dueReviewCount: dueReviewItems.length,
                         snapshot,
                     }),
                     backendAi,
-                    dailyGoal: createDailyGoalRecord(snapshot),
+                    hero: createProgressHeroRecord({
+                        dailyGoal,
+                        dueReviewCount: dueReviewItems.length,
+                        snapshot,
+                    }),
                     metrics: createProgressMetrics({
                         dueReviewCount: dueReviewItems.length,
                         reviewItems,
                         snapshot,
                     }),
+                    mistakeBreakdown: createMistakeBreakdown(attempts),
                     monetization,
                     notificationPreferences,
+                    recommendation: createProgressRecommendation({
+                        difficultReviewCount,
+                        dueReviewCount: dueReviewItems.length,
+                        snapshot,
+                    }),
                     reminderState,
                     snapshot,
                     weeklyActivity: createWeeklyActivity(attempts),

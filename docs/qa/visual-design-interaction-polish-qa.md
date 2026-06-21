@@ -1,7 +1,7 @@
 # Visual Design & Interaction Polish QA
 
-Status: partial. Slices 1-10 are implemented and verified. The next visual
-polish work starts with Slice 11, Progress Polish.
+Status: partial. Slices 1-11 are implemented and verified. The next visual
+polish work starts with Slice 12, Library Polish.
 
 Use this checklist when implementing and closing the Visual Design &
 Interaction Polish phase.
@@ -399,7 +399,32 @@ Current pass, 2026-06-20:
 - Progress bars expose accessible values.
 - Weekly activity is readable in light and dark mode.
 - Mistake breakdown does not rely only on color.
+- Recommendation card points to the next useful learning action.
+- Status and integration controls stay visually separate from learning
+  progress.
 - No charting library is required.
+
+## Slice 11 Evidence
+
+Recorded before starting Library polish.
+
+Current pass, 2026-06-20:
+
+- `ProgressScreen` uses screen-owned Progress components and local derived view
+  records from `progressUtils`.
+- Hero progress, linked metric pairs, weekly activity, mistake breakdown,
+  achievements, recommendation, and status sections are implemented.
+- `npm run typecheck`, `npm run lint`, and `npm run format:check` pass.
+- Metro status probe returned `packager-status:running`.
+- iOS simulator launch passed on `iPhone 17` for app id
+  `com.luisgarcia.correcta`.
+- `agent-device` iOS snapshots verified the Progress scroll area from top
+  metrics through recommendation/status controls.
+- iOS screenshots:
+  `/tmp/correcta-slice11-ios-progress-top.png`,
+  `/tmp/correcta-slice11-ios-progress-mid.png`,
+  `/tmp/correcta-slice11-ios-progress-achievements.png`, and
+  `/tmp/correcta-slice11-ios-progress-status.png`.
 
 ## iOS QA
 

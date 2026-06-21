@@ -1,9 +1,9 @@
 # Visual Design & Interaction Polish Results
 
-Status: partial. Slices 1-10 are complete. The shared component checkpoint has
-source-audit, automated, iOS, and Android evidence. Home, Practice, and Review
-production-screen polish have iOS evidence. The remaining visual polish work
-starts with Slice 11, Progress Polish.
+Status: partial. Slices 1-11 are complete. The shared component checkpoint has
+source-audit, automated, iOS, and Android evidence. Home, Practice, Review, and
+Progress production-screen polish have iOS evidence. The remaining visual polish
+work starts with Slice 12, Library Polish.
 
 ## Slice 1: Theme Token Design System
 
@@ -403,8 +403,67 @@ Known follow-ups:
 
 - Android Review evidence should be added during the next broader
   cross-platform screen polish pass.
-- Progress remains the active next production screen for Slice 11.
+- Progress was completed in Slice 11; Library remains the active next
+  production screen for Slice 12.
 
 Next phase:
 
-- Start Slice 11, Progress Polish.
+- Completed by Slice 11, Progress Polish.
+
+## Slice 11: Progress Polish
+
+Date: 2026-06-20.
+
+Result: pass. Progress now uses the accepted shared visual system for the
+learning score, linked metric groups, weekly activity, mistake breakdown,
+achievements, recommendation, and status sections.
+
+Implemented:
+
+- `ProgressScreen` now uses shared `ScreenHeader`, `LoadingState`,
+  `ErrorState`, linked `Card` groups, `ProgressBar`, badges, and icon controls.
+- Added `ProgressHeroCard` for local XP, streak, due-review status, accuracy
+  summary, and daily goal progress.
+- Upgraded the metric grid into linked horizontal metric pairs.
+- Upgraded weekly activity into a linked trend card with accessible progress
+  bars for each day.
+- Added mistake breakdown bars derived from local practice mistake categories.
+- Upgraded achievements into a linked milestones group with earned/locked
+  badges.
+- Added a recommendation card that routes to Review, Practice, or Library based
+  on local progress state.
+- Existing reminder, backend/AI, and monetization status controls remain
+  separate from learning progress and still use their existing services.
+
+Verification:
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run format:check`
+- Metro status probe: `packager-status:running`.
+- iOS simulator: `iPhone 17`, app id `com.luisgarcia.correcta`.
+- iOS launch: `xcrun simctl launch booted com.luisgarcia.correcta` returned a
+  running process id.
+- iOS runtime path: app launch -> Progress tab.
+- `agent-device` iOS snapshots confirmed the top learning score, linked metric
+  groups, weekly activity, mistake breakdown, milestones, recommendation, and
+  status controls are present and scrollable.
+
+Evidence:
+
+- iOS Progress top: `/tmp/correcta-slice11-ios-progress-top.png`
+- iOS Progress weekly/mid: `/tmp/correcta-slice11-ios-progress-mid.png`
+- iOS Progress achievements:
+  `/tmp/correcta-slice11-ios-progress-achievements.png`
+- iOS Progress recommendation/status:
+  `/tmp/correcta-slice11-ios-progress-status.png`
+
+Known follow-ups:
+
+- Android Progress evidence should be added during the next broader
+  cross-platform screen polish pass.
+- Library remains the active next production screen for Slice 12.
+
+Next phase:
+
+- Start Slice 12, Library Polish.

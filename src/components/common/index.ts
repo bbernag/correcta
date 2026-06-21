@@ -1,3 +1,5 @@
+export {AnimatedCounter} from "./AnimatedCounter";
+export {AnimatedMount} from "./AnimatedMount";
 export {AppText} from "./AppText";
 export type {AppTextProps, AppTextTone, AppTextVariant} from "./AppText";
 export {Button} from "./Button";
@@ -13,6 +15,7 @@ export type {
 } from "./Card";
 export {Chip} from "./Chip";
 export type {ChipProps, ChipSize, ChipVariant} from "./Chip";
+export {Crossfade} from "./Crossfade";
 export {EmptyState} from "./EmptyState";
 export type {EmptyStateProps} from "./EmptyState";
 export {ErrorState} from "./ErrorState";

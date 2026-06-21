@@ -22,6 +22,7 @@ export function usePracticeSaveActions({
 }) {
     const [isSavingWord, setIsSavingWord] = useState(false);
     const [isSavingSentence, setIsSavingSentence] = useState(false);
+    const [saveError, setSaveError] = useState<string | null>(null);
 
     async function handleSaveWord() {
         if (!result || !currentSentence || result.savedWordId) {
@@ -29,6 +30,7 @@ export function usePracticeSaveActions({
         }
 
         setIsSavingWord(true);
+        setSaveError(null);
 
         try {
             const savedWord = await savePracticeWord({
@@ -54,6 +56,18 @@ export function usePracticeSaveActions({
             });
             playHapticFeedback("success");
             AccessibilityInfo.announceForAccessibility("Word saved.");
+        } catch (saveWordError) {
+            if (!mountedRef.current) {
+                return;
+            }
+
+            const message =
+                saveWordError instanceof Error
+                    ? saveWordError.message
+                    : "Word could not be saved";
+            playHapticFeedback("error");
+            setSaveError(message);
+            AccessibilityInfo.announceForAccessibility(message);
         } finally {
             if (mountedRef.current) {
                 setIsSavingWord(false);
@@ -67,6 +81,7 @@ export function usePracticeSaveActions({
         }
 
         setIsSavingSentence(true);
+        setSaveError(null);
 
         try {
             const savedSentence = await savePracticeSentence({
@@ -93,6 +108,18 @@ export function usePracticeSaveActions({
             });
             playHapticFeedback("success");
             AccessibilityInfo.announceForAccessibility("Sentence saved.");
+        } catch (saveSentenceError) {
+            if (!mountedRef.current) {
+                return;
+            }
+
+            const message =
+                saveSentenceError instanceof Error
+                    ? saveSentenceError.message
+                    : "Sentence could not be saved";
+            playHapticFeedback("error");
+            setSaveError(message);
+            AccessibilityInfo.announceForAccessibility(message);
         } finally {
             if (mountedRef.current) {
                 setIsSavingSentence(false);
@@ -105,5 +132,6 @@ export function usePracticeSaveActions({
         handleSaveWord,
         isSavingSentence,
         isSavingWord,
+        saveError,
     };
 }

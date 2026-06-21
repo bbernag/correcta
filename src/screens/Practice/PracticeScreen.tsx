@@ -133,18 +133,29 @@ export function PracticeScreen({route}: PracticeScreenProps) {
                 </>
             ) : null}
             {result ? (
-                <FeedbackPanel
-                    isContinuing={practice.isChecking}
-                    isLastSentence={practice.isLastSentence}
-                    isSavingSentence={practice.isSavingSentence}
-                    isSavingWord={practice.isSavingWord}
-                    onContinue={practice.handleContinue}
-                    onRetry={practice.handleRetry}
-                    onSaveSentence={practice.handleSaveSentence}
-                    onSaveWord={practice.handleSaveWord}
-                    result={result}
-                    sourceText={currentSentence.sourceText}
-                />
+                <>
+                    {error ? (
+                        <Surface variant="danger" style={styles.section}>
+                            <AppText variant="label" tone="danger">
+                                Summary unavailable
+                            </AppText>
+                            <AppText tone="secondary">{error}</AppText>
+                        </Surface>
+                    ) : null}
+                    <FeedbackPanel
+                        isContinuing={practice.isChecking}
+                        isLastSentence={practice.isLastSentence}
+                        isSavingSentence={practice.isSavingSentence}
+                        isSavingWord={practice.isSavingWord}
+                        onContinue={practice.handleContinue}
+                        onRetry={practice.handleRetry}
+                        onSaveSentence={practice.handleSaveSentence}
+                        onSaveWord={practice.handleSaveWord}
+                        result={result}
+                        saveError={practice.saveError}
+                        sourceText={currentSentence.sourceText}
+                    />
+                </>
             ) : null}
         </Screen>
     );

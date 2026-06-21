@@ -76,14 +76,19 @@ export function usePracticeSession({
         setRevealedHintCount(0);
         setResult(null);
     }, []);
-    const {handleSaveSentence, handleSaveWord, isSavingSentence, isSavingWord} =
-        usePracticeSaveActions({
-            currentSentence,
-            mountedRef,
-            result,
-            services,
-            setResult,
-        });
+    const {
+        handleSaveSentence,
+        handleSaveWord,
+        isSavingSentence,
+        isSavingWord,
+        saveError,
+    } = usePracticeSaveActions({
+        currentSentence,
+        mountedRef,
+        result,
+        services,
+        setResult,
+    });
     const {handleContinue, handleRetry, handleSkip, handleSubmitAnswer} =
         usePracticeFlowActions({
             answerText,
@@ -266,6 +271,7 @@ export function usePracticeSession({
         remainingWordBankItems,
         result,
         revealedHintCount,
+        saveError,
         selectedItemIds,
         selectedWordBankItems,
         sessionState,

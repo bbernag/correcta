@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {Button, Surface} from "../../../components/common";
+import {AppText, Button, Surface} from "../../../components/common";
 import type {PracticeResult} from "../types/practiceTypes";
 import {AcceptedAlternatives} from "./AcceptedAlternatives";
 import {MistakeHighlights} from "./MistakeHighlights";
@@ -17,6 +17,7 @@ type FeedbackPanelProps = {
     onSaveSentence: () => void;
     onSaveWord: () => void;
     result: PracticeResult;
+    saveError?: string | null;
     sourceText: string;
 };
 
@@ -30,6 +31,7 @@ export function FeedbackPanel({
     onSaveSentence,
     onSaveWord,
     result,
+    saveError,
     sourceText,
 }: FeedbackPanelProps) {
     const hasSavedWord =
@@ -92,6 +94,14 @@ export function FeedbackPanel({
                     />
                 </View>
             </Surface>
+            {saveError ? (
+                <Surface variant="danger" style={styles.saveError}>
+                    <AppText variant="label" tone="danger">
+                        Save failed
+                    </AppText>
+                    <AppText tone="secondary">{saveError}</AppText>
+                </Surface>
+            ) : null}
             <MistakeHighlights mistakes={result.validation.mistakes} />
         </View>
     );
@@ -113,6 +123,9 @@ const styles = StyleSheet.create((theme) => ({
     },
     retryAction: {
         minWidth: 92,
+    },
+    saveError: {
+        gap: theme.spacing.xs,
     },
     secondaryAction: {
         flex: 1,

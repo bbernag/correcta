@@ -27,6 +27,9 @@ export function useProgressDashboard() {
     const [phase, setPhase] = useState<ProgressPhase>("loading");
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [preferencesError, setPreferencesError] = useState<string | null>(
+        null
+    );
     const [rewardState, setRewardState] = useState<ProgressRewardState>({
         isLoading: false,
         result: null,
@@ -136,6 +139,8 @@ export function useProgressDashboard() {
 
     const saveNotificationPreferences = useCallback(
         async (preferences: NotificationPreferences) => {
+            setPreferencesError(null);
+
             try {
                 const reminderState =
                     await services.reminders.savePreferences(preferences);
@@ -152,15 +157,14 @@ export function useProgressDashboard() {
                     },
                     reminderState,
                 });
-                setError(null);
-            } catch (preferencesError) {
+            } catch (saveError) {
                 if (!mountedRef.current) {
                     return;
                 }
 
-                setError(
-                    preferencesError instanceof Error
-                        ? preferencesError.message
+                setPreferencesError(
+                    saveError instanceof Error
+                        ? saveError.message
                         : "Reminder preferences could not be saved"
                 );
             }
@@ -261,6 +265,7 @@ export function useProgressDashboard() {
         handleToggleReviewReminder,
         isRefreshing,
         phase,
+        preferencesError,
         rewardState,
     };
 }

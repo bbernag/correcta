@@ -3,11 +3,13 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {
+    AppText,
     IconButton,
     LoadingState,
     Screen,
     ScreenHeader,
     SectionHeader,
+    Surface,
 } from "../../components/common";
 import type {MainTabParamList} from "../../router/types";
 import {AchievementsCard} from "./components/AchievementsCard";
@@ -117,6 +119,16 @@ export function ProgressScreen({navigation}: ProgressScreenProps) {
                     preferences={dashboard.notificationPreferences}
                     reminderState={dashboard.reminderState}
                 />
+                {progress.preferencesError ? (
+                    <Surface variant="danger" style={styles.inlineError}>
+                        <AppText variant="label" tone="danger">
+                            Reminders not saved
+                        </AppText>
+                        <AppText tone="secondary">
+                            {progress.preferencesError}
+                        </AppText>
+                    </Surface>
+                ) : null}
                 <BackendAiStatusCard status={dashboard.backendAi} />
                 <MonetizationCard
                     monetization={dashboard.monetization}
@@ -139,6 +151,9 @@ const styles = StyleSheet.create((theme) => ({
     content: {
         gap: theme.spacing.lg,
         paddingBottom: theme.spacing["3xl"],
+    },
+    inlineError: {
+        gap: theme.spacing.xs,
     },
     section: {
         gap: theme.spacing.md,

@@ -5,6 +5,7 @@ import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {
+    AnimatedMount,
     Button,
     EmptyState,
     ErrorState,
@@ -134,17 +135,25 @@ export function HomeScreen({navigation}: HomeScreenProps) {
                 subtitle="Start with one focused translation, then continue from review."
                 title="Daily practice"
             />
-            <DailyPracticeHeroCard
-                hero={dashboard.hero}
-                onStartPractice={handleStartPractice}
-            />
-            <QuickStatGrid stats={dashboard.quickStats} />
-            <TeacherTipCard tip={dashboard.teacherTip} />
-            <ContinueLearningCard
-                card={dashboard.continueLearning}
-                onOpenLibrary={handleOpenLibrary}
-                onOpenReview={handleOpenReview}
-            />
+            <AnimatedMount>
+                <DailyPracticeHeroCard
+                    hero={dashboard.hero}
+                    onStartPractice={handleStartPractice}
+                />
+            </AnimatedMount>
+            <AnimatedMount delayMs={80}>
+                <QuickStatGrid stats={dashboard.quickStats} />
+            </AnimatedMount>
+            <AnimatedMount delayMs={160}>
+                <TeacherTipCard tip={dashboard.teacherTip} />
+            </AnimatedMount>
+            <AnimatedMount delayMs={240}>
+                <ContinueLearningCard
+                    card={dashboard.continueLearning}
+                    onOpenLibrary={handleOpenLibrary}
+                    onOpenReview={handleOpenReview}
+                />
+            </AnimatedMount>
         </Screen>
     );
 }

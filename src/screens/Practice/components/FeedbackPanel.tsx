@@ -1,7 +1,12 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Button, Surface} from "../../../components/common";
+import {
+    AnimatedMount,
+    AppText,
+    Button,
+    Surface,
+} from "../../../components/common";
 import type {PracticeResult} from "../types/practiceTypes";
 import {AcceptedAlternatives} from "./AcceptedAlternatives";
 import {MistakeHighlights} from "./MistakeHighlights";
@@ -43,12 +48,16 @@ export function FeedbackPanel({
     return (
         <View style={styles.root}>
             <ResultBanner result={result} />
-            <AcceptedAlternatives
-                acceptedTranslations={result.validation.acceptedTranslations}
-                preferredAnswer={result.validation.preferredAnswer}
-                sourceText={sourceText}
-                userAnswer={result.validation.userAnswer}
-            />
+            <AnimatedMount delayMs={60}>
+                <AcceptedAlternatives
+                    acceptedTranslations={
+                        result.validation.acceptedTranslations
+                    }
+                    preferredAnswer={result.validation.preferredAnswer}
+                    sourceText={sourceText}
+                    userAnswer={result.validation.userAnswer}
+                />
+            </AnimatedMount>
             <Surface variant="card" style={styles.actions}>
                 <View style={styles.secondaryActions}>
                     <Button
@@ -102,7 +111,9 @@ export function FeedbackPanel({
                     <AppText tone="secondary">{saveError}</AppText>
                 </Surface>
             ) : null}
-            <MistakeHighlights mistakes={result.validation.mistakes} />
+            <AnimatedMount delayMs={120}>
+                <MistakeHighlights mistakes={result.validation.mistakes} />
+            </AnimatedMount>
         </View>
     );
 }

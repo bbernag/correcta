@@ -58,7 +58,7 @@ export function SavedWordCard({
             <Button
                 accessibilityLabel={`Remove saved word ${record.text}`}
                 leadingIcon="close"
-                label="Remove word"
+                label="Remove"
                 loading={isPending}
                 onPress={handleRemove}
                 size="small"

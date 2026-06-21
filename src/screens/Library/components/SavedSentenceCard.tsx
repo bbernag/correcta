@@ -58,7 +58,7 @@ export function SavedSentenceCard({
             <Button
                 accessibilityLabel={`Remove saved sentence ${record.sourceText}`}
                 leadingIcon="close"
-                label="Remove sentence"
+                label="Remove"
                 loading={isPending}
                 onPress={handleRemove}
                 size="small"

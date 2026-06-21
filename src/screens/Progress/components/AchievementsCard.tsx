@@ -14,9 +14,6 @@ export function AchievementsCard({achievements}: AchievementsCardProps) {
             <Card.Item>
                 <Card.Eyebrow>Milestones</Card.Eyebrow>
                 <AppText variant="heading">Achievements</AppText>
-                <Card.Caption>
-                    Earned locally from practice, saved content, and review.
-                </Card.Caption>
             </Card.Item>
             {achievements.map((achievement) => {
                 return (

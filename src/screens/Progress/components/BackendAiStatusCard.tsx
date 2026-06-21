@@ -19,22 +19,6 @@ export function BackendAiStatusCard({status}: BackendAiStatusCardProps) {
                         : "Local mock active"}
                 </AppText>
             </View>
-            <AppText tone="secondary">
-                Contract {status.contractVersion}. AI providers stay server-side
-                and responses are parsed before rendering.
-            </AppText>
-            {status.endpoints.map((endpoint) => {
-                return (
-                    <View key={endpoint.id} style={styles.endpoint}>
-                        <AppText variant="label">
-                            {endpoint.method} {endpoint.path}
-                        </AppText>
-                        <AppText variant="caption" tone="secondary">
-                            {endpoint.description}
-                        </AppText>
-                    </View>
-                );
-            })}
         </Surface>
     );
 }
@@ -45,12 +29,5 @@ const styles = StyleSheet.create((theme) => ({
     },
     header: {
         gap: theme.spacing.xs,
-    },
-    endpoint: {
-        borderColor: theme.colors.borderSubtle,
-        borderRadius: theme.radii.sm,
-        borderWidth: 1,
-        gap: theme.spacing.xs,
-        padding: theme.spacing.md,
     },
 }));

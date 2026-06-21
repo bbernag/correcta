@@ -19,9 +19,6 @@ export function WeeklyActivityCard({records}: WeeklyActivityCardProps) {
             <Card.Item>
                 <Card.Eyebrow>Trend</Card.Eyebrow>
                 <AppText variant="heading">Weekly activity</AppText>
-                <Card.Caption>
-                    Completed attempts for the last seven days.
-                </Card.Caption>
             </Card.Item>
             <Card.Item>
                 <View style={styles.days}>

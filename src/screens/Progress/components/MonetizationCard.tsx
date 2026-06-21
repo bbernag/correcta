@@ -23,7 +23,7 @@ export function MonetizationCard({
                 <AppText tone="secondary">
                     {monetization.providerConfigured
                         ? monetization.adapterName
-                        : "Rewarded ad provider not connected"}
+                        : "No bonuses available right now"}
                 </AppText>
             </View>
             {monetization.rewards.map((reward) => {

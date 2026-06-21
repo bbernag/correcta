@@ -123,8 +123,7 @@ export function ReminderPreferencesCard({
             />
             <AppText variant="caption" tone="secondary">
                 {reminderState.preferencesSummary}.{" "}
-                {getNativeScheduleSummary(reminderState)} Quiet hours are
-                respected in local schedule metadata.
+                {getNativeScheduleSummary(reminderState)}
             </AppText>
         </Surface>
     );

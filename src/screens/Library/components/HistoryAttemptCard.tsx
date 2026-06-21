@@ -60,7 +60,6 @@ export function HistoryAttemptCard({
             </View>
             <AppText variant="heading">{record.sourceText}</AppText>
             <View style={styles.detailGroup}>
-                <AppText variant="label">Your answer</AppText>
                 <AppText tone="secondary">{record.answerText}</AppText>
             </View>
             <View style={styles.detailGroup}>
@@ -89,9 +88,9 @@ export function HistoryAttemptCard({
                     variant="neutral"
                 />
             </View>
-            <View style={styles.chipRow}>
-                {record.mistakeLabels.length > 0 ? (
-                    record.mistakeLabels.map((mistakeLabel) => {
+            {record.mistakeLabels.length > 0 ? (
+                <View style={styles.chipRow}>
+                    {record.mistakeLabels.map((mistakeLabel) => {
                         return (
                             <Chip
                                 icon="mistake"
@@ -101,16 +100,9 @@ export function HistoryAttemptCard({
                                 variant="warning"
                             />
                         );
-                    })
-                ) : (
-                    <Chip
-                        icon="success"
-                        label={record.mistakeLabel}
-                        size="small"
-                        variant="success"
-                    />
-                )}
-            </View>
+                    })}
+                </View>
+            ) : null}
             <View style={styles.actions}>
                 <Button
                     accessibilityLabel={`Retry ${record.sourceText}`}

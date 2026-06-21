@@ -16,9 +16,6 @@ export function MistakeBreakdownCard({records}: MistakeBreakdownCardProps) {
                     <Icon name="mistake" size="default" tone="warning" />
                     <View style={styles.titleCopy}>
                         <AppText variant="heading">Mistake focus</AppText>
-                        <AppText tone="secondary" variant="bodySmall">
-                            Patterns from local practice attempts.
-                        </AppText>
                     </View>
                 </View>
             </View>

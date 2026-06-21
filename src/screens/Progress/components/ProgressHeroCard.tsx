@@ -22,7 +22,7 @@ export function ProgressHeroCard({hero}: ProgressHeroCardProps) {
                 <View style={styles.scoreRow}>
                     <View>
                         <Card.Metric>{hero.value}</Card.Metric>
-                        <Card.Caption>Local XP</Card.Caption>
+                        <Card.Caption>XP</Card.Caption>
                     </View>
                     <View style={styles.badge}>
                         <AppText variant="caption" tone="accent">

@@ -6,7 +6,7 @@ implementation tasks.
 
 The detailed design rationale still lives in `docs/design-system.md`. The
 native component rules live in `docs/rules/general/native-component-design.md`.
-The linked-card geometry rules live in
+The connected-card geometry rules live in
 `docs/rules/general/linked-surface-groups.md`. This file is the compact current
 implementation contract.
 
@@ -80,13 +80,16 @@ Rules:
 - Pills and circular controls may still use `theme.radii.pill` when the shape
   must be a true pill or circle, but the surface should still follow the same
   continuous-corner visual language.
-- Decorative bridge/cutout geometry in linked cards is not interactive and does
-  not need `FastSquircleView`; the actual card items do.
+- Decorative bridge/cutout geometry in connected cards is not interactive and
+  does not need `FastSquircleView`; the actual card items do.
+- Connected-card cutouts are a reserved signature treatment. Do not use them
+  for ordinary dashboard metrics, list rows, empty-state summaries, or content
+  that only needs a normal card.
 
 Reference implementation:
 
-- `src/components/common/PocCard/PocCardSection.tsx`
-- `src/components/common/Card/Card.tsx`
+- `src/components/common/ConnectedCard/ConnectedCard.tsx`
+- `src/components/common/ConnectedCard/ConnectedCardItem.tsx`
 - `src/components/common/Surface/Surface.tsx`
 
 ## Color Palette
@@ -101,7 +104,7 @@ tabs, selected controls, focus rings, or normal tonal surfaces.
 
 | Token                            | Hex         | Use                                           |
 | -------------------------------- | ----------- | --------------------------------------------- |
-| `canvas`                         | `#F8F7F1`   | Warm app canvas and linked-card cutouts       |
+| `canvas`                         | `#F8F7F1`   | Warm app canvas and connected-card cutouts    |
 | `backgroundPrimary`              | `#F6F7FA`   | Main screen background                        |
 | `backgroundSecondary`            | `#EEF1F5`   | Grouped areas and secondary backgrounds       |
 | `surfacePrimary`                 | `#FFFFFF`   | Cards, inputs, and main surfaces              |
@@ -129,19 +132,19 @@ tabs, selected controls, focus rings, or normal tonal surfaces.
 | `feedbackInfoSoft`               | `#E6EEF8`   | Info background                               |
 | `focusRing`                      | `#4778D6`   | Focus state                                   |
 | `shadowTint`                     | `#111827`   | Shadow tint                                   |
-| `surfaceContrast`                | `#062B2D`   | Linked card surface                           |
-| `surfaceContrastAccent`          | `#CDC6FF`   | Linked card accent                            |
-| `surfaceContrastForeground`      | `#F3EEFF`   | Linked card primary text                      |
-| `surfaceContrastMutedForeground` | `#D9D4F6`   | Linked card muted text                        |
-| `surfaceContrastFocus`           | `#C8BEFF`   | Linked card focus                             |
-| `surfaceContrastOutline`         | `#E8E3FF`   | Linked card outline                           |
-| `surfaceContrastPressed`         | `#103A3D`   | Linked card pressed state                     |
+| `surfaceContrast`                | `#062B2D`   | Reserved connected-card surface               |
+| `surfaceContrastAccent`          | `#CDC6FF`   | Reserved connected-card accent                |
+| `surfaceContrastForeground`      | `#F3EEFF`   | Reserved connected-card primary text          |
+| `surfaceContrastMutedForeground` | `#D9D4F6`   | Reserved connected-card muted text            |
+| `surfaceContrastFocus`           | `#C8BEFF`   | Reserved connected-card focus                 |
+| `surfaceContrastOutline`         | `#E8E3FF`   | Reserved connected-card outline               |
+| `surfaceContrastPressed`         | `#103A3D`   | Reserved connected-card pressed state         |
 
 ### Dark Theme
 
 | Token                            | Hex         | Use                                           |
 | -------------------------------- | ----------- | --------------------------------------------- |
-| `canvas`                         | `#070B10`   | Dark app canvas and linked-card cutouts       |
+| `canvas`                         | `#070B10`   | Dark app canvas and connected-card cutouts    |
 | `backgroundPrimary`              | `#0D1117`   | Main screen background                        |
 | `backgroundSecondary`            | `#121822`   | Grouped areas and secondary backgrounds       |
 | `surfacePrimary`                 | `#171E28`   | Cards, inputs, and main surfaces              |
@@ -169,13 +172,13 @@ tabs, selected controls, focus rings, or normal tonal surfaces.
 | `feedbackInfoSoft`               | `#182A43`   | Info background                               |
 | `focusRing`                      | `#9BBEFF`   | Focus state                                   |
 | `shadowTint`                     | `#000000`   | Shadow tint                                   |
-| `surfaceContrast`                | `#0A292D`   | Linked card surface                           |
-| `surfaceContrastAccent`          | `#C8C0FF`   | Linked card accent                            |
-| `surfaceContrastForeground`      | `#F4EFFF`   | Linked card primary text                      |
-| `surfaceContrastMutedForeground` | `#C9C4E9`   | Linked card muted text                        |
-| `surfaceContrastFocus`           | `#CDC5FF`   | Linked card focus                             |
-| `surfaceContrastOutline`         | `#273F47`   | Linked card outline                           |
-| `surfaceContrastPressed`         | `#123D43`   | Linked card pressed state                     |
+| `surfaceContrast`                | `#0A292D`   | Reserved connected-card surface               |
+| `surfaceContrastAccent`          | `#C8C0FF`   | Reserved connected-card accent                |
+| `surfaceContrastForeground`      | `#F4EFFF`   | Reserved connected-card primary text          |
+| `surfaceContrastMutedForeground` | `#C9C4E9`   | Reserved connected-card muted text            |
+| `surfaceContrastFocus`           | `#CDC5FF`   | Reserved connected-card focus                 |
+| `surfaceContrastOutline`         | `#273F47`   | Reserved connected-card outline               |
+| `surfaceContrastPressed`         | `#123D43`   | Reserved connected-card pressed state         |
 
 ### Color Rules
 
@@ -184,6 +187,9 @@ tabs, selected controls, focus rings, or normal tonal surfaces.
 - Use `accentPrimarySoft` for secondary actions, selected filters, and quiet
   active states.
 - Use `surfaceTonal` for grouped controls and neutral selected areas.
+- Use `Surface`, `StatCard`, or simple list rows for normal cards and metrics.
+- Use `ConnectedCard` only when the content is truly one signature grouped
+  module and the linked geometry improves hierarchy.
 - Use feedback colors only for learning state and semantic system state.
 - Do not use gradients for backgrounds, borders, buttons, progress indicators,
   pressed states, or decoration.
@@ -291,8 +297,8 @@ Current card radius tokens:
 | Token                  | Value | Use                                   |
 | ---------------------- | ----: | ------------------------------------- |
 | `card.radius.compact`  |    24 | Default POC/squircle component radius |
-| `card.radius.default`  |    28 | Linked card default radius            |
-| `card.radius.hero`     |    32 | Large linked card radius              |
+| `card.radius.default`  |    28 | Connected-card default radius         |
+| `card.radius.hero`     |    32 | Large connected-card radius           |
 | `card.cornerSmoothing` |     1 | Continuous corner smoothing           |
 
 Design rule:
@@ -311,25 +317,27 @@ Use cards to group learning content, not to decorate every section.
 Shared surface family:
 
 - `Surface`: standalone rounded container.
-- `Card`: production linked surface group with SVG bridge/cutout geometry.
-- `PocCard`: POC linked surface group using `FastSquircleView` sections and
-  bridge/cutout views.
-- `NoticeCard`: status/feedback notice built on `PocCard`.
+- `StatCard`: normal metric card using a white outlined surface.
+- `ConnectedCard`: reserved linked surface group with bridge/cutout geometry.
+- `NoticeCard`: status/feedback notice built on `ConnectedCard`.
 - No general shared glass component is currently approved. Compact platform
   material treatment needs a concrete production use case before implementation.
 
 Card rules:
 
-- Use linked surfaces only when related content reads as one sculpted system.
+- Use normal outlined surfaces for ordinary metrics, list rows, and dashboard
+  summaries.
+- Use connected surfaces only when related content reads as one sculpted
+  signature system.
 - Do not join unrelated cards for decoration.
-- Linked-card bridges and cutouts are decorative only: no touch, focus, haptics,
-  or accessibility events.
-- Linked surfaces use opaque colors. Do not use blur or translucent glass
-  inside linked card unions.
-- Use `surfaceContrast` for high-emphasis linked cards.
+- Connected-card bridges and cutouts are decorative only: no touch, focus,
+  haptics, or accessibility events.
+- Connected surfaces use opaque colors. Do not use blur or translucent glass
+  inside connected-card unions.
+- Use `surfaceContrast` for high-emphasis connected cards.
 - Use `canvas` for cutouts so the carved shape matches the active theme.
 - Do not put cards inside cards.
-- Do not rely on borders alone for hierarchy.
+- Do not rely on shape alone for hierarchy.
 - Keep learning content more prominent than the container shape.
 
 Card geometry tokens:
@@ -392,7 +400,8 @@ Rules:
 ## Notices, Toasts, And Notifications
 
 Use `NoticeCard` for in-app status feedback that belongs in the learning flow.
-It composes `PocCard`, so it inherits the POC continuous-corner rule.
+It composes `ConnectedCard`, so it inherits the continuous-corner rule and the
+reserved connected-surface treatment.
 
 Notice tones:
 
@@ -437,7 +446,7 @@ Rules:
 
 Elevation tokens:
 
-- `shadows.surface`: normal cards.
+- `shadows.surface`: selected raised surfaces only.
 - `shadows.elevated`: elevated cards and inputs.
 - `shadows.floating`: floating controls and feedback panels.
 - `shadows.overlay`: modals and overlays.
@@ -539,7 +548,7 @@ Do not use:
 - Neon or rainbow palettes.
 - Green as brand, navigation, primary action, or active state.
 - Mascots, childish illustrations, or noisy game mechanics.
-- Generic flat white cards with only borders.
+- Generic flat cards with weak hierarchy.
 - Large empty padding.
 - Nested cards inside cards.
 - Screen-specific variants leaking into shared components.

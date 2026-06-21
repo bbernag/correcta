@@ -2,9 +2,13 @@
 
 ## Purpose
 
-Define Correcta's signature linked-card visual pattern. Use this when related
-cards should feel like one sculpted native composition instead of a stack of
-ordinary separated cards.
+Define Correcta's reserved connected-card visual pattern. Use this only when
+related cards should intentionally feel like one sculpted native composition
+instead of a stack of ordinary separated cards.
+
+Do not use this pattern for ordinary dashboard metrics, list rows, empty-state
+summaries, or content that only needs a normal card. Those should use `Surface`,
+`StatCard`, or a screen-specific simple row/card.
 
 This pattern is inspired by the provided reference image: large dark rounded
 surfaces on a warm light canvas, joined through narrow gaps by same-color
@@ -15,7 +19,7 @@ Native views, Unistyles tokens, and project components.
 
 - **Linked Surface Group:** A set of semantically related cards presented as one
   visual composition.
-- **Card Union:** The shared component responsible for arranging linked
+- **Connected Card:** The shared component responsible for arranging linked
   surfaces.
 - **Union Bridge:** The same-color shape that fills the union gap between
   adjacent cards before canvas cut-ins are layered on top.
@@ -47,16 +51,16 @@ merged card.
 
 - Implement union content with React Native `View`, `Pressable`,
   `react-native-fast-squircle` `FastSquircleView`, flex layout, and Unistyles.
-- The shared `Card` component uses `FastSquircleView` for item surfaces and
-  `react-native-svg` `Svg` and `Path` for decorative union geometry. The SVG
-  layer owns bridge and cut-in geometry only; it must not own text, controls,
-  touch handling, haptics, or accessibility semantics.
+- The shared `ConnectedCard` component uses `FastSquircleView` for item
+  surfaces and React Native view layers for decorative union geometry. The
+  decorative layer owns bridge and cut-in geometry only; it must not own text,
+  controls, touch handling, haptics, or accessibility semantics.
 - Do not use DOM APIs, CSS masks, `clip-path`, SVG masks, Skia, Canvas, image
   assets, or custom native drawing for this geometry unless a future rule
-  explicitly replaces the SVG path approach.
-- Card Union surfaces and bridges must be opaque. Translucency creates visible
+  explicitly replaces the React Native view-layer approach.
+- Connected-card surfaces and bridges must be opaque. Translucency creates visible
   overlap seams.
-- Do not use Liquid Glass, blur, or translucent materials inside a Card Union.
+- Do not use Liquid Glass, blur, or translucent materials inside a ConnectedCard.
 - Do not hard-code white circles or overlays to create cut-ins. Cut-ins must use
   the active theme canvas token.
 - The bridge must never receive touch, focus, haptics, or accessibility events.
@@ -64,52 +68,53 @@ merged card.
 
 ## Component API
 
-Use the shared `Card` compound component:
+Use the shared `ConnectedCard` compound component:
 
 ```tsx
-<Card orientation="vertical" tone="contrast">
-  <Card.Item>{content}</Card.Item>
-  <Card.Item>{content}</Card.Item>
-</Card>
+<ConnectedCard orientation="vertical" tone="contrast">
+  <ConnectedCard.Item>{content}</ConnectedCard.Item>
+  <ConnectedCard.Item>{content}</ConnectedCard.Item>
+</ConnectedCard>
 ```
 
 Required types:
 
 ```ts
-type CardOrientation = "vertical" | "horizontal";
-type CardGap = "compact" | "default" | "relaxed";
+type ConnectedCardOrientation = "vertical" | "horizontal";
+type ConnectedCardGap = "compact" | "default" | "relaxed";
 ```
 
-`Card` should accept:
+`ConnectedCard` should accept:
 
 - `orientation`
 - `tone`
 - `gap`
 - standard React Native `View` and accessibility props where applicable
 
-`Card.Item` owns card content, padding, pressed state, and accessibility
+`ConnectedCard.Item` owns card content, padding, pressed state, and accessibility
 semantics. The root must generate union bridges automatically between adjacent
 items. Do not expose a public bridge subcomponent or require screens to position
 bridges manually. When the design calls for a full canvas gap between two
-cards, split them into separate `Card` groups rather than disabling bridge
-geometry inside one group.
+cards, split them into separate `ConnectedCard` groups rather than disabling
+bridge geometry inside one group.
 
 All items in one union must use the same opaque surface token.
 
 ## Geometry
 
-Linked card surfaces use radius `28` by default, radius `24` when compact, and
-radius `32` for hero surfaces. Use padding `20` to `24` for hero cards and `16`
-to `20` for compact stat cards.
+Connected-card surfaces use radius `28` by default, radius `24` when compact,
+and radius `32` for hero surfaces. Use padding `20` to `24` for hero cards and
+`16` to `20` for compact connected-card items.
 
-### SVG Surface Layer
+### Decorative Connector Layer
 
-The Card Union visual geometry is a decorative SVG path behind normal React
-Native content. The SVG draws same-color center bridges and active-canvas
-cut-outs. This keeps the bridge and concave seams in the measured SVG geometry
-instead of rendering a separate visible connector pill between cards.
+The connected-card visual geometry is a decorative connector layer between
+normal React Native item surfaces. The connector draws same-color center
+bridges and active-canvas cut-outs. This keeps the bridge and concave seams in
+the measured geometry instead of rendering a separate visible connector pill
+between cards.
 
-The SVG layer must:
+The decorative connector layer must:
 
 - Use theme tokens for `surfaceContrast`, `canvas`, radius, gap, cut-out
   thickness, and bridge span.
@@ -126,18 +131,20 @@ The React Native item layer must:
   state.
 - Render item surfaces with `FastSquircleView` when the card itself needs
   native smoothed corners.
-- Use the same opaque `surfaceContrast` token as the SVG bridge. Do not mix
+- Use the same opaque `surfaceContrast` token as the bridge. Do not mix
   item and bridge colors.
 - Use opacity or internal overlays for press feedback; do not render a separate
-  bridge view above the SVG.
+  bridge view above the connector.
 
 ### Vertical Union
 
 For vertically stacked cards:
 
 - Use a default `8` point Union Gap.
-- Fill the gap through the SVG silhouette, not through a separate View bridge.
-- Layer active-canvas cut-ins over the left and right edges in the SVG.
+- Fill the gap through the decorative connector silhouette, not through a
+  separate visible bridge component owned by the screen.
+- Layer active-canvas cut-ins over the left and right edges in the decorative
+  connector.
 - Size each cut-in to about `15%` of the card width by default (span `0.7`),
   leaving a narrower `70%` center bridge.
 - Keep each cut-in visually slim, about `8` points tall or the measured Union
@@ -155,14 +162,14 @@ Recommended structure:
 
 ```tsx
 <View style={styles.cardRoot}>
-  <CardSurface pointerEvents="none" />
-  <Card.Item>{content}</Card.Item>
+  <ConnectedCardConnector pointerEvents="none" />
+  <ConnectedCard.Item>{content}</ConnectedCard.Item>
   <View style={styles.unionGap} pointerEvents="none" />
-  <Card.Item>{content}</Card.Item>
+  <ConnectedCard.Item>{content}</ConnectedCard.Item>
 </View>
 ```
 
-The SVG cut-in path must use:
+The connector cut-in geometry must use:
 
 ```ts
 bridgeWidth = measuredUnionWidth * card.bridge.span
@@ -179,8 +186,9 @@ rounded right corners; a right cut-out should have rounded left corners.
 For paired stat cards:
 
 - Use a default `8` point horizontal gap.
-- Fill the gap through the SVG silhouette.
-- Layer active-canvas cut-ins over the top and bottom edges in the SVG.
+- Fill the gap through the decorative connector silhouette.
+- Layer active-canvas cut-ins over the top and bottom edges in the decorative
+  connector.
 - Keep each cut-in visually slim, about `10` points tall, so the center gap
   does not become an hourglass notch.
 - Round the inner edge of the top and bottom cut-ins so the center bridge reads
@@ -202,12 +210,12 @@ corners.
 
 ## Layering And Layout
 
-- Render the SVG surface below card items.
-- Use `zIndex: 0` for the SVG surface and `zIndex: 1` for item content.
-- Keep the Card Union root and gap slots at `overflow: "visible"`.
+- Render the decorative connector below card items.
+- Use `zIndex: 0` for the decorative connector and `zIndex: 1` for item content.
+- Keep the ConnectedCard root and gap slots at `overflow: "visible"`.
 - Items may use `overflow: "hidden"` to clip their own pressed overlays.
 - Do not use per-item elevation or shadows inside a union.
-- Use one opaque surface token for the item surfaces and SVG bridge geometry.
+- Use one opaque surface token for the item surfaces and bridge geometry.
   Do not mix surface colors inside one union.
 - Vertical unions may contain variable-height items.
 - Horizontal Interlocking Pairs must have equal heights and normally contain
@@ -216,8 +224,8 @@ corners.
 
 ## Platform Behavior
 
-- Card Union geometry must be identical on iOS and Android.
-- Card Unions use opaque tonal surfaces on both platforms.
+- ConnectedCard geometry must be identical on iOS and Android.
+- ConnectedCard groups use opaque tonal surfaces on both platforms.
 - Do not apply iOS glass treatment to union items or bridges.
 - Do not add Android elevation independently to individual union items.
 - Prefer high surface-to-canvas contrast over shadows for this pattern.
@@ -226,9 +234,10 @@ corners.
 
 ## Motion And Haptics
 
-- Never scale one Card Union item independently. This visually tears the union
+- Never scale one ConnectedCard item independently. This visually tears the union
   apart.
-- When the entire union is one action, animate the complete `Card` root.
+- When the entire union is one action, animate the complete `ConnectedCard`
+  root.
 - When items have separate actions, use a clipped pressed overlay without scale.
 - Union gaps, bridges, and cut-ins must not resize or morph during presses.
 - The bridge remains decorative and must not trigger haptics.
@@ -285,17 +294,18 @@ Add examples for:
 - Narrow and wide device widths.
 
 Include a debug example with temporary outlines around items, gap slots, and
-the measured SVG surface. Verify that there are no one-pixel seams at `1x`,
+the measured connector surface. Verify that there are no one-pixel seams at `1x`,
 `2x`, or `3x` density.
 
 ## Files And Architecture
 
 ```txt
-src/components/common/Card/
-  Card.tsx
-  CardSurface.tsx
-  cardTypes.ts
-  cardUtils.ts
+src/components/common/ConnectedCard/
+  ConnectedCard.tsx
+  ConnectedCardConnector.tsx
+  ConnectedCardItem.tsx
+  connectedCardTypes.ts
+  connectedCardUtils.ts
   index.ts
 ```
 
@@ -342,7 +352,7 @@ Tests must cover:
 - Horizontal unions leave opposing rounded cut-ins at the top and bottom.
 - Cards and bridges use the exact same opaque surface token.
 - No gradients, blur, glass, masks, or image-based geometry are used.
-- No visible seams appear where the SVG surface meets the item content.
+- No visible seams appear where the connector surface meets the item content.
 - The bridge has no shadow, border, accessibility role, or touch handling.
 - Individual union items do not scale independently.
 - Horizontal Interlocking Pairs remain equal-height with Dynamic Type enabled.

@@ -91,5 +91,7 @@ export {Surface} from "./Surface";
 export type {SurfaceProps, SurfaceVariant} from "./Surface";
 export {TextInput} from "./TextInput";
 export type {TextInputProps, TextInputStatus} from "./TextInput";
+export {CorrectaToastProvider, Toast, useCorrectaToast} from "./Toast";
+export type {ToastAction, ToastOptions, ToastVariant} from "./Toast";
 export {WordChip} from "./WordChip";
 export type {WordChipProps, WordChipStatus} from "./WordChip";

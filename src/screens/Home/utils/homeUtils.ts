@@ -91,40 +91,56 @@ function createQuickStats({
     savedCount: number;
     snapshot: HomeSourceData["snapshot"];
 }): HomeQuickStat[] {
-    return [
-        {
+    const stats: HomeQuickStat[] = [];
+
+    if (snapshot.streakDays > 0) {
+        stats.push({
             helper: snapshot.streakDays === 1 ? "Day streak" : "Day streaks",
             icon: "streak",
             id: "streak",
             label: "Streak",
-            tone: snapshot.streakDays > 0 ? "success" : "info",
+            tone: "success",
             value: String(snapshot.streakDays),
-        },
-        {
+        });
+    }
+
+    if (dueReviewCount > 0) {
+        stats.push({
             helper: "Cards ready",
             icon: "review",
             id: "review",
             label: "Review",
-            tone: dueReviewCount > 0 ? "warning" : "info",
+            tone: "warning",
             value: String(dueReviewCount),
-        },
-        {
+        });
+    }
+
+    if (savedCount > 0) {
+        stats.push({
             helper: "Words and sentences",
             icon: "saved",
             id: "saved",
             label: "Saved",
-            tone: savedCount > 0 ? "accent" : "info",
+            tone: "accent",
             value: String(savedCount),
-        },
-        {
-            helper: "Correct answers",
+        });
+    }
+
+    if (snapshot.attemptsCompleted > 0) {
+        stats.push({
+            helper:
+                snapshot.attemptsCompleted === 1
+                    ? "1 attempt"
+                    : `${snapshot.attemptsCompleted} attempts`,
             icon: "accuracy",
             id: "accuracy",
             label: "Accuracy",
             tone: snapshot.correctRate >= 0.8 ? "success" : "accent",
             value: formatPercent(snapshot.correctRate),
-        },
-    ];
+        });
+    }
+
+    return stats;
 }
 
 function createTeacherTip({

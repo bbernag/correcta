@@ -141,9 +141,11 @@ export function HomeScreen({navigation}: HomeScreenProps) {
                     onStartPractice={handleStartPractice}
                 />
             </AnimatedMount>
-            <AnimatedMount delayMs={80}>
-                <QuickStatGrid stats={dashboard.quickStats} />
-            </AnimatedMount>
+            {dashboard.quickStats.length > 0 ? (
+                <AnimatedMount delayMs={80}>
+                    <QuickStatGrid stats={dashboard.quickStats} />
+                </AnimatedMount>
+            ) : null}
             <AnimatedMount delayMs={160}>
                 <TeacherTipCard tip={dashboard.teacherTip} />
             </AnimatedMount>

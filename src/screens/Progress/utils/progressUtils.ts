@@ -51,57 +51,64 @@ export function createProgressMetrics({
         return item.mastery === "learning";
     });
     const savedCount = snapshot.savedWords + snapshot.savedSentences;
+    const metrics: ProgressMetric[] = [];
 
-    return [
-        {
+    if (snapshot.attemptsCompleted > 0) {
+        metrics.push({
             helper: "Completed locally",
             icon: "practice",
             id: "attempts",
             label: "Attempts",
-            tone: snapshot.attemptsCompleted > 0 ? "accent" : "info",
+            tone: "accent",
             value: String(snapshot.attemptsCompleted),
-        },
-        {
-            helper: "Correct answers",
+        });
+        metrics.push({
+            helper:
+                snapshot.attemptsCompleted === 1
+                    ? "1 attempt"
+                    : `${snapshot.attemptsCompleted} attempts`,
             icon: "accuracy",
             id: "accuracy",
             label: "Accuracy",
             tone: snapshot.correctRate >= 0.8 ? "success" : "warning",
             value: formatPercent(snapshot.correctRate),
-        },
-        {
+        });
+    }
+
+    if (savedCount > 0) {
+        metrics.push({
             helper: "Words and sentences",
             icon: "saved",
             id: "saved",
             label: "Saved",
-            tone: savedCount > 0 ? "success" : "info",
+            tone: "success",
             value: String(savedCount),
-        },
-        {
+        });
+    }
+
+    if (dueReviewCount > 0) {
+        metrics.push({
             helper: "Cards ready today",
             icon: "review",
             id: "due-review",
             label: "Due review",
-            tone: dueReviewCount > 0 ? "warning" : "success",
+            tone: "warning",
             value: String(dueReviewCount),
-        },
-        {
+        });
+    }
+
+    if (difficultItems.length > 0) {
+        metrics.push({
             helper: "Marked learning",
             icon: "mistake",
             id: "difficult",
-            label: "Difficult",
-            tone: difficultItems.length > 0 ? "warning" : "success",
+            label: "Needs work",
+            tone: "warning",
             value: String(difficultItems.length),
-        },
-        {
-            helper: "Local progress score",
-            icon: "progress",
-            id: "xp",
-            label: "XP",
-            tone: "accent",
-            value: String(getProgressXp(snapshot)),
-        },
-    ];
+        });
+    }
+
+    return metrics;
 }
 
 export function createDailyGoalRecord(
@@ -289,6 +296,15 @@ export function createProgressRecommendation({
 
 export function formatPercent(value: number) {
     return `${Math.round(value * 100)}%`;
+}
+
+export function hasProgressStarted(snapshot: ProgressSnapshot) {
+    return (
+        snapshot.attemptsCompleted > 0 ||
+        snapshot.savedWords > 0 ||
+        snapshot.savedSentences > 0 ||
+        snapshot.sessionsCompleted > 0
+    );
 }
 
 function getProgressXp(snapshot: ProgressSnapshot) {

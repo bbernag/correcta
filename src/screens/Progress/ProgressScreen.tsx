@@ -6,6 +6,8 @@ import {StyleSheet} from "react-native-unistyles";
 
 import {
     AppText,
+    Button,
+    EmptyState,
     IconButton,
     LoadingState,
     Screen,
@@ -25,6 +27,7 @@ import {ProgressRecommendationCard} from "./components/ProgressRecommendationCar
 import {ReminderPreferencesCard} from "./components/ReminderPreferencesCard";
 import {WeeklyActivityCard} from "./components/WeeklyActivityCard";
 import {useProgressDashboard} from "./hooks/useProgressDashboard";
+import {hasProgressStarted} from "./utils/progressUtils";
 
 type ProgressScreenProps = CompositeScreenProps<
     NativeBottomTabScreenProps<MainTabParamList, "Progress">,
@@ -88,6 +91,36 @@ export function ProgressScreen({navigation}: ProgressScreenProps) {
         }
     }
 
+    function handleStartPractice() {
+        navigation.navigate("PracticeSession", {restartKey: Date.now()});
+    }
+
+    if (!hasProgressStarted(dashboard.snapshot)) {
+        return (
+            <Screen contentContainerStyle={styles.content}>
+                <ScreenHeader
+                    action={headerAction}
+                    eyebrow="Progress"
+                    subtitle="Your first practice starts the trend."
+                    title="Progress"
+                />
+                <EmptyState
+                    action={
+                        <Button
+                            accessibilityLabel="Start practice to begin progress"
+                            label="Start practice"
+                            leadingIcon="practice"
+                            onPress={handleStartPractice}
+                        />
+                    }
+                    icon="progress"
+                    message="Complete one translation to unlock streaks, accuracy, and weekly activity."
+                    title="Progress starts after practice"
+                />
+            </Screen>
+        );
+    }
+
     return (
         <Screen contentContainerStyle={styles.content} scroll>
             <ScreenHeader
@@ -97,13 +130,15 @@ export function ProgressScreen({navigation}: ProgressScreenProps) {
                 title="Learning score"
             />
             <ProgressHeroCard hero={dashboard.hero} />
-            <View style={styles.section}>
-                <SectionHeader
-                    subtitle="A quick scan of what changed through local practice."
-                    title="Scoreboard"
-                />
-                <ProgressMetricGrid metrics={dashboard.metrics} />
-            </View>
+            {dashboard.metrics.length > 0 ? (
+                <View style={styles.section}>
+                    <SectionHeader
+                        subtitle="A quick scan of what changed through local practice."
+                        title="Scoreboard"
+                    />
+                    <ProgressMetricGrid metrics={dashboard.metrics} />
+                </View>
+            ) : null}
             <WeeklyActivityCard records={dashboard.weeklyActivity} />
             <MistakeBreakdownCard records={dashboard.mistakeBreakdown} />
             <AchievementsCard achievements={dashboard.achievements} />

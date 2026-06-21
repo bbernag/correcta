@@ -21,7 +21,7 @@ export function ReviewSummaryCard({summary}: ReviewSummaryCardProps) {
                     <AppText variant="label" tone="accent">
                         {summary.activeDeckTitle}
                     </AppText>
-                    <AppText variant="heading">Review queue</AppText>
+                    <AppText variant="heading">Due today</AppText>
                 </View>
                 <AppText tone="secondary" variant="bodySmall">
                     {summary.progressLabel}

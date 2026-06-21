@@ -22,6 +22,7 @@ export type ReviewDeckRecords = {
     activeItems: ReviewItem[];
     decks: ReviewDeckState[];
     dueItems: ReviewItem[];
+    totalItemCount: number;
 };
 
 export type ReviewSummaryMetric = {

@@ -7,6 +7,7 @@ import {StyleSheet} from "react-native-unistyles";
 
 import {
     AppText,
+    Button,
     ErrorState,
     LoadingState,
     Screen,
@@ -55,12 +56,20 @@ export function LibraryScreen({navigation}: LibraryScreenProps) {
         library.records.savedWords.length > 0 ||
         library.records.savedSentences.length > 0 ||
         library.records.mistakeGroups.length > 0;
+    const hasSavedLibraryContent =
+        library.records.savedWords.length > 0 ||
+        library.records.savedSentences.length > 0 ||
+        library.records.mistakeGroups.length > 0;
 
     function handleRetryAttempt(record: LibraryAttemptRecord) {
         navigation.navigate("PracticeSession", {
             restartKey: Date.now(),
             retrySentenceId: record.sentenceId,
         });
+    }
+
+    function handleStartPractice() {
+        navigation.navigate("PracticeSession", {restartKey: Date.now()});
     }
 
     if (library.isLoading && !hasRecords) {
@@ -81,15 +90,19 @@ export function LibraryScreen({navigation}: LibraryScreenProps) {
                     <View style={styles.header}>
                         <ScreenHeader
                             eyebrow="Library"
-                            subtitle="Saved words, useful sentences, and practice history from local learning."
-                            title="Learning notebook"
+                            subtitle="Saved words, useful sentences, and practice history."
+                            title="Library"
                         />
-                        <LibraryOverviewCard records={library.records} />
+                        {hasSavedLibraryContent ? (
+                            <LibraryOverviewCard records={library.records} />
+                        ) : null}
                         <LibrarySegmentControl
                             onChange={library.handleSelectSegment}
+                            records={library.records}
                             value={library.segment}
                         />
-                        {library.segment === "history" ? (
+                        {library.segment === "history" &&
+                        library.records.attempts.length > 0 ? (
                             <View style={styles.filterGroup}>
                                 <AppText variant="label">
                                     History result
@@ -122,6 +135,7 @@ export function LibraryScreen({navigation}: LibraryScreenProps) {
                         item,
                         library,
                         onRetryAttempt: handleRetryAttempt,
+                        onStartPractice: handleStartPractice,
                     });
                 }}
                 renderSectionHeader={({section}) => {
@@ -138,10 +152,12 @@ function renderLibraryItem({
     item,
     library,
     onRetryAttempt,
+    onStartPractice,
 }: {
     item: LibrarySectionItem;
     library: ReturnType<typeof useLibraryRecords>;
     onRetryAttempt: (record: LibraryAttemptRecord) => void;
+    onStartPractice: () => void;
 }) {
     switch (item.kind) {
         case "attempt":
@@ -188,6 +204,16 @@ function renderLibraryItem({
                     icon={item.icon}
                     message={item.message}
                     title={item.title}
+                    action={
+                        item.actionLabel ? (
+                            <Button
+                                accessibilityLabel={item.actionLabel}
+                                label={item.actionLabel}
+                                leadingIcon="practice"
+                                onPress={onStartPractice}
+                            />
+                        ) : undefined
+                    }
                 />
             );
     }

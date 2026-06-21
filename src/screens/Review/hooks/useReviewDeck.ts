@@ -20,6 +20,7 @@ const EMPTY_REVIEW_RECORDS: ReviewDeckRecords = {
     activeItems: [],
     decks: [],
     dueItems: [],
+    totalItemCount: 0,
 };
 
 export function useReviewDeck() {
@@ -60,12 +61,15 @@ export function useReviewDeck() {
             }
 
             try {
-                const dueItems = await services.reviewQueue.listDueItems(
-                    new Date().toISOString()
-                );
+                const now = new Date().toISOString();
+                const [reviewItems, dueItems] = await Promise.all([
+                    services.reviewQueue.listItems(),
+                    services.reviewQueue.listDueItems(now),
+                ]);
                 const nextRecords = createReviewDeckRecords({
                     activeDeckId,
                     dueItems,
+                    totalItemCount: reviewItems.length,
                 });
 
                 if (!mountedRef.current) {

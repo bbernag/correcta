@@ -12,10 +12,6 @@ export function LibraryOverviewCard({records}: LibraryOverviewCardProps) {
     return (
         <Surface style={styles.root}>
             <View style={styles.stat}>
-                <AppText variant="heading">{records.attempts.length}</AppText>
-                <AppText tone="secondary">Attempts</AppText>
-            </View>
-            <View style={styles.stat}>
                 <AppText variant="heading">{records.savedWords.length}</AppText>
                 <AppText tone="secondary">Words</AppText>
             </View>
@@ -26,8 +22,10 @@ export function LibraryOverviewCard({records}: LibraryOverviewCardProps) {
                 <AppText tone="secondary">Sentences</AppText>
             </View>
             <View style={styles.stat}>
-                <AppText variant="heading">{records.dueReviewCount}</AppText>
-                <AppText tone="secondary">Due</AppText>
+                <AppText variant="heading">
+                    {records.mistakeGroups.length}
+                </AppText>
+                <AppText tone="secondary">Needs work</AppText>
             </View>
         </Surface>
     );

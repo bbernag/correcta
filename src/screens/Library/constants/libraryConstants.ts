@@ -44,7 +44,7 @@ export const LIBRARY_MISTAKE_CATEGORY_LABELS: Record<MistakeCategory, string> =
     };
 
 export const LIBRARY_INPUT_MODE_LABELS: Record<PracticeInputMode, string> = {
-    sentenceBuilder: "Sentence Builder",
+    sentenceBuilder: "Word bank",
     typing: "Typing",
 };
 

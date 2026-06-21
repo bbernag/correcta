@@ -1,13 +1,16 @@
+import type {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
 import {
     AnimatedMount,
+    Button,
     LoadingState,
     Screen,
     ScreenHeader,
     SectionHeader,
 } from "../../components/common";
+import type {RootStackParamList} from "../../router/types";
 import {ReviewCard} from "./components/ReviewCard";
 import {ReviewDeckSelector} from "./components/ReviewDeckSelector";
 import {ReviewEmptyState} from "./components/ReviewEmptyState";
@@ -16,9 +19,26 @@ import {ReviewQueuePreview} from "./components/ReviewQueuePreview";
 import {ReviewSummaryCard} from "./components/ReviewSummaryCard";
 import {useReviewViewModel} from "./hooks/useReviewViewModel";
 
-export function ReviewScreen() {
+type ReviewScreenProps = NativeStackScreenProps<
+    RootStackParamList,
+    "ReviewSession"
+>;
+
+export function ReviewScreen({navigation}: ReviewScreenProps) {
     const review = useReviewViewModel();
     const cardState = review.cardState;
+    const selectableDecks = review.records.decks.filter((deck) => {
+        return deck.itemCount > 0;
+    });
+    const shouldShowDeckSelector = selectableDecks.length > 1;
+
+    function handleStartPractice() {
+        navigation.navigate("PracticeSession", {restartKey: Date.now()});
+    }
+
+    function handleOpenLibrary() {
+        navigation.navigate("MainTabs", {screen: "Library"});
+    }
 
     if (review.phase === "loading") {
         return (
@@ -46,12 +66,47 @@ export function ReviewScreen() {
             ) : null}
             {review.phase !== "error" ? (
                 <>
-                    <ReviewSummaryCard summary={review.summary} />
-                    {review.isReviewComplete ? <ReviewEmptyState /> : null}
-                    {review.isActiveDeckEmpty ? (
+                    {review.isReviewNewUser ? (
                         <ReviewEmptyState
-                            message="Choose another deck or complete more practice to add cards here."
-                            title="No cards in this deck"
+                            action={
+                                <Button
+                                    accessibilityLabel="Start practice to build your review set"
+                                    label="Start practice"
+                                    leadingIcon="practice"
+                                    onPress={handleStartPractice}
+                                />
+                            }
+                        />
+                    ) : null}
+                    {review.isReviewCaughtUp ? (
+                        <ReviewEmptyState
+                            action={
+                                <View style={styles.emptyActions}>
+                                    <Button
+                                        accessibilityLabel="Practice new sentences"
+                                        label="Practice new sentences"
+                                        leadingIcon="practice"
+                                        onPress={handleStartPractice}
+                                    />
+                                    <Button
+                                        accessibilityLabel="Browse saved items"
+                                        label="Browse saved items"
+                                        onPress={handleOpenLibrary}
+                                        variant="secondary"
+                                    />
+                                </View>
+                            }
+                            message="New due cards will appear after more practice or when saved items are ready again."
+                            title="You're caught up"
+                        />
+                    ) : null}
+                    {review.phase === "ready" ? (
+                        <ReviewSummaryCard summary={review.summary} />
+                    ) : null}
+                    {review.phase === "ready" && review.isActiveDeckEmpty ? (
+                        <ReviewEmptyState
+                            message="Choose another review set or complete more practice to add cards here."
+                            title="No due cards in this set"
                         />
                     ) : null}
                     {cardState ? (
@@ -73,16 +128,18 @@ export function ReviewScreen() {
                             <ReviewQueuePreview items={review.queuePreview} />
                         </>
                     ) : null}
-                    <View style={styles.section}>
-                        <SectionHeader
-                            subtitle="Each deck shows the cards due right now."
-                            title="Review decks"
-                        />
-                        <ReviewDeckSelector
-                            decks={review.records.decks}
-                            onSelectDeck={review.handleSelectDeck}
-                        />
-                    </View>
+                    {shouldShowDeckSelector ? (
+                        <View style={styles.section}>
+                            <SectionHeader
+                                subtitle="Choose which due cards to study now."
+                                title="Review sets"
+                            />
+                            <ReviewDeckSelector
+                                decks={selectableDecks}
+                                onSelectDeck={review.handleSelectDeck}
+                            />
+                        </View>
+                    ) : null}
                 </>
             ) : null}
         </Screen>
@@ -97,6 +154,9 @@ const styles = StyleSheet.create((theme) => ({
     },
     content: {
         paddingBottom: theme.spacing["3xl"],
+    },
+    emptyActions: {
+        gap: theme.spacing.sm,
     },
     section: {
         gap: theme.spacing.md,

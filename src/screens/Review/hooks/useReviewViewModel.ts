@@ -34,6 +34,10 @@ export function useReviewViewModel() {
             review.phase === "ready" && review.records.activeItems.length === 0,
         isReviewComplete:
             review.phase === "empty" || review.records.dueItems.length === 0,
+        isReviewNewUser:
+            review.phase === "empty" && review.records.totalItemCount === 0,
+        isReviewCaughtUp:
+            review.phase === "empty" && review.records.totalItemCount > 0,
         queuePreview,
         summary,
     };

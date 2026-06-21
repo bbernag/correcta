@@ -108,6 +108,7 @@ export type LibrarySectionItem =
       }
     | {id: string; kind: "mistake"; record: LibraryMistakeGroupRecord}
     | {
+          actionLabel?: string;
           icon: IconName;
           id: string;
           kind: "empty";

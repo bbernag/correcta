@@ -56,9 +56,11 @@ const REVIEW_DECK_DEFINITIONS: (Omit<ReviewDeckSummary, "itemCount"> & {
 export function createReviewDeckRecords({
     activeDeckId,
     dueItems,
+    totalItemCount = dueItems.length,
 }: {
     activeDeckId: ReviewDeckId;
     dueItems: ReviewItem[];
+    totalItemCount?: number;
 }): ReviewDeckRecords {
     const decks = REVIEW_DECK_DEFINITIONS.map((deck) => {
         const itemCount = countItemsBySourceTypes({
@@ -81,6 +83,7 @@ export function createReviewDeckRecords({
         activeItems: getDeckItems({deckId: activeDeckId, dueItems}),
         decks,
         dueItems,
+        totalItemCount,
     };
 }
 
@@ -193,31 +196,39 @@ export function createReviewSummary({
                 helper: "Cards ready now",
                 icon: "review",
                 id: "due",
-                label: "Due",
-                tone: dueItems.length > 0 ? "warning" : "success",
+                label: "Due today",
+                tone: "warning",
                 value: String(dueItems.length),
             },
-            {
-                helper: "In selected deck",
-                icon: "saved",
-                id: "active",
-                label: "Queue",
-                tone: activeItems.length > 0 ? "accent" : "info",
-                value: String(activeItems.length),
-            },
-            {
-                helper: "Marked learning",
-                icon: "mistake",
-                id: "learning",
-                label: "Difficult",
-                tone: learningCount > 0 ? "warning" : "success",
-                value: String(learningCount),
-            },
+            ...(activeItems.length !== dueItems.length
+                ? [
+                      {
+                          helper: "Selected set",
+                          icon: "saved" as const,
+                          id: "active",
+                          label: "Selected",
+                          tone: "accent" as const,
+                          value: String(activeItems.length),
+                      },
+                  ]
+                : []),
+            ...(learningCount > 0
+                ? [
+                      {
+                          helper: "Marked learning",
+                          icon: "mistake" as const,
+                          id: "learning",
+                          label: "Needs work",
+                          tone: "warning" as const,
+                          value: String(learningCount),
+                      },
+                  ]
+                : []),
         ],
         progressLabel:
             dueItems.length > 0
-                ? `${activeItems.length}/${dueItems.length} cards in this pass`
-                : "Review queue complete",
+                ? `${activeItems.length}/${dueItems.length} due in this pass`
+                : "You're caught up",
         progressMax: Math.max(dueItems.length, 1),
         progressTone: dueItems.length === 0 ? "success" : "accent",
         progressValue: activeItems.length,

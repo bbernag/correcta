@@ -41,11 +41,12 @@ function createSavedWordsSection(records: LibraryRecords): LibrarySection {
                   })
                 : [
                       {
+                          actionLabel: "Start practice",
                           icon: "word",
                           id: "empty-words",
                           kind: "empty" as const,
                           message:
-                              "Save useful words from feedback to build vocabulary review.",
+                              "Tap a word in feedback, then choose Save to build this list.",
                           title: "No saved words",
                       },
                   ],
@@ -68,11 +69,12 @@ function createSavedSentencesSection(records: LibraryRecords): LibrarySection {
                   })
                 : [
                       {
+                          actionLabel: "Start practice",
                           icon: "sentence",
                           id: "empty-sentences",
                           kind: "empty" as const,
                           message:
-                              "Save useful sentences from feedback or history.",
+                              "Use Save sentence from feedback or history to keep useful examples.",
                           title: "No saved sentences",
                       },
                   ],
@@ -120,6 +122,10 @@ function createHistorySections({
                   })
                 : [
                       {
+                          actionLabel:
+                              records.attempts.length > 0
+                                  ? undefined
+                                  : "Start practice",
                           icon: "time",
                           id: "empty-history",
                           kind: "empty" as const,

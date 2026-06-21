@@ -1,13 +1,24 @@
+import type {ReactNode} from "react";
+
 import {EmptyState} from "../../../components/common";
 
 type ReviewEmptyStateProps = {
+    action?: ReactNode;
     message?: string;
     title?: string;
 };
 
 export function ReviewEmptyState({
-    message = "Save words, save sentences, or complete practice attempts with mistakes to build your next review deck.",
-    title = "No review due",
+    action,
+    message = "Saved words, saved sentences, and mistakes become review cards.",
+    title = "Build your review set",
 }: ReviewEmptyStateProps) {
-    return <EmptyState icon="review" message={message} title={title} />;
+    return (
+        <EmptyState
+            action={action}
+            icon="review"
+            message={message}
+            title={title}
+        />
+    );
 }

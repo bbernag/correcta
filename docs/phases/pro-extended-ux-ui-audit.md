@@ -148,26 +148,26 @@ Rules:
 - Dark inverse surfaces appear at most once per screen.
 - Components consume semantic Unistyles tokens instead of raw colors.
 
-| Semantic token | Suggested value | Use |
-| --- | --- | --- |
-| `background.canvas` | `#F6F7FA` | Main app background |
-| `background.surface` | `#FFFFFF` | Cards, editors, list rows |
-| `background.subtle` | `#EEF2F6` | Empty states, grouped sections |
-| `background.inverse` | `#123B37` | Rare brand hero surface |
-| `content.primary` | `#101828` | Titles and body text |
-| `content.secondary` | `#5B6472` | Supporting copy and metadata |
-| `border.default` | `#D8DEE8` | Cards, inputs, dividers |
-| `action.primary` | `#245FC6` | Primary buttons and selected controls |
-| `action.pressed` | `#1E4EA6` | Pressed state |
-| `action.subtle` | `#EAF1FF` | Selected tab or low-emphasis action |
-| `brand.accent` | `#0F6B62` | Logo, learning accent, small illustrations |
-| `brand.subtle` | `#E8F5F2` | Brand-tinted supporting surface |
-| `status.success` | `#1B7F52` | Correct and saved states |
-| `status.successSubtle` | `#E9F7EF` | Success background |
-| `status.warning` | `#8A5A00` | Almost-correct or caution |
-| `status.warningSubtle` | `#FFF4D6` | Warning background |
-| `status.danger` | `#B42318` | Error or destructive state |
-| `status.dangerSubtle` | `#FDECEC` | Error background |
+| Semantic token         | Suggested value | Use                                        |
+| ---------------------- | --------------- | ------------------------------------------ |
+| `background.canvas`    | `#F6F7FA`       | Main app background                        |
+| `background.surface`   | `#FFFFFF`       | Cards, editors, list rows                  |
+| `background.subtle`    | `#EEF2F6`       | Empty states, grouped sections             |
+| `background.inverse`   | `#123B37`       | Rare brand hero surface                    |
+| `content.primary`      | `#101828`       | Titles and body text                       |
+| `content.secondary`    | `#5B6472`       | Supporting copy and metadata               |
+| `border.default`       | `#D8DEE8`       | Cards, inputs, dividers                    |
+| `action.primary`       | `#245FC6`       | Primary buttons and selected controls      |
+| `action.pressed`       | `#1E4EA6`       | Pressed state                              |
+| `action.subtle`        | `#EAF1FF`       | Selected tab or low-emphasis action        |
+| `brand.accent`         | `#0F6B62`       | Logo, learning accent, small illustrations |
+| `brand.subtle`         | `#E8F5F2`       | Brand-tinted supporting surface            |
+| `status.success`       | `#1B7F52`       | Correct and saved states                   |
+| `status.successSubtle` | `#E9F7EF`       | Success background                         |
+| `status.warning`       | `#8A5A00`       | Almost-correct or caution                  |
+| `status.warningSubtle` | `#FFF4D6`       | Warning background                         |
+| `status.danger`        | `#B42318`       | Error or destructive state                 |
+| `status.dangerSubtle`  | `#FDECEC`       | Error background                           |
 
 Visual rules:
 
@@ -189,13 +189,13 @@ Recommended changes:
 
 - Use one heading, such as `Today` or `Daily practice`.
 - Remove redundant eyebrow/title repetition like `Correcta` plus `Daily
-  practice` plus another `Daily practice` in the hero.
+practice` plus another `Daily practice` in the hero.
 - Combine the hero, daily goal, and CTA into one module:
-  - Spanish to English - Beginner
-  - 5 sentences, about 3 minutes
-  - optional first-prompt preview
-  - Start today's practice
-  - goal progress
+    - Spanish to English - Beginner
+    - 5 sentences, about 3 minutes
+    - optional first-prompt preview
+    - Start today's practice
+    - goal progress
 - If Home previews `Necesito un cafe.`, Practice should open on that same
   sentence. Otherwise, do not preview a specific sentence.
 - Keep no more than two secondary metrics above the fold, such as streak and
@@ -273,11 +273,11 @@ Feedback:
 
 - Lead with `Correct`, `Almost`, or `Needs work`.
 - Then show:
-  - one-sentence explanation
-  - your answer
-  - suggested answer
-  - only meaningful differences
-  - collapsed other natural answers when relevant
+    - one-sentence explanation
+    - your answer
+    - suggested answer
+    - only meaningful differences
+    - collapsed other natural answers when relevant
 - Rename `Teacher feedback` to `Feedback` or `Why this works` unless a human
   teacher authored the content.
 - Remove `100%` unless its meaning is clear.
@@ -296,20 +296,20 @@ Goal: make Review state-driven and obvious.
 Recommended states:
 
 1. New user
-   - Title: `Build your review set`
-   - Explain in one sentence that saved words, saved sentences, and mistakes
-     become review cards.
-   - Primary action: `Start practice`
+    - Title: `Build your review set`
+    - Explain in one sentence that saved words, saved sentences, and mistakes
+      become review cards.
+    - Primary action: `Start practice`
 
 2. Caught up
-   - Title: `You're caught up`
-   - Show the next due time when available.
-   - Secondary actions: `Practice new sentences` or `Browse saved items`
+    - Title: `You're caught up`
+    - Show the next due time when available.
+    - Secondary actions: `Practice new sentences` or `Browse saved items`
 
 3. Cards due
-   - Title: `12 cards due`
-   - One primary `Start review` button
-   - One compact summary of the selected review set
+    - Title: `12 cards due`
+    - One primary `Start review` button
+    - One compact summary of the selected review set
 
 Recommended changes:
 
@@ -345,7 +345,7 @@ Recommended changes:
 - Move saved-content counts to Library.
 - Move due-review counts to Review.
 - Remove implementation-facing language like `local progress` and `completed
-  locally` unless local-only storage is an intentional product promise.
+locally` unless local-only storage is an intentional product promise.
 - Rename `Scoreboard` to something concrete like `This week`.
 - Remove `Learning score` and XP unless the scoring logic is clear to users.
 - Rename `Difficult` to `Needs work`.
@@ -368,9 +368,9 @@ Recommended changes:
 - Hide search and sorting until there is content.
 - Hide History filters when there are no history records.
 - Give every empty state one relevant CTA:
-  - Words: `Start practice`
-  - Sentences: `Start practice`
-  - History: `Complete a practice`
+    - Words: `Start practice`
+    - Sentences: `Start practice`
+    - History: `Complete a practice`
 - Explain precisely how content arrives: "Tap a word in feedback, then choose
   Save."
 - Use simple list rows with dividers rather than putting every saved item in a
@@ -403,14 +403,14 @@ Recommended active routes above tabs:
 
 Terminology changes:
 
-| Current | Recommended |
-| --- | --- |
-| `ES to EN` | `Spanish to English` |
-| `Build` | `Word bank` |
-| `Next prompt` | `Next sentence` |
-| `No review due` | `You're caught up` |
-| `Difficult` | `Needs work` |
-| `Teacher feedback` | `Feedback` |
+| Current                                          | Recommended                |
+| ------------------------------------------------ | -------------------------- |
+| `ES to EN`                                       | `Spanish to English`       |
+| `Build`                                          | `Word bank`                |
+| `Next prompt`                                    | `Next sentence`            |
+| `No review due`                                  | `You're caught up`         |
+| `Difficult`                                      | `Needs work`               |
+| `Teacher feedback`                               | `Feedback`                 |
 | `Review queue` / `deck` / `cards` mixed together | Use one concept per screen |
 
 ## Motion And Micro-Interactions
@@ -498,15 +498,15 @@ Recommendations:
 
 ## Phased Roadmap
 
-| Phase | Scope | Dependencies | Primary risk | Complexity |
-| --- | --- | --- | --- | --- |
-| 0. Product definitions | Decide screen ownership, terminology, metric definitions, empty states, and Type / Word Bank draft behavior. | None | Building polished UI around unresolved concepts. | S |
-| 1. Visual foundation | Add semantic Unistyles tokens; standardize typography, spacing, radii, borders, buttons, cards, segmented controls, metrics, and empty states. | Phase 0 | Broad visual regressions across screens. | M |
-| 2. Navigation shell | Introduce root stack above native tabs; simplify tabs; add focused Practice and Review session routes. | Final IA | Back behavior, deep links, preserving sessions. | M |
-| 3. Practice redesign | Rebuild prompt, stable answer editor, Type / Word Bank switching, sticky actions, keyboard behavior, draft persistence, feedback comparison, save actions, and session exit. | Phases 1-2 | Keyboard differences, state loss, lossy mode conversion, swipe behavior. | L |
-| 4. Today, Review, Library | Implement conditional Home content, Review state models, simplified Library tabs, empty states, and populated list rows. | Shared components and state selectors | Inconsistent backend states or unclear onboarding triggers. | L |
-| 5. Progress | Replace zero dashboard; define meaningful metrics; add weekly activity, goal, and milestone states. | Reliable analytics and metric definitions | Misleading scores, small sample sizes, undefined XP logic. | M |
-| 6. Motion and accessibility QA | Add restrained `EaseView` transitions, reduced-motion behavior, screen-reader focus and announcements, large-text, keyboard, Android, and iOS testing. | Stable layouts from prior phases | Platform-specific layout and focus differences. | M |
+| Phase                          | Scope                                                                                                                                                                        | Dependencies                              | Primary risk                                                             | Complexity |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------ | ---------- |
+| 0. Product definitions         | Decide screen ownership, terminology, metric definitions, empty states, and Type / Word Bank draft behavior.                                                                 | None                                      | Building polished UI around unresolved concepts.                         | S          |
+| 1. Visual foundation           | Add semantic Unistyles tokens; standardize typography, spacing, radii, borders, buttons, cards, segmented controls, metrics, and empty states.                               | Phase 0                                   | Broad visual regressions across screens.                                 | M          |
+| 2. Navigation shell            | Introduce root stack above native tabs; simplify tabs; add focused Practice and Review session routes.                                                                       | Final IA                                  | Back behavior, deep links, preserving sessions.                          | M          |
+| 3. Practice redesign           | Rebuild prompt, stable answer editor, Type / Word Bank switching, sticky actions, keyboard behavior, draft persistence, feedback comparison, save actions, and session exit. | Phases 1-2                                | Keyboard differences, state loss, lossy mode conversion, swipe behavior. | L          |
+| 4. Today, Review, Library      | Implement conditional Home content, Review state models, simplified Library tabs, empty states, and populated list rows.                                                     | Shared components and state selectors     | Inconsistent backend states or unclear onboarding triggers.              | L          |
+| 5. Progress                    | Replace zero dashboard; define meaningful metrics; add weekly activity, goal, and milestone states.                                                                          | Reliable analytics and metric definitions | Misleading scores, small sample sizes, undefined XP logic.               | M          |
+| 6. Motion and accessibility QA | Add restrained `EaseView` transitions, reduced-motion behavior, screen-reader focus and announcements, large-text, keyboard, Android, and iOS testing.                       | Stable layouts from prior phases          | Platform-specific layout and focus differences.                          | M          |
 
 Accessibility fundamentals should start in Phase 1 rather than being deferred to
 Phase 6. Phase 6 is the final audit and correction pass.

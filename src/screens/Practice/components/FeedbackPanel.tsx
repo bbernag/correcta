@@ -104,12 +104,14 @@ export function FeedbackPanel({
                 </View>
             </Surface>
             {saveError ? (
-                <Surface variant="danger" style={styles.saveError}>
-                    <AppText variant="label" tone="danger">
-                        Save failed
-                    </AppText>
-                    <AppText tone="secondary">{saveError}</AppText>
-                </Surface>
+                <AnimatedMount>
+                    <Surface variant="danger" style={styles.saveError}>
+                        <AppText variant="label" tone="danger">
+                            Save failed
+                        </AppText>
+                        <AppText tone="secondary">{saveError}</AppText>
+                    </Surface>
+                </AnimatedMount>
             ) : null}
             <AnimatedMount delayMs={120}>
                 <MistakeHighlights mistakes={result.validation.mistakes} />

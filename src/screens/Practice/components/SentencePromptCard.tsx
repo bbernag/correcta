@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, Card, Icon} from "../../../components/common";
+import {AnimatedMount, AppText, Card, Icon} from "../../../components/common";
 import type {PracticeSentence} from "../../../types";
 
 type SentencePromptCardProps = {
@@ -34,9 +34,9 @@ export function SentencePromptCard({
                     <View style={styles.hints}>
                         {visibleHints.map((hint) => {
                             return (
-                                <AppText key={hint} tone="secondary">
-                                    {hint}
-                                </AppText>
+                                <AnimatedMount key={hint}>
+                                    <AppText tone="secondary">{hint}</AppText>
+                                </AnimatedMount>
                             );
                         })}
                     </View>

@@ -118,12 +118,14 @@ export function PracticeScreen({route}: PracticeScreenProps) {
                         wordBankItems={practice.wordBankItems}
                     />
                     {error ? (
-                        <Surface variant="danger" style={styles.section}>
-                            <AppText variant="label" tone="danger">
-                                Check failed
-                            </AppText>
-                            <AppText tone="secondary">{error}</AppText>
-                        </Surface>
+                        <AnimatedMount>
+                            <Surface variant="danger" style={styles.section}>
+                                <AppText variant="label" tone="danger">
+                                    Check failed
+                                </AppText>
+                                <AppText tone="secondary">{error}</AppText>
+                            </Surface>
+                        </AnimatedMount>
                     ) : null}
                     <PracticeActionBar
                         canSubmit={practice.canSubmit}

@@ -19,6 +19,7 @@ type ReminderPresetOption = {
 };
 
 type ReminderPreferencesCardProps = {
+    isSaving?: boolean;
     onSelectReminderPreset: (params: {
         preset: NotificationPreferences["reminderPreset"];
         time: string;
@@ -37,6 +38,7 @@ const REMINDER_OPTIONS: ReminderPresetOption[] = [
 ];
 
 export function ReminderPreferencesCard({
+    isSaving = false,
     onSelectReminderPreset,
     onToggleReminders,
     onToggleReviewReminder,
@@ -66,7 +68,11 @@ export function ReminderPreferencesCard({
                                 selected,
                             })}
                             accessibilityRole="radio"
-                            accessibilityState={{checked: selected}}
+                            accessibilityState={{
+                                checked: selected,
+                                disabled: isSaving,
+                            }}
+                            disabled={isSaving}
                             key={option.id}
                             onPress={() => {
                                 onSelectReminderPreset({
@@ -78,6 +84,7 @@ export function ReminderPreferencesCard({
                         >
                             {({pressed}) => (
                                 <PressableMotionView
+                                    disabled={isSaving}
                                     pressed={pressed}
                                     style={[
                                         styles.option,
@@ -99,11 +106,13 @@ export function ReminderPreferencesCard({
                 })}
             </View>
             <Button
+                disabled={isSaving}
                 label={preferences.enabled ? "Turn reminders off" : "Turn on"}
                 onPress={onToggleReminders}
                 variant={preferences.enabled ? "ghost" : "secondary"}
             />
             <Button
+                disabled={isSaving}
                 label={
                     preferences.reviewReminderEnabled
                         ? "Pause review reminders"

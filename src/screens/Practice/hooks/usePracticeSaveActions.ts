@@ -2,6 +2,7 @@ import type {Dispatch, MutableRefObject, SetStateAction} from "react";
 import {useState} from "react";
 import {AccessibilityInfo} from "react-native";
 
+import {useCorrectaToast} from "../../../components/common";
 import {playHapticFeedback} from "../../../native";
 import {savePracticeSentence, savePracticeWord} from "../../../services/domain";
 import type {CorrectaServices, PracticeSentence} from "../../../types";
@@ -20,6 +21,7 @@ export function usePracticeSaveActions({
     services: CorrectaServices;
     setResult: Dispatch<SetStateAction<PracticeResult | null>>;
 }) {
+    const {showToast} = useCorrectaToast();
     const [isSavingWord, setIsSavingWord] = useState(false);
     const [isSavingSentence, setIsSavingSentence] = useState(false);
     const [saveError, setSaveError] = useState<string | null>(null);
@@ -55,7 +57,7 @@ export function usePracticeSaveActions({
                 savedWordId: savedWord.id,
             });
             playHapticFeedback("success");
-            AccessibilityInfo.announceForAccessibility("Word saved.");
+            showToast({title: "Word saved", variant: "success"});
         } catch (saveWordError) {
             if (!mountedRef.current) {
                 return;
@@ -107,7 +109,7 @@ export function usePracticeSaveActions({
                 savedSentenceId: savedSentence.id,
             });
             playHapticFeedback("success");
-            AccessibilityInfo.announceForAccessibility("Sentence saved.");
+            showToast({title: "Sentence saved", variant: "success"});
         } catch (saveSentenceError) {
             if (!mountedRef.current) {
                 return;

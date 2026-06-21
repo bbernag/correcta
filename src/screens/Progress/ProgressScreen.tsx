@@ -113,6 +113,7 @@ export function ProgressScreen({navigation}: ProgressScreenProps) {
                     title="Status"
                 />
                 <ReminderPreferencesCard
+                    isSaving={progress.isSavingPreferences}
                     onSelectReminderPreset={progress.handleSelectReminderPreset}
                     onToggleReminders={progress.handleToggleReminders}
                     onToggleReviewReminder={progress.handleToggleReviewReminder}

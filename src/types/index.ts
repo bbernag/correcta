@@ -13,6 +13,11 @@ export type {
     NotificationReminderState,
     ScheduledReminder,
     ScheduledReminderKind,
+    ScheduledReminderRoute,
+} from "./notifications";
+export {
+    SCHEDULED_REMINDER_KINDS,
+    SCHEDULED_REMINDER_ROUTES,
 } from "./notifications";
 export type {
     BackendAiEndpointContract,

@@ -5,15 +5,15 @@ import type {
     NativeNotificationScheduler,
     NotificationPermissionStatus,
 } from "../../types";
-import type {
-    NotificationResponseRoute,
-    NotificationResponseRouteListener,
-} from "./notificationTypes";
+import {
+    parseNotificationResponseRoute,
+    REMINDER_ID_DATA_KEY,
+    REMINDER_KIND_DATA_KEY,
+    REMINDER_ROUTE_DATA_KEY,
+} from "./notificationRoute";
+import type {NotificationResponseRouteListener} from "./notificationTypes";
 
 const REMINDER_CHANNEL_ID = "correcta-reminders";
-const ROUTE_DATA_KEY = "correctaRouteName";
-const REMINDER_ID_DATA_KEY = "correctaReminderId";
-const REMINDER_KIND_DATA_KEY = "correctaReminderKind";
 
 export function configureNotificationPresentation() {
     Notifications.setNotificationHandler({
@@ -69,7 +69,7 @@ export function createExpoNotificationScheduler(): NativeNotificationScheduler {
                         data: {
                             [REMINDER_ID_DATA_KEY]: reminder.id,
                             [REMINDER_KIND_DATA_KEY]: reminder.kind,
-                            [ROUTE_DATA_KEY]: reminder.routeName,
+                            [REMINDER_ROUTE_DATA_KEY]: reminder.routeName,
                         },
                         sound: false,
                         title: reminder.title,
@@ -96,7 +96,7 @@ export function addNotificationResponseRouteListener(
     listener: NotificationResponseRouteListener
 ) {
     return Notifications.addNotificationResponseReceivedListener((response) => {
-        const route = getRouteFromResponseData(
+        const route = parseNotificationResponseRoute(
             response.notification.request.content.data
         );
 
@@ -113,7 +113,9 @@ export function getLastNotificationResponseRoute() {
         return null;
     }
 
-    return getRouteFromResponseData(response.notification.request.content.data);
+    return parseNotificationResponseRoute(
+        response.notification.request.content.data
+    );
 }
 
 async function requestReminderPermission() {
@@ -174,33 +176,4 @@ function getPermissionStatusFromResponse(
     }
 
     return "undetermined";
-}
-
-function getRouteFromResponseData(
-    data: Record<string, unknown> | undefined
-): NotificationResponseRoute | null {
-    const routeName = data?.[ROUTE_DATA_KEY];
-
-    if (
-        routeName !== "Practice" &&
-        routeName !== "Review" &&
-        routeName !== "Progress"
-    ) {
-        return null;
-    }
-
-    const reminderId = data?.[REMINDER_ID_DATA_KEY];
-    const reminderKind = data?.[REMINDER_KIND_DATA_KEY];
-
-    return {
-        reminderId: typeof reminderId === "string" ? reminderId : undefined,
-        reminderKind:
-            reminderKind === "dailyPractice" ||
-            reminderKind === "review" ||
-            reminderKind === "wordOfDay" ||
-            reminderKind === "sentenceChallenge"
-                ? reminderKind
-                : undefined,
-        routeName,
-    };
 }

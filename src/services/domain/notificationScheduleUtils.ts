@@ -128,7 +128,9 @@ function getNextScheduledDate({
             quietHoursStart: preferences.quietHoursStart,
         });
 
-        if (quietEndDate > now) {
+        // Quiet-hours end can roll into the next calendar day; only accept it
+        // when that day is still one the user selected.
+        if (quietEndDate > now && isDayEnabled(quietEndDate, preferences)) {
             return quietEndDate;
         }
     }

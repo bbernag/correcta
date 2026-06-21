@@ -55,6 +55,47 @@ describe("buildScheduledReminders", () => {
         expect(reminders).toHaveLength(1);
         expect(reminders[0].kind).toBe("dailyPractice");
     });
+
+    it("never schedules on a day outside the selected days when quiet hours roll over", () => {
+        const fridayNoon = new Date(2026, 5, 19, 12, 0, 0);
+
+        const reminders = buildScheduledReminders({
+            dueReviewCount: 0,
+            now: fridayNoon,
+            preferences: makePreferences({
+                days: ["friday"],
+                reminderTime: "22:00",
+                quietHoursStart: "21:00",
+                quietHoursEnd: "07:00",
+            }),
+        });
+
+        for (const reminder of reminders) {
+            // Friday is day 5; the old rollover bug produced Saturday (6).
+            expect(new Date(reminder.scheduledFor).getDay()).toBe(5);
+        }
+    });
+
+    it("defers into the next day's quiet-hours end when that day is selected", () => {
+        const fridayNoon = new Date(2026, 5, 19, 12, 0, 0);
+
+        const reminders = buildScheduledReminders({
+            dueReviewCount: 0,
+            now: fridayNoon,
+            preferences: makePreferences({
+                days: ["friday", "saturday"],
+                reminderTime: "22:00",
+                quietHoursStart: "21:00",
+                quietHoursEnd: "07:00",
+            }),
+        });
+
+        expect(reminders).toHaveLength(1);
+
+        const scheduledFor = new Date(reminders[0].scheduledFor);
+        expect(scheduledFor.getDay()).toBe(6); // Saturday, which is selected
+        expect(scheduledFor.getHours()).toBe(7); // quiet-hours end
+    });
 });
 
 describe("getNextReminderLabel", () => {

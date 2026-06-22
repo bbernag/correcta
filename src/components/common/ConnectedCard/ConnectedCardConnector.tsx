@@ -14,6 +14,9 @@ import {getConnectedCardCutoutSpan} from "./connectedCardUtils";
 // stagger so multi-section cards unzip rather than snapping apart at once.
 const CONNECTED_CARD_MORPH_HOLD = motion.duration.fast;
 const CONNECTED_CARD_MORPH_STAGGER = 80;
+const DEFAULT_BRIDGE_SPAN = 0.74;
+const DEFAULT_CUTOUT_THICKNESS = 8;
+const DEFAULT_HORIZONTAL_OVERLAP = 20;
 
 const MORPH_TRANSITION = {
     duration: motion.duration.emphasis,
@@ -35,17 +38,22 @@ type CutoutSpec = {
 export function ConnectedCardConnector({
     animated,
     bridgeColor,
-    bridgeSpan,
     cutoutColor,
     delayMs,
     gap,
     morphIndex,
     orientation,
+    size,
     tone,
 }: ConnectedCardConnectorProps) {
     const {theme} = useUnistyles();
     const isReducedMotionEnabled = useReducedMotion();
-    const cutoutSpan = getConnectedCardCutoutSpan(bridgeSpan);
+    const resolvedSpan =
+        theme.card.bridge.span?.[orientation]?.[size] ?? DEFAULT_BRIDGE_SPAN;
+    const cutoutSpan = getConnectedCardCutoutSpan(resolvedSpan);
+    const horizontalOverlap =
+        theme.card.bridge.horizontalOverlap?.[size] ??
+        DEFAULT_HORIZONTAL_OVERLAP;
     const cutoutColorStyle = cutoutColor
         ? {backgroundColor: cutoutColor}
         : null;
@@ -55,7 +63,21 @@ export function ConnectedCardConnector({
     const horizontal = orientation === "horizontal";
     const gapValue = theme.card.gap[gap];
     const gapSizeStyle = horizontal ? {width: gapValue} : {height: gapValue};
-    const cutouts = getCutoutSpecs({cutoutSpan, horizontal});
+    const cutouts = getCutoutSpecs({
+        cutoutSpan,
+        horizontal,
+        horizontalOverlap,
+        thickness:
+            theme.card.bridge.cutoutThickness ?? DEFAULT_CUTOUT_THICKNESS,
+    });
+    const bridgePlacementStyle = horizontal
+        ? {
+              bottom: cutoutSpan,
+              left: -horizontalOverlap,
+              right: -horizontalOverlap,
+              top: cutoutSpan,
+          }
+        : null;
     const morphDelayMs =
         delayMs +
         CONNECTED_CARD_MORPH_HOLD +
@@ -80,6 +102,7 @@ export function ConnectedCardConnector({
                     horizontal
                         ? styles.horizontalBridge
                         : styles.verticalBridge,
+                    bridgePlacementStyle,
                 ]}
             />
             {cutouts.map((cutout) => {
@@ -128,9 +151,13 @@ export function ConnectedCardConnector({
 function getCutoutSpecs({
     cutoutSpan,
     horizontal,
+    horizontalOverlap,
+    thickness,
 }: {
     cutoutSpan: `${number}%`;
     horizontal: boolean;
+    horizontalOverlap: number;
+    thickness: number;
 }): CutoutSpec[] {
     if (horizontal) {
         return [
@@ -141,7 +168,13 @@ function getCutoutSpecs({
                 style: [
                     styles.horizontalCutout,
                     styles.topCutout,
-                    {height: cutoutSpan},
+                    {
+                        height: thickness,
+                        left: -horizontalOverlap,
+                        marginTop: -thickness / 2,
+                        right: -horizontalOverlap,
+                        top: cutoutSpan,
+                    },
                 ],
             },
             {
@@ -151,7 +184,13 @@ function getCutoutSpecs({
                 style: [
                     styles.horizontalCutout,
                     styles.bottomCutout,
-                    {height: cutoutSpan},
+                    {
+                        bottom: cutoutSpan,
+                        height: thickness,
+                        left: -horizontalOverlap,
+                        marginBottom: -thickness / 2,
+                        right: -horizontalOverlap,
+                    },
                 ],
             },
         ];

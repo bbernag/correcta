@@ -22,6 +22,8 @@ export {ErrorState} from "./ErrorState";
 export type {ErrorStateProps} from "./ErrorState";
 export {FeedbackHighlight} from "./FeedbackHighlight";
 export type {FeedbackHighlightProps} from "./FeedbackHighlight";
+export {GlassSurface} from "./GlassSurface";
+export type {GlassSurfaceProps, GlassSurfaceStyle} from "./GlassSurface";
 export {Icon} from "./Icon";
 export type {IconName, IconProps, IconSize, IconTone} from "./Icon";
 export {IconButton} from "./IconButton";
@@ -95,6 +97,11 @@ export type {SurfaceProps, SurfaceVariant} from "./Surface";
 export {TextInput} from "./TextInput";
 export type {TextInputProps, TextInputStatus} from "./TextInput";
 export {CorrectaToastProvider, Toast, useCorrectaToast} from "./Toast";
-export type {ToastAction, ToastOptions, ToastVariant} from "./Toast";
+export type {
+    ToastAction,
+    ToastInstance,
+    ToastOptions,
+    ToastVariant,
+} from "./Toast";
 export {WordChip} from "./WordChip";
 export type {WordChipProps, WordChipStatus} from "./WordChip";

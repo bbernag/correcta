@@ -89,14 +89,15 @@ type ConnectedCardGap = "compact" | "default" | "relaxed";
 - `orientation`
 - `tone`
 - `gap`
+- `size`
 - standard React Native `View` and accessibility props where applicable
 
 `ConnectedCard.Item` owns card content, padding, pressed state, and accessibility
 semantics. The root must generate union bridges automatically between adjacent
 items. Do not expose a public bridge subcomponent or require screens to position
-bridges manually. When the design calls for a full canvas gap between two
-cards, split them into separate `ConnectedCard` groups rather than disabling
-bridge geometry inside one group.
+bridges manually. Do not expose bridge span controls to screen code. When the
+design calls for a full canvas gap between two cards, split them into separate
+`ConnectedCard` groups rather than disabling bridge geometry inside one group.
 
 All items in one union must use the same opaque surface token.
 
@@ -145,8 +146,8 @@ For vertically stacked cards:
   separate visible bridge component owned by the screen.
 - Layer active-canvas cut-ins over the left and right edges in the decorative
   connector.
-- Size each cut-in to about `15%` of the card width by default (span `0.7`),
-  leaving a narrower `70%` center bridge.
+- Size each cut-in from the internal vertical size token, leaving the center
+  bridge fixed by `ConnectedCard` size.
 - Keep each cut-in visually slim, about `8` points tall or the measured Union
   Gap height when the gap is smaller, and center it within the Union Gap. The
   cut-in should look like a short horizontal slot, not a large circular bite.
@@ -172,7 +173,7 @@ Recommended structure:
 The connector cut-in geometry must use:
 
 ```ts
-bridgeWidth = measuredUnionWidth * card.bridge.span
+bridgeWidth = measuredUnionWidth * card.bridge.span.vertical[size]
 slotWidth = (measuredUnionWidth - bridgeWidth) / 2
 slotHeight = min(measuredUnionGapHeight, card.bridge.cutoutThickness)
 slotY = midpointBetweenAdjacentItems - slotHeight / 2
@@ -189,6 +190,9 @@ For paired stat cards:
 - Fill the gap through the decorative connector silhouette.
 - Layer active-canvas cut-ins over the top and bottom edges in the decorative
   connector.
+- Overlap the horizontal bridge and cut-ins into both card surfaces by the
+  internal size token so the pair reads as one linked surface instead of a thin
+  strip in the layout gap.
 - Keep each cut-in visually slim, about `10` points tall, so the center gap
   does not become an hourglass notch.
 - Round the inner edge of the top and bottom cut-ins so the center bridge reads
@@ -201,7 +205,7 @@ The horizontal cut-in path must use:
 
 ```ts
 slotCenterX = midpointBetweenAdjacentItems
-slotWidth = gapBetweenItems + card.bridge.cutoutThickness
+slotWidth = gapBetweenItems + card.bridge.horizontalOverlap[size] * 2
 slotHeight = card.bridge.cutoutThickness
 ```
 
@@ -267,9 +271,11 @@ card: {
   bridge: {
     capRadius: 999,
     cutoutThickness: 8,
-    spanDefault: 0.7,
-    spanMin: 0.66,
-    spanMax: 0.78,
+    horizontalOverlap: { compact: 16, default: 20, hero: 24 },
+    span: {
+      horizontal: { compact: 0.4, default: 0.4, hero: 0.4 },
+      vertical: { compact: 0.8, default: 0.74, hero: 0.74 },
+    },
   },
 }
 ```
@@ -286,7 +292,7 @@ Add examples for:
 - Three-card vertical union.
 - Horizontal Interlocking Pair.
 - `compact`, `default`, and `relaxed` gaps.
-- Bridge spans of `66%`, `70%`, and `78%`.
+- `compact`, `default`, and `hero` size bridge geometry.
 - Light and dark themes.
 - Separately pressable items.
 - One pressable union.
@@ -316,8 +322,7 @@ screen-specific absolute-positioning values.
 Tests must cover:
 
 - Vertical and horizontal axes.
-- Default `70%` bridge span.
-- Span clamping between `66%` and `78%`.
+- Fixed bridge span resolution by `orientation` and `size`.
 - Decorative bridge accessibility behavior.
 - Shared surface-token enforcement.
 - Separate-item and whole-group press behavior.
@@ -327,8 +332,8 @@ Tests must cover:
 
 - Ordinary cards separated only by margin when they are intended to form a
   union.
-- A narrow connector spanning less than `66%`.
-- A connector wider than `78%` that removes the visible cut-ins.
+- Screen-owned bridge span overrides.
+- A vertical connector that removes the visible cut-ins.
 - A freestanding rounded pill visible between cards, such as `(===)`.
 - Rectangular or sharp-ended cut-ins.
 - Hard-coded white notch shapes.
@@ -347,7 +352,7 @@ Tests must cover:
 
 - Related cards form a Linked Surface Group rather than an ordinary card stack.
 - A real light canvas cut-in remains visible between cards.
-- The Union Bridge fills `66%` to `78%` of the shared edge; default is `70%`.
+- The Union Bridge span is fixed internally by `orientation` and `size`.
 - Vertical unions leave rounded cut-ins at the left and right edges.
 - Horizontal unions leave opposing rounded cut-ins at the top and bottom.
 - Cards and bridges use the exact same opaque surface token.

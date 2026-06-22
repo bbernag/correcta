@@ -1,17 +1,19 @@
 import {View} from "react-native";
 import {StyleSheet} from "react-native-unistyles";
 
-import {AppText, ProgressBar} from "../../../components/common";
+import {AppText, IconButton, ProgressBar} from "../../../components/common";
 import type {UserPreferences} from "../../../types";
 
 type PracticeHeaderProps = {
     currentIndex: number;
+    onClose: () => void;
     preferences: UserPreferences;
     totalCount: number;
 };
 
 export function PracticeHeader({
     currentIndex,
+    onClose,
     preferences,
     totalCount,
 }: PracticeHeaderProps) {
@@ -28,6 +30,13 @@ export function PracticeHeader({
                         Translate
                     </AppText>
                 </View>
+                <IconButton
+                    accessibilityLabel="Close practice session"
+                    hapticFeedback="selection"
+                    icon="close"
+                    onPress={onClose}
+                    variant="surface"
+                />
             </View>
             <ProgressBar
                 accessibilityLabel={`Practice progress ${currentStep} of ${totalCount}`}

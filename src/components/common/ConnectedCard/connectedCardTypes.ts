@@ -25,7 +25,6 @@ export type ConnectedCardProps = PropsWithChildren<
         animated?: boolean;
         animationDelayMs?: number;
         bridgeColor?: string;
-        bridgeSpan?: number;
         cutoutColor?: ColorValue;
         gap?: ConnectedCardGap;
         orientation?: ConnectedCardOrientation;
@@ -49,12 +48,12 @@ export type ConnectedCardItemProps = PropsWithChildren<
 export type ConnectedCardConnectorProps = {
     animated: boolean;
     bridgeColor?: string;
-    bridgeSpan: number;
     cutoutColor?: ColorValue;
     delayMs: number;
     gap: ConnectedCardGap;
     morphIndex: number;
     orientation: ConnectedCardOrientation;
+    size: ConnectedCardSize;
     tone: ConnectedCardTone;
 };
 

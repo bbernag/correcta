@@ -359,13 +359,14 @@ Tasks:
 - Add or extend Unistyles tokens for `canvas`, `surfaceContrast`,
   `surfaceContrastForeground`, `surfaceContrastMutedForeground`,
   `surfaceContrastAccent`, `surfaceContrastPressed`, `surfaceContrastFocus`,
-  `Card` radii, gaps, bridge overlap, and min/default/max bridge spans.
+  `Card` radii, gaps, bridge overlap, and fixed bridge spans by orientation
+  and size.
 - Create or refine `src/components/common/Card/*`.
 - Add `Card` and `Card.Item` compound anatomy.
 - Support vertical and horizontal axes.
 - Support two or more vertical items.
 - Support a two-item horizontal interlocking pair.
-- Default `bridgeSpan` to `0.7` and clamp it between `0.66` and `0.78`.
+- Resolve bridge span internally from `orientation` and `size`.
 - Generate bridges internally between adjacent items.
 - Use the same opaque surface token for every item and bridge.
 - Render bridges below items and exclude them from touch, haptics, and

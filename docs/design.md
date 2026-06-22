@@ -342,18 +342,26 @@ Card rules:
 
 Card geometry tokens:
 
-| Token                         | Value |
-| ----------------------------- | ----: |
-| `card.gap.compact`            |     6 |
-| `card.gap.default`            |     8 |
-| `card.gap.relaxed`            |    12 |
-| `card.padding.compact`        |    16 |
-| `card.padding.default`        |    20 |
-| `card.padding.hero`           |    24 |
-| `card.bridge.capRadius`       |   999 |
-| `card.bridge.cutoutThickness` |     8 |
-| `card.bridge.edgeOverlap`     |     1 |
-| `card.bridge.span`            |  0.74 |
+| Token                                   | Value |
+| --------------------------------------- | ----: |
+| `card.gap.compact`                      |     6 |
+| `card.gap.default`                      |     8 |
+| `card.gap.relaxed`                      |    12 |
+| `card.padding.compact`                  |    16 |
+| `card.padding.default`                  |    20 |
+| `card.padding.hero`                     |    24 |
+| `card.bridge.capRadius`                 |   999 |
+| `card.bridge.cutoutThickness`           |     8 |
+| `card.bridge.edgeOverlap`               |     1 |
+| `card.bridge.horizontalOverlap.compact` |    16 |
+| `card.bridge.horizontalOverlap.default` |    20 |
+| `card.bridge.horizontalOverlap.hero`    |    24 |
+| `card.bridge.span.horizontal.compact`   |   0.4 |
+| `card.bridge.span.horizontal.default`   |   0.4 |
+| `card.bridge.span.horizontal.hero`      |   0.4 |
+| `card.bridge.span.vertical.compact`     |   0.8 |
+| `card.bridge.span.vertical.default`     |  0.74 |
+| `card.bridge.span.vertical.hero`        |  0.74 |
 
 ## Buttons
 

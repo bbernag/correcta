@@ -1,11 +1,12 @@
 import type {NoticeCardTone, ResultBadgeTone} from "../../../components/common";
 import type {
     MistakeCategory,
+    PracticeInputMode,
     ValidationStatus,
     PracticeSentence,
 } from "../../../types";
 import type {HapticFeedback} from "../../../native";
-import type {WordBankItem} from "../types/practiceTypes";
+import type {PracticePhase, WordBankItem} from "../types/practiceTypes";
 
 export function createWordBankItems(
     sentence: PracticeSentence | null
@@ -112,6 +113,35 @@ export function getPracticeResultHapticFeedback(
     }
 
     return "warning";
+}
+
+export function getWordBankAutoSubmitKey({
+    answer,
+    inputMode,
+    phase,
+    selectedItemIds,
+    sentenceId,
+    totalItemCount,
+}: {
+    answer: string;
+    inputMode: PracticeInputMode | undefined;
+    phase: PracticePhase;
+    selectedItemIds: string[];
+    sentenceId: string | undefined;
+    totalItemCount: number;
+}) {
+    if (
+        inputMode !== "sentenceBuilder" ||
+        phase !== "answering" ||
+        !sentenceId ||
+        totalItemCount === 0 ||
+        selectedItemIds.length !== totalItemCount ||
+        answer.trim().length === 0
+    ) {
+        return null;
+    }
+
+    return `${sentenceId}:${selectedItemIds.join("|")}`;
 }
 
 export function formatScore(score: number) {

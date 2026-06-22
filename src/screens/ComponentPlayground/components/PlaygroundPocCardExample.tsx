@@ -108,7 +108,7 @@ export function PlaygroundPocCardExample() {
                     Horizontal
                 </AppText>
                 <View style={styles.canvas}>
-                    <ConnectedCard bridgeSpan={0.4} orientation="horizontal">
+                    <ConnectedCard orientation="horizontal">
                         <ConnectedCard.Item
                             contentStyle={styles.horizontalSectionContent}
                             style={styles.horizontalSection}

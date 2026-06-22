@@ -11,11 +11,13 @@ import {getAccuracyLabel} from "../utils/practiceUtils";
 import type {PracticeSessionSummaryState} from "../types/practiceTypes";
 
 type SessionSummaryCardProps = {
+    onClose: () => void;
     onRestart: () => void;
     summaryState: PracticeSessionSummaryState;
 };
 
 export function SessionSummaryCard({
+    onClose,
     onRestart,
     summaryState,
 }: SessionSummaryCardProps) {
@@ -89,7 +91,19 @@ export function SessionSummaryCard({
                     </AppText>
                 </View>
             </View>
-            <Button label="Start another session" onPress={onRestart} />
+            <View style={styles.actions}>
+                <Button
+                    label="Start another session"
+                    onPress={onRestart}
+                    style={styles.action}
+                />
+                <Button
+                    label="Done"
+                    onPress={onClose}
+                    style={styles.action}
+                    variant="secondary"
+                />
+            </View>
         </Surface>
     );
 }
@@ -109,5 +123,11 @@ const styles = StyleSheet.create((theme) => ({
         flexBasis: "48%",
         gap: theme.spacing.xs,
         padding: theme.spacing.md,
+    },
+    actions: {
+        gap: theme.spacing.sm,
+    },
+    action: {
+        alignSelf: "stretch",
     },
 }));

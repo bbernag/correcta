@@ -10,6 +10,7 @@ type UsePracticeSwipeNavigationParams = {
     isChecking: boolean;
     onContinue: () => void | Promise<void>;
     onRetry: () => void;
+    onSkip: () => void | Promise<void>;
     phase: PracticePhase;
     result: PracticeResult | null;
 };
@@ -18,6 +19,7 @@ export function usePracticeSwipeNavigation({
     isChecking,
     onContinue,
     onRetry,
+    onSkip,
     phase,
     result,
 }: UsePracticeSwipeNavigationParams) {
@@ -38,10 +40,18 @@ export function usePracticeSwipeNavigation({
     );
 
     const handleSwipeLeft = useCallback(() => {
-        if (getAction("left") === "continue") {
-            void onContinue();
+        const action = getAction("left");
+
+        if (action === "continue") {
+            return onContinue();
         }
-    }, [getAction, onContinue]);
+
+        if (action === "skip") {
+            return onSkip();
+        }
+
+        return undefined;
+    }, [getAction, onContinue, onSkip]);
 
     const handleSwipeRight = useCallback(() => {
         if (getAction("right") === "retry") {
@@ -49,7 +59,8 @@ export function usePracticeSwipeNavigation({
         }
     }, [getAction, onRetry]);
 
-    const canSwipeLeft = getAction("left") === "continue";
+    const leftAction = getAction("left");
+    const canSwipeLeft = leftAction === "continue" || leftAction === "skip";
     const canSwipeRight = getAction("right") === "retry";
 
     return useMemo(() => {

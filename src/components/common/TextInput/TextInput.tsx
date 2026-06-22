@@ -98,6 +98,7 @@ export function TextInput({
                             ? 1.01
                             : 1,
                 }}
+                style={isFocused && !isDisabled ? styles.frameGlow : undefined}
                 transition={
                     isReducedMotionEnabled
                         ? REDUCED_MOTION_TRANSITION
@@ -220,10 +221,13 @@ const styles = StyleSheet.create((theme) => ({
     inputDisabledText: {
         color: theme.colors.textSecondary,
     },
+    frameGlow: {
+        borderRadius: theme.radii.lg,
+        ...theme.shadows.surface,
+    },
     inputFocused: {
         backgroundColor: theme.colors.surfaceElevated,
         borderColor: theme.colors.focusRing,
-        ...theme.shadows.surface,
     },
     inputError: {
         backgroundColor: theme.colors.surfacePrimary,

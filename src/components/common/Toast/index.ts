@@ -4,6 +4,7 @@ export {useCorrectaToast} from "./toastContext";
 export type {
     ToastAction,
     ToastContextValue,
+    ToastInstance,
     ToastOptions,
     ToastVariant,
 } from "./toastTypes";

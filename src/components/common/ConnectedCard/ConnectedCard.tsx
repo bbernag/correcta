@@ -10,16 +10,11 @@ import {ConnectedCardConnector} from "./ConnectedCardConnector";
 import {ConnectedCardContext} from "./connectedCardContext";
 import {ConnectedCardItem} from "./ConnectedCardItem";
 import type {ConnectedCardProps} from "./connectedCardTypes";
-import {
-    CONNECTED_CARD_BRIDGE_SPAN_DEFAULT,
-    getConnectedCardBridgeSpan,
-} from "./connectedCardUtils";
 
 function ConnectedCardRoot({
     animated = false,
     animationDelayMs = 0,
     bridgeColor,
-    bridgeSpan = CONNECTED_CARD_BRIDGE_SPAN_DEFAULT,
     children,
     cutoutColor,
     gap = "default",
@@ -30,7 +25,6 @@ function ConnectedCardRoot({
     ...viewProps
 }: ConnectedCardProps) {
     const items = Children.toArray(children);
-    const resolvedBridgeSpan = getConnectedCardBridgeSpan(bridgeSpan);
 
     return (
         <ConnectedCardContext.Provider value={{orientation, size, tone}}>
@@ -55,12 +49,12 @@ function ConnectedCardRoot({
                                 <ConnectedCardConnector
                                     animated={animated}
                                     bridgeColor={bridgeColor}
-                                    bridgeSpan={resolvedBridgeSpan}
                                     cutoutColor={cutoutColor}
                                     delayMs={animationDelayMs}
                                     gap={gap}
                                     morphIndex={index}
                                     orientation={orientation}
+                                    size={size}
                                     tone={tone}
                                 />
                             ) : null}

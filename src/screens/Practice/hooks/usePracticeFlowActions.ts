@@ -1,9 +1,5 @@
 import type {Dispatch, MutableRefObject, SetStateAction} from "react";
 
-import {
-    getPracticeSummary,
-    submitPracticeAnswer,
-} from "../../../services/domain";
 import {playHapticFeedback} from "../../../native";
 import type {CorrectaServices, PracticeSentence} from "../../../types";
 import type {
@@ -13,12 +9,17 @@ import type {
     PracticeSessionSummaryState,
 } from "../types/practiceTypes";
 import {getPracticeResultHapticFeedback} from "../utils/practiceUtils";
+import {
+    advanceSessionOrShowSummary,
+    submitAnswer,
+} from "./practiceFlowActionHelpers";
 
 export function usePracticeFlowActions({
     answerText,
     currentAnswer,
     currentSentence,
     mountedRef,
+    onCorrectAnswer,
     phase,
     resetAnswerState,
     result,
@@ -36,6 +37,10 @@ export function usePracticeFlowActions({
     currentAnswer: string;
     currentSentence: PracticeSentence | null;
     mountedRef: MutableRefObject<boolean>;
+    onCorrectAnswer: (options: {
+        completedResult: PracticeResult;
+        completedSentence: PracticeSentence;
+    }) => void;
     phase: PracticePhase;
     resetAnswerState: () => void;
     result: PracticeResult | null;
@@ -57,7 +62,7 @@ export function usePracticeFlowActions({
         }
 
         playHapticFeedback("impact");
-        await checkAnswer({
+        const nextResult = await submitAnswer({
             answerText: currentAnswer,
             currentSentence,
             mountedRef,
@@ -66,15 +71,54 @@ export function usePracticeFlowActions({
             sessionState,
             setError,
             setPhase,
-            setResult,
         });
+
+        if (!nextResult) {
+            return;
+        }
+
+        playHapticFeedback(
+            getPracticeResultHapticFeedback(nextResult.validation.status)
+        );
+
+        if (nextResult.validation.status === "correct") {
+            const isLastSentence =
+                sessionState.currentIndex ===
+                sessionState.sentences.length - 1;
+            await advanceSessionOrShowSummary({
+                fallbackResult: nextResult,
+                mountedRef,
+                resetAnswerState,
+                services,
+                sessionState,
+                setError,
+                setPhase,
+                setResult,
+                setSessionState,
+                setSummaryState,
+            });
+            if (mountedRef.current && !isLastSentence) {
+                onCorrectAnswer({
+                    completedResult: nextResult,
+                    completedSentence: currentSentence,
+                });
+            }
+            return;
+        }
+
+        setResult(nextResult);
+        setPhase("feedback");
     }
 
     async function handleSkip() {
+        if (!sessionState || !currentSentence || phase === "checking") {
+            return;
+        }
+
         playHapticFeedback("selection");
         setAnswerText("");
         setSelectedItemIds([]);
-        await checkAnswer({
+        const nextResult = await submitAnswer({
             answerText: "",
             currentSentence,
             mountedRef,
@@ -83,7 +127,26 @@ export function usePracticeFlowActions({
             sessionState,
             setError,
             setPhase,
+        });
+
+        if (!nextResult) {
+            return;
+        }
+
+        playHapticFeedback(
+            getPracticeResultHapticFeedback(nextResult.validation.status)
+        );
+        await advanceSessionOrShowSummary({
+            fallbackResult: nextResult,
+            mountedRef,
+            resetAnswerState,
+            services,
+            sessionState,
+            setError,
+            setPhase,
             setResult,
+            setSessionState,
+            setSummaryState,
         });
     }
 
@@ -103,44 +166,18 @@ export function usePracticeFlowActions({
             return;
         }
 
-        if (sessionState.currentIndex < sessionState.sentences.length - 1) {
-            resetAnswerState();
-            setSessionState({
-                ...sessionState,
-                currentIndex: sessionState.currentIndex + 1,
-            });
-            setPhase("answering");
-
-            return;
-        }
-
-        setPhase("checking");
-
-        try {
-            const summary = await getPracticeSummary({
-                services,
-                sessionId: sessionState.session.id,
-            });
-
-            if (!mountedRef.current) {
-                return;
-            }
-
-            setSummaryState({sentences: sessionState.sentences, summary});
-            setPhase("summary");
-            playHapticFeedback("success");
-        } catch (summaryError) {
-            if (!mountedRef.current) {
-                return;
-            }
-
-            setError(
-                summaryError instanceof Error
-                    ? summaryError.message
-                    : "Practice summary could not be created"
-            );
-            setPhase("feedback");
-        }
+        await advanceSessionOrShowSummary({
+            fallbackResult: result ?? undefined,
+            mountedRef,
+            resetAnswerState,
+            services,
+            sessionState,
+            setError,
+            setPhase,
+            setResult,
+            setSessionState,
+            setSummaryState,
+        });
     }
 
     return {
@@ -149,65 +186,4 @@ export function usePracticeFlowActions({
         handleSkip,
         handleSubmitAnswer,
     };
-}
-
-async function checkAnswer({
-    answerText,
-    currentSentence,
-    mountedRef,
-    phase,
-    services,
-    sessionState,
-    setError,
-    setPhase,
-    setResult,
-}: {
-    answerText: string;
-    currentSentence: PracticeSentence | null;
-    mountedRef: MutableRefObject<boolean>;
-    phase: PracticePhase;
-    services: CorrectaServices;
-    sessionState: PracticeSessionState | null;
-    setError: Dispatch<SetStateAction<string | null>>;
-    setPhase: Dispatch<SetStateAction<PracticePhase>>;
-    setResult: Dispatch<SetStateAction<PracticeResult | null>>;
-}) {
-    if (!sessionState || !currentSentence || phase === "checking") {
-        return;
-    }
-
-    setPhase("checking");
-    setError(null);
-
-    try {
-        const nextResult = await submitPracticeAnswer({
-            answerText,
-            inputMode: sessionState.inputMode,
-            sentence: currentSentence,
-            services,
-            session: sessionState.session,
-        });
-
-        if (!mountedRef.current) {
-            return;
-        }
-
-        setResult(nextResult);
-        setPhase("feedback");
-        playHapticFeedback(
-            getPracticeResultHapticFeedback(nextResult.validation.status)
-        );
-    } catch (submitError) {
-        if (!mountedRef.current) {
-            return;
-        }
-
-        playHapticFeedback("error");
-        setError(
-            submitError instanceof Error
-                ? submitError.message
-                : "Answer could not be checked"
-        );
-        setPhase("answering");
-    }
 }

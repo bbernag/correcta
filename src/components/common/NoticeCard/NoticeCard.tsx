@@ -23,8 +23,6 @@ const TONE_LABELS: Record<NoticeCardTone, string> = {
     info: "Note",
 };
 
-const NOTICE_CARD_BRIDGE_SPAN = 0.8;
-
 const NOTICE_CARD_ENTRY_TRANSITION = {
     duration: motion.duration.normal,
     easing: "easeOut",
@@ -48,7 +46,6 @@ export function NoticeCard({
 
     return (
         <ConnectedCard
-            bridgeSpan={NOTICE_CARD_BRIDGE_SPAN}
             cutoutColor={cutoutColor}
             size="compact"
             style={style}

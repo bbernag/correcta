@@ -1,6 +1,4 @@
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import {AccessibilityInfo} from "react-native";
-
 import {
     createCorrectaServices,
     startLocalPracticeSession,
@@ -10,10 +8,14 @@ import type {PracticeInputMode} from "../../../types";
 import {
     createWordBankItems,
     getBuilderAnswer,
-    getStatusLabel,
+    getWordBankAutoSubmitKey,
 } from "../utils/practiceUtils";
+import {useCorrectAnswerToast} from "./useCorrectAnswerToast";
+import {usePracticeAnnouncements} from "./usePracticeAnnouncements";
 import {usePracticeFlowActions} from "./usePracticeFlowActions";
 import {usePracticeSaveActions} from "./usePracticeSaveActions";
+import {usePracticeStatusToast} from "./usePracticeStatusToast";
+import {useWordBankAutoSubmit} from "./useWordBankAutoSubmit";
 import type {
     PracticePhase,
     PracticeResult,
@@ -56,6 +58,23 @@ export function usePracticeSession({
         sessionState?.inputMode === "sentenceBuilder"
             ? builderAnswer
             : answerText;
+    const wordBankAutoSubmitKey = useMemo(() => {
+        return getWordBankAutoSubmitKey({
+            answer: builderAnswer,
+            inputMode: sessionState?.inputMode,
+            phase,
+            selectedItemIds,
+            sentenceId: currentSentence?.id,
+            totalItemCount: wordBankItems.length,
+        });
+    }, [
+        builderAnswer,
+        currentSentence?.id,
+        phase,
+        selectedItemIds,
+        sessionState?.inputMode,
+        wordBankItems.length,
+    ]);
     const remainingWordBankItems = wordBankItems.filter((item) => {
         return !selectedItemIds.includes(item.id);
     });
@@ -75,7 +94,11 @@ export function usePracticeSession({
         setRevealedHintCount(0);
         setResult(null);
     }, []);
+    const {dismissStatusToast, showStatusToast, statusToast} =
+        usePracticeStatusToast();
     const {
+        correctToastDurationMs,
+        handleSaveCompletedSentence,
         handleSaveSentence,
         handleSaveWord,
         isSavingSentence,
@@ -87,13 +110,21 @@ export function usePracticeSession({
         result,
         services,
         setResult,
+        showStatusToast,
     });
+    const {
+        correctAnswerToast,
+        dismissCorrectAnswerToast,
+        handleSaveCorrectAnswerToast,
+        showCorrectAnswerToast,
+    } = useCorrectAnswerToast({handleSaveCompletedSentence});
     const {handleContinue, handleRetry, handleSkip, handleSubmitAnswer} =
         usePracticeFlowActions({
             answerText,
             currentAnswer,
             currentSentence,
             mountedRef,
+            onCorrectAnswer: showCorrectAnswerToast,
             phase,
             resetAnswerState,
             result,
@@ -107,6 +138,11 @@ export function usePracticeSession({
             setSessionState,
             setSummaryState,
         });
+    useWordBankAutoSubmit({
+        onSubmitAnswer: handleSubmitAnswer,
+        wordBankAutoSubmitKey,
+    });
+    usePracticeAnnouncements({phase, result, summaryState});
 
     const handleRestart = useCallback(async () => {
         const token = loadTokenRef.current + 1;
@@ -165,22 +201,6 @@ export function usePracticeSession({
             loadTokenRef.current += 1;
         };
     }, [handleRestart, restartKey]);
-
-    useEffect(() => {
-        if (phase === "checking") {
-            announcePracticeState("Checking answer");
-        }
-
-        if (phase === "feedback" && result) {
-            announcePracticeState(
-                `${getStatusLabel(result.validation.status)}. ${result.feedback.simpleExplanation}`
-            );
-        }
-
-        if (phase === "summary" && summaryState) {
-            announcePracticeState("Practice summary ready");
-        }
-    }, [phase, result, summaryState]);
 
     function handleChangeAnswer(text: string) {
         setAnswerText(text);
@@ -248,6 +268,10 @@ export function usePracticeSession({
         answerText,
         currentAnswer,
         currentSentence,
+        correctAnswerToast,
+        correctToastDurationMs,
+        dismissCorrectAnswerToast,
+        dismissStatusToast,
         error,
         handleChangeAnswer,
         handleClearBuilder,
@@ -255,6 +279,7 @@ export function usePracticeSession({
         handleRemoveWord,
         handleRestart,
         handleRetry,
+        handleSaveCorrectAnswerToast,
         handleSaveSentence,
         handleSaveWord,
         handleSelectInputMode,
@@ -272,15 +297,8 @@ export function usePracticeSession({
         selectedItemIds,
         selectedWordBankItems,
         sessionState,
+        statusToast,
         summaryState,
         wordBankItems,
     };
-}
-
-function announcePracticeState(message: string) {
-    try {
-        AccessibilityInfo.announceForAccessibility(message);
-    } catch {
-        // Announcements are best-effort and should not block practice.
-    }
 }
